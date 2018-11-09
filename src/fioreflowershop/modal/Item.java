@@ -58,7 +58,7 @@ public class Item {
     
     @Override
     public String toString() {
-        return "Name: " + name + ", Price: RM" + price;
+        return "Name: " + name + ", Price: RM" + price + ", Quantity: " + quantity;
     }
     
 }
