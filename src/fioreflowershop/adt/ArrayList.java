@@ -31,26 +31,61 @@ public class ArrayList<T> implements ListInterface<T> {
             expandArray();
         }
 
+        list[totalEntries] = newEntry;
+        totalEntries++;
         return true;
     }
 
     @Override
     public boolean add(int newPosition, T newEntry) {
+        boolean isSuccessful = true;
 
-        return true;
+        if ((newPosition >= 1) && (newPosition <= totalEntries + 1)) {
+            if (isFull()) {
+                expandArray();
+            }
+
+            makeRoom(newPosition);
+            list[newPosition - 1] = newEntry;
+            totalEntries++;
+        } else {
+            isSuccessful = false;
+        }
+
+        return isSuccessful;
     }
 
     @Override
-    public boolean remove(int existPosition) {
-        return true;
+    public T remove(int existPosition) {
+        T result = null;
+
+        if ((existPosition >= 1) && (existPosition <= totalEntries)) {
+            result = list[existPosition - 1];
+
+            if (existPosition < totalEntries) {
+                removeGap(existPosition);
+            }
+
+            totalEntries--;
+        }
+
+        return result;
     }
 
     @Override
     public void clear() {
+        totalEntries = 0;
     }
 
     @Override
-    public void getItem(int position) {
+    public T getItem(int position) {
+        T result = null;
+
+        if ((position >= 1) && (position <= totalEntries)) {
+            result = list[position - 1];
+        }
+
+        return result;
     }
 
     @Override
@@ -86,4 +121,23 @@ public class ArrayList<T> implements ListInterface<T> {
         }
     }
 
+    private void removeGap(int givenPosition) {
+        // move each entry to next lower position starting at entry after the
+        // one removed and continuing until end of list
+        int removedIndex = givenPosition - 1;
+        int lastIndex = totalEntries - 1;
+
+        for (int index = removedIndex; index < lastIndex; index++) {
+            list[index] = list[index + 1];
+        }
+    }
+
+    public String toString() {
+        String outputStr = "";
+        for (int index = 0; index < totalEntries; ++index) {
+            outputStr += list[index] + "\n";
+        }
+
+        return outputStr;
+    }
 }
