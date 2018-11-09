@@ -9,12 +9,16 @@ package fioreflowershop.adt;
  *
  * @author Chiu Peeng
  */
-interface StackInterface<T> {
+interface StackInterface<T>{
     public void push(T object);
     
     public T pop();
     
     public T peek();
+    
+    public T get(int index);
+    
+    public void remove(int i);
     
     public boolean isEmpty();
     
