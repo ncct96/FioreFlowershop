@@ -12,6 +12,7 @@ package fioreflowershop.modal;
 public class Item {
     private String name;
     private double price;
+    private static int quantity;
 
     public Item() {
     }
@@ -21,6 +22,12 @@ public class Item {
         this.price = price;
     }
 
+    public Item(String name, double price, int quantity) {
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+    }
+    
     public String getName() {
         return name;
     }
@@ -37,6 +44,18 @@ public class Item {
         this.price = price;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+    
+    public void minusQuantity(){
+        --quantity;
+    }
+    
     @Override
     public String toString() {
         return "Name: " + name + ", Price: RM" + price;

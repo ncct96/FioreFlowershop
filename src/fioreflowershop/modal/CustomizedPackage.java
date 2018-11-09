@@ -5,13 +5,26 @@
  */
 package fioreflowershop.modal;
 
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  *
  * @author Chiu Peeng
  */
 public class CustomizedPackage {
     private static int orderNo = 1;
-    private Item style, size, flower, accessory, priority;
+    private int orderNum;
+    Date date = new Date();
+    private Item style, size, flower, accessory, priority, deliveryType;
+
+    public Item getDeliveryType() {
+        return deliveryType;
+    }
+
+    public void setDeliveryType(Item deliveryType) {
+        this.deliveryType = deliveryType;
+    }
 
     public static int getOrderNo() {
         return orderNo;
@@ -23,6 +36,22 @@ public class CustomizedPackage {
 
     public Item getStyle() {
         return style;
+    }
+
+    public int getOrderNum() {
+        return orderNum;
+    }
+
+    public void setOrderNum(int orderNum) {
+        this.orderNum = orderNum;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public void setStyle(Item style) {
@@ -61,18 +90,30 @@ public class CustomizedPackage {
         this.priority = priority;
     }
 
-    public CustomizedPackage(Item style, Item size, Item flower, Item accessory, Item priority) {
+    public CustomizedPackage(Item style, Item size, Item flower, Item accessory, Item priority, Item deliveryType) {
+        orderNum = orderNo;
+        ++orderNo;
+        date = Calendar.getInstance().getTime();
         this.style = style;
         this.size = size;
         this.flower = flower;
         this.accessory = accessory;
         this.priority = priority;
+        this.deliveryType = deliveryType;
     }
 
     public CustomizedPackage() {
+        orderNum = orderNo;
+        ++orderNo;
+        date = Calendar.getInstance().getTime();
     }
     
     public double CalculateOrder(){
-        return (style.getPrice() + (flower.getPrice() * size.getPrice()) + accessory.getPrice()) * priority.getPrice();
+        return (style.getPrice() + (flower.getPrice() * size.getPrice()) + accessory.getPrice()) * priority.getPrice() + deliveryType.getPrice();
+    }
+    
+    public void minusQuantity(){
+        flower.minusQuantity();
+        accessory.minusQuantity();
     }
 }
