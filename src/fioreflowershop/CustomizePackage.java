@@ -235,6 +235,30 @@ public class CustomizePackage {
         deliveryTypes.add(new Item("Deliver", 10));
     }
 
+    public static ArrayList<Item> getStyles() {
+        return styles;
+    }
+
+    public static ArrayList<Item> getSizes() {
+        return sizes;
+    }
+
+    public static ArrayList<Item> getFlowers() {
+        return flowers;
+    }
+
+    public static ArrayList<Item> getAccessories() {
+        return accessories;
+    }
+
+    public static ArrayList<Item> getPriorities() {
+        return priorities;
+    }
+
+    public static ArrayList<Item> getDeliveryTypes() {
+        return deliveryTypes;
+    }
+
     public ListInterface<CustomizedPackage> getCustomPackageList() {
         return customPackageList;
     }
