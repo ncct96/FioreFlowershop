@@ -15,6 +15,7 @@ public class User {
     private String password;
     private String address;
     private String phone;
+    private boolean status = false;
     
     public User(){
         
@@ -28,6 +29,14 @@ public class User {
         this.phone = phone;
     }
 
+    public void setStatus(boolean status){
+        this.status = status;
+    }
+    
+    public boolean getStatus(){
+        return status;
+    }
+    
     public String getUsername() {
         return username;
     }
@@ -70,7 +79,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "Username : " + username + "\nEmail" + email + "\nContact Number : " + phone +"\nAddress" + address + "\nPassword" + password;
+        return "\nUsername : " + username + "\nEmail : " + email + "\nContact Number : " + phone +"\nAddress : " + address + "\nPassword : " + password;
     }
     
 }

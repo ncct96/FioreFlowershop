@@ -13,7 +13,7 @@ public class Customer extends User{
     public Customer(){
         
     }
-    public Customer(String username, String email, String phone, String address, String password){
+    public Customer(String username, String password, String email, String phone, String address){
         super(username, email, phone, address, password);
     }
 }
