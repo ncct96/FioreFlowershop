@@ -5,6 +5,8 @@
  */
 package fioreflowershop.adt;
 
+import fioreflowershop.modal.Customer;
+
 /**
  *
  * @author Nicholas
@@ -14,7 +16,7 @@ public class ArrayList<T> implements ListInterface<T> {
     private T[] list;
     private int totalEntries;
     private static final int DEFAULT_LIST_SIZE = 25;
-
+    
     public ArrayList() {
         this(DEFAULT_LIST_SIZE);
     }
@@ -88,7 +90,7 @@ public class ArrayList<T> implements ListInterface<T> {
         if ((position >= 1) && (position <= totalEntries)) {
             result = list[position - 1];
         }
-
+        
         return result;
     }
 
@@ -141,7 +143,6 @@ public class ArrayList<T> implements ListInterface<T> {
         for (int index = 0; index < totalEntries; ++index) {
             outputStr += list[index] + "\n";
         }
-
         return outputStr;
     }
 }
