@@ -24,6 +24,10 @@ public class ArrayList<T> implements ListInterface<T> {
         list = (T[]) new Object[defaultSize];
     }
 
+    public T[] getList() {
+        return list;
+    }
+
     @Override
     public boolean add(T newEntry) {
 
