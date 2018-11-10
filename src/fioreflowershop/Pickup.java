@@ -15,14 +15,20 @@ import fioreflowershop.modal.Item;
  * @author Nicholas
  */
 public class Pickup {
-    
-    ListInterface<CustomizedPackage> customPackageList = new ArrayList<>();
-    
+
+    public void sortPickup() {
+        
+        CustomizePackage customPackage = new CustomizePackage();
+
+        ListInterface<CustomizedPackage> customPackageList = customPackage.getCustomPackageList();
+
+        for(int i = 1; i < customPackageList.getTotalEntries() + 1; i++){
+            System.out.println(customPackageList.getItem(i).getAccessory().getName());
+        }
+    }
+
 //    for(int i = 0; i < customPack ; i++ ){
 //    
 //}
 //    
-    public void initOrderList(){
-
-    }
 }
