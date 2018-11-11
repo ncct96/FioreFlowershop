@@ -37,8 +37,7 @@ public class Pickup {
     public static void initializeData() {
 
         // Retrieve Data from all List
-        CustomizePackage customPackage = new CustomizePackage();
-        ListInterface<CustomizedPackage> customPackageList = new ArrayList<>();
+        
 
 //        customPackage.InitializePackages();
 //
@@ -53,21 +52,6 @@ public class Pickup {
 
         //CorporateCustomer corpCust = new CorporateCustomer("ncct96", "ncct96@gmail.com", "0165919413", "13,Lorong Maju 6, Taman Assam Maju", "ncct96", "TARUC", true);
         //Order order = new Order(1001, "Pick Up", corpCust, customizedPackage);
-    }
-
-    public static void pickupMenu() {
-        System.out.println("1. Today's Pick Up Order List");
-        System.out.println("2. Search Pick Up Order List by Date");
-
-        int choice = sc.nextInt();
-
-        if (choice == 1) {
-
-        } else if (choice == 2) {
-
-        } else {
-
-        }
     }
 
 //    for(int i = 0; i < customPack ; i++ ){
