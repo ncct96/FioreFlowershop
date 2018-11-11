@@ -18,9 +18,8 @@ public class CorporateCustomer extends User{
         
     }
     
-    public CorporateCustomer(String username, String email, String phone, String address, String password, String company, boolean service){
+    public CorporateCustomer(String username, String email, String phone, String address, String password, String company){
         super(username, email, phone, address, password);
-        this.creditService = service;
         this.company = company;
     }
 
