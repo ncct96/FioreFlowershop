@@ -15,7 +15,7 @@ import java.util.Date;
 public class CustomizedPackage {
     private static int orderNo = 1;
     private int orderNum;
-    Date date = new Date();
+    private Date date = new Date();
     private Item style, size, flower, accessory, priority, deliveryType;
     private Customer customer = new Customer();
 
