@@ -27,7 +27,7 @@ public class CustomizePackage {
         boolean cancel = false;
 
         System.out.println("Customizing flower package");
-        //System.out.println("Enter [-1] at any step to cancel and return to main menu\n");
+        System.out.println("Enter [-1] at any step to cancel and return to main menu\n");
 
         try {
             do {
@@ -119,38 +119,36 @@ public class CustomizePackage {
                     }
                 } while (deliveryType < 1 || deliveryType > deliveryTypes.getTotalEntries());
             }
-            //Nicholas debug stuff
-            System.out.println("DDD");
-            Pickup pickup = new Pickup();
-            pickup.sortPickup();
 
         } catch (InputMismatchException e) {
             System.out.println("That wasn't a number :(");
         }
 
-        CustomizedPackage order = new CustomizedPackage(styles.getItem(style), sizes.getItem(size), flowers.getItem(flower), accessories.getItem(accessory), priorities.getItem(priority), deliveryTypes.getItem(deliveryType), customer);
-        customizedPackages.enqueue(order);
-        double price = order.CalculateOrder();
-        order.minusQuantity();
-        System.out.println("Price: RM" + price);
+        if (!cancel) {
+            CustomizedPackage order = new CustomizedPackage(styles.getItem(style), sizes.getItem(size), flowers.getItem(flower), accessories.getItem(accessory), priorities.getItem(priority), deliveryTypes.getItem(deliveryType), customer);
+            customizedPackages.enqueue(order);
+            double price = order.CalculateOrder();
+            order.minusQuantity();
+            System.out.println("Price: RM" + price);
 
-        ArrayQueue<CustomizedPackage> sortingQueue = new ArrayQueue<>();
-        sortingQueue.enqueue(customizedPackages.dequeue());
-        while (!customizedPackages.isEmpty()) {
-            CustomizedPackage next = customizedPackages.dequeue();
-            for (int i = -1; i <= customizedPackages.getBackIndex(); i++) {
-                if (sortingQueue.getFront().getPriority().getQuantity() < next.getPriority().getQuantity()) {
-                    sortingQueue.enqueue(sortingQueue.dequeue());
-                } else {
-                    sortingQueue.enqueue(next);
-                    next = sortingQueue.dequeue();
+            ArrayQueue<CustomizedPackage> sortingQueue = new ArrayQueue<>();
+            sortingQueue.enqueue(customizedPackages.dequeue());
+            while (!customizedPackages.isEmpty()) {
+                CustomizedPackage next = customizedPackages.dequeue();
+                for (int i = -1; i <= customizedPackages.getBackIndex(); i++) {
+                    if (sortingQueue.getFront().getPriority().getQuantity() < next.getPriority().getQuantity()) {
+                        sortingQueue.enqueue(sortingQueue.dequeue());
+                    } else {
+                        sortingQueue.enqueue(next);
+                        next = sortingQueue.dequeue();
+                    }
                 }
+                sortingQueue.enqueue(next);
             }
-            sortingQueue.enqueue(next);
-        }
-        
-        while(!sortingQueue.isEmpty()){
-            customizedPackages.enqueue(sortingQueue.dequeue());
+
+            while (!sortingQueue.isEmpty()) {
+                customizedPackages.enqueue(sortingQueue.dequeue());
+            }
         }
     }
 }
