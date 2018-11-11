@@ -10,6 +10,7 @@ import fioreflowershop.modal.Item;
 import fioreflowershop.adt.ArrayList;
 import fioreflowershop.adt.ArrayQueue;
 import fioreflowershop.adt.ListInterface;
+import fioreflowershop.adt.QueueInterface;
 import fioreflowershop.modal.Consumer;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -20,7 +21,7 @@ import java.util.Scanner;
  */
 public class CustomizePackage {
 
-    public static void CustomizePackageControl(ArrayList<Item> styles, ArrayList<Item> sizes, ArrayList<Item> flowers, ArrayList<Item> accessories, ArrayList<Item> priorities, ArrayList<Item> deliveryTypes, Consumer customer, ArrayQueue<CustomizedPackage> customizedPackages) {
+    public static void CustomizePackageControl(ArrayList<Item> styles, ArrayList<Item> sizes, ArrayList<Item> flowers, ArrayList<Item> accessories, ArrayList<Item> priorities, ArrayList<Item> deliveryTypes, Consumer customer, QueueInterface<CustomizedPackage> customizedPackages) {
 
         int style = 0, size = 0, flower = 0, accessory = 0, priority = 0, deliveryType = 0, loop = 0;
         Scanner scan = new Scanner(System.in);
@@ -119,7 +120,6 @@ public class CustomizePackage {
                     }
                 } while (deliveryType < 1 || deliveryType > deliveryTypes.getTotalEntries());
             }
-
         } catch (InputMismatchException e) {
             System.out.println("That wasn't a number :(");
         }
