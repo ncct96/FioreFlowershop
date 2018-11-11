@@ -49,9 +49,10 @@ public class Pickup {
 
         CustomizedPackage customizedPackage = new CustomizedPackage(styles.getItem(1), sizes.getItem(1), flowers.getItem(1), accessories.getItem(1), priorities.getItem(1), deliveryTypes.getItem(1));
 
-        CorporateCustomer corpCust = new CorporateCustomer("ncct96", "ncct96@gmail.com", "0165919413", "13,Lorong Maju 6, Taman Assam Maju", "ncct96", "TARUC", true);
-
-        Order order = new Order(1001, "Pick Up", corpCust, customizedPackage);
+        //CorporateCustomer corpCust = new CorporateCustomer("ncct96", "ncct96@gmail.com", "0165919413", "13,Lorong Maju 6, Taman Assam Maju", "ncct96", "TARUC", true);
+        //Order order = new Order(1001, "Pick Up", corpCust, customizedPackage);
+        
+        
 
     }
 
