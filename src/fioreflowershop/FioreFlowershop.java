@@ -18,20 +18,7 @@ public class FioreFlowershop {
     public static void main(String[] args) {
         // TODO code application logic here
         //CustomizePackage.CustomizePackageControl();
-        //userTypeSelection();
-        testing();
-    }
-    
-    public static void testing(){
-        char userp;
-        do{
-            System.out.println("Press");
-            userp = s.next().charAt(0);
-            System.out.println(userp);
-        }while(userp != 'y' && userp != 'Y');
-        if(userp == 'y' || userp == 'Y'){
-            System.out.println("Break");
-        }
+        userTypeSelection();
     }
     
     public static void userTypeSelection(){
