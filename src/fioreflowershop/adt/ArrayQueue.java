@@ -22,7 +22,7 @@ public class ArrayQueue<T> implements QueueInterface<T> {
 
   public ArrayQueue(int initialCapacity) {
     queue = (T[]) new Object[initialCapacity];
-    backIndex = -1; //intialized to -1 to indicate an empty queue
+    backIndex = -1;//intialized to -1 to indicate an empty queue
   } // end constructor
 
   //Adds a new entry to the back of the queue.
@@ -58,7 +58,7 @@ public class ArrayQueue<T> implements QueueInterface<T> {
       for (int i = frontIndex; i < backIndex; ++i) {
         queue[i] = queue[i + 1];
       }
-
+      queue[backIndex] = null;
       backIndex--;
     } // end if
 
@@ -85,6 +85,10 @@ public class ArrayQueue<T> implements QueueInterface<T> {
   private boolean isArrayFull() {
     return backIndex == queue.length - 1;
   } // end isArrayFull
+
+    public int getBackIndex() {
+        return backIndex;
+    }
 
   //Doubles the size of the old Queue list
   private void doubleArray() {

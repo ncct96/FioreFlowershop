@@ -5,8 +5,6 @@
  */
 package fioreflowershop.modal;
 
-import java.util.function.Consumer;
-
 /**
  *
  * @author Nicholas
@@ -15,8 +13,11 @@ public class Order {
 
     private int orderID;
     private String orderType;
-    private CorporateCustomer corp;
-    private Consumer con;
+    private CorporateCustomer corp = new CorporateCustomer();
+    private Consumer con = new Consumer();
+
+    public Order() {
+    }
 
     public Order(int orderID, String orderType, CorporateCustomer corp) {
         this.orderID = orderID;

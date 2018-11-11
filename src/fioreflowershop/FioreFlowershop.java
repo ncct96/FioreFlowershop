@@ -26,7 +26,6 @@ public class FioreFlowershop {
     private static ArrayList<Item> accessories = new ArrayList<>();
     private static ArrayList<Item> priorities = new ArrayList<>();
     private static ArrayList<Item> deliveryTypes = new ArrayList<>();
-
     private static ArrayQueue<CustomizedPackage> customizedPackages = new ArrayQueue<>();
 
     //Catalog Maintenance part
@@ -39,9 +38,20 @@ public class FioreFlowershop {
 
     public static void main(String[] args) {
         Consumer customer = new Consumer();
+        CatalogOrder.initializeData();
         initializePackages();
-        //testing();
+
+        Pickup.customSortPickup(customizedPackages, customer);
+
         CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
+
+        
+        /////// CHIUPEENG DEBUG LOOP //////
+        for(int i = 0; i < 3; i++){
+            CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
+        }
+        //////                      //////
+        
         userTypeSelection();
     }
 
@@ -227,7 +237,7 @@ public class FioreFlowershop {
             int searchChoice = s.nextInt();
 
             if (searchChoice == 1) {
-
+                Pickup.sortPickupOrder(CatalogOrder.conOrder,CatalogOrder.corpOrder);
             } else if (searchChoice == 2) {
 
             } else {
