@@ -32,7 +32,13 @@ public class FioreFlowershop {
     public static void main(String[] args) {
         Consumer customer = new Consumer();
         initializePackages();
-        CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
+        
+        /////// CHIUPEENG DEBUG LOOP //////
+        for(int i = 0; i < 3; i++){
+            CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
+        }
+        //////                      //////
+        
         userTypeSelection();
     }
 
