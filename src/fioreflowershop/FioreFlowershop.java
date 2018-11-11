@@ -5,6 +5,7 @@
  */
 package fioreflowershop;
 import fioreflowershop.CustomizePackage;
+import fioreflowershop.modal.Customer;
 import java.util.Scanner;
 /**
  *
@@ -16,8 +17,6 @@ public class FioreFlowershop {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-
         //CustomizePackage.CustomizePackageControl();
         userTypeSelection();
     }
