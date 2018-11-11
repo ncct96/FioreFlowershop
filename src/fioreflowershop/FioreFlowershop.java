@@ -187,7 +187,7 @@ public class FioreFlowershop {
         System.out.println("1. Pick Up Order");
         System.out.println("2. Delivery Order");
 
-        int choice = sc.nextInt();
+        int choice = s.nextInt();
 
         if (choice == 1) {
             System.out.println("1. Today's Pick Up Order List");
@@ -196,7 +196,7 @@ public class FioreFlowershop {
             System.out.println("1. Today's Delivery Order List");
             System.out.println("2. Search Delivery Order List by Date");
 
-            int searchChoice = sc.nextInt();
+            int searchChoice = s.nextInt();
 
             if (searchChoice == 1) {
 

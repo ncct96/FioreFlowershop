@@ -9,7 +9,6 @@ import fioreflowershop.modal.CustomizedPackage;
 import fioreflowershop.modal.Item;
 import fioreflowershop.adt.ArrayList;
 import fioreflowershop.adt.ArrayQueue;
-import fioreflowershop.modal.Customer;
 import fioreflowershop.adt.ListInterface;
 import fioreflowershop.modal.Consumer;
 import java.util.InputMismatchException;
@@ -21,7 +20,7 @@ import java.util.Scanner;
  */
 public class CustomizePackage {
 
-    public static void CustomizePackageControl(ArrayList<Item> styles, ArrayList<Item> sizes, ArrayList<Item> flowers, ArrayList<Item> accessories, ArrayList<Item> priorities, ArrayList<Item> deliveryTypes, Customer customer, ArrayQueue<CustomizedPackage> customizedPackages) {
+    public static void CustomizePackageControl(ArrayList<Item> styles, ArrayList<Item> sizes, ArrayList<Item> flowers, ArrayList<Item> accessories, ArrayList<Item> priorities, ArrayList<Item> deliveryTypes, Consumer customer, ArrayQueue<CustomizedPackage> customizedPackages) {
 
         int style = 0, size = 0, flower = 0, accessory = 0, priority = 0, deliveryType = 0, loop = 0;
         Scanner scan = new Scanner(System.in);

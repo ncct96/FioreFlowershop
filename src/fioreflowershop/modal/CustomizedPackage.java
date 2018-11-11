@@ -18,7 +18,7 @@ public class CustomizedPackage {
     private int orderNum;
     private Date date = new Date();
     private Item style, size, flower, accessory, priority, deliveryType;
-    private Customer customer = new Customer();
+    private Consumer customer = new Consumer();
     private Calendar cal = Calendar.getInstance();
 
     public Item getDeliveryType() {
