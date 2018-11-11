@@ -133,5 +133,24 @@ public class CustomizePackage {
         double price = order.CalculateOrder();
         order.minusQuantity();
         System.out.println("Price: RM" + price);
+
+        ArrayQueue<CustomizedPackage> sortingQueue = new ArrayQueue<>();
+        sortingQueue.enqueue(customizedPackages.dequeue());
+        while (!customizedPackages.isEmpty()) {
+            CustomizedPackage next = customizedPackages.dequeue();
+            for (int i = -1; i <= customizedPackages.getBackIndex(); i++) {
+                if (sortingQueue.getFront().getPriority().getQuantity() < next.getPriority().getQuantity()) {
+                    sortingQueue.enqueue(sortingQueue.dequeue());
+                } else {
+                    sortingQueue.enqueue(next);
+                    next = sortingQueue.dequeue();
+                }
+            }
+            sortingQueue.enqueue(next);
+        }
+        
+        while(!sortingQueue.isEmpty()){
+            customizedPackages.enqueue(sortingQueue.dequeue());
+        }
     }
 }
