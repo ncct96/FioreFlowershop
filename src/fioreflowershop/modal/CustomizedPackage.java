@@ -17,6 +17,7 @@ public class CustomizedPackage {
     private int orderNum;
     private Date date = new Date();
     private Item style, size, flower, accessory, priority, deliveryType;
+    private Customer customer = new Customer();
 
     public Item getDeliveryType() {
         return deliveryType;
@@ -90,7 +91,7 @@ public class CustomizedPackage {
         this.priority = priority;
     }
 
-    public CustomizedPackage(Item style, Item size, Item flower, Item accessory, Item priority, Item deliveryType) {
+    public CustomizedPackage(Item style, Item size, Item flower, Item accessory, Item priority, Item deliveryType, Customer customer) {
         orderNum = orderNo;
         ++orderNo;
         date = Calendar.getInstance().getTime();
@@ -100,6 +101,7 @@ public class CustomizedPackage {
         this.accessory = accessory;
         this.priority = priority;
         this.deliveryType = deliveryType;
+        this.customer = customer;
     }
 
     public CustomizedPackage() {

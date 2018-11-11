@@ -40,16 +40,16 @@ public class Pickup {
         CustomizePackage customPackage = new CustomizePackage();
         ListInterface<CustomizedPackage> customPackageList = new ArrayList<>();
 
-        customPackage.InitializePackages();
+//        customPackage.InitializePackages();
+//
+//        ArrayList<Item> styles = customPackage.getStyles();
+//        ArrayList<Item> sizes = customPackage.getSizes();
+//        ArrayList<Item> flowers = customPackage.getFlowers();
+//        ArrayList<Item> accessories = customPackage.getAccessories();
+//        ArrayList<Item> priorities = customPackage.getPriorities();
+//        ArrayList<Item> deliveryTypes = customPackage.getDeliveryTypes();
 
-        ArrayList<Item> styles = customPackage.getStyles();
-        ArrayList<Item> sizes = customPackage.getSizes();
-        ArrayList<Item> flowers = customPackage.getFlowers();
-        ArrayList<Item> accessories = customPackage.getAccessories();
-        ArrayList<Item> priorities = customPackage.getPriorities();
-        ArrayList<Item> deliveryTypes = customPackage.getDeliveryTypes();
-
-        CustomizedPackage customizedPackage = new CustomizedPackage(styles.getItem(1), sizes.getItem(1), flowers.getItem(1), accessories.getItem(1), priorities.getItem(1), deliveryTypes.getItem(1));
+        //CustomizedPackage customizedPackage = new CustomizedPackage(styles.getItem(1), sizes.getItem(1), flowers.getItem(1), accessories.getItem(1), priorities.getItem(1), deliveryTypes.getItem(1));
 
         //CorporateCustomer corpCust = new CorporateCustomer("ncct96", "ncct96@gmail.com", "0165919413", "13,Lorong Maju 6, Taman Assam Maju", "ncct96", "TARUC", true);
         //Order order = new Order(1001, "Pick Up", corpCust, customizedPackage);

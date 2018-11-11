@@ -15,41 +15,137 @@ import java.util.Scanner;
 public class CustomerMaintenance {
     static Scanner s = new Scanner (System.in);
     static ListInterface<Customer> customer = new ArrayList<>();
+    static Customer customerDetails = new Customer();
     static ListInterface<CorporateCustomer> corporate = new ArrayList<>();
-    static String username = null; static String address = null; static String email = null; static boolean status; static int monthLimit = 0;
+    static String username = null; static String address = null; static String email = null; static boolean status; static int monthLimit;
     
-    public static void main(String[] args) {
-        // TODO code application logic here
-        CreateOrLogIn();
-    }
-    
-    public static void CreateOrLogIn(){
+    public static void customerOptions(){
+        if(username == null){
+            System.out.println("\nPlease Login to Gain Access to More Features.\n");
+            System.out.println("[1] Create New Account");
+            System.out.println("[2] Login To Existing Account");
+            int logOrCreate = s.nextInt();
+            switch(logOrCreate){
+                case 1: CreateAccount(); break;
+                case 2: CustLogIn(); break;
+            }
+        }
+        System.out.println("\nWelcome Customers ! Fiore Flowershop is at your service :D ");
         System.out.println("Please Select The Options Below.");
-        System.out.println("[1] Create New Account");
-        System.out.println("[2] Log In to Exisiting Account");
-        int customer = s.nextInt();
-        switch (customer) {
-            case 1:
-                CustTypeSelect();
-                break;
-            case 2:
-                CustLogIn();
-                break;
-        } 
+        System.out.println("[1] Make Flower Order");
+        System.out.println("[2] View Ordered Items");
+        System.out.println("[3] Edit Flower Order");
+        System.out.println("[4] Back to Main Menu");
+        int customerOptionsChoice = s.nextInt();
+        switch(customerOptionsChoice){
+            case 1: //Make Flower Order
+                System.out.println("\nPlease Select The Options Below.");
+                System.out.println("[1] Make Catalog Flower Orders");
+                System.out.println("[2] Make Customizable Flower Orders");
+                int orderChoice = s.nextInt();
+                switch(orderChoice){
+                    case 1: //catalog flower order
+                    case 2: //customizable flower order
+                }
+            case 2: //View Ordered Items
+            case 3: //Edit Flower Order
+            case 4: FioreFlowershop.userTypeSelection(); break;
+        }
     }
     
-    public static void CustTypeSelect(){
-        System.out.println("Please Select The Type of Customer.");
+    public static void CreateAccount(){
+        boolean passwCheck;
+        System.out.println("\nPlease Select The Type of Customer.");
         System.out.println("[1] Consumers");
         System.out.println("[2] Corporate Customers");
         int choiceCust = s.nextInt();
-        CreateAccount(choiceCust);
+        if(choiceCust == 1){
+            boolean exist = false; String passw = "";
+            passwCheck = false;
+            System.out.println("\nPlease Fill In The Fields As Prompted.");
+            s.nextLine();
+            System.out.print("Username : ");
+            String usern = s.nextLine();
+            System.out.print("Email : ");
+            String email = s.nextLine();
+            System.out.print("Contact Number : ");
+            String number = s.nextLine();
+            System.out.print("Address (For Delivery Services) : ");
+            String address = s.nextLine();
+            do{
+                System.out.print("Password : ");
+                passw = s.nextLine();
+                System.out.print("Retype Password : ");
+                String repassw = s.nextLine();
+                if(repassw.equals(passw)){
+                    passwCheck = true;
+                } else {
+                    System.out.println("\n" + FioreFlowershop.ConsoleColors.RED_BOLD + "Password Mismatched, Please Try Again.\n");
+                }
+            }while(passwCheck == false);
+            
+           
+            Customer c = new Customer(usern,passw,email,number,address);
+            for(int i = 1; i <= customer.getTotalEntries(); i++){
+                if(customer.getItem(i).getUsername().equals(usern) || customer.getItem(i).getEmail().equals(email)){
+                    System.out.println(FioreFlowershop.ConsoleColors.RED_BOLD + "\nSorry, Exisiting Account Found, Please Try Again." + FioreFlowershop.ConsoleColors.RESET);
+                    exist = true;
+                    break;
+                }
+            }
+            if(!exist){
+                customer.add(c);
+            }
+            System.out.println("\n" + FioreFlowershop.ConsoleColors.GREEN + "New Account Successfully Created ! " + FioreFlowershop.ConsoleColors.RESET); 
+            NextOption();
+    
+        } else if (choiceCust == 2){
+            passwCheck = false; boolean exist = false; String passw = ""; 
+            s.nextLine();
+            System.out.println("Please Fill In The Fields As Prompted.");
+            System.out.print("Username : ");
+            String usern = s.nextLine();
+            System.out.print("Email : ");
+            String email = s.nextLine();
+            System.out.print("Contact Number : ");
+            String number = s.nextLine();
+            System.out.print("Address (For Delivery Services) : ");
+            String address = s.nextLine();
+            System.out.print("Company : ");
+            String company = s.nextLine();
+            
+            do{
+                System.out.print("Password : ");
+                passw = s.nextLine();
+                System.out.print("Retype Password : ");
+                String repassw = s.nextLine();
+                if(repassw.equals(passw)){
+                    passwCheck = true;
+                } else {
+                    System.out.println("\n" + FioreFlowershop.ConsoleColors.RED_BOLD + "Password Mismatched, Please Try Again.\n");
+                }
+            }while(passwCheck == false);
+            CorporateCustomer Corporate = new CorporateCustomer(usern, email, number, address, passw, company);
+            
+            for(int i = 1; i <= corporate.getTotalEntries(); i++){
+                if(corporate.getItem(i).getEmail().equals(email) && corporate.getItem(i).getUsername().equals(usern)){
+                    System.out.println("\nSorry, Exisiting Account Found, Please Try Again.");
+                    exist = true;
+                    break;
+                }
+            }
+            if(!exist){
+                corporate.add(Corporate);
+            }
+            System.out.println("\n" + FioreFlowershop.ConsoleColors.GREEN + "New Account Successfully Created ! " + FioreFlowershop.ConsoleColors.RESET);
+            NextOption();
+        }
     }
     
     public static void CustLogIn(){
         boolean customerHit = false; boolean corporateHit = false;
         if(username == null){
-        System.out.println("Please Fill In The Confidentials As Prompted");
+        System.out.println("\nPlease Fill In The Confidentials As Prompted");
         s.nextLine();
         System.out.print("Please Enter Your Username : ");
         String usern = s.nextLine();
@@ -58,7 +154,7 @@ public class CustomerMaintenance {
         
         for(int i = 1; i <= customer.getTotalEntries(); i++){
             if(customer.getItem(i).getUsername().equals(usern) && customer.getItem(i).getPassword().equals(passw)){
-                System.out.println("Welcome Back " + customer.getItem(i).getUsername() + " !");
+                System.out.println(FioreFlowershop.ConsoleColors.GREEN + "\nWelcome Back " + customer.getItem(i).getUsername() + " !" + FioreFlowershop.ConsoleColors.RESET);
                 username = customer.getItem(i).getUsername();
                 address = customer.getItem(i).getAddress();
                 email = customer.getItem(i).getEmail();
@@ -71,7 +167,7 @@ public class CustomerMaintenance {
         }
         for(int i = 1; i <= corporate.getTotalEntries(); i++){
             if(corporate.getItem(i).getUsername().equals(usern) && corporate.getItem(i).getPassword().equals(passw)){
-                System.out.println("Welcome Back " + corporate.getItem(i).getUsername() + " !");
+                System.out.println(FioreFlowershop.ConsoleColors.GREEN + "\nWelcome Back " + corporate.getItem(i).getUsername() + " !" + FioreFlowershop.ConsoleColors.RESET);
                 username = corporate.getItem(i).getUsername();
                 address = corporate.getItem(i).getAddress();
                 email = corporate.getItem(i).getCompany();
@@ -86,117 +182,33 @@ public class CustomerMaintenance {
             }
         }
         if(!customerHit && !corporateHit){
-            System.out.println("\nInvalid Login Credentials");
+            System.out.println(FioreFlowershop.ConsoleColors.RED_BOLD + "\nInvalid Login Credentials" + FioreFlowershop.ConsoleColors.RESET);
                 System.out.println("Would you like to try again or create an account?");
                 System.out.println("[1] Login Again");
                 System.out.println("[2] Create An Account");
                 int choice = s.nextInt();
                 switch(choice){
-                    case 1:
-                        CustLogIn();
-                        break;
-                    case 2:
-                        CustTypeSelect();
-                        break;
+                    case 1: CustLogIn(); break;
+                    case 2: CreateAccount(); break;
                 }
         }
-        CreateOrLogIn();
+        customerOptions(); //Test Run only, Supposed to Redirect to other page
         } else {
-            System.out.println("You Are Already Logged In ! ");
+            System.out.println(FioreFlowershop.ConsoleColors.RED_BOLD + "\nYou Are Already Logged In ! " + FioreFlowershop.ConsoleColors.RESET);
             //Redirect to other page
         }
     }
     
     public static void NextOption(){
-        System.out.println("What would you like to do now?");
+        System.out.println("\nWhat would you like to do now?");
             System.out.println("[1] Create Another Account.");
             System.out.println("[2] Go back to Main Menu.");
             System.out.println("[3] Log In Now.");
             int choiceNow = s.nextInt();
             switch(choiceNow){
-                case 1:
-                    CustTypeSelect();
-                    break;
-                case 2:
-                    //REDIRECT TO MAIN MENU PAGE
-                    break;
-                case 3:
-                    CustLogIn();
-                    break;
+                case 1: CreateAccount(); break;
+                case 2: /*REDIRECT TO MAIN MENU PAGE*/ break;
+                case 3: CustLogIn(); break;
             }
-    }
-    
-    public static void CreateAccount(int choice){
-        if(choice == 1){
-            int num = 0; boolean exist = false;
-            
-            System.out.println("\nPlease Fill In The Fields As Prompted.");
-            s.nextLine();
-            System.out.print("Username : ");
-            String usern = s.nextLine();
-            System.out.print("Email : ");
-            String email = s.nextLine();
-            System.out.print("Contact Number : ");
-            String number = s.nextLine();
-            System.out.print("Address (For Delivery Services) : ");
-            String address = s.nextLine();
-            System.out.print("Password : ");
-            String passw = s.nextLine();
-            System.out.print("Retype Password : ");
-            String repassw = s.nextLine();
-           
-            Customer c = new Customer(usern,passw,email,number,address);
-            for(int i = 1; i <= customer.getTotalEntries(); i++){
-                if(customer.getItem(i).getUsername().equals(usern) || customer.getItem(i).getEmail().equals(email)){
-                    System.out.println("\nSorry, Exisiting Account Found, Please Try Again.");
-                    exist = true;
-                    break;
-                }
-            }
-            if(!exist){
-                customer.add(c);
-            }
-            
-            System.out.println(customer); NextOption();
-    
-        } else if (choice == 2){
-            boolean service = false; boolean exist = false;
-            s.nextLine();
-            System.out.println("Please Fill In The Fields As Prompted.");
-            System.out.print("Username : ");
-            String usern = s.nextLine();
-            System.out.print("Email : ");
-            String email = s.nextLine();
-            System.out.print("Contact Number : ");
-            String number = s.nextLine();
-            System.out.print("Address (For Delivery Services) : ");
-            String address = s.nextLine();
-            System.out.print("Company : ");
-            String company = s.nextLine();
-            System.out.print("Would you like to Sign Up for Monthly Credit Service? (Y/N) : ");
-            String creditService = s.nextLine();
-            
-            if(creditService.equalsIgnoreCase("Y") || creditService.equalsIgnoreCase("YES")){
-                service = true;
-            }
-            System.out.print("Password : ");
-            String passw = s.nextLine();
-            System.out.print("Retype Password : ");
-            String repassw = s.nextLine();
-            
-            CorporateCustomer Corporate = new CorporateCustomer(usern, email, number, address, passw, company, service);
-            
-            for(int i = 1; i <= corporate.getTotalEntries(); i++){
-                if(corporate.getItem(i).getEmail().equals(email) && corporate.getItem(i).getUsername().equals(usern)){
-                    System.out.println("\nSorry, Exisiting Account Found, Please Try Again.");
-                    exist = true;
-                    break;
-                }
-            }
-            if(!exist){
-                corporate.add(Corporate);
-            }
-            System.out.println(corporate.toString()); NextOption();
-        }
     }
 }
