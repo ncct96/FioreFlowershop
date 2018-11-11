@@ -13,19 +13,13 @@ import java.util.concurrent.ArrayBlockingQueue;
  * @author Nicholas
  */
 public class Delivery {
-    
-    public static void main(String[] args) {
-        
+
+    public static void DeliveryMenu() {
+
     }
-    
-    public static void DeliveryMenu(){
-        
+
+    public static void sortDeliveryOrder() {
+
     }
-    
-    public static void InitializeOrder(){
-        Queue<CustomizePackage> customDelivery = new ArrayBlockingQueue<>(200);
-        
-        
-    }
-    
+
 }
