@@ -5,11 +5,10 @@
  */
 package fioreflowershop;
 
-import fioreflowershop.CustomizePackage;
-import static fioreflowershop.Pickup.sc;
-import fioreflowershop.adt.ArrayList;
-import fioreflowershop.modal.Customer;
-import fioreflowershop.modal.Item;
+import fioreflowershop.*;
+import fioreflowershop.adt.*;
+import fioreflowershop.modal.*;
+
 import java.util.Scanner;
 
 /**
@@ -18,6 +17,8 @@ import java.util.Scanner;
  */
 public class FioreFlowershop {
 
+    static ListInterface<Consumer> customer = new ArrayList<>();
+    static ListInterface<CorporateCustomer> corporate = new ArrayList<>();
     static Scanner s = new Scanner(System.in);
     private static ArrayList<Item> styles = new ArrayList<>();
     private static ArrayList<Item> sizes = new ArrayList<>();
@@ -26,10 +27,12 @@ public class FioreFlowershop {
     private static ArrayList<Item> priorities = new ArrayList<>();
     private static ArrayList<Item> deliveryTypes = new ArrayList<>();
 
+    private static ArrayQueue<CustomizedPackage> customizedPackages = new ArrayQueue<>();
+    
     public static void main(String[] args) {
-        Customer customer = new Customer();
+        Consumer customer = new Consumer();
         initializePackages();
-        CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer);
+        CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
         userTypeSelection();
     }
 
@@ -55,9 +58,9 @@ public class FioreFlowershop {
         accessories.add(new Item("Bears", 50, 5));
         accessories.add(new Item("Woven Basket", 35, 10));
 
-        priorities.add(new Item("Flexi", 1));
-        priorities.add(new Item("Normal", 1.5));
-        priorities.add(new Item("Express", 3));
+        priorities.add(new Item("Flexi", 1, 6));
+        priorities.add(new Item("Normal", 1.5, 4));
+        priorities.add(new Item("Express", 3, 2));
 
         deliveryTypes.add(new Item("Pickup", 0));
         deliveryTypes.add(new Item("Deliver", 10));

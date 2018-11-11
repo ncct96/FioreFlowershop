@@ -9,11 +9,14 @@ package fioreflowershop.modal;
  *
  * @author Admin
  */
-public class Customer extends User{
-    public Customer(){
+public class Consumer extends User{
+    public Consumer(){
         
     }
-    public Customer(String username, String password, String email, String phone, String address){
+    public Consumer (String username, String email, String phone, String address){
+        super(username, email, phone, address);
+    }
+    public Consumer(String username, String password, String email, String phone, String address){
         super(username, email, phone, address, password);
     }
 }

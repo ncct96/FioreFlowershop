@@ -13,11 +13,13 @@ import java.util.Date;
  * @author Chiu Peeng
  */
 public class CustomizedPackage {
+
     private static int orderNo = 1;
     private int orderNum;
     private Date date = new Date();
     private Item style, size, flower, accessory, priority, deliveryType;
     private Customer customer = new Customer();
+    private Calendar cal = Calendar.getInstance();
 
     public Item getDeliveryType() {
         return deliveryType;
@@ -91,10 +93,11 @@ public class CustomizedPackage {
         this.priority = priority;
     }
 
-    public CustomizedPackage(Item style, Item size, Item flower, Item accessory, Item priority, Item deliveryType, Customer customer) {
+    public CustomizedPackage(Item style, Item size, Item flower, Item accessory, Item priority, Item deliveryType, Consumer customer) {
         orderNum = orderNo;
         ++orderNo;
-        date = Calendar.getInstance().getTime();
+        cal.add(Calendar.DATE, priority.getQuantity());
+        date = cal.getTime();
         this.style = style;
         this.size = size;
         this.flower = flower;
@@ -109,12 +112,12 @@ public class CustomizedPackage {
         ++orderNo;
         date = Calendar.getInstance().getTime();
     }
-    
-    public double CalculateOrder(){
+
+    public double CalculateOrder() {
         return (style.getPrice() + (flower.getPrice() * size.getPrice()) + accessory.getPrice()) * priority.getPrice() + deliveryType.getPrice();
     }
-    
-    public void minusQuantity(){
+
+    public void minusQuantity() {
         flower.minusQuantity();
         accessory.minusQuantity();
     }
