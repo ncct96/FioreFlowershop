@@ -12,10 +12,16 @@ package fioreflowershop.modal;
 public class CorporateCustomer extends User{
     private String company;
     private int monthlyLimit;
-    private boolean creditService;
+    private int creditSpent;
     
     public CorporateCustomer(){
         
+    }
+    
+    public CorporateCustomer(String username, String email, String phone, String address, int monthLimit, int creditSpent){
+        super(username, email, phone, address);
+        this.monthlyLimit = monthLimit;
+        this.creditSpent = creditSpent;
     }
     
     public CorporateCustomer(String username, String email, String phone, String address, String password, String company){
@@ -23,12 +29,12 @@ public class CorporateCustomer extends User{
         this.company = company;
     }
 
-    public void setCreditService(boolean creditService){
-        this.creditService = creditService;
+    public int getCreditSpent() {
+        return creditSpent;
     }
-    
-    public boolean getCreditService(){
-        return creditService;
+
+    public void setCreditSpent(int creditSpent) {
+        this.creditSpent = creditSpent;
     }
     
     public String getCompany() {
@@ -49,7 +55,7 @@ public class CorporateCustomer extends User{
 
     @Override
     public String toString() {
-        return "\nCompany Name : " + company + "\nCredit Service : " + creditService + "\nPreset Credit Limit : " + monthlyLimit;
+        return "\nCompany Name : " + company + "\nCredit Spent : " + creditSpent + "\nPreset Credit Limit : " + monthlyLimit;
     }
     
 }

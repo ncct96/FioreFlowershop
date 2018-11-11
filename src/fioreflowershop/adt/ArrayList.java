@@ -5,7 +5,7 @@
  */
 package fioreflowershop.adt;
 
-import fioreflowershop.modal.Customer;
+import fioreflowershop.modal.Consumer;
 
 /**
  *

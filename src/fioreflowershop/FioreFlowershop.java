@@ -5,12 +5,18 @@
  */
 package fioreflowershop;
 import fioreflowershop.CustomizePackage;
+import fioreflowershop.adt.ArrayList;
+import fioreflowershop.adt.ListInterface;
+import fioreflowershop.modal.CorporateCustomer;
+import fioreflowershop.modal.Consumer;
 import java.util.Scanner;
 /**
  *
  * @author Chiu Peeng
  */
 public class FioreFlowershop {
+    static ListInterface<Consumer> customer = new ArrayList<>();
+    static ListInterface<CorporateCustomer> corporate = new ArrayList<>();
     static Scanner s = new Scanner(System.in);
     /**
      * @param args the command line arguments
