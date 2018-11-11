@@ -9,6 +9,8 @@ import fioreflowershop.adt.ArrayList;
 import fioreflowershop.adt.ListInterface;
 import fioreflowershop.modal.CorporateCustomer;
 import fioreflowershop.modal.Consumer;
+import fioreflowershop.modal.Consumer;
+import fioreflowershop.modal.Item;
 import java.util.Scanner;
 /**
  *
@@ -18,13 +20,48 @@ public class FioreFlowershop {
     static ListInterface<Consumer> customer = new ArrayList<>();
     static ListInterface<CorporateCustomer> corporate = new ArrayList<>();
     static Scanner s = new Scanner(System.in);
-    /**
-     * @param args the command line arguments
-     */
+    private static ArrayList<Item> styles = new ArrayList<>();
+    private static ArrayList<Item> sizes = new ArrayList<>();
+    private static ArrayList<Item> flowers = new ArrayList<>();
+    private static ArrayList<Item> accessories = new ArrayList<>();
+    private static ArrayList<Item> priorities = new ArrayList<>();
+    private static ArrayList<Item> deliveryTypes = new ArrayList<>();
+    
     public static void main(String[] args) {
-        // TODO code application logic here
-        //CustomizePackage.CustomizePackageControl();
+        Consumer customer = new Consumer();
+        initializePackages();
+        CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer);
         userTypeSelection();
+    }
+    
+    public static void initializePackages() {
+        styles.add(new Item("Fan", 10));
+        styles.add(new Item("Elliptical", 10));
+        styles.add(new Item("Vertical", 10));
+        styles.add(new Item("Horizontal", 10));
+        styles.add(new Item("Triangular", 10));
+
+        sizes.add(new Item("Small", 1));
+        sizes.add(new Item("Medium", 2));
+        sizes.add(new Item("Large", 4));
+
+        flowers.add(new Item("Sunflowers", 250, 10));
+        flowers.add(new Item("Red Roses", 300, 20));
+        flowers.add(new Item("White Roses", 250, 10));
+        flowers.add(new Item("Tulips", 450, 50));
+        flowers.add(new Item("Daffodils", 200, 20));
+
+        accessories.add(new Item("None", 0, 1));
+        accessories.add(new Item("Name Card", 5, 20));
+        accessories.add(new Item("Bears", 50, 5));
+        accessories.add(new Item("Woven Basket", 35, 10));
+
+        priorities.add(new Item("Flexi", 1));
+        priorities.add(new Item("Normal", 1.5));
+        priorities.add(new Item("Express", 3));
+
+        deliveryTypes.add(new Item("Pickup", 0));
+        deliveryTypes.add(new Item("Deliver", 10));
     }
     
     public static void userTypeSelection(){

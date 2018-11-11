@@ -16,6 +16,10 @@ public class CustomerMaintenance {
     static Scanner s = new Scanner (System.in);
     static Consumer customerLoggedIn; 
     static CorporateCustomer corporateLoggedIn;
+    static ListInterface<Consumer> customer = new ArrayList<>();
+    static Consumer customerDetails = new Consumer();
+    static ListInterface<CorporateCustomer> corporate = new ArrayList<>();
+    static String username = null; static String address = null; static String email = null; static boolean status; static int monthLimit;
     
     public static void customerOptions(){
         if(customerLoggedIn == null && corporateLoggedIn == null){
