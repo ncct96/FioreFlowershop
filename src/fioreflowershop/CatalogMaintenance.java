@@ -19,7 +19,9 @@ public class CatalogMaintenance {
     private static ArrayList<CatalogPackage> freshFlower = new ArrayList<>();
     private static ArrayList<CatalogPackage> bouquets = new ArrayList<>();
     private static ArrayList<CatalogPackage> flowerArrangement = new ArrayList<>();
-    private static ArrayList<CatalogPackage> discountedCatalog = new ArrayList<>();
+    private static ArrayList<CatalogPackage> freshFlowerDiscounted = new ArrayList<>();
+    private static ArrayList<CatalogPackage> bouquetsDiscounted = new ArrayList<>();
+    private static ArrayList<CatalogPackage> flowerArrangementDiscounted = new ArrayList<>();
 
     //Data field
     static int userMenuOption;
@@ -30,6 +32,7 @@ public class CatalogMaintenance {
 
     //First UI
     public static void catalogMaintenanceMenu() {
+        testing();
         do {
             System.out.println("Catalog Maintenance");
             System.out.println("===================");
@@ -68,7 +71,7 @@ public class CatalogMaintenance {
     public static void productType(String navigationTitle) {
         int productTypes = 0;
         do {
-            System.out.println(navigationTitle);
+            System.out.println("\n" + navigationTitle);
             System.out.println("===================");
             System.out.println("Item type list\n1. Fresh flowers\n2. Bouquets\n3. Flower arrangement\n4. Back");
             System.out.print("Please enter the product type(1-4): ");
@@ -92,7 +95,7 @@ public class CatalogMaintenance {
     public static void createCatalog(String navigationTitle, int productTypes) {
         char nextProduct;
         do {
-            System.out.println(navigationTitle);
+            System.out.println("\n" + navigationTitle);
             System.out.println("===================");
             System.out.print("Please enter package name: ");
             scan.nextLine();
@@ -104,7 +107,7 @@ public class CatalogMaintenance {
 
             int sizeOption = 0;
             String size = "";
-            
+
             do {
                 System.out.print("Please enter package size (1 = Small, 2 = Medium, 3 = Large): ");
                 if (scan.hasNextInt()) {
@@ -115,7 +118,7 @@ public class CatalogMaintenance {
                     System.err.println("Please enter the number only.");
                     scan.next();
                 }
-            } while (!(isInteger));
+            } while (!(isInteger) || sizeOption < 1 || sizeOption > 3);
 
             if (sizeOption == 1) {
                 size = "Small";
@@ -196,9 +199,9 @@ public class CatalogMaintenance {
     }
 
     //Display the catalog or monthly promotion catalog
-    public static void displayCatalog(String navigationTitle) {
+    public static void displayCatalog(String navigationTitle) {        
         do {
-            System.out.println(navigationTitle);
+            System.out.println("\n" + navigationTitle);
             System.out.println("===================");
             System.out.println("1. Catalog");
             System.out.println("2. Monthly promotion catalog");
@@ -215,24 +218,186 @@ public class CatalogMaintenance {
         } while (!(isInteger) || userMenuOption < 1 || userMenuOption > 3);
         if (userMenuOption == 3) {
             catalogMaintenanceMenu();
-        }else if(userMenuOption == 1){
+        } else if (userMenuOption == 1) {
             normalCatalog();
+        } else if (userMenuOption == 2) {
+            monthlyPromotionCatalog();
         }
     }
-    
+
     //Display the normal catalog
     public static void normalCatalog() {
         CatalogPackage catalogPackage = new CatalogPackage();
-        System.out.println("Display catalog - normal catalog");
+        System.out.println("\nDisplay catalog - normal catalog");
         System.out.println("================================================================================================");
-        System.out.println("Package Name                      Quantity            Price                Discounted price     ");
-        for(int i = 1; i < freshFlower.getTotalEntries(); i++){
-            catalogPackage = freshFlower.getItem(i);
-            System.out.printf("%d", catalogPackage.getDiscountRate());
-            double discountRate = catalogPackage.getPrice() - (double)(catalogPackage.getDiscountRate() / 100.00);
-            System.out.printf("%s\n", catalogPackage.getName());
-            System.out.printf("%s,%s,%s,%s\t\t%d  %.2f  %.2f", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getQuantity(), catalogPackage.getPrice(), discountRate);
+        System.out.println("Product types\t\t\t\tQuantity\tPrice\t\t\tDiscounted price");
+        if (freshFlower.getTotalEntries() != 0) {
+            System.out.println("Fresh Flower");
+            System.out.println("==================");
+            for (int i = 1; i < freshFlower.getTotalEntries() + 1; i++) {
+                catalogPackage = freshFlower.getItem(i);
+                double discountRate = (double) ((100 - catalogPackage.getDiscountRate()) * catalogPackage.getPrice() / 100);
+                if (discountRate == catalogPackage.getPrice()) {
+                    System.out.printf("%s\n", catalogPackage.getName());
+                    System.out.printf("%s,%s,%s,%s \t   %d\t\t RM%.2f\t\t  - \n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getQuantity(), catalogPackage.getPrice());
+                } else {
+                    System.out.printf("%s\n", catalogPackage.getName());
+                    System.out.printf("%s,%s,%s,%s \t   %d\t\t RM%.2f\t\t RM%.2f\n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getQuantity(), catalogPackage.getPrice(), discountRate);
+                }
+
+                if (catalogPackage.getDiscountRate() > 0) {
+                    freshFlowerDiscounted.add(catalogPackage);
+                }
+            }
         }
-        System.out.println("Display catalog - normal catalog");
+
+        if (bouquets.getTotalEntries() != 0) {
+            System.out.println("\nBouquets");
+            System.out.println("==================");
+            for (int i = 1; i < bouquets.getTotalEntries() + 1; i++) {
+                catalogPackage = bouquets.getItem(i);
+                double discountRate = (double) ((100 - catalogPackage.getDiscountRate()) * catalogPackage.getPrice() / 100);
+                if (discountRate == catalogPackage.getPrice()) {
+                    System.out.printf("%s\n", catalogPackage.getName());
+                    System.out.printf("%s,%s,%s,%s \t   %d\t\t RM%.2f\t\t  - \n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getQuantity(), catalogPackage.getPrice());
+                } else {
+                    System.out.printf("%s\n", catalogPackage.getName());
+                    System.out.printf("%s,%s,%s,%s \t   %d\t\t RM%.2f\t\t RM%.2f\n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getQuantity(), catalogPackage.getPrice(), discountRate);
+                }
+                if (catalogPackage.getDiscountRate() > 0) {
+                    bouquetsDiscounted.add(catalogPackage);
+                }
+            }
+        }
+
+        if (flowerArrangement.getTotalEntries() != 0) {
+            System.out.println("\nFlower Arrangement");
+            System.out.println("==================");
+            for (int i = 1; i < flowerArrangement.getTotalEntries() + 1; i++) {
+                catalogPackage = flowerArrangement.getItem(i);
+                double discountRate = (double) ((100 - catalogPackage.getDiscountRate()) * catalogPackage.getPrice() / 100);
+                if (discountRate == catalogPackage.getPrice()) {
+                    System.out.printf("%s\n", catalogPackage.getName());
+                    System.out.printf("%s,%s,%s,%s \t   %d\t\t RM%.2f\t\t  - \n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getQuantity(), catalogPackage.getPrice());
+                } else {
+                    System.out.printf("%s\n", catalogPackage.getName());
+                    System.out.printf("%s,%s,%s,%s \t   %d\t\t RM%.2f\t\t RM%.2f\n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getQuantity(), catalogPackage.getPrice(), discountRate);
+                }
+                if (catalogPackage.getDiscountRate() > 0) {
+                    flowerArrangementDiscounted.add(catalogPackage);
+                }
+            }
+        }
+
+        System.out.println("\nDiscounted Product List");
+        System.out.println("================================================================================================");
+        System.out.println("Product types\t\t\t\tQuantity\tPrice\t\t\tDiscounted price");
+        if (freshFlowerDiscounted.getTotalEntries() != 0) {
+            System.out.println("Fresh Flower");
+            System.out.println("==================");
+            for (int i = 1; i < freshFlowerDiscounted.getTotalEntries() + 1; i++) {
+                catalogPackage = freshFlowerDiscounted.getItem(i);
+                double discountRate = (double) ((100 - catalogPackage.getDiscountRate()) * catalogPackage.getPrice() / 100);
+                System.out.printf("%s\n", catalogPackage.getName());
+                System.out.printf("%s,%s,%s,%s \t   %d\t\t RM%.2f\t\t RM%.2f\n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getQuantity(), catalogPackage.getPrice(), discountRate);
+            }
+        }
+
+        if (bouquetsDiscounted.getTotalEntries() != 0) {
+            System.out.println("\nBouquets");
+            System.out.println("==================");
+            for (int i = 1; i < bouquetsDiscounted.getTotalEntries() + 1; i++) {
+                catalogPackage = bouquetsDiscounted.getItem(i);
+                double discountRate = (double) ((100 - catalogPackage.getDiscountRate()) * catalogPackage.getPrice() / 100);
+                System.out.printf("%s\n", catalogPackage.getName());
+                System.out.printf("%s,%s,%s,%s \t   %d\t\t RM%.2f\t\t RM%.2f\n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getQuantity(), catalogPackage.getPrice(), discountRate);
+            }
+        }
+
+        if (flowerArrangementDiscounted.getTotalEntries() != 0) {
+            System.out.println("\nFlower Arrangement");
+            System.out.println("==================");
+            for (int i = 1; i < flowerArrangementDiscounted.getTotalEntries() + 1; i++) {
+                catalogPackage = flowerArrangementDiscounted.getItem(i);
+                double discountRate = (double) ((100 - catalogPackage.getDiscountRate()) * catalogPackage.getPrice() / 100);
+                System.out.printf("%s\n", catalogPackage.getName());
+                System.out.printf("%s,%s,%s,%s \t   %d\t\t RM%.2f\t\t RM%.2f\n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getQuantity(), catalogPackage.getPrice(), discountRate);
+            }
+        }
+
+        System.out.println("\n====================================================");
+        char userOption;
+        do {
+            System.out.print("Please enter 'Y/y' to Catalog maintenance menu: ");
+            userOption = scan.next().charAt(0);
+            System.out.println(userOption);
+
+        } while (userOption != 'y' && userOption != 'Y');
+
+        if (userOption == 'y' || userOption == 'Y') {
+            catalogMaintenanceMenu();
+        }
+    }
+
+    //Display the monthly promotion catalog
+    public static void monthlyPromotionCatalog() {
+        CatalogPackage catalogPackage = new CatalogPackage();
+        System.out.println("\nDisplay catalog - Monthly promotion catalog");
+        System.out.println("================================================================================================");
+        System.out.println("Product types\t\t\t\tQuantity\tPrice\t\t\tDiscounted price");
+        if (freshFlowerDiscounted.getTotalEntries() != 0) {
+            System.out.println("Fresh Flower");
+            System.out.println("==================");
+            for (int i = 1; i < freshFlowerDiscounted.getTotalEntries() + 1; i++) {
+                catalogPackage = freshFlowerDiscounted.getItem(i);
+                double discountRate = (double) ((100 - catalogPackage.getDiscountRate()) * catalogPackage.getPrice() / 100);
+                System.out.printf("%s\n", catalogPackage.getName());
+                System.out.printf("%s,%s,%s,%s \t   %d\t\t RM%.2f\t\t RM%.2f\n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getQuantity(), catalogPackage.getPrice(), discountRate);
+            }
+        }
+
+        if (bouquetsDiscounted.getTotalEntries() != 0) {
+            System.out.println("\nBouquets");
+            System.out.println("==================");
+            for (int i = 1; i < bouquetsDiscounted.getTotalEntries() + 1; i++) {
+                catalogPackage = bouquetsDiscounted.getItem(i);
+                double discountRate = (double) ((100 - catalogPackage.getDiscountRate()) * catalogPackage.getPrice() / 100);
+                System.out.printf("%s\n", catalogPackage.getName());
+                System.out.printf("%s,%s,%s,%s \t   %d\t\t RM%.2f\t\t RM%.2f\n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getQuantity(), catalogPackage.getPrice(), discountRate);
+            }
+        }
+
+        if (flowerArrangementDiscounted.getTotalEntries() != 0) {
+            System.out.println("\nFlower Arrangement");
+            System.out.println("==================");
+            for (int i = 1; i < flowerArrangementDiscounted.getTotalEntries() + 1; i++) {
+                catalogPackage = flowerArrangementDiscounted.getItem(i);
+                double discountRate = (double) ((100 - catalogPackage.getDiscountRate()) * catalogPackage.getPrice() / 100);
+                System.out.printf("%s\n", catalogPackage.getName());
+                System.out.printf("%s,%s,%s,%s \t   %d\t\t RM%.2f\t\t RM%.2f\n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getQuantity(), catalogPackage.getPrice(), discountRate);
+            }
+        }
+
+        System.out.println("\n====================================================");
+        char userOption;
+        do {
+            System.out.print("Please enter 'Y/y' to Catalog maintenance menu: ");
+            userOption = scan.next().charAt(0);
+            System.out.println(userOption);
+
+        } while (userOption != 'y' && userOption != 'Y');
+
+        if (userOption == 'y' || userOption == 'Y') {
+            catalogMaintenanceMenu();
+        }
+    }
+    
+    //Dummy data
+    public static void testing() {
+        //testing purpose
+        freshFlower.add(new CatalogPackage("Package 1.0", "Style 1.0", "Small", "Flower 1.0", "Bear 1.0", 10, 100.00, 20));
+        freshFlower.add(new CatalogPackage("Package 1.1", "Style 1.1", "Large", "Flower 1.1", "Bear 1.1", 10, 100.00, 0));
+        bouquets.add(new CatalogPackage("Package 2.0", "Style 2.0", "Small", "Flower 2.0", "Bear 2.0", 10, 100.00, 60));
+        bouquets.add(new CatalogPackage("Package 2.1", "Style 2.1", "Small", "Flower 2.1", "Bear 2.1", 10, 100.00, 0));
     }
 }
