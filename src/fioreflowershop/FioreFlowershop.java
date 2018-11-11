@@ -4,13 +4,10 @@
  * and open the template in the editor.
  */
 package fioreflowershop;
-import fioreflowershop.CustomizePackage;
-import fioreflowershop.adt.ArrayList;
-import fioreflowershop.adt.ListInterface;
-import fioreflowershop.modal.CorporateCustomer;
-import fioreflowershop.modal.Consumer;
-import fioreflowershop.modal.Consumer;
-import fioreflowershop.modal.Item;
+
+import fioreflowershop.*;
+import fioreflowershop.adt.*;
+import fioreflowershop.modal.*;
 import java.util.Scanner;
 /**
  *
@@ -26,11 +23,12 @@ public class FioreFlowershop {
     private static ArrayList<Item> accessories = new ArrayList<>();
     private static ArrayList<Item> priorities = new ArrayList<>();
     private static ArrayList<Item> deliveryTypes = new ArrayList<>();
+    private static ArrayQueue<CustomizedPackage> customizedPackages = new ArrayQueue<>();
     
     public static void main(String[] args) {
         Consumer customer = new Consumer();
         initializePackages();
-        CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer);
+        CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
         userTypeSelection();
     }
     
@@ -56,9 +54,9 @@ public class FioreFlowershop {
         accessories.add(new Item("Bears", 50, 5));
         accessories.add(new Item("Woven Basket", 35, 10));
 
-        priorities.add(new Item("Flexi", 1));
-        priorities.add(new Item("Normal", 1.5));
-        priorities.add(new Item("Express", 3));
+        priorities.add(new Item("Flexi", 1, 6));
+        priorities.add(new Item("Normal", 1.5, 4));
+        priorities.add(new Item("Express", 3, 2));
 
         deliveryTypes.add(new Item("Pickup", 0));
         deliveryTypes.add(new Item("Deliver", 10));
