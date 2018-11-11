@@ -11,6 +11,7 @@ import fioreflowershop.modal.CorporateCustomer;
 import fioreflowershop.modal.CustomizedPackage;
 import fioreflowershop.modal.Item;
 import fioreflowershop.modal.Order;
+import java.util.Scanner;
 
 /**
  *
@@ -18,6 +19,7 @@ import fioreflowershop.modal.Order;
  */
 public class Pickup {
 
+    static Scanner sc = new Scanner(System.in);
     ListInterface<CustomizedPackage> customPackageList = new ArrayList<>();
 
     public void sortPickup() {
@@ -25,7 +27,7 @@ public class Pickup {
         initializeData();
 
         CustomizePackage customPackage = new CustomizePackage();
-        
+
         // ListInterface<CustomizedPackage> customPackageList = customPackage.getCustomPackageList();
         for (int i = 1; i < customPackageList.getTotalEntries() + 1; i++) {
             System.out.println(customPackageList.getItem(i).getAccessory().getName());
@@ -35,8 +37,7 @@ public class Pickup {
     public static void initializeData() {
 
         // Retrieve Data from all List
-        CustomizePackage customPackage = new CustomizePackage();
-        ListInterface<CustomizedPackage> customPackageList = new ArrayList<>();
+        
 
 //        customPackage.InitializePackages();
 //
@@ -51,9 +52,6 @@ public class Pickup {
 
         //CorporateCustomer corpCust = new CorporateCustomer("ncct96", "ncct96@gmail.com", "0165919413", "13,Lorong Maju 6, Taman Assam Maju", "ncct96", "TARUC", true);
         //Order order = new Order(1001, "Pick Up", corpCust, customizedPackage);
-        
-        
-
     }
 
 //    for(int i = 0; i < customPack ; i++ ){

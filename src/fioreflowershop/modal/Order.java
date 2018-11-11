@@ -5,21 +5,29 @@
  */
 package fioreflowershop.modal;
 
+import java.util.function.Consumer;
+
 /**
  *
  * @author Nicholas
  */
 public class Order {
+
     private int orderID;
     private String orderType;
     private CorporateCustomer corp;
-    private CustomizedPackage customPackage;
+    private Consumer con;
 
-    public Order(int orderID, String orderType, CorporateCustomer corp, CustomizedPackage customPackage) {
+    public Order(int orderID, String orderType, CorporateCustomer corp) {
         this.orderID = orderID;
         this.orderType = orderType;
         this.corp = corp;
-        this.customPackage = customPackage;
+    }
+
+    public Order(int orderID, String orderType, Consumer con) {
+        this.orderID = orderID;
+        this.orderType = orderType;
+        this.con = con;
     }
 
     public int getOrderID() {
@@ -34,10 +42,6 @@ public class Order {
         return corp;
     }
 
-    public CustomizedPackage getCustomPackage() {
-        return customPackage;
-    }
-
     public void setOrderID(int orderID) {
         this.orderID = orderID;
     }
@@ -50,10 +54,4 @@ public class Order {
         this.corp = corp;
     }
 
-    public void setCustomPackage(CustomizedPackage customPackage) {
-        this.customPackage = customPackage;
-    }
-    
-    
-    
 }
