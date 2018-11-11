@@ -93,7 +93,7 @@ public class CustomizedPackage {
         this.priority = priority;
     }
 
-    public CustomizedPackage(Item style, Item size, Item flower, Item accessory, Item priority, Item deliveryType, Customer customer) {
+    public CustomizedPackage(Item style, Item size, Item flower, Item accessory, Item priority, Item deliveryType, Consumer customer) {
         orderNum = orderNo;
         ++orderNo;
         cal.add(Calendar.DATE, priority.getQuantity());

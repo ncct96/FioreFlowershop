@@ -15,10 +15,16 @@ public class User {
     private String password;
     private String address;
     private String phone;
-    private boolean status = false;
     
     public User(){
         
+    }
+    
+    public User(String username, String email, String phone, String address){
+        this.username = username;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
     }
     
     public User(String username, String email, String phone, String address, String password){
@@ -27,14 +33,6 @@ public class User {
         this.address = address;
         this.password = password;
         this.phone = phone;
-    }
-
-    public void setStatus(boolean status){
-        this.status = status;
-    }
-    
-    public boolean getStatus(){
-        return status;
     }
     
     public String getUsername() {

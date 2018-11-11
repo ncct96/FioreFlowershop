@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package fioreflowershop;
+
 import fioreflowershop.*;
 import fioreflowershop.adt.*;
 import fioreflowershop.modal.*;
@@ -13,6 +14,8 @@ import java.util.Scanner;
  * @author Chiu Peeng
  */
 public class FioreFlowershop {
+    static ListInterface<Consumer> customer = new ArrayList<>();
+    static ListInterface<CorporateCustomer> corporate = new ArrayList<>();
     static Scanner s = new Scanner(System.in);
     private static ArrayList<Item> styles = new ArrayList<>();
     private static ArrayList<Item> sizes = new ArrayList<>();
@@ -23,7 +26,7 @@ public class FioreFlowershop {
     private static ArrayQueue<CustomizedPackage> customizedPackages = new ArrayQueue<>();
     
     public static void main(String[] args) {
-        Customer customer = new Customer();
+        Consumer customer = new Consumer();
         initializePackages();
         CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
         userTypeSelection();
