@@ -5,6 +5,7 @@
  */
 package fioreflowershop;
 import fioreflowershop.CustomizePackage;
+import fioreflowershop.modal.Customer;
 /**
  *
  * @author Chiu Peeng
@@ -15,9 +16,12 @@ public class FioreFlowershop {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-//        CustomizePackage.CustomizePackageControl();
+        Customer customer = new Customer();
+        
+        CustomizePackage.CustomizePackageControl(customer);
         CatalogMaintenance.catalogMaintenanceMenu();
     }
-    
+    public void startUI(){
+        
+    }
 }
