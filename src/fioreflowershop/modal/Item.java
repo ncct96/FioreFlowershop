@@ -12,7 +12,7 @@ package fioreflowershop.modal;
 public class Item {
     private String name;
     private double price;
-    private static int quantity;
+    private int quantity;
 
     public Item() {
     }

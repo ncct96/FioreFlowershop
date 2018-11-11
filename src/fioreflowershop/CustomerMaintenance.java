@@ -15,6 +15,7 @@ import java.util.Scanner;
 public class CustomerMaintenance {
     static Scanner s = new Scanner (System.in);
     static ListInterface<Customer> customer = new ArrayList<>();
+    static Customer customerDetails = new Customer();
     static ListInterface<CorporateCustomer> corporate = new ArrayList<>();
     static String username = null; static String address = null; static String email = null; static boolean status; static int monthLimit;
     
