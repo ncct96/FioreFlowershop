@@ -9,7 +9,7 @@ package fioreflowershop.modal;
  *
  * @author Admin
  */
-public class CorporateCustomer extends User{
+public class CorporateCustomer extends User implements Comparable<User>{
     private String company;
     private int monthlyLimit;
     private int creditSpent;

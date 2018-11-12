@@ -9,7 +9,7 @@ package fioreflowershop.modal;
  *
  * @author Admin
  */
-public class User {
+public class User implements Comparable<User>{
     private String username;
     private String email;
     private String password;
@@ -78,6 +78,11 @@ public class User {
     @Override
     public String toString() {
         return "\nUsername : " + username + "\nEmail : " + email + "\nContact Number : " + phone +"\nAddress : " + address + "\nPassword : " + password;
+    }
+
+    @Override
+    public int compareTo(User o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

@@ -120,6 +120,7 @@ public class CustomizePackage {
                     }
                 } while (deliveryType < 1 || deliveryType > deliveryTypes.getTotalEntries());
             }
+
         } catch (InputMismatchException e) {
             System.out.println("That wasn't a number :(");
         }

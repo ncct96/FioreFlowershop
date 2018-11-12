@@ -9,7 +9,7 @@ package fioreflowershop.adt;
  *
  * @author Nicholas
  */
-public interface ListInterface<T>{
+public interface ListInterface<T extends Comparable<? super T>>{
     
     public boolean add(T newEntry);
     
