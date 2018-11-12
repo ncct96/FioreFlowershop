@@ -447,16 +447,16 @@ public class CatalogOrder {
         Consumer con = new Consumer("Ncct96", "adgfafgjyaf", "0128198471", "No 13");
         CorporateCustomer corp = new CorporateCustomer("Bxxx1", "sdgsjhd@gmail", "27238723", "No 25", "211221", "TARUC");
         Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.YEAR, 2017);
-        cal.set(Calendar.DAY_OF_MONTH, 20);
-        cal.set(Calendar.MONTH, 4);
-        cal.set(Calendar.HOUR_OF_DAY, 17);
+        cal.set(Calendar.YEAR, 2018);
+        cal.set(Calendar.DAY_OF_MONTH, 13);
+        cal.set(Calendar.MONTH, 10);
+        cal.set(Calendar.HOUR_OF_DAY, 03);
         cal.set(Calendar.MINUTE, 30);
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
 
         Calendar cal1 = Calendar.getInstance();
-        cal1.set(Calendar.YEAR, 2016);
+        cal1.set(Calendar.YEAR, 2018);
         cal1.set(Calendar.DAY_OF_MONTH, 20);
         cal1.set(Calendar.MONTH, 5);
         cal1.set(Calendar.HOUR_OF_DAY, 18);
@@ -465,9 +465,9 @@ public class CatalogOrder {
         cal1.set(Calendar.MILLISECOND, 0);
 
         Calendar cal2 = Calendar.getInstance();
-        cal2.set(Calendar.YEAR, 2015);
+        cal2.set(Calendar.YEAR, 2018);
         cal2.set(Calendar.DAY_OF_MONTH, 20);
-        cal2.set(Calendar.MONTH, 6);
+        cal2.set(Calendar.MONTH, 5);
         cal2.set(Calendar.HOUR_OF_DAY, 20);
         cal2.set(Calendar.MINUTE, 30);
         cal2.set(Calendar.SECOND, 0);

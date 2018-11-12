@@ -190,6 +190,7 @@ public class FioreFlowershop {
         System.out.println("[3] Order Pickup/Delivery");
         System.out.println("[4] Consumer Payment Management");
         System.out.println("[5] View Sales Order");
+        System.out.println("Enter your option: ");
         int counterStaffChoice = s.nextInt();
         switch (counterStaffChoice) {
             case 1:
@@ -237,12 +238,14 @@ public class FioreFlowershop {
 
         System.out.println("1. Pick Up Order");
         System.out.println("2. Delivery Order");
+        System.out.println("Enter your option: ");
 
         int choice = s.nextInt();
 
         if (choice == 1) {
             System.out.println("1. Today's Pick Up Order List");
             System.out.println("2. Search Pick Up Order List by Date");
+            System.out.println("Enter your option: ");
 
             int pickupChoice = s.nextInt();
 
@@ -253,7 +256,7 @@ public class FioreFlowershop {
                 try {
                     s.nextLine();
 
-                    System.out.println("Please enter date to search (yyyy-MM-dd): ");
+                    System.out.print("Please enter date to search (yyyy-MM-dd): ");
 
                     String dateStr = s.nextLine();
 
@@ -273,6 +276,7 @@ public class FioreFlowershop {
         } else if (choice == 2) {
             System.out.println("1. Today's Delivery Order List");
             System.out.println("2. Search Delivery Order List by Date");
+            System.out.println("Enter your option: ");
 
             int deliveryChoice = s.nextInt();
 
@@ -281,15 +285,15 @@ public class FioreFlowershop {
             } else if (deliveryChoice == 2) {
                 try {
                     s.nextLine();
-                    
-                    System.out.println("Please enter date to search (yyyy-MM-dd): ");
-                    
+
+                    System.out.print("Please enter date to search (yyyy-MM-dd): ");
+
                     String dateStr = s.nextLine();
-                    
+
                     SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
-                    
+
                     Date date = dateformat.parse(dateStr);
-                    
+
                     Delivery.searchDelivery(deliveryOrder, date, customizedPackages);
                 } catch (ParseException ex) {
                     Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
