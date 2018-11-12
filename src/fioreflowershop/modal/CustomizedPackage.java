@@ -20,7 +20,7 @@ public class CustomizedPackage{
     private int orderNum;
     private String orderDate, deliveryDate;
     private Item style, size, flower, accessory, priority, deliveryType;
-    private Consumer customer = new Consumer();
+    private Consumer customer;
     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
     public Item getDeliveryType() {

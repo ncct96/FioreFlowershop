@@ -48,6 +48,10 @@ public class Order{
         return corp;
     }
 
+    public Consumer getCon() {
+        return con;
+    }
+
     public void setOrderID(int orderID) {
         this.orderID = orderID;
     }
