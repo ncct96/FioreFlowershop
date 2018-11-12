@@ -16,6 +16,7 @@ import fioreflowershop.modal.Item;
 import fioreflowershop.modal.Order;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -48,11 +49,37 @@ public class Pickup {
 
     }
 
-    public static void sortPickupOrder(ListInterface<Order> pickupOrder, QueueInterface customizeOrder) {
+    public static void searchPickUp(ListInterface pickupOrder, Date date) {
         ListInterface<Order> unOrderList = pickupOrder;
-        ListInterface<Order> tempOrderedList = new ArrayList<Order>();
-        Date tempDate = null;
-        boolean added = false;
+        ListInterface<Order> matchedList = new ArrayList<>();
+
+        Calendar cal = Calendar.getInstance();
+        Calendar listCal = Calendar.getInstance();
+        cal.setTime(date);
+
+        for (int i = 1; i <= unOrderList.getTotalEntries(); i++) {
+
+            listCal.setTime(unOrderList.getItem(i).getDate());
+            int day, month, year, userDay, userMonth, userYear;
+
+            day = listCal.get(Calendar.DAY_OF_MONTH);
+            month = listCal.get(Calendar.MONTH) + 1;
+            year = listCal.get(Calendar.YEAR);
+
+            userDay = cal.get(Calendar.DAY_OF_MONTH);
+            userMonth = cal.get(Calendar.MONTH) + 1;
+            userYear = cal.get(Calendar.YEAR);
+
+            if (day == userDay && month == userMonth && year == userYear) {
+                matchedList.add(unOrderList.getItem(i));
+            }
+        }
+
+        displaySortedPickup(matchedList);
+    }
+
+    public static void sortPickupOrder(ListInterface<Order> pickupOrder, QueueInterface customizeOrder) {
+        ListInterface<Order> orderedList = pickupOrder;
 
         SimpleDateFormat parser = new SimpleDateFormat("HH:mm");
 
@@ -81,21 +108,19 @@ public class Pickup {
 //                }
 //            }
 //}
-
-        for (int i = 1; i < unOrderList.getTotalEntries() - 1; i++)  
-        {  
-            int index = i;  
-           for (int j = i; j <= unOrderList.getTotalEntries(); j++){  
-                if (unOrderList.getItem(j).getDate().before(unOrderList.getItem(index).getDate())){  
+        for (int i = 1; i < orderedList.getTotalEntries() - 1; i++) {
+            int index = i;
+            for (int j = i; j <= orderedList.getTotalEntries(); j++) {
+                if (orderedList.getItem(j).getDate().before(orderedList.getItem(index).getDate())) {
                     index = j; //searching for lowest index  
-                }  
-            }  
-            Order smallerOrder = unOrderList.getItem(index);   
-            unOrderList.replace(index, unOrderList.getItem(i));  
-            unOrderList.replace(i, smallerOrder);
-        }  
+                }
+            }
+            Order smallerOrder = orderedList.getItem(index);
+            orderedList.replace(index, orderedList.getItem(i));
+            orderedList.replace(i, smallerOrder);
+        }
 
-        displaySortedPickup(unOrderList);
+        displaySortedPickup(orderedList);
 
     }
 
