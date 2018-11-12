@@ -9,7 +9,7 @@ package fioreflowershop.modal;
  *
  * @author Chiu Peeng
  */
-public class Item {
+public class Item implements Comparable<Item>{
     private String name;
     private double price;
     private int quantity;
@@ -59,6 +59,11 @@ public class Item {
     @Override
     public String toString() {
         return "Name: " + name + ", Price: RM" + price + ", Quantity: " + quantity;
+    }
+
+    @Override
+    public int compareTo(Item o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

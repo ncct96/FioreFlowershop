@@ -10,26 +10,55 @@ import fioreflowershop.adt.ListInterface;
 import fioreflowershop.modal.Consumer;
 import fioreflowershop.modal.CorporateCustomer;
 import fioreflowershop.modal.Order;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
  * @author Nicholas
  */
 public class CatalogOrder {
-    
-    static ListInterface<Order> conOrder = new ArrayList<>();
-    static ListInterface<Order> corpOrder = new ArrayList<>();
-    
-    public static void initializeData(){ 
+
+    public static void initializeData(ListInterface pickupOrder) {
+
         Consumer con = new Consumer("Ncct96", "adgfafgjyaf", "0128198471", "No 13");
         CorporateCustomer corp = new CorporateCustomer("Bxxx1", "sdgsjhd@gmail", "27238723", "No 25", "211221", "Die");
-        Order order = new Order(1001, "Pickup", con);
-        Order order2 = new Order(1002, "Pickup", corp);
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 17);
+        cal.set(Calendar.MINUTE, 30);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+
+        Calendar cal1 = Calendar.getInstance();
+        cal1.set(Calendar.HOUR_OF_DAY, 18);
+        cal1.set(Calendar.MINUTE, 30);
+        cal1.set(Calendar.SECOND, 0);
+        cal1.set(Calendar.MILLISECOND, 0);
+
+        Date a = cal.getTime();
+        Date b = cal.getTime();
+        Date c = cal.getTime();
+        Date d = cal1.getTime();
+        Date e = cal1.getTime();
+        Date f = cal1.getTime();
+
+        Order order = new Order(1001, "Pickup", con, a);
+        Order order2 = new Order(1002, "Pickup", corp, b);
+        Order order3 = new Order(1003, "Pickup", corp, c);
+        Order order4 = new Order(1004, "Pickup", corp, d);
+        Order order5 = new Order(1005, "Pickup", corp, e);
+        Order order6 = new Order(1006, "Pickup", corp, f);
         
-        conOrder.add(order);
-        corpOrder.add(order2);
+        System.out.print(order2.getDate());
+
+        pickupOrder.add(order);
+        pickupOrder.add(order2);
+        pickupOrder.add(order3);
+        pickupOrder.add(order4);
+        pickupOrder.add(order5);
+        pickupOrder.add(order6);
         
-        
+
     }
-    
+
 }

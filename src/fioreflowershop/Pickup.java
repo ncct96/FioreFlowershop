@@ -14,8 +14,11 @@ import fioreflowershop.modal.CorporateCustomer;
 import fioreflowershop.modal.CustomizedPackage;
 import fioreflowershop.modal.Item;
 import fioreflowershop.modal.Order;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -38,24 +41,48 @@ public class Pickup {
 
         ListInterface orderList = new ArrayList();
 
-  
     }
 
     public static void corpCatSortPickup(ListInterface order) {
 
     }
 
-    public static void sortPickupOrder(ListInterface conOrder, ListInterface corpOrder) {
-        ListInterface<Order> conOrderList = new ArrayList();
-        ListInterface<Order> corpOrderList = new ArrayList();
-        
-              Collections.sort(conOrderList, new Comparator<Order>() {
-        @Override
-        public int compare(MyObject object1, MyObject object2) {
-            return (int) (object1.getDate().compareTo(object2.getDate()));
-        }
-    });
+    public static void sortPickupOrder(ListInterface<Order> pickupOrder, QueueInterface customizeOrder) {
+        ListInterface<Order> unOrderList = pickupOrder;
+        ListInterface<Order> orderedList = new ArrayList<>();
 
+        SimpleDateFormat parser = new SimpleDateFormat("HH:mm");
+
+        for (int i = 1; i < unOrderList.getTotalEntries(); i++) {
+
+            String date = parser.format(unOrderList.getItem(i).getDate());
+
+            if (orderedList.isEmpty()) {
+                orderedList.add(unOrderList.getItem(i));
+                unOrderList.remove(i);
+            }
+
+        }
+
+        for (int j = 1; j <= unOrderList.getTotalEntries(); j++) {
+            if (unOrderList.getItem(j).getDate().before(orderedList.getItem(j).getDate())) {
+                orderedList.add((j), unOrderList.getItem(j));
+            } else if (unOrderList.getItem(j).getDate().after(orderedList.getItem(j).getDate())) {
+                orderedList.add((j + 1), unOrderList.getItem(j));
+            } else {
+                orderedList.add(j, unOrderList.getItem(j));
+            }
+        }
+
+        displaySortedPickup(orderedList);
+
+    }
+
+    public static void displaySortedPickup(ListInterface<Order> orderedList) {
+
+        for (int k = 1; k <= orderedList.getTotalEntries(); k++) {
+            System.out.println(orderedList.getItem(k).getDate());
+        }
     }
 
     public static void initializeData() {
