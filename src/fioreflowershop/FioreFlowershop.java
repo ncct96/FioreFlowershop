@@ -34,7 +34,7 @@ public class FioreFlowershop {
         initializePackages();
         
         /////// CHIUPEENG DEBUG LOOP //////
-        for(int i = 0; i < 3; i++){
+        for(int i = 0; i < 5; i++){
             CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
         }
         //////                      //////

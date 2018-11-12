@@ -132,11 +132,12 @@ public class CustomizePackage {
             System.out.println("Price: RM" + price);
 
             ArrayQueue<CustomizedPackage> sortingQueue = new ArrayQueue<>();
+            
             sortingQueue.enqueue(customizedPackages.dequeue());
-            while (!customizedPackages.isEmpty()) {
+            while (customizedPackages.getBackIndex() > -1) {
                 CustomizedPackage next = customizedPackages.dequeue();
-                for (int i = -1; i <= customizedPackages.getBackIndex(); i++) {
-                    if (sortingQueue.getFront().getPriority().getQuantity() < next.getPriority().getQuantity()) {
+                for (int i = -1; i < sortingQueue.getBackIndex(); ++i) {
+                    if (sortingQueue.getFront().getDeliveryDate().before(next.getDeliveryDate())) {
                         sortingQueue.enqueue(sortingQueue.dequeue());
                     } else {
                         sortingQueue.enqueue(next);
