@@ -46,26 +46,7 @@ public class FioreFlowershop {
         Consumer customer = new Consumer();
         initializePackages();
         CatalogOrder.initializeData(pickupOrder);
-
-        //Pickup.customSortPickup(customizedPackages, customer);
-
-        //CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
-
-        
-        /////// CHIUPEENG DEBUG LOOP //////
-//        for (int i = 0; i < 3; i++) {
-//            CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
-//        }
-
-        //counterStaff();
         Pickup.customSortPickup(customizedPackages, customer);
-
-//        CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
-        /////// CHIUPEENG DEBUG LOOP //////
-//        for (int i = 0; i < 5; i++) {
-//            CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
-//        }
-        counterStaff();
 
         userTypeSelection();
     }
@@ -107,6 +88,14 @@ public class FioreFlowershop {
         customizedPackages.enqueue(new CustomizedPackage(styles.getItem(1), sizes.getItem(2), flowers.getItem(5), accessories.getItem(2), priorities.getItem(1), deliveryTypes.getItem(2), customer));
     }
 
+    public static void gotoCustomizePackage(Consumer customerLoggedIn){
+                /////// CHIUPEENG DEBUG LOOP //////
+//        for (int i = 0; i < 3; i++) {
+//            CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
+//        }
+        CustomizePackage.customizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customerLoggedIn, customizedPackages);
+    }
+    
     //Dummy data - woo for display purpose
     public static void testing() {
         //testing purpose
