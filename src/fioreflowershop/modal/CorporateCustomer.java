@@ -55,7 +55,7 @@ public class CorporateCustomer extends User{
 
     @Override
     public String toString() {
-        return "\nCompany Name : " + company + "\nCredit Spent : " + creditSpent + "\nPreset Credit Limit : " + monthlyLimit;
+        return super.toString()+ "\nCompany Name : " + company + "\nCredit Spent : " + creditSpent + "\nPreset Credit Limit : " + monthlyLimit;
     }
     
 }
