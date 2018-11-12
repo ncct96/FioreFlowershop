@@ -22,9 +22,10 @@ import java.util.logging.Logger;
  */
 public class FioreFlowershop {
 
-    private static ListInterface<Consumer> customer = new ArrayList<>();
+    private static ListInterface<Consumer> consumer = new ArrayList<>();
     private static ListInterface<CorporateCustomer> corporate = new ArrayList<>();
     private static ListInterface<Order> pickupOrder = new ArrayList<Order>();
+    private static ListInterface<Order> deliveryOrder = new ArrayList<Order>();
     private static Scanner s = new Scanner(System.in);
     private static ArrayList<Item> styles = new ArrayList<>();
     private static ArrayList<Item> sizes = new ArrayList<>();
@@ -32,7 +33,7 @@ public class FioreFlowershop {
     private static ArrayList<Item> accessories = new ArrayList<>();
     private static ArrayList<Item> priorities = new ArrayList<>();
     private static ArrayList<Item> deliveryTypes = new ArrayList<>();
-    private static ArrayQueue<CustomizedPackage> customizedPackages = new ArrayQueue<>();
+    private static QueueInterface<CustomizedPackage> customizedPackages = new ArrayQueue<>();
 
     //Catalog Maintenance part
     private static ArrayList<CatalogPackage> freshFlower = new ArrayList<>();
@@ -43,10 +44,9 @@ public class FioreFlowershop {
     private static ArrayList<CatalogPackage> flowerArrangementDiscounted = new ArrayList<>();
 
     public static void main(String[] args) {
-        Consumer customer = new Consumer();
+        Consumer customer = new Consumer("Chiu Peeng", "adgfafgjyaf", "0128198471", "No 13");
         initializePackages();
-        CatalogOrder.initializeData(pickupOrder);
-        Pickup.customSortPickup(customizedPackages, customer);
+        CatalogOrder.initializeData(pickupOrder, deliveryOrder);
 
         userTypeSelection();
     }
@@ -79,23 +79,24 @@ public class FioreFlowershop {
 
         deliveryTypes.add(new Item("Pickup", 0));
         deliveryTypes.add(new Item("Deliver", 10));
-        
-        Consumer customer = new Consumer();
+
+        Consumer customer = new Consumer("Chiu Peeng", "adgfafgjyaf", "0128198471", "No 13");
+        Consumer customer1 = new Consumer("Jason", "adgfafgjyaf", "0195556767", "No 13");
         customizedPackages.enqueue(new CustomizedPackage(styles.getItem(2), sizes.getItem(3), flowers.getItem(1), accessories.getItem(4), priorities.getItem(3), deliveryTypes.getItem(1), customer));
-        customizedPackages.enqueue(new CustomizedPackage(styles.getItem(1), sizes.getItem(2), flowers.getItem(3), accessories.getItem(3), priorities.getItem(2), deliveryTypes.getItem(2), customer));
+        customizedPackages.enqueue(new CustomizedPackage(styles.getItem(1), sizes.getItem(2), flowers.getItem(3), accessories.getItem(3), priorities.getItem(2), deliveryTypes.getItem(2), customer1));
         customizedPackages.enqueue(new CustomizedPackage(styles.getItem(3), sizes.getItem(1), flowers.getItem(2), accessories.getItem(1), priorities.getItem(2), deliveryTypes.getItem(2), customer));
-        customizedPackages.enqueue(new CustomizedPackage(styles.getItem(4), sizes.getItem(2), flowers.getItem(4), accessories.getItem(1), priorities.getItem(1), deliveryTypes.getItem(1), customer));
+        customizedPackages.enqueue(new CustomizedPackage(styles.getItem(4), sizes.getItem(2), flowers.getItem(4), accessories.getItem(1), priorities.getItem(1), deliveryTypes.getItem(1), customer1));
         customizedPackages.enqueue(new CustomizedPackage(styles.getItem(1), sizes.getItem(2), flowers.getItem(5), accessories.getItem(2), priorities.getItem(1), deliveryTypes.getItem(2), customer));
     }
 
-    public static void gotoCustomizePackage(Consumer customerLoggedIn){
-                /////// CHIUPEENG DEBUG LOOP //////
+    public static void gotoCustomizePackage(Consumer customerLoggedIn) {
+        /////// CHIUPEENG DEBUG LOOP //////
 //        for (int i = 0; i < 3; i++) {
 //            CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
 //        }
         CustomizePackage.customizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customerLoggedIn, customizedPackages);
     }
-    
+
     //Dummy data - woo for display purpose
     public static void testing() {
         //testing purpose
@@ -191,7 +192,8 @@ public class FioreFlowershop {
         System.out.println("[5] View Sales Order");
         int counterStaffChoice = s.nextInt();
         switch (counterStaffChoice) {
-            case 1: CustomerMaintenance.staffEditType();
+            case 1:
+                CustomerMaintenance.staffEditType();
             case 2: //corporate customer invoice
             case 3: //order pickup/delivery
                 orderMenu();
@@ -250,16 +252,16 @@ public class FioreFlowershop {
 
                 try {
                     s.nextLine();
-                    
+
                     System.out.println("Please enter date to search (yyyy-MM-dd): ");
-                    
+
                     String dateStr = s.nextLine();
-                    
+
                     SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
-                    
+
                     Date date = dateformat.parse(dateStr);
-                    
-                    Pickup.searchPickUp(pickupOrder, date);
+
+                    Pickup.searchPickUp(pickupOrder, date, customizedPackages);
                 } catch (ParseException ex) {
                     Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -275,9 +277,23 @@ public class FioreFlowershop {
             int deliveryChoice = s.nextInt();
 
             if (deliveryChoice == 1) {
-                Pickup.sortPickupOrder(pickupOrder, customizedPackages);
+                Delivery.sortDeliveryOrder(deliveryOrder, customizedPackages);
             } else if (deliveryChoice == 2) {
-
+                try {
+                    s.nextLine();
+                    
+                    System.out.println("Please enter date to search (yyyy-MM-dd): ");
+                    
+                    String dateStr = s.nextLine();
+                    
+                    SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+                    
+                    Date date = dateformat.parse(dateStr);
+                    
+                    Delivery.searchDelivery(deliveryOrder, date, customizedPackages);
+                } catch (ParseException ex) {
+                    Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+                }
             } else {
 
             }
@@ -286,22 +302,22 @@ public class FioreFlowershop {
 
         }
     }
-    
+
     //GETTER SETTER FOR CUSTOMER LIST
-    public static void setCustomer(ListInterface<Consumer> consumer){
-        customer = consumer;
+    public static void setCustomer(ListInterface<Consumer> consumer) {
+        consumer = consumer;
     }
-    
-    public static ListInterface<Consumer> getCustomer(){
-        return customer;
+
+    public static ListInterface<Consumer> getCustomer() {
+        return consumer;
     }
-    
+
     //GETTER SETTER FOR CORPORATE LIST
-    public static void setCorporate(ListInterface<CorporateCustomer> corporateCust){
+    public static void setCorporate(ListInterface<CorporateCustomer> corporateCust) {
         corporate = corporateCust;
     }
-    
-    public static ListInterface<CorporateCustomer> getCorporate(){
+
+    public static ListInterface<CorporateCustomer> getCorporate() {
         return corporate;
     }
 

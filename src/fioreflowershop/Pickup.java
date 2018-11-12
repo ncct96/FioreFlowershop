@@ -32,24 +32,7 @@ public class Pickup {
     static Scanner sc = new Scanner(System.in);
     ListInterface<CustomizedPackage> customPackageList = new ArrayList<>();
 
-    public static void customSortPickup(QueueInterface customPackage, Consumer consumer) {
-
-        initializeData();
-
-        // ListInterface<CustomizedPackage> customPackageList = customPackage.getCustomPackageList();
-    }
-
-    public static void conCatSortPickup(ListInterface order) {
-
-        ListInterface orderList = new ArrayList();
-
-    }
-
-    public static void corpCatSortPickup(ListInterface order) {
-
-    }
-
-    public static void searchPickUp(ListInterface pickupOrder, Date date) {
+    public static void searchPickUp(ListInterface pickupOrder, Date date, QueueInterface<CustomizedPackage> customOrder) {
         ListInterface<Order> unOrderList = pickupOrder;
         ListInterface<Order> matchedList = new ArrayList<>();
 
@@ -75,47 +58,22 @@ public class Pickup {
             }
         }
 
-        displaySortedPickup(matchedList);
+        displaySortedPickup(matchedList, customOrder);
     }
 
     public static void sortPickupOrder(ListInterface<Order> pickupOrder, QueueInterface customizeOrder) {
 
-        ListInterface<Order> unSortList = new ArrayList<>();
+        ListInterface<Order> sortedList = new ArrayList<>();
 
-        ListInterface<Order> orderedList = pickupOrder;
-        
+        QueueInterface customOrder = customizeOrder;
+
         ListInterface<Order> unOrderList = pickupOrder;
 
         Calendar cal = Calendar.getInstance();
         Calendar listCal = Calendar.getInstance();
         cal.setTime(new Date());
 
-//        for (int i = 1; i < unOrderList.getTotalEntries(); i++) {
-//
-//            String date = parser.format(unOrderList.getItem(i).getDate());
-//
-//            if (orderedList.isEmpty()) {
-//                orderedList.add(unOrderList.getItem(i));
-//            }
-//
-//        }
-//
-//        for (int j = 2; j <= unOrderList.getTotalEntries() + 1; j++) {
-//
-//            for (int l = 1; l <= orderedList.getTotalEntries(); l++) {
-//                if (unOrderList.getItem(j).getDate().before(orderedList.getItem(l).getDate())) {
-//                    orderedList.add((l - 1), unOrderList.getItem(j));
-//                    added = true;
-//                } else if (unOrderList.getItem(j).getDate().after(orderedList.getItem(l).getDate())) {
-//                    orderedList.add((l + 1), unOrderList.getItem(j));
-//                    added = true;
-//                } else {
-//                    orderedList.add(l, unOrderList.getItem(j));
-//                    added = true;
-//                }
-//            }
-//}
-        for (int j = 1; j < unOrderList.getTotalEntries() - 1; j++) {
+        for (int j = 1; j <= unOrderList.getTotalEntries(); j++) {
             listCal.setTime(unOrderList.getItem(j).getDate());
             int day, month, year, userDay, userMonth, userYear;
 
@@ -124,51 +82,71 @@ public class Pickup {
             year = listCal.get(Calendar.YEAR);
 
             userDay = cal.get(Calendar.DAY_OF_MONTH);
-            userMonth = cal.get(Calendar.MONTH);
+            userMonth = cal.get(Calendar.MONTH) + 1;
             userYear = cal.get(Calendar.YEAR);
 
             if (day == userDay && month == userMonth && year == userYear) {
-                orderedList.add(unOrderList.getItem(j));
+                sortedList.add(unOrderList.getItem(j));
             }
         }
 
-        for (int i = 1; i < orderedList.getTotalEntries() - 1; i++) {
+        for (int i = 1; i < sortedList.getTotalEntries() - 1; i++) {
             int index = i;
-            for (int j = i; j <= orderedList.getTotalEntries(); j++) {
-                if (orderedList.getItem(j).getDate().before(orderedList.getItem(index).getDate())) {
+            for (int j = i; j <= sortedList.getTotalEntries(); j++) {
+                if (sortedList.getItem(j).getDate().before(sortedList.getItem(index).getDate())) {
                     index = j; //searching for lowest index  
                 }
             }
-            Order smallerOrder = orderedList.getItem(index);
-            orderedList.replace(index, orderedList.getItem(i));
-            orderedList.replace(i, smallerOrder);
+            Order smallerOrder = sortedList.getItem(index);
+            sortedList.replace(index, sortedList.getItem(i));
+            sortedList.replace(i, smallerOrder);
         }
 
-        displaySortedPickup(orderedList);
+        displaySortedPickup(sortedList, customOrder);
 
     }
 
-    public static void displaySortedPickup(ListInterface<Order> orderedList) {
+    public static void displaySortedPickup(ListInterface<Order> orderedList, QueueInterface<CustomizedPackage> customOrder) {
 
+        QueueInterface<CustomizedPackage> showQueue = new ArrayQueue<>();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat dt = new SimpleDateFormat("HH:mm");
+
+        System.out.println("PICK UP ORDER");
+        System.out.println("-------------------------------------------------------");
+        System.out.println("\n\nCatalog Order");
+        System.out.println("=======================================================");
         for (int k = 1; k <= orderedList.getTotalEntries(); k++) {
-            System.out.println(orderedList.getItem(k).getDate());
+
+            if (orderedList.getItem(k).getCorp().getCompany() != null) {
+                System.out.println("Order ID: " + orderedList.getItem(k).getOrderID());
+                System.out.println("Company Name: " + orderedList.getItem(k).getCorp().getCompany());
+                String date = df.format(orderedList.getItem(k).getDate());
+                System.out.println("Pick up Date: " + date);
+                String time = dt.format(orderedList.getItem(k).getDate());
+                System.out.println("Pick up Time: " + time + "\n");
+            } else {
+                System.out.println("Order ID: " + orderedList.getItem(k).getOrderID());
+                System.out.println("Name: " + orderedList.getItem(k).getCon().getUsername());
+                String date = df.format(orderedList.getItem(k).getDate());
+                System.out.println("Pick up Date: " + date);
+                String time = dt.format(orderedList.getItem(k).getDate());
+                System.out.println("Pick up Time: " + time + "\n");
+
+            }
         }
-    }
 
-    public static void initializeData() {
+        System.out.println("\n\nCustomized Package");
+        System.out.println("=======================================================");
+        for (int i = -1; i <= customOrder.getBackIndex(); i++) {
+            CustomizedPackage order = customOrder.dequeue();
+            System.out.println("Order ID: " + order.getOrderNum());
+            System.out.println("Consumer name: " + order.getCustomer().getUsername());
+            System.out.println("Contact: " + order.getCustomer().getPhone());
+            System.out.println("Pick up date: " + order.getOrderDateString() + "\n");
+            showQueue.enqueue(order);
+        }
 
-        // Retrieve Data from all List
-//        customPackage.InitializePackages();
-//
-//        ArrayList<Item> styles = customPackage.getStyles();
-//        ArrayList<Item> sizes = customPackage.getSizes();
-//        ArrayList<Item> flowers = customPackage.getFlowers();
-//        ArrayList<Item> accessories = customPackage.getAccessories();
-//        ArrayList<Item> priorities = customPackage.getPriorities();
-//        ArrayList<Item> deliveryTypes = customPackage.getDeliveryTypes();
-        //CustomizedPackage customizedPackage = new CustomizedPackage(styles.getItem(1), sizes.getItem(1), flowers.getItem(1), accessories.getItem(1), priorities.getItem(1), deliveryTypes.getItem(1));
-        //CorporateCustomer corpCust = new CorporateCustomer("ncct96", "ncct96@gmail.com", "0165919413", "13,Lorong Maju 6, Taman Assam Maju", "ncct96", "TARUC", true);
-        //Order order = new Order(1001, "Pick Up", corpCust, customizedPackage);
     }
 
 //    for(int i = 0; i < customPack ; i++ ){
