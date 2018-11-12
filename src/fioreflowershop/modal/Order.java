@@ -5,30 +5,35 @@
  */
 package fioreflowershop.modal;
 
+import java.util.Date;
+
 /**
  *
  * @author Nicholas
  */
-public class Order {
+public class Order implements Comparable<Order> {
 
     private int orderID;
     private String orderType;
+    private Date date;
     private CorporateCustomer corp = new CorporateCustomer();
     private Consumer con = new Consumer();
 
     public Order() {
     }
 
-    public Order(int orderID, String orderType, CorporateCustomer corp) {
+    public Order(int orderID, String orderType, CorporateCustomer corp, Date date) {
         this.orderID = orderID;
         this.orderType = orderType;
         this.corp = corp;
+        this.date = date;
     }
 
-    public Order(int orderID, String orderType, Consumer con) {
+    public Order(int orderID, String orderType, Consumer con, Date date) {
         this.orderID = orderID;
         this.orderType = orderType;
         this.con = con;
+        this.date = date;
     }
 
     public int getOrderID() {
@@ -53,6 +58,23 @@ public class Order {
 
     public void setCorp(CorporateCustomer corp) {
         this.corp = corp;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = new Date();
+    }
+
+    public int compare(Order order, Order order1) {
+        return (int) (order.getDate().compareTo(order1.getDate()));
+    }
+
+    @Override
+    public int compareTo(Order o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

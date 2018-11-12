@@ -19,7 +19,8 @@ public class FioreFlowershop {
 
     static ListInterface<Consumer> customer = new ArrayList<>();
     static ListInterface<CorporateCustomer> corporate = new ArrayList<>();
-    static Scanner s = new Scanner(System.in);
+    private static ListInterface<Order> pickupOrder = new ArrayList<Order>();
+    private static Scanner s = new Scanner(System.in);
     private static ArrayList<Item> styles = new ArrayList<>();
     private static ArrayList<Item> sizes = new ArrayList<>();
     private static ArrayList<Item> flowers = new ArrayList<>();
@@ -31,19 +32,17 @@ public class FioreFlowershop {
 
     public static void main(String[] args) {
         Consumer customer = new Consumer();
-        CatalogOrder.initializeData();
+        CatalogOrder.initializeData(pickupOrder);
         initializePackages();
 
-        Pickup.customSortPickup(customizedPackages, customer);
-        CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
-
-        
+        //Pickup.customSortPickup(customizedPackages, customer);
         /////// CHIUPEENG DEBUG LOOP //////
-        for(int i = 0; i < 3; i++){
-            CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
-        }
-        //////                      //////
-        
+//        for (int i = 0; i < 3; i++) {
+//            CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
+//        }
+
+        counterStaff();
+
         userTypeSelection();
     }
 
@@ -203,15 +202,26 @@ public class FioreFlowershop {
         if (choice == 1) {
             System.out.println("1. Today's Pick Up Order List");
             System.out.println("2. Search Pick Up Order List by Date");
+
+            int pickupChoice = s.nextInt();
+
+            if (pickupChoice == 1) {
+                Pickup.sortPickupOrder(pickupOrder, customizedPackages);
+            } else if (pickupChoice == 2) {
+
+            } else {
+
+            }
+
         } else if (choice == 2) {
             System.out.println("1. Today's Delivery Order List");
             System.out.println("2. Search Delivery Order List by Date");
 
-            int searchChoice = s.nextInt();
+            int deliveryChoice = s.nextInt();
 
-            if (searchChoice == 1) {
-                Pickup.sortPickupOrder(CatalogOrder.conOrder,CatalogOrder.corpOrder);
-            } else if (searchChoice == 2) {
+            if (deliveryChoice == 1) {
+                Pickup.sortPickupOrder(pickupOrder, customizedPackages);
+            } else if (deliveryChoice == 2) {
 
             } else {
 

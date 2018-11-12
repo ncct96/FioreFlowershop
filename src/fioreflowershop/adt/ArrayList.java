@@ -11,7 +11,7 @@ import fioreflowershop.modal.Consumer;
  *
  * @author Nicholas
  */
-public class ArrayList<T> implements ListInterface<T> {
+public class ArrayList<T extends Comparable<? super T>> implements ListInterface<T>{
 
     private T[] list;
     private int totalEntries;
@@ -23,7 +23,7 @@ public class ArrayList<T> implements ListInterface<T> {
 
     public ArrayList(int defaultSize) {
         totalEntries = 0;
-        list = (T[]) new Object[defaultSize];
+        list = (T[]) new Comparable[defaultSize];
     }
 
     public T[] getList() {
@@ -125,6 +125,10 @@ public class ArrayList<T> implements ListInterface<T> {
         for (int index = lastIndex; index >= newIndex; index--) {
             list[index + 1] = list[index];
         }
+        
+//        list[totalEntries] = null;
+//        
+  //        totalEntries = totalEntries - 1;
     }
 
     private void removeGap(int givenPosition) {
