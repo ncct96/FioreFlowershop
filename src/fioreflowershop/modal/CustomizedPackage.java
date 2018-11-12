@@ -12,7 +12,7 @@ import java.util.Date;
  *
  * @author Chiu Peeng
  */
-public class CustomizedPackage implements Comparable<CustomizedPackage>{
+public class CustomizedPackage{
 
     private static int orderNo = 1;
     private int orderNum;
@@ -122,8 +122,4 @@ public class CustomizedPackage implements Comparable<CustomizedPackage>{
         accessory.minusQuantity();
     }
 
-    @Override
-    public int compareTo(CustomizedPackage o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

@@ -11,19 +11,19 @@ import fioreflowershop.modal.Consumer;
  *
  * @author Nicholas
  */
-public class ArrayList<T extends Comparable<? super T>> implements ListInterface<T>{
+public class ArrayList<T> implements ListInterface<T> {
 
     private T[] list;
     private int totalEntries;
     private static final int DEFAULT_LIST_SIZE = 25;
-    
+
     public ArrayList() {
         this(DEFAULT_LIST_SIZE);
     }
 
     public ArrayList(int defaultSize) {
         totalEntries = 0;
-        list = (T[]) new Comparable[defaultSize];
+        list = (T[]) new Object[defaultSize];
     }
 
     public T[] getList() {
@@ -40,6 +40,19 @@ public class ArrayList<T extends Comparable<? super T>> implements ListInterface
         list[totalEntries] = newEntry;
         totalEntries++;
         return true;
+    }
+
+    @Override
+    public boolean replace(int givenPosition, T newEntry) {
+        boolean isSuccessful = true;
+
+        if ((givenPosition >= 1) && (givenPosition <= totalEntries)) {
+            list[givenPosition - 1] = newEntry;
+        } else {
+            isSuccessful = false;
+        }
+
+        return isSuccessful;
     }
 
     @Override
@@ -90,7 +103,7 @@ public class ArrayList<T extends Comparable<? super T>> implements ListInterface
         if ((position >= 1) && (position <= totalEntries)) {
             result = list[position - 1];
         }
-        
+
         return result;
     }
 
@@ -125,10 +138,10 @@ public class ArrayList<T extends Comparable<? super T>> implements ListInterface
         for (int index = lastIndex; index >= newIndex; index--) {
             list[index + 1] = list[index];
         }
-        
+
 //        list[totalEntries] = null;
 //        
-  //        totalEntries = totalEntries - 1;
+        //        totalEntries = totalEntries - 1;
     }
 
     private void removeGap(int givenPosition) {

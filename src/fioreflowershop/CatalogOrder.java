@@ -35,12 +35,18 @@ public class CatalogOrder {
         cal1.set(Calendar.SECOND, 0);
         cal1.set(Calendar.MILLISECOND, 0);
 
-        Date a = cal.getTime();
-        Date b = cal.getTime();
+        Calendar cal2 = Calendar.getInstance();
+        cal2.set(Calendar.HOUR_OF_DAY, 20);
+        cal2.set(Calendar.MINUTE, 30);
+        cal2.set(Calendar.SECOND, 0);
+        cal2.set(Calendar.MILLISECOND, 0);
+
+        Date a = cal2.getTime();
+        Date b = cal1.getTime();
         Date c = cal.getTime();
-        Date d = cal1.getTime();
+        Date d = cal.getTime();
         Date e = cal1.getTime();
-        Date f = cal1.getTime();
+        Date f = cal2.getTime();
 
         Order order = new Order(1001, "Pickup", con, a);
         Order order2 = new Order(1002, "Pickup", corp, b);
@@ -48,7 +54,7 @@ public class CatalogOrder {
         Order order4 = new Order(1004, "Pickup", corp, d);
         Order order5 = new Order(1005, "Pickup", corp, e);
         Order order6 = new Order(1006, "Pickup", corp, f);
-        
+
         System.out.print(order2.getDate());
 
         pickupOrder.add(order);
@@ -57,7 +63,6 @@ public class CatalogOrder {
         pickupOrder.add(order4);
         pickupOrder.add(order5);
         pickupOrder.add(order6);
-        
 
     }
 

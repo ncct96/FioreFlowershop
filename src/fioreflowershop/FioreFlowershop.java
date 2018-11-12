@@ -19,7 +19,7 @@ public class FioreFlowershop {
 
     static ListInterface<Consumer> customer = new ArrayList<>();
     static ListInterface<CorporateCustomer> corporate = new ArrayList<>();
-    private static ListInterface<Order> pickupOrder = new ArrayList<Order>();
+    private static ListInterface<Order> pickupOrder = new ArrayList<>();
     private static Scanner s = new Scanner(System.in);
     private static ArrayList<Item> styles = new ArrayList<>();
     private static ArrayList<Item> sizes = new ArrayList<>();
@@ -39,8 +39,9 @@ public class FioreFlowershop {
 
     public static void main(String[] args) {
         Consumer customer = new Consumer();
+                initializePackages();
         CatalogOrder.initializeData(pickupOrder);
-        initializePackages();
+
 
         Pickup.customSortPickup(customizedPackages, customer);
 
