@@ -50,7 +50,7 @@ public class CustomerMaintenance {
                 int orderChoice = s.nextInt();
                 switch(orderChoice){
                     case 1: //catalog flower order
-                    case 2: //customizable flower order
+                    case 2: FioreFlowershop.gotoCustomizePackage(customerLoggedIn);//customizable flower order
                 }
             case 2: //View Ordered Items
             case 3: //Edit Flower Order
