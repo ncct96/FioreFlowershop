@@ -49,10 +49,10 @@ public class FioreFlowershop {
 
         
         /////// CHIUPEENG DEBUG LOOP //////
-//        for (int i = 0; i < 3; i++) {
-//            CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
-//        }
-
+        for(int i = 0; i < 5; i++){
+            CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
+        }
+        
         counterStaff();
 
         userTypeSelection();
