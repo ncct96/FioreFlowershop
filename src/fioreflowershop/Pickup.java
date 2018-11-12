@@ -79,9 +79,16 @@ public class Pickup {
     }
 
     public static void sortPickupOrder(ListInterface<Order> pickupOrder, QueueInterface customizeOrder) {
-        ListInterface<Order> orderedList = pickupOrder;
 
-        SimpleDateFormat parser = new SimpleDateFormat("HH:mm");
+        ListInterface<Order> unSortList = new ArrayList<>();
+
+        ListInterface<Order> orderedList = pickupOrder;
+        
+        ListInterface<Order> unOrderList = pickupOrder;
+
+        Calendar cal = Calendar.getInstance();
+        Calendar listCal = Calendar.getInstance();
+        cal.setTime(new Date());
 
 //        for (int i = 1; i < unOrderList.getTotalEntries(); i++) {
 //
@@ -108,6 +115,23 @@ public class Pickup {
 //                }
 //            }
 //}
+        for (int j = 1; j < unOrderList.getTotalEntries() - 1; j++) {
+            listCal.setTime(unOrderList.getItem(j).getDate());
+            int day, month, year, userDay, userMonth, userYear;
+
+            day = listCal.get(Calendar.DAY_OF_MONTH);
+            month = listCal.get(Calendar.MONTH) + 1;
+            year = listCal.get(Calendar.YEAR);
+
+            userDay = cal.get(Calendar.DAY_OF_MONTH);
+            userMonth = cal.get(Calendar.MONTH);
+            userYear = cal.get(Calendar.YEAR);
+
+            if (day == userDay && month == userMonth && year == userYear) {
+                orderedList.add(unOrderList.getItem(j));
+            }
+        }
+
         for (int i = 1; i < orderedList.getTotalEntries() - 1; i++) {
             int index = i;
             for (int j = i; j <= orderedList.getTotalEntries(); j++) {
