@@ -5,7 +5,6 @@
  */
 package fioreflowershop;
 
-import static fioreflowershop.CatalogMaintenance.catalogMaintenanceMenu;
 import static fioreflowershop.CatalogMaintenance.isInteger;
 import static fioreflowershop.CatalogMaintenance.scan;
 import static fioreflowershop.CatalogMaintenance.userMenuOption;
@@ -44,17 +43,6 @@ public class CatalogOrder {
     private static Scanner scan = new Scanner(System.in);
     private static int itemSelection;
     private static double itemPrice;
-
-    public static void initializeData() {
-        Consumer con = new Consumer("Ncct96", "adgfafgjyaf", "0128198471", "No 13");
-        CorporateCustomer corp = new CorporateCustomer("Bxxx1", "sdgsjhd@gmail", "27238723", "No 25", "211221", "Die");
-        Order order = new Order(1001, "Pickup", con);
-        Order order2 = new Order(1002, "Pickup", corp);
-
-        conOrder.add(order);
-        corpOrder.add(order2);
-
-    }
 
     public static void main(String[] args) {
         testing();
@@ -440,9 +428,9 @@ public class CatalogOrder {
 
         } while (userOption != 'y' && userOption != 'Y');
 
-        if (userOption == 'y' || userOption == 'Y') {
-            catalogMaintenanceMenu();
-        }
+//        if (userOption == 'y' || userOption == 'Y') {
+//            catalogMaintenanceMenu();
+//        }
     }
 
     //Dummy data
