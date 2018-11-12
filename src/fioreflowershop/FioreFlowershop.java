@@ -8,8 +8,14 @@ package fioreflowershop;
 import fioreflowershop.*;
 import fioreflowershop.adt.*;
 import fioreflowershop.modal.*;
+import java.io.Console;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -39,20 +45,16 @@ public class FioreFlowershop {
 
     public static void main(String[] args) {
         Consumer customer = new Consumer();
-                initializePackages();
+        initializePackages();
         CatalogOrder.initializeData(pickupOrder);
-
 
         Pickup.customSortPickup(customizedPackages, customer);
 
-        CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
-
-        
+//        CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
         /////// CHIUPEENG DEBUG LOOP //////
-        for(int i = 0; i < 5; i++){
-            CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
-        }
-        
+//        for (int i = 0; i < 5; i++) {
+//            CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
+//        }
         counterStaff();
 
         userTypeSelection();
@@ -239,6 +241,22 @@ public class FioreFlowershop {
             if (pickupChoice == 1) {
                 Pickup.sortPickupOrder(pickupOrder, customizedPackages);
             } else if (pickupChoice == 2) {
+
+                try {
+                    s.nextLine();
+                    
+                    System.out.println("Please enter date to search (yyyy-MM-dd): ");
+                    
+                    String dateStr = s.nextLine();
+                    
+                    SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+                    
+                    Date date = dateformat.parse(dateStr);
+                    
+                    Pickup.searchPickUp(pickupOrder, date);
+                } catch (ParseException ex) {
+                    Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
             } else {
 
