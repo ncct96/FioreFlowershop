@@ -21,6 +21,27 @@ public class CustomerMaintenance {
     static ListInterface<CorporateCustomer> corporate = new ArrayList<>();
     static String username = null; static String address = null; static String email = null; static boolean status; static int monthLimit;
     
+    public static void staffEditType(){
+        System.out.println("\nPlease Select The Type Of Customer To Edit.");
+        System.out.println("[1] Customer");
+        System.out.println("[2] Corporate Customer");
+        int staffEditChoice = s.nextInt();
+        switch(staffEditChoice){
+            case 1: staffEditCust(); break;
+            case 2: staffEditCorp(); break;
+        }
+    }
+    
+    public static void staffEditCust(){
+        for(int i = 1; i <= FioreFlowershop.customer.getTotalEntries(); i++){
+            
+        }
+    }
+    
+    public static void staffEditCorp(){
+        
+    }
+    
     public static void customerOptions(){
         if(customerLoggedIn == null && corporateLoggedIn == null){
             System.out.println("\nPlease Login to Gain Access to More Features.\n");
