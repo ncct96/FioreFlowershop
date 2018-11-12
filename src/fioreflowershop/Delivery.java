@@ -28,9 +28,12 @@ public class Delivery {
     public static void searchDelivery(ListInterface deliveryOrder, Date date, QueueInterface<CustomizedPackage> customOrder) {
         ListInterface<Order> unOrderList = deliveryOrder;
         ListInterface<Order> matchedList = new ArrayList<>();
+        QueueInterface<CustomizedPackage> searchQueue = new ArrayQueue<>();
 
         Calendar cal = Calendar.getInstance();
         Calendar listCal = Calendar.getInstance();
+        Calendar cal1 = Calendar.getInstance();
+        Calendar CuslistCal = Calendar.getInstance();
         cal.setTime(date);
 
         for (int i = 1; i <= unOrderList.getTotalEntries(); i++) {
@@ -51,7 +54,39 @@ public class Delivery {
             }
         }
 
-        displaySortedDelivery(matchedList, customOrder);
+        for (int i = -1; i <= customOrder.getBackIndex(); i++) {
+
+            CustomizedPackage order = customOrder.dequeue();
+            CuslistCal.setTime(order.getDeliveryDate());
+            int day, month, year, userDay, userMonth, userYear;
+
+            day = CuslistCal.get(Calendar.DAY_OF_MONTH);
+            month = CuslistCal.get(Calendar.MONTH) + 1;
+            year = CuslistCal.get(Calendar.YEAR);
+
+            userDay = cal1.get(Calendar.DAY_OF_MONTH);
+            userMonth = cal1.get(Calendar.MONTH) + 1;
+            userYear = cal1.get(Calendar.YEAR);
+
+            if (day == userDay && month == userMonth && year == userYear) {
+                searchQueue.enqueue(order);
+            }
+        }
+
+        for (int i = 1; i < matchedList.getTotalEntries() - 1; i++) {
+            int index = i;
+            for (int j = i; j <= matchedList.getTotalEntries(); j++) {
+                if (matchedList.getItem(j).getDate().before(matchedList.getItem(index).getDate())) {
+                    index = j; //searching for lowest index  
+                }
+            }
+            Order smallerOrder = matchedList.getItem(index);
+            matchedList.replace(index, matchedList.getItem(i));
+            matchedList.replace(i, smallerOrder);
+
+            displaySortedDelivery(matchedList, searchQueue);
+        }
+
     }
 
     public static void sortDeliveryOrder(ListInterface<Order> deliveryOrder, QueueInterface customizeOrder) {
@@ -107,7 +142,7 @@ public class Delivery {
 
         System.out.println("DELIVERY ORDER");
         System.out.println("-------------------------------------------------------");
-        System.out.println("\n\nCatalog Order");
+        System.out.println("\nCatalog Order");
         System.out.println("=======================================================");
         for (int k = 1; k <= orderedList.getTotalEntries(); k++) {
 
@@ -124,15 +159,24 @@ public class Delivery {
             }
         }
 
-        System.out.println("\n\nCustomized Package");
+        if (orderedList.isEmpty()) {
+            System.err.println("No record found!");
+        }
+
+        System.out.println("\nCustomized Package");
         System.out.println("=======================================================");
-        for (int i = -1; i <= customOrder.getBackIndex(); i++) {
-            CustomizedPackage order = customOrder.dequeue();
-            System.out.println("Order ID: " + order.getOrderNum());
-            System.out.println("Consumer name: " + order.getCustomer().getUsername());
-            System.out.println("Contact: " + order.getCustomer().getPhone());
-            System.out.println("Delivery date: " + order.getDeliveryDateString() + "\n");
-            showQueue.enqueue(order);
+
+        if (!customOrder.isEmpty()) {
+            for (int i = -1; i <= customOrder.getBackIndex(); i++) {
+                CustomizedPackage order = customOrder.dequeue();
+                System.out.println("Order ID: " + order.getOrderNum());
+                System.out.println("Consumer name: " + order.getCustomer().getUsername());
+                System.out.println("Contact: " + order.getCustomer().getPhone());
+                System.out.println("Delivery date: " + order.getDeliveryDateString() + "\n");
+                showQueue.enqueue(order);
+            }
+        } else {
+            System.out.println(FioreFlowershop.ConsoleColors.RED + "No record found!");
         }
 
     }
