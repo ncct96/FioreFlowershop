@@ -9,22 +9,24 @@ package fioreflowershop.adt;
  *
  * @author Nicholas
  */
-public interface ListInterface<T extends Comparable<? super T>>{
-    
+public interface ListInterface<T> {
+
     public boolean add(T newEntry);
-    
+
     public boolean add(int newPosition, T newEntry);
-    
+
     public T remove(int existPosition);
-    
+
+    public boolean replace(int givenPosition, T newEntry);
+
     public void clear();
-    
+
     public T getItem(int position);
-    
+
     public int getTotalEntries();
-    
+
     public boolean isEmpty();
-    
+
     public boolean isFull();
-    
+
 }

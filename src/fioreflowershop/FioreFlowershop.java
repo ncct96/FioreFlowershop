@@ -39,8 +39,9 @@ public class FioreFlowershop {
 
     public static void main(String[] args) {
         Consumer customer = new Consumer();
+                initializePackages();
         CatalogOrder.initializeData(pickupOrder);
-        initializePackages();
+
 
         //Pickup.customSortPickup(customizedPackages, customer);
 
