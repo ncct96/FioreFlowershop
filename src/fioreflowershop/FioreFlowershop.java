@@ -39,20 +39,15 @@ public class FioreFlowershop {
 
     public static void main(String[] args) {
         Consumer customer = new Consumer();
-                initializePackages();
+        initializePackages();
         CatalogOrder.initializeData(pickupOrder);
-
-
         Pickup.customSortPickup(customizedPackages, customer);
 
-        CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
-
-        
         /////// CHIUPEENG DEBUG LOOP //////
-        for(int i = 0; i < 5; i++){
-            CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
+        for (int i = 0; i < 5; i++) {
+            CustomizePackage.customizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
         }
-        
+
         counterStaff();
 
         userTypeSelection();
@@ -86,7 +81,7 @@ public class FioreFlowershop {
 
         deliveryTypes.add(new Item("Pickup", 0));
         deliveryTypes.add(new Item("Deliver", 10));
-        
+
         Consumer customer = new Consumer();
         customizedPackages.enqueue(new CustomizedPackage(styles.getItem(2), sizes.getItem(3), flowers.getItem(1), accessories.getItem(4), priorities.getItem(3), deliveryTypes.getItem(1), customer));
         customizedPackages.enqueue(new CustomizedPackage(styles.getItem(1), sizes.getItem(2), flowers.getItem(3), accessories.getItem(3), priorities.getItem(2), deliveryTypes.getItem(2), customer));
