@@ -11,7 +11,7 @@ import java.util.Date;
  *
  * @author Nicholas
  */
-public class Order implements Comparable<Order> {
+public class Order{
 
     private int orderID;
     private String orderType;
@@ -66,15 +66,6 @@ public class Order implements Comparable<Order> {
 
     public void setDate(Date date) {
         this.date = new Date();
-    }
-
-    public int compare(Order order, Order order1) {
-        return (int) (order.getDate().compareTo(order1.getDate()));
-    }
-
-    @Override
-    public int compareTo(Order o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

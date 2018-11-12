@@ -18,6 +18,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -49,32 +50,52 @@ public class Pickup {
 
     public static void sortPickupOrder(ListInterface<Order> pickupOrder, QueueInterface customizeOrder) {
         ListInterface<Order> unOrderList = pickupOrder;
-        ListInterface<Order> orderedList = new ArrayList<>();
+        ListInterface<Order> tempOrderedList = new ArrayList<Order>();
+        Date tempDate = null;
+        boolean added = false;
 
         SimpleDateFormat parser = new SimpleDateFormat("HH:mm");
 
-        for (int i = 1; i < unOrderList.getTotalEntries(); i++) {
+//        for (int i = 1; i < unOrderList.getTotalEntries(); i++) {
+//
+//            String date = parser.format(unOrderList.getItem(i).getDate());
+//
+//            if (orderedList.isEmpty()) {
+//                orderedList.add(unOrderList.getItem(i));
+//            }
+//
+//        }
+//
+//        for (int j = 2; j <= unOrderList.getTotalEntries() + 1; j++) {
+//
+//            for (int l = 1; l <= orderedList.getTotalEntries(); l++) {
+//                if (unOrderList.getItem(j).getDate().before(orderedList.getItem(l).getDate())) {
+//                    orderedList.add((l - 1), unOrderList.getItem(j));
+//                    added = true;
+//                } else if (unOrderList.getItem(j).getDate().after(orderedList.getItem(l).getDate())) {
+//                    orderedList.add((l + 1), unOrderList.getItem(j));
+//                    added = true;
+//                } else {
+//                    orderedList.add(l, unOrderList.getItem(j));
+//                    added = true;
+//                }
+//            }
+//}
 
-            String date = parser.format(unOrderList.getItem(i).getDate());
+        for (int i = 1; i < unOrderList.getTotalEntries() - 1; i++)  
+        {  
+            int index = i;  
+           for (int j = i; j <= unOrderList.getTotalEntries(); j++){  
+                if (unOrderList.getItem(j).getDate().before(unOrderList.getItem(index).getDate())){  
+                    index = j; //searching for lowest index  
+                }  
+            }  
+            Order smallerOrder = unOrderList.getItem(index);   
+            unOrderList.replace(index, unOrderList.getItem(i));  
+            unOrderList.replace(i, smallerOrder);
+        }  
 
-            if (orderedList.isEmpty()) {
-                orderedList.add(unOrderList.getItem(i));
-                unOrderList.remove(i);
-            }
-
-        }
-
-        for (int j = 1; j <= unOrderList.getTotalEntries(); j++) {
-            if (unOrderList.getItem(j).getDate().before(orderedList.getItem(j).getDate())) {
-                orderedList.add((j), unOrderList.getItem(j));
-            } else if (unOrderList.getItem(j).getDate().after(orderedList.getItem(j).getDate())) {
-                orderedList.add((j + 1), unOrderList.getItem(j));
-            } else {
-                orderedList.add(j, unOrderList.getItem(j));
-            }
-        }
-
-        displaySortedPickup(orderedList);
+        displaySortedPickup(unOrderList);
 
     }
 
