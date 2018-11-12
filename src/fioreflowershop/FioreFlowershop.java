@@ -17,8 +17,8 @@ import java.util.Scanner;
  */
 public class FioreFlowershop {
 
-    static ListInterface<Consumer> customer = new ArrayList<>();
-    static ListInterface<CorporateCustomer> corporate = new ArrayList<>();
+    private static ListInterface<Consumer> customer = new ArrayList<>();
+    private static ListInterface<CorporateCustomer> corporate = new ArrayList<>();
     private static ListInterface<Order> pickupOrder = new ArrayList<Order>();
     private static Scanner s = new Scanner(System.in);
     private static ArrayList<Item> styles = new ArrayList<>();
@@ -42,9 +42,9 @@ public class FioreFlowershop {
         CatalogOrder.initializeData(pickupOrder);
         initializePackages();
 
-        Pickup.customSortPickup(customizedPackages, customer);
+        //Pickup.customSortPickup(customizedPackages, customer);
 
-        CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
+        //CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
 
         
         /////// CHIUPEENG DEBUG LOOP //////
@@ -52,7 +52,7 @@ public class FioreFlowershop {
 //            CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
 //        }
 
-        counterStaff();
+        //counterStaff();
 
         userTypeSelection();
     }
@@ -182,7 +182,7 @@ public class FioreFlowershop {
         System.out.println("[5] View Sales Order");
         int counterStaffChoice = s.nextInt();
         switch (counterStaffChoice) {
-            case 1: //Customer Maintenance
+            case 1: CustomerMaintenance.staffEditType();
             case 2: //corporate customer invoice
             case 3: //order pickup/delivery
                 orderMenu();
@@ -260,6 +260,24 @@ public class FioreFlowershop {
         } else {
 
         }
+    }
+    
+    //GETTER SETTER FOR CUSTOMER LIST
+    public static void setCustomer(ListInterface<Consumer> consumer){
+        customer = consumer;
+    }
+    
+    public static ListInterface<Consumer> getCustomer(){
+        return customer;
+    }
+    
+    //GETTER SETTER FOR CORPORATE LIST
+    public static void setCorporate(ListInterface<CorporateCustomer> corporateCust){
+        corporate = corporateCust;
+    }
+    
+    public static ListInterface<CorporateCustomer> getCorporate(){
+        return corporate;
     }
 
     public class ConsoleColors {
