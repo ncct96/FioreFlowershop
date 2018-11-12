@@ -40,7 +40,7 @@ public class CatalogOrder {
 
     //create a scanner object to get user input
     private static Scanner scan = new Scanner(System.in);
-
+    private static int itemSelection;
     private static double itemPrice;
 
     public static void initializeData() {
@@ -48,7 +48,7 @@ public class CatalogOrder {
         CorporateCustomer corp = new CorporateCustomer("Bxxx1", "sdgsjhd@gmail", "27238723", "No 25", "211221", "Die");
         Order order = new Order(1001, "Pickup", con);
         Order order2 = new Order(1002, "Pickup", corp);
-        
+
         conOrder.add(order);
         corpOrder.add(order2);
 
@@ -118,7 +118,7 @@ public class CatalogOrder {
     }
 
     //Display the normal catalog
-    public static void freshFlowerCatalog() {
+    public static void freshFlowerCatalog() {      
         CatalogPackage catalogPackage = new CatalogPackage();
         System.out.println("\nDisplay catalog - normal catalog");
         System.out.println("================================================================================================");
@@ -141,11 +141,16 @@ public class CatalogOrder {
                     freshFlowerDiscounted.add(catalogPackage);
                 }
             }
+        }else if(freshFlower.getTotalEntries() == 0){
+            System.out.println("Sorry, the item type you  selected is not available yet.");
+            typeSelection();
         }
-
-        System.out.print("Please enter your choice in number:");
-        int itemSelection = scan.nextInt();
-             
+        
+        do{
+            System.out.print("Please enter your choice in number:");
+            itemSelection = scan.nextInt();
+            
+        }while(itemSelection < freshFlower.getTotalEntries() && itemSelection > freshFlower.getTotalEntries());
         catalogPackage = freshFlower.getItem(itemSelection);
         System.out.println("\nDisplay catalog - Quantity Selection");
         System.out.println("================================================================================================");
@@ -169,21 +174,20 @@ public class CatalogOrder {
         if (discountRate == catalogPackage.getPrice()) {
             itemPrice = freshFlower.getItem(itemSelection).getPrice() * quantity;
         } else {
-            itemPrice = (double) ((100 - freshFlower.getItem(itemSelection).getDiscountRate()) * freshFlower.getItem(itemSelection).getPrice() / 100);
+            itemPrice = (double) (((100 - freshFlower.getItem(itemSelection).getDiscountRate()) * freshFlower.getItem(itemSelection).getPrice() / 100)*quantity);
         }
 
         //Add in the selected item inside the shoppingCart arraylist
         shoppingCart.add(new CatalogOrder1(freshFlower.getItem(itemSelection).getName(), freshFlower.getItem(itemSelection).getStyle(), freshFlower.getItem(itemSelection).getSize(), freshFlower.getItem(itemSelection).getFlower(), freshFlower.getItem(itemSelection).getAccessory(), itemPrice, quantity));
-        
-        
+
         System.out.println("\nDisplay Shopping Cart");
         System.out.println("================================================================================================");
         System.out.println("Product types\t\t\t\tPrice\t\tQuantity");
         if (!shoppingCart.isEmpty()) {
-
-            System.out.printf("%s\n", shoppingCart.getItem(itemSelection).getItemName());
-            System.out.printf("%s,%s,%s,%s \tRM%.2f\t   %d\n\n", shoppingCart.getItem(itemSelection).getItemStyle(), shoppingCart.getItem(itemSelection).getItemSize(), shoppingCart.getItem(itemSelection).getItemFlower(), shoppingCart.getItem(itemSelection).getItemAccesscory(), shoppingCart.getItem(itemSelection).getItemPrice() * quantity, shoppingCart.getItem(itemSelection).getItemQuantity());
-
+            for (int i = 1; i < shoppingCart.getTotalEntries() + 1; i++) {
+                System.out.printf("%s\n", shoppingCart.getItem(i).getItemName());
+                System.out.printf("%s,%s,%s,%s \tRM%.2f\t   %d\n\n", shoppingCart.getItem(i).getItemStyle(), shoppingCart.getItem(i).getItemSize(), shoppingCart.getItem(i).getItemFlower(), shoppingCart.getItem(i).getItemAccesscory(), shoppingCart.getItem(i).getItemPrice(), shoppingCart.getItem(i).getItemQuantity());
+            }
 //            discountRate = (double) ((100 - freshFlower.getItem(itemSelection).getDiscountRate()) * freshFlower.getItem(itemSelection).getPrice() / 100);
 //            System.out.printf("%s\n", freshFlower.getItem(itemSelection).getName());
 //            System.out.printf("%s,%s,%s,%s \tRM%.2f\t   %d\n\n", freshFlower.getItem(itemSelection).getStyle(), freshFlower.getItem(itemSelection).getSize(), freshFlower.getItem(itemSelection).getFlower(), freshFlower.getItem(itemSelection).getAccessory(), discountRate * quantity, quantity);
@@ -191,10 +195,10 @@ public class CatalogOrder {
         }
         System.out.print("Do you wish to browse through fresh flower? (Y/y = Yes, other keys = No)");
         String con = scan.next();
-        
-        if(con.equalsIgnoreCase("Y")){
+
+        if (con.equalsIgnoreCase("Y")) {
             freshFlowerCatalog();
-        }else{
+        } else {
             typeSelection();
         }
 
@@ -227,6 +231,9 @@ public class CatalogOrder {
 
     public static void bouquetsCatalog() {
         CatalogPackage catalogPackage = new CatalogPackage();
+        System.out.println("\nDisplay catalog - normal catalog");
+        System.out.println("================================================================================================");
+        System.out.println("Product types\t\t\t\t\tPrice\t\t\tDiscounted price");
         if (bouquets.getTotalEntries() != 0) {
             System.out.println("\nBouquets");
             System.out.println("==================");
@@ -234,35 +241,76 @@ public class CatalogOrder {
                 catalogPackage = bouquets.getItem(i);
                 double discountRate = (double) ((100 - catalogPackage.getDiscountRate()) * catalogPackage.getPrice() / 100);
                 if (discountRate == catalogPackage.getPrice()) {
-                    System.out.printf("%s\n", catalogPackage.getName());
-                    System.out.printf("%s,%s,%s,%s \t   %d\t\t RM%.2f\t\t  - \n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getQuantity(), catalogPackage.getPrice());
+                    System.out.printf("%d. %s\n", i,catalogPackage.getName());
+                    System.out.printf("%s,%s,%s,%s \t\tRM%.2f\t\t  - \n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getPrice());
                 } else {
-                    System.out.printf("%s\n", catalogPackage.getName());
-                    System.out.printf("%s,%s,%s,%s \t   %d\t\t RM%.2f\t\t RM%.2f\n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getQuantity(), catalogPackage.getPrice(), discountRate);
+                    System.out.printf("%d. %s\n", i, catalogPackage.getName());
+                    System.out.printf("%s,%s,%s,%s \t\tRM%.2f\t\t RM%.2f\n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getPrice(), discountRate);
                 }
                 if (catalogPackage.getDiscountRate() > 0) {
                     bouquetsDiscounted.add(catalogPackage);
                 }
             }
+        }else if(bouquets.getTotalEntries() == 0){
+            System.out.println("Sorry, the item type you  selected is not available yet.");
+            typeSelection();
+        }
+        do{
+            System.out.print("Please enter your choice in number:");
+            itemSelection = scan.nextInt();
+            
+        }while(itemSelection < bouquets.getTotalEntries() && itemSelection > bouquets.getTotalEntries());
+        catalogPackage = bouquets.getItem(itemSelection);
+        System.out.println("\nDisplay catalog - Quantity Selection");
+        System.out.println("================================================================================================");
+        System.out.println("Product types\t\t\t\tPrice\t\t\tDiscounted price");
+        double discountRate = (double) ((100 - catalogPackage.getDiscountRate()) * catalogPackage.getPrice() / 100);
+        if (discountRate == bouquets.getItem(itemSelection).getPrice()) {
+            System.out.printf("%s\n", catalogPackage.getName());
+            System.out.printf("%s,%s,%s,%s \tRM%.2f\t\t\t  - \n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getPrice());
+        } else {
+            System.out.printf("%s\n", catalogPackage.getName());
+            System.out.printf("%s,%s,%s,%s \tRM%.2f\t\t   RM%.2f\n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getPrice(), discountRate);
         }
 
-        System.out.println("\nDiscounted Product List");
+        if (catalogPackage.getDiscountRate() > 0) {
+            bouquetsDiscounted.add(catalogPackage);
+        }
+        System.out.print("Please enter quantity of this item you want to order:");
+        int quantity = scan.nextInt();
+
+        //Calculate total price of the selected item
+        if (discountRate == catalogPackage.getPrice()) {
+            itemPrice = bouquets.getItem(itemSelection).getPrice() * quantity;
+        } else {
+            itemPrice = (double) (((100 - bouquets.getItem(itemSelection).getDiscountRate()) * bouquets.getItem(itemSelection).getPrice() / 100)*quantity);
+        }
+
+        //Add in the selected item inside the shoppingCart arraylist
+        shoppingCart.add(new CatalogOrder1(bouquets.getItem(itemSelection).getName(), bouquets.getItem(itemSelection).getStyle(), bouquets.getItem(itemSelection).getSize(), bouquets.getItem(itemSelection).getFlower(), bouquets.getItem(itemSelection).getAccessory(), itemPrice, quantity));
+
+        System.out.println("\nDisplay Shopping Cart");
         System.out.println("================================================================================================");
-        System.out.println("Product types\t\t\t\tQuantity\tPrice\t\t\tDiscounted price");
-        if (bouquetsDiscounted.getTotalEntries() != 0) {
-            System.out.println("\nBouquets");
-            System.out.println("==================");
-            for (int i = 1; i < bouquetsDiscounted.getTotalEntries() + 1; i++) {
-                catalogPackage = bouquetsDiscounted.getItem(i);
-                double discountRate = (double) ((100 - catalogPackage.getDiscountRate()) * catalogPackage.getPrice() / 100);
-                System.out.printf("%s\n", catalogPackage.getName());
-                System.out.printf("%s,%s,%s,%s \t   %d\t\t RM%.2f\t\t RM%.2f\n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getQuantity(), catalogPackage.getPrice(), discountRate);
+        System.out.println("Product types\t\t\t\tPrice\t\tQuantity");
+        if (!shoppingCart.isEmpty()) {
+            for (int i = 1; i < shoppingCart.getTotalEntries() + 1; i++) {
+                System.out.printf("%s\n", shoppingCart.getItem(i).getItemName());
+                System.out.printf("%s,%s,%s,%s \tRM%.2f\t\t   %d\n\n", shoppingCart.getItem(i).getItemStyle(), shoppingCart.getItem(i).getItemSize(), shoppingCart.getItem(i).getItemFlower(), shoppingCart.getItem(i).getItemAccesscory(), shoppingCart.getItem(i).getItemPrice(), shoppingCart.getItem(i).getItemQuantity());
             }
+            
+        }
+        System.out.print("Do you wish to browse through bouquets? (Y/y = Yes, other keys = No)");
+        String con = scan.next();
+
+        if (con.equalsIgnoreCase("Y")) {
+            bouquetsCatalog();
+        } else {
+            typeSelection();
         }
     }
 
     public static void flowerArrangementCatalog() {
-        CatalogPackage catalogPackage = new CatalogPackage();
+        CatalogPackage catalogPackage = new CatalogPackage();       
         System.out.println("\nDisplay catalog - normal catalog");
         System.out.println("================================================================================================");
         System.out.println("Product types\t\t\t\tQuantity\tPrice\t\t\tDiscounted price");
@@ -283,19 +331,61 @@ public class CatalogOrder {
                     flowerArrangementDiscounted.add(catalogPackage);
                 }
             }
+        }else if(flowerArrangement.getTotalEntries() == 0){
+            System.out.println("Sorry, the item type you  selected is not available yet.");
+            typeSelection();
         }
-        System.out.println("\nDiscounted Product List");
+        do{
+            System.out.print("Please enter your choice in number:");
+            itemSelection = scan.nextInt();
+            
+        }while(itemSelection < flowerArrangement.getTotalEntries() && itemSelection > flowerArrangement.getTotalEntries());
+        catalogPackage = flowerArrangement.getItem(itemSelection);
+        System.out.println("\nDisplay catalog - Quantity Selection");
         System.out.println("================================================================================================");
-        System.out.println("Product types\t\t\t\tQuantity\tPrice\t\t\tDiscounted price");
-        if (flowerArrangementDiscounted.getTotalEntries() != 0) {
-            System.out.println("\nFlower Arrangement");
-            System.out.println("==================");
-            for (int i = 1; i < flowerArrangementDiscounted.getTotalEntries() + 1; i++) {
-                catalogPackage = flowerArrangementDiscounted.getItem(i);
-                double discountRate = (double) ((100 - catalogPackage.getDiscountRate()) * catalogPackage.getPrice() / 100);
-                System.out.printf("%s\n", catalogPackage.getName());
-                System.out.printf("%s,%s,%s,%s \t   %d\t\t RM%.2f\t\t RM%.2f\n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getQuantity(), catalogPackage.getPrice(), discountRate);
+        System.out.println("Product types\t\t\t\tPrice\t\t\tDiscounted price");
+        double discountRate = (double) ((100 - catalogPackage.getDiscountRate()) * catalogPackage.getPrice() / 100);
+        if (discountRate == catalogPackage.getPrice()) {
+            System.out.printf("%s\n", catalogPackage.getName());
+            System.out.printf("%s,%s,%s,%s \tRM%.2f\t\t\t  - \n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getPrice());
+        } else {
+            System.out.printf("%s\n", catalogPackage.getName());
+            System.out.printf("%s,%s,%s,%s \tRM%.2f\t\t   RM%.2f\n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getPrice(), discountRate);
+        }
+
+        if (catalogPackage.getDiscountRate() > 0) {
+            flowerArrangementDiscounted.add(catalogPackage);
+        }
+        System.out.print("Please enter quantity of this item you want to order:");
+        int quantity = scan.nextInt();
+
+        //Calculate total price of the selected item
+        if (discountRate == catalogPackage.getPrice()) {
+            itemPrice = flowerArrangement.getItem(itemSelection).getPrice() * quantity;
+        } else {
+            itemPrice = (double) (((100 - flowerArrangement.getItem(itemSelection).getDiscountRate()) * flowerArrangement.getItem(itemSelection).getPrice() / 100)*quantity);
+        }
+
+        //Add in the selected item inside the shoppingCart arraylist
+        shoppingCart.add(new CatalogOrder1(flowerArrangement.getItem(itemSelection).getName(), flowerArrangement.getItem(itemSelection).getStyle(), flowerArrangement.getItem(itemSelection).getSize(), flowerArrangement.getItem(itemSelection).getFlower(), flowerArrangement.getItem(itemSelection).getAccessory(), itemPrice, quantity));
+
+        System.out.println("\nDisplay Shopping Cart");
+        System.out.println("================================================================================================");
+        System.out.println("Product types\t\t\t\tPrice\t\tQuantity");
+        if (!shoppingCart.isEmpty()) {
+            for (int i = 1; i < shoppingCart.getTotalEntries() + 1; i++) {
+                System.out.printf("%s\n", shoppingCart.getItem(i).getItemName());
+                System.out.printf("%s,%s,%s,%s \tRM%.2f\t   %d\n\n", shoppingCart.getItem(i).getItemStyle(), shoppingCart.getItem(i).getItemSize(), shoppingCart.getItem(i).getItemFlower(), shoppingCart.getItem(i).getItemAccesscory(), shoppingCart.getItem(i).getItemPrice(), shoppingCart.getItem(i).getItemQuantity());
             }
+
+        }
+        System.out.print("Do you wish to browse through fresh flower? (Y/y = Yes, other keys = No)");
+        String con = scan.next();
+
+        if (con.equalsIgnoreCase("Y")) {
+            flowerArrangementCatalog();
+        } else {
+            typeSelection();
         }
 
     }
