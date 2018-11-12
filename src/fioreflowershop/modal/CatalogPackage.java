@@ -9,7 +9,7 @@ package fioreflowershop.modal;
  *
  * @author Woo
  */
-public class CatalogPackage {
+public class CatalogPackage implements Comparable<CatalogPackage>{
     //Data field
     private String name, style, size, flower, accessory;
     private int quantity;
@@ -98,4 +98,9 @@ public class CatalogPackage {
     public String toString() {
         return "CatalogPackage{" + "name=" + name + ", style=" + style + ", size=" + size + ", flower=" + flower + ", accessory=" + accessory + ", quantity=" + quantity + ", price=" + price + ", discountRate=" + discountRate + '}';
     }       
+
+    @Override
+    public int compareTo(CatalogPackage o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

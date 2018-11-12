@@ -14,7 +14,7 @@ import java.util.Date;
  *
  * @author Chiu Peeng
  */
-public class CustomizedPackage {
+public class CustomizedPackage{
 
     private static int orderNo = 1;
     private int orderNum;
@@ -157,4 +157,5 @@ public class CustomizedPackage {
         flower.minusQuantity();
         accessory.minusQuantity();
     }
+
 }
