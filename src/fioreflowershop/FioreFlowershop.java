@@ -27,15 +27,26 @@ public class FioreFlowershop {
     private static ArrayList<Item> accessories = new ArrayList<>();
     private static ArrayList<Item> priorities = new ArrayList<>();
     private static ArrayList<Item> deliveryTypes = new ArrayList<>();
+    private static ArrayQueue<CustomizedPackage> customizedPackages = new ArrayQueue<>();
 
-    private static QueueInterface<CustomizedPackage> customizedPackages = new ArrayQueue<>();
+    //Catalog Maintenance part
+    private static ArrayList<CatalogPackage> freshFlower = new ArrayList<>();
+    private static ArrayList<CatalogPackage> bouquets = new ArrayList<>();
+    private static ArrayList<CatalogPackage> flowerArrangement = new ArrayList<>();
+    private static ArrayList<CatalogPackage> freshFlowerDiscounted = new ArrayList<>();
+    private static ArrayList<CatalogPackage> bouquetsDiscounted = new ArrayList<>();
+    private static ArrayList<CatalogPackage> flowerArrangementDiscounted = new ArrayList<>();
 
     public static void main(String[] args) {
         Consumer customer = new Consumer();
         CatalogOrder.initializeData(pickupOrder);
         initializePackages();
 
-        //Pickup.customSortPickup(customizedPackages, customer);
+        Pickup.customSortPickup(customizedPackages, customer);
+
+        CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
+
+        
         /////// CHIUPEENG DEBUG LOOP //////
 //        for (int i = 0; i < 3; i++) {
 //            CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
@@ -74,6 +85,15 @@ public class FioreFlowershop {
 
         deliveryTypes.add(new Item("Pickup", 0));
         deliveryTypes.add(new Item("Deliver", 10));
+    }
+
+    //Dummy data - woo for display purpose
+    public static void testing() {
+        //testing purpose
+        freshFlower.add(new CatalogPackage("Package 1.0", "Style 1.0", "Small", "Flower 1.0", "Bear 1.0", 10, 100.00, 20));
+        freshFlower.add(new CatalogPackage("Package 1.1", "Style 1.1", "Large", "Flower 1.1", "Bear 1.1", 10, 100.00, 0));
+        bouquets.add(new CatalogPackage("Package 2.0", "Style 2.0", "Small", "Flower 2.0", "Bear 2.0", 10, 100.00, 60));
+        bouquets.add(new CatalogPackage("Package 2.1", "Style 2.1", "Small", "Flower 2.1", "Bear 2.1", 10, 100.00, 0));
     }
 
     public static void userTypeSelection() {
@@ -124,11 +144,21 @@ public class FioreFlowershop {
         System.out.println("[1] Add a product to catalog");
         System.out.println("[2] Remove a product from catalog");
         System.out.println("[3] Edit the details of product in catalog");
+        System.out.println("[4] Display created catalog");
         int managerChoice = s.nextInt();
+
+        String navigationMsg;
         switch (managerChoice) {
             case 1: //Add product
+                navigationMsg = "Create catalog";
+                CatalogMaintenance.productType(navigationMsg, freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
+                break;
             case 2: //Delete product
             case 3: //Edit Product
+            case 4: //Display product
+                navigationMsg = "Display catalog";
+                CatalogMaintenance.displayCatalog(navigationMsg, freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
+                break;
         }
     }
 
