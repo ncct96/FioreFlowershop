@@ -5,6 +5,8 @@
  */
 package fioreflowershop.modal;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -12,17 +14,39 @@ import java.util.Date;
  *
  * @author Chiu Peeng
  */
-public class CustomizedPackage {
+public class CustomizedPackage{
 
     private static int orderNo = 1;
     private int orderNum;
-    private Date date = new Date();
+    private String orderDate, deliveryDate;
     private Item style, size, flower, accessory, priority, deliveryType;
     private Consumer customer = new Consumer();
-    private Calendar cal = Calendar.getInstance();
+    DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
     public Item getDeliveryType() {
         return deliveryType;
+    }
+
+    public Date getOrderDate() {
+        Date date = new Date();
+        try{
+            date = df.parse(orderDate);
+        }catch(Exception e){
+            
+        }
+        return date;
+    }
+
+    public String getOrderDateString() {
+        return orderDate;
+    }
+
+    public Consumer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Consumer customer) {
+        this.customer = customer;
     }
 
     public void setDeliveryType(Item deliveryType) {
@@ -49,12 +73,18 @@ public class CustomizedPackage {
         this.orderNum = orderNum;
     }
 
-    public Date getDate() {
+    public Date getDeliveryDate() {
+        Date date = new Date();
+        try{
+            date = df.parse(deliveryDate);
+        }catch(Exception e){
+            
+        }
         return date;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public String getDeliveryDateString() {
+        return deliveryDate;
     }
 
     public void setStyle(Item style) {
@@ -96,8 +126,15 @@ public class CustomizedPackage {
     public CustomizedPackage(Item style, Item size, Item flower, Item accessory, Item priority, Item deliveryType, Consumer customer) {
         orderNum = orderNo;
         ++orderNo;
-        cal.add(Calendar.DATE, priority.getQuantity());
-        date = cal.getTime();
+       
+        Date todayDate = Calendar.getInstance().getTime();
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, priority.getQuantity());      
+        Date addDate = cal.getTime();
+        
+        deliveryDate = df.format(addDate);
+        orderDate = df.format(todayDate);
+        
         this.style = style;
         this.size = size;
         this.flower = flower;
@@ -110,7 +147,6 @@ public class CustomizedPackage {
     public CustomizedPackage() {
         orderNum = orderNo;
         ++orderNo;
-        date = Calendar.getInstance().getTime();
     }
 
     public double CalculateOrder() {
@@ -121,4 +157,5 @@ public class CustomizedPackage {
         flower.minusQuantity();
         accessory.minusQuantity();
     }
+
 }

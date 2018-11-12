@@ -9,7 +9,7 @@ package fioreflowershop.modal;
  *
  * @author Admin
  */
-public class User {
+public class User{
     private String username;
     private String email;
     private String password;

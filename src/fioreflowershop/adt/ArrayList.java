@@ -16,7 +16,7 @@ public class ArrayList<T> implements ListInterface<T> {
     private T[] list;
     private int totalEntries;
     private static final int DEFAULT_LIST_SIZE = 25;
-    
+
     public ArrayList() {
         this(DEFAULT_LIST_SIZE);
     }
@@ -40,6 +40,19 @@ public class ArrayList<T> implements ListInterface<T> {
         list[totalEntries] = newEntry;
         totalEntries++;
         return true;
+    }
+
+    @Override
+    public boolean replace(int givenPosition, T newEntry) {
+        boolean isSuccessful = true;
+
+        if ((givenPosition >= 1) && (givenPosition <= totalEntries)) {
+            list[givenPosition - 1] = newEntry;
+        } else {
+            isSuccessful = false;
+        }
+
+        return isSuccessful;
     }
 
     @Override
@@ -90,7 +103,7 @@ public class ArrayList<T> implements ListInterface<T> {
         if ((position >= 1) && (position <= totalEntries)) {
             result = list[position - 1];
         }
-        
+
         return result;
     }
 
@@ -125,6 +138,10 @@ public class ArrayList<T> implements ListInterface<T> {
         for (int index = lastIndex; index >= newIndex; index--) {
             list[index + 1] = list[index];
         }
+
+//        list[totalEntries] = null;
+//        
+        //        totalEntries = totalEntries - 1;
     }
 
     private void removeGap(int givenPosition) {
