@@ -43,6 +43,7 @@ public class CatalogOrder {
     private static Scanner scan = new Scanner(System.in);
     private static int itemSelection;
     private static double itemPrice;
+    private static int quantity;
 
     public static void main(String[] args) {
         testing();
@@ -72,7 +73,7 @@ public class CatalogOrder {
         } else if (userMenuOption == 1) {
             typeSelection();
         } else if (userMenuOption == 2) {
-            monthlyPromotionCatalog();
+            monthlyPromotionCatalog(); // this part havent do the catalog order 
         }
     }
 
@@ -157,8 +158,10 @@ public class CatalogOrder {
         if (catalogPackage.getDiscountRate() > 0) {
             freshFlowerDiscounted.add(catalogPackage);
         }
-        System.out.print("Please enter quantity of this item you want to order:");
-        int quantity = scan.nextInt();
+        do {
+            System.out.print("Please enter quantity of this item you want to order:");
+            quantity = scan.nextInt();
+        } while (quantity == 0);
 
         //Calculate total price of the selected item
         if (discountRate == catalogPackage.getPrice()) {
@@ -266,8 +269,10 @@ public class CatalogOrder {
         if (catalogPackage.getDiscountRate() > 0) {
             bouquetsDiscounted.add(catalogPackage);
         }
-        System.out.print("Please enter quantity of this item you want to order:");
-        int quantity = scan.nextInt();
+        do {
+            System.out.print("Please enter quantity of this item you want to order:");
+            quantity = scan.nextInt();
+        } while (quantity == 0);
 
         //Calculate total price of the selected item
         if (discountRate == catalogPackage.getPrice()) {
@@ -346,8 +351,10 @@ public class CatalogOrder {
         if (catalogPackage.getDiscountRate() > 0) {
             flowerArrangementDiscounted.add(catalogPackage);
         }
-        System.out.print("Please enter quantity of this item you want to order:");
-        int quantity = scan.nextInt();
+        do {
+            System.out.print("Please enter quantity of this item you want to order:");
+            quantity = scan.nextInt();
+        } while (quantity == 0);
 
         //Calculate total price of the selected item
         if (discountRate == catalogPackage.getPrice()) {
@@ -419,15 +426,15 @@ public class CatalogOrder {
             }
         }
 
-        System.out.println("\n====================================================");
-        char userOption;
-        do {
-            System.out.print("Please enter 'Y/y' to Catalog maintenance menu: ");
-            userOption = scan.next().charAt(0);
-            System.out.println(userOption);
-
-        } while (userOption != 'y' && userOption != 'Y');
-
+//        System.out.println("\n====================================================");
+//        char userOption;
+//        do {
+//            System.out.print("Please enter 'Y/y' to Catalog maintenance menu: ");
+//            userOption = scan.next().charAt(0);
+//            System.out.println(userOption);
+//
+//        } while (userOption != 'y' && userOption != 'Y');
+//
 //        if (userOption == 'y' || userOption == 'Y') {
 //            catalogMaintenanceMenu();
 //        }
