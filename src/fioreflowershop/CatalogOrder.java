@@ -5,6 +5,8 @@
  */
 package fioreflowershop;
 
+import static fioreflowershop.CatalogMaintenance.isInteger;
+import static fioreflowershop.CatalogMaintenance.scan;
 import fioreflowershop.adt.ArrayList;
 import fioreflowershop.adt.ListInterface;
 import fioreflowershop.modal.CatalogPackage;
@@ -21,7 +23,7 @@ import java.util.Date;
  * @author Nicholas
  */
 public class CatalogOrder {
-
+    
     static ListInterface<Order> conOrder = new ArrayList<>();
     static ListInterface<Order> corpOrder = new ArrayList<>();
 
@@ -42,7 +44,12 @@ public class CatalogOrder {
     private static Scanner scan = new Scanner(System.in);
     private static int userMenuOption;
     private static int itemSelection;
-    private static double itemPrice;
+    private static double itemPrice;    
+    
+    public static void main(String[] args) {
+        testing();
+        displayCatalog();
+
     private static int quantity;
     private static boolean isInteger;
     
