@@ -42,9 +42,10 @@ public class FioreFlowershop {
     private static ArrayList<CatalogPackage> freshFlowerDiscounted = new ArrayList<>();
     private static ArrayList<CatalogPackage> bouquetsDiscounted = new ArrayList<>();
     private static ArrayList<CatalogPackage> flowerArrangementDiscounted = new ArrayList<>();
+    private static ListInterface<CatalogOrder1> shoppingCart = new ArrayList<>();
 
     public static void main(String[] args) {
-        Consumer customer = new Consumer("Chiu Peeng", "adgfafgjyaf", "0128198471", "No 13");  
+        Consumer customer = new Consumer("Chiu Peeng", "adgfafgjyaf", "0128198471", "No 13");
 //        CatalogOrder.initializeData(pickupOrder, deliveryOrder);
         testing();
         userTypeSelection();
@@ -96,14 +97,14 @@ public class FioreFlowershop {
         CustomizePackage.customizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customerLoggedIn, customizedPackages);
     }
 
-    public static void gotoCatalogOrders(Consumer customerLoggedIn, CorporateCustomer corporateLoggedIn){
-        if(corporateLoggedIn == null){
-            CatalogOrder.CustomerOrderMain(customerLoggedIn,freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
-        }else if(customerLoggedIn == null){
-            CatalogOrder.CorporateOrderMain(corporateLoggedIn, freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
+    public static void gotoCatalogOrders(Consumer customerLoggedIn, CorporateCustomer corporateLoggedIn) {
+        if (corporateLoggedIn == null) {
+            CatalogOrder.CustomerOrderMain(shoppingCart, customerLoggedIn, freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
+        } else if (customerLoggedIn == null) {
+            CatalogOrder.CorporateOrderMain(shoppingCart, corporateLoggedIn, freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
         }
     }
-    
+
     //Dummy data - woo for display purpose
     public static void testing() {
         //testing purpose
@@ -339,6 +340,10 @@ public class FioreFlowershop {
 
     public static ListInterface<CorporateCustomer> getCorporate() {
         return corporate;
+    }
+
+    public static ListInterface<CatalogOrder1> getShoppingCart() {
+        return shoppingCart;
     }
 
     public class ConsoleColors {
