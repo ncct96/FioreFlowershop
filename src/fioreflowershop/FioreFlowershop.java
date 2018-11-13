@@ -44,10 +44,9 @@ public class FioreFlowershop {
     private static ArrayList<CatalogPackage> flowerArrangementDiscounted = new ArrayList<>();
 
     public static void main(String[] args) {
-        Consumer customer = new Consumer("Chiu Peeng", "adgfafgjyaf", "0128198471", "No 13");
-        initializePackages();
-        CatalogOrder.initializeData(pickupOrder, deliveryOrder);
-
+        Consumer customer = new Consumer("Chiu Peeng", "adgfafgjyaf", "0128198471", "No 13");  
+//        CatalogOrder.initializeData(pickupOrder, deliveryOrder);
+        testing();
         userTypeSelection();
     }
 
@@ -97,6 +96,14 @@ public class FioreFlowershop {
         CustomizePackage.customizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customerLoggedIn, customizedPackages);
     }
 
+    public static void gotoCatalogOrders(Consumer customerLoggedIn, CorporateCustomer corporateLoggedIn){
+        if(corporateLoggedIn == null){
+            CatalogOrder.CustomerOrderMain(customerLoggedIn,freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
+        }else if(customerLoggedIn == null){
+            CatalogOrder.CorporateOrderMain(corporateLoggedIn, freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
+        }
+    }
+    
     //Dummy data - woo for display purpose
     public static void testing() {
         //testing purpose

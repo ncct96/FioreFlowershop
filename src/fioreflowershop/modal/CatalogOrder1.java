@@ -18,11 +18,14 @@ public class CatalogOrder1 {
     private String itemAccesscory;
     private int itemQuantity;
     private double itemPrice;
+    private CorporateCustomer corporate = new CorporateCustomer();
+    private Consumer customer = new Consumer();
 
     public CatalogOrder1() {
     }
     
-    public CatalogOrder1(String itemName, String itemStyle, String itemSize, String itemFlower, String itemAccessory,double itemPrice,int itemQuantity) {
+    public CatalogOrder1(Consumer customer, String itemName, String itemStyle, String itemSize, String itemFlower, String itemAccessory,double itemPrice,int itemQuantity) {
+        this.customer = customer;
         this.itemName = itemName;
         this.itemStyle = itemStyle;
         this.itemSize = itemSize;
@@ -30,6 +33,33 @@ public class CatalogOrder1 {
         this.itemAccesscory = itemAccessory;
         this.itemPrice = itemPrice;
         this.itemQuantity = itemQuantity;    
+    }
+    
+    public CatalogOrder1(CorporateCustomer corporate, String itemName, String itemStyle, String itemSize, String itemFlower, String itemAccessory,double itemPrice,int itemQuantity) {
+        this.corporate = corporate;
+        this.itemName = itemName;
+        this.itemStyle = itemStyle;
+        this.itemSize = itemSize;
+        this.itemFlower = itemFlower;
+        this.itemAccesscory = itemAccessory;
+        this.itemPrice = itemPrice;
+        this.itemQuantity = itemQuantity;    
+    }
+
+    public CorporateCustomer getCorporate() {
+        return corporate;
+    }
+
+    public void setCorporate(CorporateCustomer corporate) {
+        this.corporate = corporate;
+    }
+
+    public Consumer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Consumer customer) {
+        this.customer = customer;
     }
 
     public String getItemName() {
