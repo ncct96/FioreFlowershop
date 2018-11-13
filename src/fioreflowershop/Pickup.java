@@ -38,46 +38,46 @@ public class Pickup {
         ListInterface<Order> matchedList = new ArrayList<>();
         QueueInterface<CustomizedPackage> searchQueue = new ArrayQueue<>();
 
+        int count = customOrder.getBackIndex();
+
         Calendar cal = Calendar.getInstance();
         Calendar listCal = Calendar.getInstance();
         Calendar cal1 = Calendar.getInstance();
         Calendar CuslistCal = Calendar.getInstance();
         cal.setTime(date);
 
+        int day, month, year, userDay, userMonth, userYear;
+
+        userDay = cal.get(Calendar.DAY_OF_MONTH);
+        userMonth = cal.get(Calendar.MONTH) + 1;
+        userYear = cal.get(Calendar.YEAR);
+
         for (int i = 1; i <= unOrderList.getTotalEntries(); i++) {
 
             listCal.setTime(unOrderList.getItem(i).getDate());
-            int day, month, year, userDay, userMonth, userYear;
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
             year = listCal.get(Calendar.YEAR);
-
-            userDay = cal.get(Calendar.DAY_OF_MONTH);
-            userMonth = cal.get(Calendar.MONTH) + 1;
-            userYear = cal.get(Calendar.YEAR);
 
             if (day == userDay && month == userMonth && year == userYear) {
                 matchedList.add(unOrderList.getItem(i));
             }
         }
 
-        for (int i = -1; i <= customOrder.getBackIndex(); i++) {
+        for (int i = -1; i <= count; i++) {
 
-            CustomizedPackage order = customOrder.dequeue();
-            CuslistCal.setTime(order.getDeliveryDate());
-            int day, month, year, userDay, userMonth, userYear;
+            if (!customOrder.isEmpty()) {
+                CustomizedPackage order = customOrder.dequeue();
+                CuslistCal.setTime(order.getDeliveryDate());
 
-            day = CuslistCal.get(Calendar.DAY_OF_MONTH);
-            month = CuslistCal.get(Calendar.MONTH) + 1;
-            year = CuslistCal.get(Calendar.YEAR);
+                day = CuslistCal.get(Calendar.DAY_OF_MONTH);
+                month = CuslistCal.get(Calendar.MONTH) + 1;
+                year = CuslistCal.get(Calendar.YEAR);
 
-            userDay = cal1.get(Calendar.DAY_OF_MONTH);
-            userMonth = cal1.get(Calendar.MONTH) + 1;
-            userYear = cal1.get(Calendar.YEAR);
-
-            if (day == userDay && month == userMonth && year == userYear) {
-                searchQueue.enqueue(order);
+                if (day == userDay && month == userMonth && year == userYear) {
+                    searchQueue.enqueue(order);
+                }
             }
         }
 
@@ -92,36 +92,56 @@ public class Pickup {
             matchedList.replace(index, matchedList.getItem(i));
             matchedList.replace(i, smallerOrder);
 
-            displaySortedPickup(matchedList, searchQueue);
         }
+
+        displaySortedPickup(matchedList, searchQueue);
     }
-    
+
     public static void sortPickupOrder(ListInterface<Order> pickupOrder, QueueInterface customizeOrder) {
 
         ListInterface<Order> sortedList = new ArrayList<>();
 
-        QueueInterface customOrder = customizeOrder;
+        QueueInterface<CustomizedPackage> customOrder = customizeOrder;
 
         ListInterface<Order> unOrderList = pickupOrder;
 
+        QueueInterface<CustomizedPackage> searchQueue = new ArrayQueue<>();
+
         Calendar cal = Calendar.getInstance();
         Calendar listCal = Calendar.getInstance();
+        Calendar cal1 = Calendar.getInstance();
+        Calendar CuslistCal = Calendar.getInstance();
         cal.setTime(new Date());
+
+        int day, month, year, userDay, userMonth, userYear;
+
+        userDay = cal.get(Calendar.DAY_OF_MONTH);
+        userMonth = cal.get(Calendar.MONTH) + 1;
+        userYear = cal.get(Calendar.YEAR);
 
         for (int j = 1; j <= unOrderList.getTotalEntries(); j++) {
             listCal.setTime(unOrderList.getItem(j).getDate());
-            int day, month, year, userDay, userMonth, userYear;
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
             year = listCal.get(Calendar.YEAR);
 
-            userDay = cal.get(Calendar.DAY_OF_MONTH);
-            userMonth = cal.get(Calendar.MONTH) + 1;
-            userYear = cal.get(Calendar.YEAR);
-
             if (day == userDay && month == userMonth && year == userYear) {
                 sortedList.add(unOrderList.getItem(j));
+            }
+        }
+
+        for (int i = -1; i <= customOrder.getBackIndex(); i++) {
+
+            CustomizedPackage tempCustomOrder = customOrder.dequeue();
+            CuslistCal.setTime(tempCustomOrder.getDeliveryDate());
+
+            day = CuslistCal.get(Calendar.DAY_OF_MONTH);
+            month = CuslistCal.get(Calendar.MONTH) + 1;
+            year = CuslistCal.get(Calendar.YEAR);
+
+            if (day == userDay && month == userMonth && year == userYear) {
+                searchQueue.enqueue(tempCustomOrder);
             }
         }
 
@@ -137,7 +157,7 @@ public class Pickup {
             sortedList.replace(i, smallerOrder);
         }
 
-        displaySortedPickup(sortedList, customOrder);
+        displaySortedPickup(sortedList, searchQueue);
 
     }
 
@@ -156,6 +176,7 @@ public class Pickup {
             if (orderedList.getItem(k).getCorp().getCompany() != null) {
                 System.out.println("Order ID: " + orderedList.getItem(k).getOrderID());
                 System.out.println("Company Name: " + orderedList.getItem(k).getCorp().getCompany());
+                System.out.println("Contact: " + orderedList.getItem(k).getCorp().getPhone());
                 String date = df.format(orderedList.getItem(k).getDate());
                 System.out.println("Pick up Date: " + date);
                 String time = dt.format(orderedList.getItem(k).getDate());
@@ -163,6 +184,7 @@ public class Pickup {
             } else {
                 System.out.println("Order ID: " + orderedList.getItem(k).getOrderID());
                 System.out.println("Name: " + orderedList.getItem(k).getCon().getUsername());
+                System.out.println("Contact: " + orderedList.getItem(k).getCon().getPhone());
                 String date = df.format(orderedList.getItem(k).getDate());
                 System.out.println("Pick up Date: " + date);
                 String time = dt.format(orderedList.getItem(k).getDate());
@@ -181,11 +203,13 @@ public class Pickup {
         if (!customOrder.isEmpty()) {
             for (int i = -1; i <= customOrder.getBackIndex(); i++) {
                 CustomizedPackage order = customOrder.dequeue();
-                System.out.println("Order ID: " + order.getOrderNum());
-                System.out.println("Consumer name: " + order.getCustomer().getUsername());
-                System.out.println("Contact: " + order.getCustomer().getPhone());
-                System.out.println("Pick up date: " + order.getDeliveryDateString() + "\n");
-                showQueue.enqueue(order);
+                if (order.getDeliveryType().getName().equals("Pickup")) {
+                    System.out.println("Order ID: " + order.getOrderNum());
+                    System.out.println("Consumer name: " + order.getCustomer().getUsername());
+                    System.out.println("Contact: " + order.getCustomer().getPhone());
+                    System.out.println("Pick up date: " + order.getDeliveryDateString() + "\n");
+                    showQueue.enqueue(order);
+                }
             }
         } else {
             System.out.println(FioreFlowershop.ConsoleColors.RED + "No record found!");

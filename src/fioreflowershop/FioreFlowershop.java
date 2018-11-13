@@ -196,7 +196,7 @@ public class FioreFlowershop {
             case 1:
                 CustomerMaintenance.staffEditType();
             case 2: //corporate customer invoice
-            case 3: //order pickup/delivery
+            case 3: //order pickup/delivery                
                 orderMenu();
                 break;
             case 4: //consumer payment management
@@ -206,12 +206,13 @@ public class FioreFlowershop {
 
     public static void florist() {
         System.out.println("\nPlease Select The Options Below.");
-        System.out.println("[1] View Today's Pick Up List");
-        System.out.println("[2] View Today's Delivery List");
-        System.out.println("[3] Generate Itemized Bill");
+        System.out.println("[1] View Order List");
+        System.out.println("[2] Generate Itemized Bill");
         int floristChoice = s.nextInt();
         switch (floristChoice) {
             case 1:
+                orderMenu();
+                break;
             case 2:
             case 3:
         }
