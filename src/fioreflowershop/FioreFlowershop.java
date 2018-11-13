@@ -129,6 +129,7 @@ public class FioreFlowershop {
         System.out.println("[3] Counter Staff");
         System.out.println("[4] Florist");
         System.out.println("[5] Delivery Staff");
+        System.out.println("[6] Back");
         int staffTypeChoice = s.nextInt();
         switch (staffTypeChoice) {
             case 1:
@@ -146,6 +147,9 @@ public class FioreFlowershop {
             case 5:
                 deliveryStaff();
                 break;
+            case 6:
+                userTypeSelection();
+                break;
         }
     }
 
@@ -155,6 +159,7 @@ public class FioreFlowershop {
         System.out.println("[2] Remove a product from catalog");
         System.out.println("[3] Edit the details of product in catalog");
         System.out.println("[4] Display created catalog");
+        System.out.println("[5] Back");
         int managerChoice = s.nextInt();
 
         String navigationMsg;
@@ -168,6 +173,9 @@ public class FioreFlowershop {
             case 4: //Display product
                 navigationMsg = "Display catalog";
                 CatalogMaintenance.displayCatalog(navigationMsg, freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
+                break;
+            case 5: //Back to staff selection
+                staffTypeSelection();
                 break;
         }
     }
@@ -327,6 +335,7 @@ public class FioreFlowershop {
     }
 
     public class ConsoleColors {
+
         // Reset
         public static final String RESET = "\033[0m";  // Text Reset
         // Regular Colors
