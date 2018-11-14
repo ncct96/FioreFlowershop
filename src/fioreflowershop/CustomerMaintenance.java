@@ -49,7 +49,7 @@ public class CustomerMaintenance {
                 System.out.println("[2] Make Customizable Flower Orders");
                 int orderChoice = s.nextInt();
                 switch(orderChoice){
-                    case 1: FioreFlowershop.gotoCatalogOrders(customerLoggedIn, corporateLoggedIn);//catalog flower order 
+                    case 1: FioreFlowershop.gotoCatalogOrders(customerLoggedIn,corporateLoggedIn); break; //catalog flower order
                     case 2: FioreFlowershop.gotoCustomizePackage(customerLoggedIn);//customizable flower order
                 }
         } else if (customerOptionsChoice == 2){ //View Ordered Items

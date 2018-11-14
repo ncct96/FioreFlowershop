@@ -42,12 +42,12 @@ public class FioreFlowershop {
     private static ArrayList<CatalogPackage> freshFlowerDiscounted = new ArrayList<>();
     private static ArrayList<CatalogPackage> bouquetsDiscounted = new ArrayList<>();
     private static ArrayList<CatalogPackage> flowerArrangementDiscounted = new ArrayList<>();
+    private static ListInterface<CatalogOrder1> shoppingCart = new ArrayList<>();
 
     public static void main(String[] args) {
         Consumer customer = new Consumer("Chiu Peeng", "adgfafgjyaf", "0128198471", "No 13");
-        initializePackages();
-        CatalogOrder.initializeData(pickupOrder, deliveryOrder);
-
+//        CatalogOrder.initializeData(pickupOrder, deliveryOrder);
+        testing();
         userTypeSelection();
     }
 
@@ -88,10 +88,6 @@ public class FioreFlowershop {
         customizedPackages.enqueue(new CustomizedPackage(styles.getItem(4), sizes.getItem(2), flowers.getItem(4), accessories.getItem(1), priorities.getItem(1), deliveryTypes.getItem(1), customer1));
         customizedPackages.enqueue(new CustomizedPackage(styles.getItem(1), sizes.getItem(2), flowers.getItem(5), accessories.getItem(2), priorities.getItem(1), deliveryTypes.getItem(2), customer));
     }
-    
-    public static void gotoCatalogOrders(Consumer customerLoggedIn, CorporateCustomer corporateLoggedIn){
-        // Redirect to flower catalog orders
-    }
 
     public static void gotoCustomizePackage(Consumer customerLoggedIn) {
         /////// CHIUPEENG DEBUG LOOP //////
@@ -99,6 +95,14 @@ public class FioreFlowershop {
 //            CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
 //        }
         CustomizePackage.customizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customerLoggedIn, customizedPackages);
+    }
+
+    public static void gotoCatalogOrders(Consumer customerLoggedIn, CorporateCustomer corporateLoggedIn) {
+        if (corporateLoggedIn == null) {
+            CatalogOrder.CustomerOrderMain(shoppingCart, customerLoggedIn, freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
+        } else if (customerLoggedIn == null) {
+            CatalogOrder.CorporateOrderMain(shoppingCart, corporateLoggedIn, freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
+        }
     }
 
     //Dummy data - woo for display purpose
@@ -133,6 +137,7 @@ public class FioreFlowershop {
         System.out.println("[3] Counter Staff");
         System.out.println("[4] Florist");
         System.out.println("[5] Delivery Staff");
+        System.out.println("[6] Back");
         int staffTypeChoice = s.nextInt();
         switch (staffTypeChoice) {
             case 1:
@@ -150,6 +155,9 @@ public class FioreFlowershop {
             case 5:
                 deliveryStaff();
                 break;
+            case 6:
+                userTypeSelection();
+                break;
         }
     }
 
@@ -159,6 +167,7 @@ public class FioreFlowershop {
         System.out.println("[2] Remove a product from catalog");
         System.out.println("[3] Edit the details of product in catalog");
         System.out.println("[4] Display created catalog");
+        System.out.println("[5] Back");
         int managerChoice = s.nextInt();
 
         String navigationMsg;
@@ -172,6 +181,9 @@ public class FioreFlowershop {
             case 4: //Display product
                 navigationMsg = "Display catalog";
                 CatalogMaintenance.displayCatalog(navigationMsg, freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
+                break;
+            case 5: //Back to staff selection
+                staffTypeSelection();
                 break;
         }
     }
@@ -330,7 +342,12 @@ public class FioreFlowershop {
         return corporate;
     }
 
+    public static ListInterface<CatalogOrder1> getShoppingCart() {
+        return shoppingCart;
+    }
+
     public class ConsoleColors {
+
         // Reset
         public static final String RESET = "\033[0m";  // Text Reset
         // Regular Colors
