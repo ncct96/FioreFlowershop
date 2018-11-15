@@ -53,6 +53,9 @@ public class FioreFlowershop {
     }
 
     public static void initializePackages() {
+        //consumer initialize
+        consumer.add(new Consumer());
+        
         styles.add(new Item("Fan", 10));
         styles.add(new Item("Elliptical", 10));
         styles.add(new Item("Vertical", 10));
