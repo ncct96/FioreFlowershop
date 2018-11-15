@@ -46,7 +46,8 @@ public class FioreFlowershop {
 
     public static void main(String[] args) {
         Consumer customer = new Consumer("Chiu Peeng", "adgfafgjyaf", "0128198471", "No 13");
-//        CatalogOrder.initializeData(pickupOrder, deliveryOrder);
+        CatalogOrder.initializeData(pickupOrder, deliveryOrder);
+        initializePackages();
         testing();
         userTypeSelection();
     }
