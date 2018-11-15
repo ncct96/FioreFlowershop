@@ -54,7 +54,8 @@ public class FioreFlowershop {
 
     public static void initializePackages() {
         //consumer initialize
-        consumer.add(new Consumer());
+        consumer.add(new Consumer("ceekay","abcdef123","ceekay@example.com","0125566922","No Address Available"));
+        corporate.add(new CorporateCustomer("Noice","noice@example.com","0123456789","No Address","abcdef","Not your business"));
         
         styles.add(new Item("Fan", 10));
         styles.add(new Item("Elliptical", 10));
