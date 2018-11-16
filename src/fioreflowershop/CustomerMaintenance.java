@@ -32,7 +32,7 @@ public class CustomerMaintenance {
             switch(logOrCreate){
                 case 1: CreateAccount(); break;
                 case 2: CustLogIn(); break;
-                case 3: //back to main  menu
+                case 3: FioreFlowershop.userTypeSelection();
             }
         }
         System.out.println("\nWelcome Customers ! Fiore Flowershop is at your service :D ");
@@ -40,8 +40,7 @@ public class CustomerMaintenance {
         System.out.println("[1] Make Flower Order");
         System.out.println("[2] View Ordered Items");
         System.out.println("[3] Edit Flower Order");
-        System.out.println("[4] Back to Main Menu");
-        System.out.println("[5] Log Out From This Account");
+        System.out.println("[4] Log Out From This Account");
         int customerOptionsChoice = s.nextInt();
         if(customerOptionsChoice == 1){ //Make Flower Order
                 System.out.println("\nPlease Select The Options Below.");
@@ -57,8 +56,6 @@ public class CustomerMaintenance {
         } else if(customerOptionsChoice == 3){ //Edit Flower Order
             
         } else if(customerOptionsChoice == 4){
-            FioreFlowershop.userTypeSelection();
-        } else if(customerOptionsChoice == 5){
             if(customerLoggedIn != null){
             customerLoggedIn = null;
             System.out.println("\n" + FioreFlowershop.ConsoleColors.GREEN + "Successfully Logged Out From Customer Account ! " + FioreFlowershop.ConsoleColors.RESET);
