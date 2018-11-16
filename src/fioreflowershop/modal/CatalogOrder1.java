@@ -5,6 +5,8 @@
  */
 package fioreflowershop.modal;
 
+import java.util.Date;
+
 /**
  *
  * @author Zion Tseu
@@ -20,12 +22,17 @@ public class CatalogOrder1 {
     private double itemPrice;
     private CorporateCustomer corporate = new CorporateCustomer();
     private Consumer customer = new Consumer();
+    private Date orderDate;
+    private Long pickupTime; //or delivery time   
+    private String orderType;
 
     public CatalogOrder1() {
     }
     
-    public CatalogOrder1(Consumer customer, String itemName, String itemStyle, String itemSize, String itemFlower, String itemAccessory,double itemPrice,int itemQuantity) {
+    public CatalogOrder1(Consumer customer, String orderType, Long pickupTime, String itemName, String itemStyle, String itemSize, String itemFlower, String itemAccessory,double itemPrice,int itemQuantity) {
         this.customer = customer;
+        this.orderType = orderType;
+        this.pickupTime = pickupTime;
         this.itemName = itemName;
         this.itemStyle = itemStyle;
         this.itemSize = itemSize;
@@ -35,8 +42,10 @@ public class CatalogOrder1 {
         this.itemQuantity = itemQuantity;    
     }
     
-    public CatalogOrder1(CorporateCustomer corporate, String itemName, String itemStyle, String itemSize, String itemFlower, String itemAccessory,double itemPrice,int itemQuantity) {
+    public CatalogOrder1(CorporateCustomer corporate,String orderType, Long pickupTime, String itemName, String itemStyle, String itemSize, String itemFlower, String itemAccessory,double itemPrice,int itemQuantity) {
         this.corporate = corporate;
+        this.orderType = orderType;
+        this.pickupTime = pickupTime;
         this.itemName = itemName;
         this.itemStyle = itemStyle;
         this.itemSize = itemSize;
@@ -118,23 +127,25 @@ public class CatalogOrder1 {
         this.itemPrice = itemPrice;
     }
 
-//    public CatalogPackage getItem() {
-//        return item;
-//    }
-//
-//    public void setItem(CatalogPackage item) {
-//        this.item = item;
-//    }
-    
+    public Date getOrderDate() {
+        return orderDate;
+    }
 
-//    @Override
-//    public String toString() {
-//        return "CatalogOrder{" + "item=" + item + ", itemQuantity=" + itemQuantity + '}';
-//    }
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public Long getPickupTime() {
+        return pickupTime;
+    }
+
+    public void setPickupTime(Long pickupTime) {
+        this.pickupTime = pickupTime;
+    }
 
     @Override
     public String toString() {
-        return "CatalogOrder{" + "itemName=" + itemName + ", itemStyle=" + itemStyle + ", itemSize=" + itemSize + ", itemFlower=" + itemFlower + ", itemQuantity=" + itemQuantity + ", itemPrice=" + itemPrice + '}';
+        return "CatalogOrder1{" + "itemName=" + itemName + ", itemStyle=" + itemStyle + ", itemSize=" + itemSize + ", itemFlower=" + itemFlower + ", itemAccesscory=" + itemAccesscory + ", itemQuantity=" + itemQuantity + ", itemPrice=" + itemPrice + ", corporate=" + corporate + ", customer=" + customer + ", orderDate=" + orderDate + ", pickupTime=" + pickupTime + '}';
     }
     
 }
