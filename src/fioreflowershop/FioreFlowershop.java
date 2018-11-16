@@ -44,19 +44,26 @@ public class FioreFlowershop {
     private static ArrayList<CatalogPackage> flowerArrangementDiscounted = new ArrayList<>();
     private static ListInterface<CatalogOrder1> shoppingCart = new ArrayList<>();
 
+    private static int firstrun = 0;
+
     public static void main(String[] args) {
-        Consumer customer = new Consumer("Chiu Peeng", "testing", "testing", "0128198471", "No 13");
-        CatalogOrder.initializeData(pickupOrder, deliveryOrder);
-        initializePackages();
-        testing();
+
+        ++firstrun;
+
+        if (firstrun == 1) {
+            CatalogOrder.initializeData(pickupOrder, deliveryOrder);
+            initializePackages();
+        }
+        //testing();
         userTypeSelection();
     }
 
     public static void initializePackages() {
         //consumer initialize
-        consumer.add(new Consumer("ceekay","abcdef123","ceekay@example.com","0125566922","No Address Available"));
-        corporate.add(new CorporateCustomer("Noice","noice@example.com","0123456789","No Address","abcdef","Not your business"));
-        
+        consumer.add(new Consumer("ceekay", "abcdef123", "ceekay@example.com", "0125566922", "No Address Available"));
+        corporate.add(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business"));
+        consumer.add(new Consumer("testing", "testing", "testing", "0125566922", "No Address Available"));
+
         styles.add(new Item("Fan", 10));
         styles.add(new Item("Elliptical", 10));
         styles.add(new Item("Vertical", 10));
@@ -202,7 +209,8 @@ public class FioreFlowershop {
         switch (inventoryClerkChoice) {
             case 1: //Check stock quantity
             case 2: //Restock product
-            case 3:userTypeSelection();
+            case 3:
+                userTypeSelection();
         }
     }
 
@@ -225,7 +233,9 @@ public class FioreFlowershop {
                 break;
             case 4: //consumer payment management
             case 5: //view sales order
-            case 6: userTypeSelection();break;
+            case 6:
+                userTypeSelection();
+                break;
         }
     }
 
@@ -240,7 +250,9 @@ public class FioreFlowershop {
                 orderMenu();
                 break;
             case 2:
-            case 3:staffTypeSelection();break;
+            case 3:
+                staffTypeSelection();
+                break;
         }
     }
 
@@ -259,7 +271,9 @@ public class FioreFlowershop {
             case 3:
             case 4:
             case 5:
-            case 6:userTypeSelection();break;
+            case 6:
+                userTypeSelection();
+                break;
         }
     }
 
@@ -331,11 +345,11 @@ public class FioreFlowershop {
                 } catch (ParseException ex) {
                     Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } else{
-                    
+            } else {
+
             }
 
-        } else if(choice == 3) {
+        } else if (choice == 3) {
             florist();
         }
     }
