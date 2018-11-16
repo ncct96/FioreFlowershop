@@ -194,7 +194,7 @@ public class Pickup {
         }
 
         if (orderedList.isEmpty()) {
-            System.err.println("No record found!");
+            System.out.println(FioreFlowershop.ConsoleColors.RED + "No record found!");
         }
 
         System.out.println("\nCustomized Package");
