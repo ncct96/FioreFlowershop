@@ -71,6 +71,7 @@ public class CustomerMaintenance {
         System.out.println("\nPlease Select The Type of Customer.");
         System.out.println("[1] Consumers");
         System.out.println("[2] Corporate Customers");
+        System.out.println("[3] Back");
         int choiceCust = s.nextInt();
         if(choiceCust == 1){
             boolean exist = false; String passw = "";
@@ -141,7 +142,7 @@ public class CustomerMaintenance {
                     System.out.println("\n" + FioreFlowershop.ConsoleColors.RED_BOLD + "Password Mismatched, Please Try Again.\n" + FioreFlowershop.ConsoleColors.RESET);
                 }
             }while(passwCheck == false);
-            CorporateCustomer Corporate = new CorporateCustomer(usern, email, number, address, passw, company);
+            CorporateCustomer Corporate = new CorporateCustomer(usern, email, number, address, passw, company, 5000);
             
             if(userSize != null){
                 for(int i = 1; i <= userSize.getTotalEntries(); i++){
@@ -157,6 +158,8 @@ public class CustomerMaintenance {
                 userSize.add(Corporate);
                 System.out.println("\n" + FioreFlowershop.ConsoleColors.GREEN + "New Account Successfully Created ! " + FioreFlowershop.ConsoleColors.RESET);
             }
+            customerOptions();
+        } else if(choiceCust == 3){
             customerOptions();
         }
     }
@@ -229,6 +232,7 @@ public class CustomerMaintenance {
         System.out.println("\nPlease Select The Type Of Customer To Edit.");
         System.out.println("[1] Customer");
         System.out.println("[2] Corporate Customer");
+        System.out.println("[3] Back");
         int staffEditChoice = s.nextInt();
         if(staffEditChoice == 1){
             String edit;
@@ -277,7 +281,7 @@ public class CustomerMaintenance {
         }
         } else if(staffEditChoice == 2){
                 String edit; int editLimit;
-                for(int i = 1; i <= FioreFlowershop.getCustomer().getTotalEntries(); i++){
+                for(int i = 1; i <= FioreFlowershop.getCorporate().getTotalEntries(); i++){
                     System.out.println("\n"+FioreFlowershop.ConsoleColors.BLUE + "["+ i + "] "+ FioreFlowershop.ConsoleColors.RESET + FioreFlowershop.getCorporate().toString());
                 }
                     System.out.println("Please Enter The Number of Customer You Would Want To Edit.");
@@ -334,6 +338,8 @@ public class CustomerMaintenance {
             FioreFlowershop.getCorporate().getItem(corpEditChoice).setMonthlyLimit(editLimit);
             System.out.println("Successfully Modified ! ");
         }
+      } else if(staffEditChoice == 3){
+          FioreFlowershop.counterStaff();
       }
         staffNextOption();
     }

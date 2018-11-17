@@ -60,9 +60,15 @@ public class FioreFlowershop {
 
     public static void initializePackages() {
         //consumer initialize
+         Date todayDate = new Date();
+         long pickupTime = todayDate.getTime();
         consumer.add(new Consumer("ceekay", "abcdef123", "ceekay@example.com", "0125566922", "No Address Available"));
-        corporate.add(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business"));
+        corporate.add(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000));
         consumer.add(new Consumer("testing", "testing", "testing", "0125566922", "No Address Available"));
+        shoppingCart.add(new CatalogOrder1(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000),
+                "Delivery", pickupTime, "FlowerPowa", "Majestic AF", 
+                "Bigger than u mama", "Some Flower Name", 
+                "Accessory", 100.00, 3));
 
         styles.add(new Item("Fan", 10));
         styles.add(new Item("Elliptical", 10));
@@ -227,7 +233,7 @@ public class FioreFlowershop {
         switch (counterStaffChoice) {
             case 1:
                 CustomerMaintenance.staffEditType();
-            case 2: //corporate customer invoice
+            case 2: InvoicePayment.invoiceMaintenance();break;
             case 3: //order pickup/delivery                
                 orderMenu();
                 break;
