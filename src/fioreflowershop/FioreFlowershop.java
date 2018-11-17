@@ -66,7 +66,7 @@ public class FioreFlowershop {
         corporate.add(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000));
         consumer.add(new Consumer("testing", "testing", "testing", "0125566922", "No Address Available"));
         shoppingCart.add(new CatalogOrder1(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000),
-                "Delivery", pickupTime, "FlowerPowa", "Majestic AF", 
+                "Delivery", pickupTime, "FlowerPowa", "Majestic AFF", 
                 "Bigger than u mama", "Some Flower Name", 
                 "Accessory", 100.00, 3));
 
