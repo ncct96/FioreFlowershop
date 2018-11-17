@@ -63,7 +63,6 @@ public class CustomerMaintenance {
             corporateLoggedIn = null;
             System.out.println("\n" + FioreFlowershop.ConsoleColors.GREEN + "Successfully Logged Out From Corporate Customer Account ! " + FioreFlowershop.ConsoleColors.RESET);
         }
-        customerOptions();
      }
     }
     
@@ -174,9 +173,9 @@ public class CustomerMaintenance {
         
         for(int i = 1; i <= FioreFlowershop.getCustomer().getTotalEntries(); i++){
             if(FioreFlowershop.getCustomer().getItem(i).getEmail().equals(email) && FioreFlowershop.getCustomer().getItem(i).getPassword().equals(passw)){
-                System.out.println(FioreFlowershop.ConsoleColors.GREEN + "\nWelcome Back " + FioreFlowershop.getCustomer().getItem(i).getUsername() + " !" + FioreFlowershop.ConsoleColors.RESET);
                 customerLoggedIn = new Consumer(FioreFlowershop.getCustomer().getItem(i).getUsername(),FioreFlowershop.getCustomer().getItem(i).getEmail(),
                 FioreFlowershop.getCustomer().getItem(i).getPhone(), FioreFlowershop.getCustomer().getItem(i).getAddress());
+                System.out.println(FioreFlowershop.ConsoleColors.GREEN + "\nWelcome Back " + customerLoggedIn.getUsername() + " !" + FioreFlowershop.ConsoleColors.RESET);
                 customerHit = true; break;
             } else {
                 customerHit = false;
