@@ -2,12 +2,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fioreflowershop;
 
-import com.google.maps.errors.ApiException;
-import fioreflowershop.*;
-import fioreflowershop.adt.*;
-import fioreflowershop.modal.*;
+package com.mycompany.fioreflowershop;
+
+import com.mycompany.fioreflowershop.*;
+import com.mycompany.fioreflowershop.adt.*;
+import com.mycompany.fioreflowershop.modal.*;
 import java.io.Console;
 import java.io.IOException;
 import java.text.ParseException;
@@ -64,15 +64,9 @@ public class FioreFlowershop {
 
     public static void initializePackages() {
         //consumer initialize
-         Date todayDate = new Date();
-         long pickupTime = todayDate.getTime();
         consumer.add(new Consumer("ceekay", "abcdef123", "ceekay@example.com", "0125566922", "No Address Available"));
-        corporate.add(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000));
+        corporate.add(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business"));
         consumer.add(new Consumer("testing", "testing", "testing", "0125566922", "No Address Available"));
-        shoppingCart.add(new CatalogOrder1(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000),
-                "Delivery", pickupTime, "FlowerPowa", "Majestic AFF", 
-                "Bigger than u mama", "Some Flower Name", 
-                "Accessory", 100.00, 3));
 
         styles.add(new Item("Fan", 10));
         styles.add(new Item("Elliptical", 10));
@@ -237,7 +231,7 @@ public class FioreFlowershop {
         switch (counterStaffChoice) {
             case 1:
                 CustomerMaintenance.staffEditType();
-            case 2: InvoicePayment.invoiceMaintenance();break;
+            case 2: //corporate customer invoice
             case 3: //order pickup/delivery                
                 orderMenu();
                 break;
@@ -279,17 +273,17 @@ public class FioreFlowershop {
             case 1:
             case 2:
             case 3:
-        {
-            try {
-                DeliveryOptimization.distanceMatrix(origin, dest);
-                        } catch (ApiException ex) {
-                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+//        {
+//            try {
+//                DeliveryOptimization.distanceMatrix(origin, dest);
+//                        } catch (ApiException ex) {
+//                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+//            } catch (InterruptedException ex) {
+//                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+//            } catch (IOException ex) {
+//                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
             case 4:
             case 5:
             case 6:

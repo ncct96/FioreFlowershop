@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fioreflowershop;
+package com.mycompany.fioreflowershop;
 
-import fioreflowershop.adt.ArrayList;
-import fioreflowershop.adt.ListInterface;
-import fioreflowershop.modal.CatalogPackage;
-import fioreflowershop.modal.Consumer;
-import fioreflowershop.modal.CorporateCustomer;
-import fioreflowershop.modal.Order;
-import fioreflowershop.modal.CatalogOrder1;
+import com.mycompany.fioreflowershop.adt.ArrayList;
+import com.mycompany.fioreflowershop.adt.ListInterface;
+import com.mycompany.fioreflowershop.modal.CatalogPackage;
+import com.mycompany.fioreflowershop.modal.Consumer;
+import com.mycompany.fioreflowershop.modal.CorporateCustomer;
+import com.mycompany.fioreflowershop.modal.Order;
+import com.mycompany.fioreflowershop.modal.CatalogOrder1;
 import java.util.Scanner;
 import java.util.Calendar;
 import java.util.Date;
@@ -531,7 +531,7 @@ public class CatalogOrder {
     public static void initializeData(ListInterface pickupOrder, ListInterface deliveryOrder) {
 
         Consumer con = new Consumer("Ncct96", "adgfafgjyaf", "0128198471", "No 13");
-        CorporateCustomer corp = new CorporateCustomer("Bxxx1", "sdgsjhd@gmail", "0165939123", "No 25", "211221", "TARUC", 5000);
+        CorporateCustomer corp = new CorporateCustomer("Bxxx1", "sdgsjhd@gmail", "0165939123", "No 25", "211221", "TARUC");
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR, 2018);
         cal.set(Calendar.DAY_OF_MONTH, 13);
@@ -584,8 +584,8 @@ public class CatalogOrder {
         pickupOrder.add(order6);
 
         Consumer con1 = new Consumer("ChenKang", "adgfafgjyaf", "0165554313", "No 13");
-        CorporateCustomer corp1 = new CorporateCustomer("BahLI", "sdgsjhd@gmail", "058067843", "No 25", "211221", "SUNWAY BERHAD", 5000);
-        CorporateCustomer corp2 = new CorporateCustomer("BahLI", "sdgsjhd@gmail", "058017323", "No 25", "211221", "AEON BERHAD", 5000);
+        CorporateCustomer corp1 = new CorporateCustomer("BahLI", "sdgsjhd@gmail", "058067843", "No 25", "211221", "SUNWAY BERHAD");
+        CorporateCustomer corp2 = new CorporateCustomer("BahLI", "sdgsjhd@gmail", "058017323", "No 25", "211221", "AEON BERHAD");
         Calendar cal4 = Calendar.getInstance();
         cal4.set(Calendar.YEAR, 2018);
         cal4.set(Calendar.DAY_OF_MONTH, 20);
