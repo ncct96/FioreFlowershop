@@ -44,6 +44,6 @@ public interface QueueInterface<T> {
    * Task: Removes all entries from the queue.
    */
   public void clear();
-  
+ 
   public int getBackIndex();
 }

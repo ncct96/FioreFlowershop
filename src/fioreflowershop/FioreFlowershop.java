@@ -4,10 +4,12 @@
  */
 package fioreflowershop;
 
+import com.google.maps.errors.ApiException;
 import fioreflowershop.*;
 import fioreflowershop.adt.*;
 import fioreflowershop.modal.*;
 import java.io.Console;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -43,6 +45,8 @@ public class FioreFlowershop {
     private static ArrayList<CatalogPackage> bouquetsDiscounted = new ArrayList<>();
     private static ArrayList<CatalogPackage> flowerArrangementDiscounted = new ArrayList<>();
     private static ListInterface<CatalogOrder1> shoppingCart = new ArrayList<>();
+    private static String[] origin = {"Taiping"};
+    private static String[] dest = {"Kuala Lumpur","Penang","Ipoh"};
 
     private static int firstrun = 0;
 
@@ -99,7 +103,7 @@ public class FioreFlowershop {
         customizedPackages.enqueue(new CustomizedPackage(styles.getItem(3), sizes.getItem(1), flowers.getItem(2), accessories.getItem(1), priorities.getItem(2), deliveryTypes.getItem(2), customer));
         customizedPackages.enqueue(new CustomizedPackage(styles.getItem(4), sizes.getItem(2), flowers.getItem(4), accessories.getItem(1), priorities.getItem(1), deliveryTypes.getItem(1), customer1));
         customizedPackages.enqueue(new CustomizedPackage(styles.getItem(1), sizes.getItem(2), flowers.getItem(5), accessories.getItem(2), priorities.getItem(1), deliveryTypes.getItem(2), customer));
-    }
+    } 
 
     public static void gotoCustomizePackage(Consumer customerLoggedIn) {
         /////// CHIUPEENG DEBUG LOOP //////
@@ -269,6 +273,17 @@ public class FioreFlowershop {
             case 1:
             case 2:
             case 3:
+        {
+            try {
+                DeliveryOptimization.distanceMatrix(origin, dest);
+                        } catch (ApiException ex) {
+                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
             case 4:
             case 5:
             case 6:
