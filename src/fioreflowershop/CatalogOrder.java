@@ -576,8 +576,6 @@ public class CatalogOrder {
         Order order5 = new Order(1005, "Pickup", corp, e);
         Order order6 = new Order(1006, "Pickup", con, f);
 
-        System.out.print(order2.getDate());
-
         pickupOrder.add(order);
         pickupOrder.add(order2);
         pickupOrder.add(order3);
@@ -631,8 +629,6 @@ public class CatalogOrder {
         Order order10 = new Order(1010, "Delivery", corp1, j);
         Order order11 = new Order(1011, "Delivery", corp2, k);
         Order order12 = new Order(1012, "Delivery", con1, l);
-
-        System.out.print(order2.getDate());
 
         deliveryOrder.add(order7);
         deliveryOrder.add(order8);
