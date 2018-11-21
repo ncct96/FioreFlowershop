@@ -5,10 +5,9 @@
 
 package com.mycompany.fioreflowershop;
 
-import com.mycompany.fioreflowershop.*;
+import com.google.maps.errors.ApiException;
 import com.mycompany.fioreflowershop.adt.*;
 import com.mycompany.fioreflowershop.modal.*;
-import java.io.Console;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -46,7 +45,7 @@ public class FioreFlowershop {
     private static ArrayList<CatalogPackage> flowerArrangementDiscounted = new ArrayList<>();
     private static ListInterface<CatalogOrder1> shoppingCart = new ArrayList<>();
     private static String[] origin = {"Taiping"};
-    private static String[] dest = {"Kuala Lumpur","Penang","Ipoh"};
+    private static String[] dest = {"PV13 Lake Condominium","PV15 Lake Condominium","Ipoh"};
 
     private static int firstrun = 0;
 
@@ -273,17 +272,17 @@ public class FioreFlowershop {
             case 1:
             case 2:
             case 3:
-//        {
-//            try {
-//                DeliveryOptimization.distanceMatrix(origin, dest);
-//                        } catch (ApiException ex) {
-//                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
-//            } catch (InterruptedException ex) {
-//                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
-//            } catch (IOException ex) {
-//                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
+        {
+            try {
+                DeliveryOptimization.distanceMatrix(origin, dest);
+                        } catch (ApiException ex) {
+                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
             case 4:
             case 5:
             case 6:
