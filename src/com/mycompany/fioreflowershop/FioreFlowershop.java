@@ -44,8 +44,8 @@ public class FioreFlowershop {
     private static ArrayList<CatalogPackage> bouquetsDiscounted = new ArrayList<>();
     private static ArrayList<CatalogPackage> flowerArrangementDiscounted = new ArrayList<>();
     private static ListInterface<CatalogOrder1> shoppingCart = new ArrayList<>();
-    private static String[] origin = {"Taiping"};
-    private static String[] dest = {"PV13 Lake Condominium","PV15 Lake Condominium","Ipoh"};
+    private static String[] origin = {"Relau","Relau","Relau","Relau","Relau","Relau","Relau"};
+    private static String[] dest = {"Relau","Bayan Lepas,Penang","Batu Ferringhi,Penang","Bayan Lepas,Penang","Jelutong,Penang","Batu Ferringhi,Penang", "Gurney Plaza, 170, Gurney Dr, Pulau Tikus, 10250 George Town,Penang"};
 
     private static int firstrun = 0;
 
@@ -64,7 +64,7 @@ public class FioreFlowershop {
     public static void initializePackages() {
         //consumer initialize
         consumer.add(new Consumer("ceekay", "abcdef123", "ceekay@example.com", "0125566922", "No Address Available"));
-        corporate.add(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business"));
+        corporate.add(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", 12321, 21123));
         consumer.add(new Consumer("testing", "testing", "testing", "0125566922", "No Address Available"));
 
         styles.add(new Item("Fan", 10));

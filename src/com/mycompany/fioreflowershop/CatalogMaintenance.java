@@ -23,7 +23,7 @@ public class CatalogMaintenance {
     static Scanner scan = new Scanner(System.in);
 
     //Display item type
-    public static void productType(String navigationTitle, ArrayList<CatalogPackage> freshFlower, ArrayList<CatalogPackage> bouquets, ArrayList<CatalogPackage> flowerArrangement, ArrayList<CatalogPackage> freshFlowerDiscounted, ArrayList<CatalogPackage> bouquetsDiscounted, ArrayList<CatalogPackage> flowerArrangementDiscounted) {
+    public static void productType(String navigationTitle, ArrayList<CatalogPackage> freshFlower, ArrayList<CatalogPackage> bouquets, ArrayList<CatalogPackage> flowerArrangement, ArrayList<CatalogPackage> freshFlowerDiscounted,ArrayList<CatalogPackage> bouquetsDiscounted, ArrayList<CatalogPackage> flowerArrangementDiscounted) {
         //Product type menu
         int productTypes = 0;
         do {
@@ -185,7 +185,7 @@ public class CatalogMaintenance {
             } while (nextProduct == 'Y' || nextProduct == 'y');
 
             if (nextProduct != 'y' || nextProduct != 'Y') {
-                FioreFlowershop.manager();
+               FioreFlowershop.manager();
             }
         }
     }
