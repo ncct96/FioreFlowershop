@@ -24,9 +24,10 @@ public class CorporateCustomer extends User{
         this.creditSpent = creditSpent;
     }
     
-    public CorporateCustomer(String username, String email, String phone, String address, String password, String company){
+    public CorporateCustomer(String username, String email, String phone, String address, String password, String company, int monthLimit){
         super(username, email, phone, address, password);
         this.company = company;
+        this.monthlyLimit = monthLimit;
     }
 
     public int getCreditSpent() {
