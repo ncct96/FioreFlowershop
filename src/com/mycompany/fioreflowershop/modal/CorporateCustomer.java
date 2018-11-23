@@ -13,7 +13,7 @@ public class CorporateCustomer extends User{
     private String company;
     private int monthlyLimit;
     private int creditSpent;
-    
+
     public CorporateCustomer(){
         
     }

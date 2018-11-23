@@ -585,8 +585,11 @@ public class CatalogOrder {
         pickupOrder.add(order6);
 
         Consumer con1 = new Consumer("ChenKang", "adgfafgjyaf", "0165554313", "No 13");
-        CorporateCustomer corp1 = new CorporateCustomer("BahLI", "sdgsjhd@gmail", "058067843", "No 25", "211221", "SUNWAY BERHAD", 5000);
-        CorporateCustomer corp2 = new CorporateCustomer("BahLI", "sdgsjhd@gmail", "058017323", "No 25", "211221", "AEON BERHAD", 5000);
+        CorporateCustomer corp1 = new CorporateCustomer("BahLI", "sdgsjhd@gmail", "058067843", "B-13-10,Pv 13 Condominium", "211221", "SUNWAY BERHAD", 5000);
+        CorporateCustomer corp2 = new CorporateCustomer("BahLI", "sdgsjhd@gmail", "058017323", "Penang", "211221", "AEON BERHAD", 5000);
+        CorporateCustomer corp3 = new CorporateCustomer("BahLI", "sdgsjhd@gmail", "058017323", "Cheras", "211221", "JUSCO BERHAD", 5000);
+        CorporateCustomer corp4 = new CorporateCustomer("BahLI", "sdgsjhd@gmail", "058017323", "Johor", "211221", "MOMO BERHAD", 5000);
+
         Calendar cal4 = Calendar.getInstance();
         cal4.set(Calendar.YEAR, 2018);
         cal4.set(Calendar.DAY_OF_MONTH, 20);
@@ -627,8 +630,8 @@ public class CatalogOrder {
         Order order7 = new Order(1007, "Delivery", con1, g);
         Order order8 = new Order(1008, "Delivery", corp1, h);
         Order order9 = new Order(1009, "Delivery", corp2, i);
-        Order order10 = new Order(1010, "Delivery", corp1, j);
-        Order order11 = new Order(1011, "Delivery", corp2, k);
+        Order order10 = new Order(1010, "Delivery", corp3, j);
+        Order order11 = new Order(1011, "Delivery", corp4, k);
         Order order12 = new Order(1012, "Delivery", con1, l);
 
         deliveryOrder.add(order7);

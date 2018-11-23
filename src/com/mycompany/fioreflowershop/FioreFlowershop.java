@@ -2,7 +2,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.mycompany.fioreflowershop;
 
 import com.google.maps.errors.ApiException;
@@ -44,8 +43,10 @@ public class FioreFlowershop {
     private static ArrayList<CatalogPackage> bouquetsDiscounted = new ArrayList<>();
     private static ArrayList<CatalogPackage> flowerArrangementDiscounted = new ArrayList<>();
     private static ListInterface<CatalogOrder1> shoppingCart = new ArrayList<>();
-    private static String[] origin = {"Relau","Relau","Relau","Relau","Relau","Relau","Relau"};
-    private static String[] dest = {"Relau","Bayan Lepas,Penang","Batu Ferringhi,Penang","Bayan Lepas,Penang","Jelutong,Penang","Batu Ferringhi,Penang", "Gurney Plaza, 170, Gurney Dr, Pulau Tikus, 10250 George Town,Penang"};
+    private static String[] origin = {"George Town, Penang", "Taiping, Perak", "Kedah"};
+    private static String[] dest = {"George Town, Penang", "Taiping, Perak", "Kedah"};
+    private static final String shopAddress = "Kedah";
+
 
     private static int firstrun = 0;
 
@@ -102,7 +103,8 @@ public class FioreFlowershop {
         customizedPackages.enqueue(new CustomizedPackage(styles.getItem(3), sizes.getItem(1), flowers.getItem(2), accessories.getItem(1), priorities.getItem(2), deliveryTypes.getItem(2), customer));
         customizedPackages.enqueue(new CustomizedPackage(styles.getItem(4), sizes.getItem(2), flowers.getItem(4), accessories.getItem(1), priorities.getItem(1), deliveryTypes.getItem(1), customer1));
         customizedPackages.enqueue(new CustomizedPackage(styles.getItem(1), sizes.getItem(2), flowers.getItem(5), accessories.getItem(2), priorities.getItem(1), deliveryTypes.getItem(2), customer));
-    } 
+    }
+
 
     public static void gotoCustomizePackage(Consumer customerLoggedIn) {
         /////// CHIUPEENG DEBUG LOOP //////
@@ -168,7 +170,18 @@ public class FioreFlowershop {
                 florist();
                 break;
             case 5:
+
+        {
+            try {
                 deliveryStaff();
+            } catch (ApiException ex) {
+                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
                 break;
             case 6:
                 userTypeSelection();
@@ -258,8 +271,7 @@ public class FioreFlowershop {
                 break;
         }
     }
-
-    public static void deliveryStaff() {
+    public static void deliveryStaff() throws ApiException, InterruptedException, IOException {
         System.out.println("\nPlease Select The Options Below.");
         System.out.println("[1] View Ongoing Delivery List");
         System.out.println("[2] Update Status for Delivery Order");
@@ -271,18 +283,9 @@ public class FioreFlowershop {
         switch (deliveryStaffChoice) {
             case 1:
             case 2:
-            case 3:
-        {
-            try {
-                DeliveryOptimization.distanceMatrix(origin, dest);
-                        } catch (ApiException ex) {
-                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+            case 3: 
+                Delivery.sortRouteDelivery(deliveryOrder, customizedPackages, shopAddress);
+            break;
             case 4:
             case 5:
             case 6:
@@ -365,6 +368,36 @@ public class FioreFlowershop {
 
         } else if (choice == 3) {
             florist();
+        }
+    }
+  
+    public static void sortDeliveryRoute() {
+        System.out.println("\nPlease Select The Options Below.");
+        System.out.println("[1] Today's Delivery Order List");
+        System.out.println("[2] Search Delivery Order List by Date");
+        System.out.println("[3] Back");
+        System.out.println("Enter your option: ");
+
+        int deliveryChoice = s.nextInt();
+
+        if (deliveryChoice == 1) {
+            Delivery.sortDeliveryOrder(deliveryOrder, customizedPackages);
+        } else if (deliveryChoice == 2) {
+            try {
+                s.nextLine();
+
+                System.out.print("Please enter date to search (yyyy-MM-dd): ");
+
+                String dateStr = s.nextLine();
+
+                SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+
+                Date date = dateformat.parse(dateStr);
+
+                Delivery.searchDelivery(deliveryOrder, date, customizedPackages);
+            } catch (ParseException ex) {
+                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

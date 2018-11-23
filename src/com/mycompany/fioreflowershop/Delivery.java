@@ -5,13 +5,15 @@
  */
 package com.mycompany.fioreflowershop;
 
-import static com.mycompany.fioreflowershop.Pickup.displaySortedPickup;
+import com.google.maps.errors.ApiException;
 import com.mycompany.fioreflowershop.adt.ArrayList;
 import com.mycompany.fioreflowershop.adt.ArrayQueue;
 import com.mycompany.fioreflowershop.adt.ListInterface;
 import com.mycompany.fioreflowershop.adt.QueueInterface;
+import com.mycompany.fioreflowershop.modal.Consumer;
 import com.mycompany.fioreflowershop.modal.CustomizedPackage;
 import com.mycompany.fioreflowershop.modal.Order;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -205,6 +207,87 @@ public class Delivery {
             System.out.println(FioreFlowershop.ConsoleColors.RED + "No record found!");
         }
 
+    }
+
+    public static void sortRouteDelivery(ListInterface<Order> deliveryOrder, QueueInterface customizeOrder, String shopAddress) throws ApiException, InterruptedException, IOException {
+        ListInterface<Order> sortedList = new ArrayList<>();
+
+        QueueInterface<CustomizedPackage> customOrder = customizeOrder;
+
+        ListInterface<Order> unOrderList = deliveryOrder;
+
+        QueueInterface<CustomizedPackage> searchQueue = new ArrayQueue<>();
+
+        Calendar cal = Calendar.getInstance();
+        Calendar listCal = Calendar.getInstance();
+        Calendar cal1 = Calendar.getInstance();
+        Calendar CuslistCal = Calendar.getInstance();
+        cal.setTime(new Date());
+
+        int day, month, year, userDay, userMonth, userYear;
+
+        userDay = cal.get(Calendar.DAY_OF_MONTH);
+        userMonth = cal.get(Calendar.MONTH) + 1;
+        userYear = cal.get(Calendar.YEAR);
+
+        for (int j = 1; j <= unOrderList.getTotalEntries(); j++) {
+            listCal.setTime(unOrderList.getItem(j).getDate());
+
+            day = listCal.get(Calendar.DAY_OF_MONTH);
+            month = listCal.get(Calendar.MONTH) + 1;
+            year = listCal.get(Calendar.YEAR);
+
+            if (day == userDay && month == userMonth && year == userYear) {
+                sortedList.add(unOrderList.getItem(j));
+            }
+        }
+
+        for (int i = -1; i <= customOrder.getBackIndex(); i++) {
+
+            CustomizedPackage tempCustomOrder = customOrder.dequeue();
+            CuslistCal.setTime(tempCustomOrder.getDeliveryDate());
+
+            day = CuslistCal.get(Calendar.DAY_OF_MONTH);
+            month = CuslistCal.get(Calendar.MONTH) + 1;
+            year = CuslistCal.get(Calendar.YEAR);
+
+            if (day == userDay && month == userMonth && year == userYear) {
+                searchQueue.enqueue(tempCustomOrder);
+            }
+        }
+
+        sortRoute(sortedList, searchQueue, shopAddress);
+    }
+
+    public static void sortRoute(ListInterface<Order> sortedList, QueueInterface<CustomizedPackage> searchQueue, String shopAddress) throws ApiException, InterruptedException, IOException {
+
+        Date date = new Date();
+        Consumer con = new Consumer(shopAddress, shopAddress, shopAddress, shopAddress);
+        Order shop = new Order(0, "Delivery", con, date);
+        
+//        ListInterface<Order> sortedCustomOrder = new ArrayList<>();
+        ListInterface<Order> origin = new ArrayList<>((sortedList.getTotalEntries()) + (searchQueue.getBackIndex() + 1) + 1);
+        ListInterface<Order> dest = new ArrayList<>((sortedList.getTotalEntries()) + (searchQueue.getBackIndex() + 1) + 1);
+        
+
+        origin.add(1, shop);
+        dest.add(1, shop);
+        
+        for(int i = 1; i < sortedList.getTotalEntries(); i++){
+            origin.add(sortedList.getItem(i + 1));
+            dest.add(sortedList.getItem(i + 1));
+        }
+
+        while(!searchQueue.isEmpty()) {
+            origin.add(origin.getTotalEntries() + 1,searchQueue.dequeue());
+            dest.add(origin.getTotalEntries() + 1,searchQueue.dequeue());
+        }
+        
+        try {
+            DeliveryOptimization.distanceMatrix(origin, dest);
+        } catch (IOException ex) {
+            Logger.getLogger(Delivery.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

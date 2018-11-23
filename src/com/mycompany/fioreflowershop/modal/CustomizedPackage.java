@@ -14,7 +14,7 @@ import java.util.Date;
  *
  * @author Chiu Peeng
  */
-public class CustomizedPackage{
+public class CustomizedPackage extends Order{
 
     private static int orderNo = 1;
     private int orderNum;
