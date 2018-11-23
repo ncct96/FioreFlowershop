@@ -3,28 +3,29 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fioreflowershop;
+package com.mycompany.fioreflowershop;
 
-import fioreflowershop.adt.ArrayList;
-import fioreflowershop.adt.ListInterface;
-import fioreflowershop.modal.CatalogPackage;
-import fioreflowershop.modal.Consumer;
-import fioreflowershop.modal.CorporateCustomer;
-import fioreflowershop.modal.Order;
-import fioreflowershop.modal.CatalogOrder1;
+import com.mycompany.fioreflowershop.adt.ArrayList;
+import com.mycompany.fioreflowershop.adt.ListInterface;
+import com.mycompany.fioreflowershop.modal.CatalogPackage;
+import com.mycompany.fioreflowershop.modal.Consumer;
+import com.mycompany.fioreflowershop.modal.CorporateCustomer;
+import com.mycompany.fioreflowershop.modal.Order;
+import com.mycompany.fioreflowershop.modal.CatalogOrder1;
 import java.util.Scanner;
 import java.util.Calendar;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+
 /**
  *
  * @author Nicholas
  */
 public class CatalogOrder {
 
-    static ListInterface<CatalogOrder1> shoppingCart = FioreFlowershop.getShoppingCart();   
-    
+    static ListInterface<CatalogOrder1> shoppingCart = FioreFlowershop.getShoppingCart();
+
     static ListInterface<Order> conOrder = new ArrayList<>();
     static ListInterface<Order> corpOrder = new ArrayList<>();
 
@@ -44,7 +45,7 @@ public class CatalogOrder {
     private static int userMenuOption;
     private static int itemSelection;
     private static double itemPrice;
-    private static int quantity;  
+    private static int quantity;
     private static String orderType = "Pickup";
     private static boolean isInteger;
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -366,7 +367,7 @@ public class CatalogOrder {
         }
     }
 
-    public static void flowerArrangementCatalog(ArrayList<CatalogPackage> freshFlower, ArrayList<CatalogPackage> bouquets, ArrayList<CatalogPackage> flowerArrangement, ArrayList<CatalogPackage> freshFlowerDiscounted, ArrayList<CatalogPackage> bouquetsDiscounted, ArrayList<CatalogPackage> flowerArrangementDiscounted) {
+    public static void flowerArrangementCatalog(ArrayList<CatalogPackage> freshFlower, ArrayList<CatalogPackage> bouquets, ArrayList<CatalogPackage> flowerArrangement, ArrayList<CatalogPackage> freshFlowerDiscounted, ArrayList<CatalogPackage> bouquetsDiscounted,ArrayList<CatalogPackage> flowerArrangementDiscounted) {
         CatalogPackage catalogPackage = new CatalogPackage();
         System.out.println("\nDisplay catalog - normal catalog");
         System.out.println("================================================================================================");
@@ -530,8 +531,8 @@ public class CatalogOrder {
 //    }
     public static void initializeData(ListInterface pickupOrder, ListInterface deliveryOrder) {
 
-        Consumer con = new Consumer("Ncct96", "adgfafgjyaf", "0128198471", "No 13");
-        CorporateCustomer corp = new CorporateCustomer("Bxxx1", "sdgsjhd@gmail", "0165939123", "No 25", "211221", "TARUC", 5000);
+        Consumer con = new Consumer("Ncct96", "adgfafgjyaf", "0128198471", "Taiping");
+        CorporateCustomer corp = new CorporateCustomer("Bxxx1", "sdgsjhd@gmail", "0165939123", "Ipoh", "211221", "TARUC", 5000);
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR, 2018);
         cal.set(Calendar.DAY_OF_MONTH, 13);
@@ -576,8 +577,6 @@ public class CatalogOrder {
         Order order5 = new Order(1005, "Pickup", corp, e);
         Order order6 = new Order(1006, "Pickup", con, f);
 
-        System.out.print(order2.getDate());
-
         pickupOrder.add(order);
         pickupOrder.add(order2);
         pickupOrder.add(order3);
@@ -586,8 +585,10 @@ public class CatalogOrder {
         pickupOrder.add(order6);
 
         Consumer con1 = new Consumer("ChenKang", "adgfafgjyaf", "0165554313", "No 13");
-        CorporateCustomer corp1 = new CorporateCustomer("BahLI", "sdgsjhd@gmail", "058067843", "No 25", "211221", "SUNWAY BERHAD", 5000);
-        CorporateCustomer corp2 = new CorporateCustomer("BahLI", "sdgsjhd@gmail", "058017323", "No 25", "211221", "AEON BERHAD", 5000);
+        CorporateCustomer corp1 = new CorporateCustomer("BahLI", "sdgsjhd@gmail", "058067843", "B-13-10,Pv 13 Condominium", "211221", "SUNWAY BERHAD", 5000);
+        CorporateCustomer corp2 = new CorporateCustomer("BahLI", "sdgsjhd@gmail", "058017323", "Penang", "211221", "AEON BERHAD", 5000);
+        CorporateCustomer corp3 = new CorporateCustomer("BahLI", "sdgsjhd@gmail", "058017323", "Cheras", "211221", "JUSCO BERHAD", 5000);
+        CorporateCustomer corp4 = new CorporateCustomer("BahLI", "sdgsjhd@gmail", "058017323", "Johor", "211221", "MOMO BERHAD", 5000);
         Calendar cal4 = Calendar.getInstance();
         cal4.set(Calendar.YEAR, 2018);
         cal4.set(Calendar.DAY_OF_MONTH, 20);
@@ -628,11 +629,9 @@ public class CatalogOrder {
         Order order7 = new Order(1007, "Delivery", con1, g);
         Order order8 = new Order(1008, "Delivery", corp1, h);
         Order order9 = new Order(1009, "Delivery", corp2, i);
-        Order order10 = new Order(1010, "Delivery", corp1, j);
-        Order order11 = new Order(1011, "Delivery", corp2, k);
+        Order order10 = new Order(1010, "Delivery", corp3, j);
+        Order order11 = new Order(1011, "Delivery", corp4, k);
         Order order12 = new Order(1012, "Delivery", con1, l);
-
-        System.out.print(order2.getDate());
 
         deliveryOrder.add(order7);
         deliveryOrder.add(order8);

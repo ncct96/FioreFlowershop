@@ -2,12 +2,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fioreflowershop;
+package com.mycompany.fioreflowershop;
 
-import fioreflowershop.*;
-import fioreflowershop.adt.*;
-import fioreflowershop.modal.*;
-import java.io.Console;
+import com.google.maps.errors.ApiException;
+import com.mycompany.fioreflowershop.adt.*;
+import com.mycompany.fioreflowershop.modal.*;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -43,6 +43,9 @@ public class FioreFlowershop {
     private static ArrayList<CatalogPackage> bouquetsDiscounted = new ArrayList<>();
     private static ArrayList<CatalogPackage> flowerArrangementDiscounted = new ArrayList<>();
     private static ListInterface<CatalogOrder1> shoppingCart = new ArrayList<>();
+    private static String[] origin = {"George Town, Penang", "Taiping, Perak", "Kedah"};
+    private static String[] dest = {"George Town, Penang", "Taiping, Perak", "Kedah"};
+    private static final String shopAddress = "Kedah";
 
     private static int firstrun = 0;
 
@@ -60,15 +63,9 @@ public class FioreFlowershop {
 
     public static void initializePackages() {
         //consumer initialize
-         Date todayDate = new Date();
-         long pickupTime = todayDate.getTime();
         consumer.add(new Consumer("ceekay", "abcdef123", "ceekay@example.com", "0125566922", "No Address Available"));
-        corporate.add(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000));
+        corporate.add(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", 12321, 21123));
         consumer.add(new Consumer("testing", "testing", "testing", "0125566922", "No Address Available"));
-        shoppingCart.add(new CatalogOrder1(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000),
-                "Delivery", pickupTime, "FlowerPowa", "Majestic AFF", 
-                "Bigger than u mama", "Some Flower Name", 
-                "Accessory", 100.00, 3));
 
         styles.add(new Item("Fan", 10));
         styles.add(new Item("Elliptical", 10));
@@ -171,7 +168,17 @@ public class FioreFlowershop {
                 florist();
                 break;
             case 5:
+        {
+            try {
                 deliveryStaff();
+            } catch (ApiException ex) {
+                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
                 break;
             case 6:
                 userTypeSelection();
@@ -233,7 +240,7 @@ public class FioreFlowershop {
         switch (counterStaffChoice) {
             case 1:
                 CustomerMaintenance.staffEditType();
-            case 2: InvoicePayment.invoiceMaintenance();break;
+            case 2: //corporate customer invoice
             case 3: //order pickup/delivery                
                 orderMenu();
                 break;
@@ -262,7 +269,7 @@ public class FioreFlowershop {
         }
     }
 
-    public static void deliveryStaff() {
+    public static void deliveryStaff() throws ApiException, InterruptedException, IOException {
         System.out.println("\nPlease Select The Options Below.");
         System.out.println("[1] View Ongoing Delivery List");
         System.out.println("[2] Update Status for Delivery Order");
@@ -274,7 +281,8 @@ public class FioreFlowershop {
         switch (deliveryStaffChoice) {
             case 1:
             case 2:
-            case 3:
+            case 3: 
+                Delivery.sortRouteDelivery(deliveryOrder, customizedPackages, shopAddress);
             case 4:
             case 5:
             case 6:
@@ -357,6 +365,36 @@ public class FioreFlowershop {
 
         } else if (choice == 3) {
             florist();
+        }
+    }
+
+    public static void sortDeliveryRoute() {
+        System.out.println("\nPlease Select The Options Below.");
+        System.out.println("[1] Today's Delivery Order List");
+        System.out.println("[2] Search Delivery Order List by Date");
+        System.out.println("[3] Back");
+        System.out.println("Enter your option: ");
+
+        int deliveryChoice = s.nextInt();
+
+        if (deliveryChoice == 1) {
+            Delivery.sortDeliveryOrder(deliveryOrder, customizedPackages);
+        } else if (deliveryChoice == 2) {
+            try {
+                s.nextLine();
+
+                System.out.print("Please enter date to search (yyyy-MM-dd): ");
+
+                String dateStr = s.nextLine();
+
+                SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+
+                Date date = dateformat.parse(dateStr);
+
+                Delivery.searchDelivery(deliveryOrder, date, customizedPackages);
+            } catch (ParseException ex) {
+                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

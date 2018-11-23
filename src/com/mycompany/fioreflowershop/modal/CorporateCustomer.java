@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fioreflowershop.modal;
+package com.mycompany.fioreflowershop.modal;
 
 /**
  *
@@ -13,7 +13,7 @@ public class CorporateCustomer extends User{
     private String company;
     private int monthlyLimit;
     private int creditSpent;
-    
+
     public CorporateCustomer(){
         
     }
@@ -53,6 +53,8 @@ public class CorporateCustomer extends User{
     public void setMonthlyLimit(int monthlyLimit) {
         this.monthlyLimit = monthlyLimit;
     }
+    
+    
 
     @Override
     public String toString() {

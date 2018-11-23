@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fioreflowershop.adt;
+package com.mycompany.fioreflowershop.adt;
 
-import fioreflowershop.modal.Consumer;
+import com.mycompany.fioreflowershop.modal.Consumer;
 
 /**
  *

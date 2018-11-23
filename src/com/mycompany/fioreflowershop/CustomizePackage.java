@@ -3,15 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fioreflowershop;
+package com.mycompany.fioreflowershop;
 
-import fioreflowershop.modal.CustomizedPackage;
-import fioreflowershop.modal.Item;
-import fioreflowershop.adt.ArrayList;
-import fioreflowershop.adt.ArrayQueue;
-import fioreflowershop.adt.ListInterface;
-import fioreflowershop.adt.QueueInterface;
-import fioreflowershop.modal.Consumer;
+import com.mycompany.fioreflowershop.modal.Item;
+import com.mycompany.fioreflowershop.adt.ArrayList;
+import com.mycompany.fioreflowershop.adt.ArrayQueue;
+import com.mycompany.fioreflowershop.adt.QueueInterface;
+import com.mycompany.fioreflowershop.modal.Consumer;
+import com.mycompany.fioreflowershop.modal.CustomizedPackage;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -22,6 +21,16 @@ import java.util.Scanner;
 public class CustomizePackage {
 
     public static void customizePackageControl(ArrayList<Item> styles, ArrayList<Item> sizes, ArrayList<Item> flowers, ArrayList<Item> accessories, ArrayList<Item> priorities, ArrayList<Item> deliveryTypes, Consumer customer, QueueInterface<CustomizedPackage> customizedPackages) {
+
+        final String ANSI_RESET = "\u001B[0m";
+        final String ANSI_BLACK = "\u001B[30m";
+        final String ANSI_RED = "\u001B[31m";
+        final String ANSI_GREEN = "\u001B[32m";
+        final String ANSI_YELLOW = "\u001B[33m";
+        final String ANSI_BLUE = "\u001B[34m";
+        final String ANSI_PURPLE = "\u001B[35m";
+        final String ANSI_CYAN = "\u001B[36m";
+        final String ANSI_WHITE = "\u001B[37m";
 
         int style = 0, size = 0, flower = 0, accessory = 0, priority = 0, deliveryType = 0;
         Scanner scan = new Scanner(System.in);
@@ -35,7 +44,8 @@ public class CustomizePackage {
                 do {
                     System.out.println("\nSelect the flower arrangement style");
                     for (int i = 1; i <= styles.getTotalEntries(); i++) {
-                        System.out.printf("[%d] %s: RM%.2f\n", i, styles.getItem(i).getName(), styles.getItem(i).getPrice());
+                        System.out.print(ANSI_GREEN + "[" + i + "]" + ANSI_RESET);
+                        System.out.printf(" %s: RM%.2f\n", styles.getItem(i).getName(), styles.getItem(i).getPrice());
                     }
                     style = scan.nextInt();
 
@@ -43,10 +53,13 @@ public class CustomizePackage {
                         cancel = true;
                         break;
                     }
+                    if (style < 1 || style > styles.getTotalEntries()) {
+                        System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
+                    }
                 } while (style < 1 || style > styles.getTotalEntries());
                 break;
             } catch (InputMismatchException e) {
-                System.out.println("That wasn't a number :(");
+                System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
                 scan.next();
             }
         }
@@ -58,7 +71,8 @@ public class CustomizePackage {
                         System.out.println("\nSelect the floral arrangement size");
                         System.out.println("This will be multiplied by the selected flower's price");
                         for (int i = 1; i <= sizes.getTotalEntries(); i++) {
-                            System.out.printf("[%d] %s: Flower Price x %.0f\n", i, sizes.getItem(i).getName(), sizes.getItem(i).getPrice());
+                            System.out.print(ANSI_GREEN + "[" + i + "]" + ANSI_RESET);
+                            System.out.printf(" %s: Flower Price x %.0f\n", sizes.getItem(i).getName(), sizes.getItem(i).getPrice());
                         }
                         size = scan.nextInt();
 
@@ -66,10 +80,13 @@ public class CustomizePackage {
                             cancel = true;
                             break;
                         }
+                        if (size < 1 || size > sizes.getTotalEntries()) {
+                            System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
+                        }
                     } while (size < 1 || size > sizes.getTotalEntries());
                     break;
                 } catch (InputMismatchException e) {
-                    System.out.println("That wasn't a number :(");
+                    System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
                     scan.next();
                 }
             }
@@ -80,7 +97,8 @@ public class CustomizePackage {
                     do {
                         System.out.println("\nSelect the flowers for the arrangement");
                         for (int i = 1; i <= flowers.getTotalEntries(); i++) {
-                            System.out.printf("[%d] %s: RM%.2f\n", i, flowers.getItem(i).getName(), flowers.getItem(i).getPrice());
+                            System.out.print(ANSI_GREEN + "[" + i + "]" + ANSI_RESET);
+                            System.out.printf(" %s: RM%.2f\n", flowers.getItem(i).getName(), flowers.getItem(i).getPrice());
                         }
                         flower = scan.nextInt();
 
@@ -88,10 +106,13 @@ public class CustomizePackage {
                             cancel = true;
                             break;
                         }
+                        if (flower < 1 || flower > flowers.getTotalEntries()) {
+                            System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
+                        }
                     } while (flower < 1 || flower > flowers.getTotalEntries());
                     break;
                 } catch (InputMismatchException e) {
-                    System.out.println("That wasn't a number :(");
+                    System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
                     scan.next();
                 }
             }
@@ -102,7 +123,8 @@ public class CustomizePackage {
                     do {
                         System.out.println("\nSelect the accessory to be added");
                         for (int i = 1; i <= accessories.getTotalEntries(); i++) {
-                            System.out.printf("[%d] %s: RM%.2f\n", i, accessories.getItem(i).getName(), accessories.getItem(i).getPrice());
+                            System.out.print(ANSI_GREEN + "[" + i + "]" + ANSI_RESET);
+                            System.out.printf(" %s: RM%.2f\n", accessories.getItem(i).getName(), accessories.getItem(i).getPrice());
                         }
                         accessory = scan.nextInt();
 
@@ -110,10 +132,13 @@ public class CustomizePackage {
                             cancel = true;
                             break;
                         }
+                        if (accessory < 1 || accessory > accessories.getTotalEntries()) {
+                            System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
+                        }
                     } while (accessory < 1 || accessory > accessories.getTotalEntries());
                     break;
                 } catch (InputMismatchException e) {
-                    System.out.println("That wasn't a number :(");
+                    System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
                     scan.next();
                 }
             }
@@ -125,7 +150,8 @@ public class CustomizePackage {
                         System.out.println("\nSelect the order priority");
                         System.out.println("This will be multiplied by the sum of the floral arrangement");
                         for (int i = 1; i <= priorities.getTotalEntries(); i++) {
-                            System.out.printf("[%d] %s: Order price x %.0f\n", i, priorities.getItem(i).getName(), priorities.getItem(i).getPrice());
+                            System.out.print(ANSI_GREEN + "[" + i + "]" + ANSI_RESET);
+                            System.out.printf(" %s: Order price x %.0f\n", priorities.getItem(i).getName(), priorities.getItem(i).getPrice());
                         }
                         priority = scan.nextInt();
 
@@ -133,10 +159,13 @@ public class CustomizePackage {
                             cancel = true;
                             break;
                         }
+                        if (priority < 1 || priority > priorities.getTotalEntries()) {
+                            System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
+                        }
                     } while (priority < 1 || priority > priorities.getTotalEntries());
                     break;
                 } catch (InputMismatchException e) {
-                    System.out.println("That wasn't a number :(");
+                    System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
                     scan.next();
                 }
             }
@@ -147,7 +176,8 @@ public class CustomizePackage {
                     do {
                         System.out.println("\nSelect the delivery type");
                         for (int i = 1; i <= deliveryTypes.getTotalEntries(); i++) {
-                            System.out.printf("[%d] %s: Extra Charges: RM%.0f\n", i, deliveryTypes.getItem(i).getName(), deliveryTypes.getItem(i).getPrice());
+                            System.out.print(ANSI_GREEN + "[" + i + "]" + ANSI_RESET);
+                            System.out.printf(" %s: Extra Charges: RM%.0f\n", deliveryTypes.getItem(i).getName(), deliveryTypes.getItem(i).getPrice());
                         }
                         deliveryType = scan.nextInt();
 
@@ -155,10 +185,13 @@ public class CustomizePackage {
                             cancel = true;
                             break;
                         }
+                        if (deliveryType < 1 || deliveryType > deliveryTypes.getTotalEntries()) {
+                            System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
+                        }
                     } while (deliveryType < 1 || deliveryType > deliveryTypes.getTotalEntries());
                     break;
                 } catch (InputMismatchException e) {
-                    System.out.println("That wasn't a number :(");
+                    System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
                     scan.next();
                 }
             }

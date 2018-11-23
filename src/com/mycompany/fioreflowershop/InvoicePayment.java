@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fioreflowershop;
+package com.mycompany.fioreflowershop;
 
-import fioreflowershop.modal.CatalogOrder1;
-import fioreflowershop.modal.CorporateCustomer;
-import fioreflowershop.modal.User;
+import com.mycompany.fioreflowershop.FioreFlowershop;
+import com.mycompany.fioreflowershop.modal.CatalogOrder1;
+import com.mycompany.fioreflowershop.modal.CorporateCustomer;
+import com.mycompany.fioreflowershop.modal.User;
 import java.util.Scanner;
 
 /**

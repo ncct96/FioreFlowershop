@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fioreflowershop.modal;
+package com.mycompany.fioreflowershop.modal;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -14,7 +14,7 @@ import java.util.Date;
  *
  * @author Chiu Peeng
  */
-public class CustomizedPackage{
+public class CustomizedPackage extends Order{
 
     private static int orderNo = 1;
     private int orderNum;

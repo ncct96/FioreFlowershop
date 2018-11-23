@@ -3,30 +3,38 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fioreflowershop;
+package com.mycompany.fioreflowershop;
 
-import static fioreflowershop.Pickup.displaySortedPickup;
-import fioreflowershop.adt.ArrayList;
-import fioreflowershop.adt.ArrayQueue;
-import fioreflowershop.adt.ListInterface;
-import fioreflowershop.adt.QueueInterface;
-import fioreflowershop.modal.CustomizedPackage;
-import fioreflowershop.modal.Order;
+import static com.mycompany.fioreflowershop.Delivery.displaySortedDelivery;
+import com.mycompany.fioreflowershop.adt.ArrayList;
+import com.mycompany.fioreflowershop.adt.ArrayQueue;
+import com.mycompany.fioreflowershop.adt.ListInterface;
+import com.mycompany.fioreflowershop.adt.QueueInterface;
+import com.mycompany.fioreflowershop.modal.Consumer;
+import com.mycompany.fioreflowershop.modal.CorporateCustomer;
+import com.mycompany.fioreflowershop.modal.CustomizedPackage;
+import com.mycompany.fioreflowershop.modal.Item;
+import com.mycompany.fioreflowershop.modal.Order;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
-import java.util.Queue;
-import java.util.concurrent.ArrayBlockingQueue;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  *
  * @author Nicholas
  */
-public class Delivery {
+public class Pickup {
 
-    public static void searchDelivery(ListInterface deliveryOrder, Date date, QueueInterface<CustomizedPackage> customOrder) {
-        ListInterface<Order> unOrderList = deliveryOrder;
+    static Scanner sc = new Scanner(System.in);
+    ListInterface<CustomizedPackage> customPackageList = new ArrayList<>();
+
+    public static void searchPickUp(ListInterface pickupOrder, Date date, QueueInterface<CustomizedPackage> customOrder) {
+        ListInterface<Order> unOrderList = pickupOrder;
         ListInterface<Order> matchedList = new ArrayList<>();
         QueueInterface<CustomizedPackage> searchQueue = new ArrayQueue<>();
 
@@ -51,10 +59,6 @@ public class Delivery {
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
             year = listCal.get(Calendar.YEAR);
-
-            userDay = cal.get(Calendar.DAY_OF_MONTH);
-            userMonth = cal.get(Calendar.MONTH) + 1;
-            userYear = cal.get(Calendar.YEAR);
 
             if (day == userDay && month == userMonth && year == userYear) {
                 matchedList.add(unOrderList.getItem(i));
@@ -89,16 +93,17 @@ public class Delivery {
             matchedList.replace(i, smallerOrder);
 
         }
-        displaySortedDelivery(matchedList, searchQueue);
+
+        displaySortedPickup(matchedList, searchQueue);
     }
 
-    public static void sortDeliveryOrder(ListInterface<Order> deliveryOrder, QueueInterface customizeOrder) {
+    public static void sortPickupOrder(ListInterface<Order> pickupOrder, QueueInterface customizeOrder) {
 
         ListInterface<Order> sortedList = new ArrayList<>();
 
         QueueInterface<CustomizedPackage> customOrder = customizeOrder;
 
-        ListInterface<Order> unOrderList = deliveryOrder;
+        ListInterface<Order> unOrderList = pickupOrder;
 
         QueueInterface<CustomizedPackage> searchQueue = new ArrayQueue<>();
 
@@ -152,17 +157,17 @@ public class Delivery {
             sortedList.replace(i, smallerOrder);
         }
 
-        displaySortedDelivery(sortedList, searchQueue);
+        displaySortedPickup(sortedList, searchQueue);
 
     }
 
-    public static void displaySortedDelivery(ListInterface<Order> orderedList, QueueInterface<CustomizedPackage> customOrder) {
+    public static void displaySortedPickup(ListInterface<Order> orderedList, QueueInterface<CustomizedPackage> customOrder) {
 
         QueueInterface<CustomizedPackage> showQueue = new ArrayQueue<>();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         DateFormat dt = new SimpleDateFormat("HH:mm");
 
-        System.out.println("DELIVERY ORDER");
+        System.out.println("PICK UP ORDER");
         System.out.println("-------------------------------------------------------");
         System.out.println("\nCatalog Order");
         System.out.println("=======================================================");
@@ -173,13 +178,18 @@ public class Delivery {
                 System.out.println("Company Name: " + orderedList.getItem(k).getCorp().getCompany());
                 System.out.println("Contact: " + orderedList.getItem(k).getCorp().getPhone());
                 String date = df.format(orderedList.getItem(k).getDate());
-                System.out.println("Delivery Date: " + date + "\n");
+                System.out.println("Pick up Date: " + date);
+                String time = dt.format(orderedList.getItem(k).getDate());
+                System.out.println("Pick up Time: " + time + "\n");
             } else {
                 System.out.println("Order ID: " + orderedList.getItem(k).getOrderID());
                 System.out.println("Name: " + orderedList.getItem(k).getCon().getUsername());
                 System.out.println("Contact: " + orderedList.getItem(k).getCon().getPhone());
                 String date = df.format(orderedList.getItem(k).getDate());
-                System.out.println("Delivery Date: " + date + "\n");
+                System.out.println("Pick up Date: " + date);
+                String time = dt.format(orderedList.getItem(k).getDate());
+                System.out.println("Pick up Time: " + time + "\n");
+
             }
         }
 
@@ -193,11 +203,11 @@ public class Delivery {
         if (!customOrder.isEmpty()) {
             for (int i = -1; i <= customOrder.getBackIndex(); i++) {
                 CustomizedPackage order = customOrder.dequeue();
-                if (order.getDeliveryType().getName().equals("Deliver")) {
+                if (order.getDeliveryType().getName().equals("Pickup")) {
                     System.out.println("Order ID: " + order.getOrderNum());
                     System.out.println("Consumer name: " + order.getCustomer().getUsername());
                     System.out.println("Contact: " + order.getCustomer().getPhone());
-                    System.out.println("Delivery date: " + order.getDeliveryDateString() + "\n");
+                    System.out.println("Pick up date: " + order.getDeliveryDateString() + "\n");
                     showQueue.enqueue(order);
                 }
             }
@@ -207,4 +217,8 @@ public class Delivery {
 
     }
 
+//    for(int i = 0; i < customPack ; i++ ){
+//    
+//}
+//    
 }
