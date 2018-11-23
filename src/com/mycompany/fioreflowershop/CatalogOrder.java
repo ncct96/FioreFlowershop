@@ -531,8 +531,8 @@ public class CatalogOrder {
 //    }
     public static void initializeData(ListInterface pickupOrder, ListInterface deliveryOrder) {
 
-        Consumer con = new Consumer("Ncct96", "adgfafgjyaf", "0128198471", "Taiping");
-        CorporateCustomer corp = new CorporateCustomer("Bxxx1", "sdgsjhd@gmail", "0165939123", "Ipoh", "211221", "TARUC", 5000);
+        Consumer con = new Consumer("Ncct96", "adgfafgjyaf", "0128198471", "No 13");
+        CorporateCustomer corp = new CorporateCustomer("Bxxx1", "sdgsjhd@gmail", "0165939123", "No 25", "211221", "TARUC", 5000);
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR, 2018);
         cal.set(Calendar.DAY_OF_MONTH, 13);
@@ -589,6 +589,7 @@ public class CatalogOrder {
         CorporateCustomer corp2 = new CorporateCustomer("BahLI", "sdgsjhd@gmail", "058017323", "Penang", "211221", "AEON BERHAD", 5000);
         CorporateCustomer corp3 = new CorporateCustomer("BahLI", "sdgsjhd@gmail", "058017323", "Cheras", "211221", "JUSCO BERHAD", 5000);
         CorporateCustomer corp4 = new CorporateCustomer("BahLI", "sdgsjhd@gmail", "058017323", "Johor", "211221", "MOMO BERHAD", 5000);
+
         Calendar cal4 = Calendar.getInstance();
         cal4.set(Calendar.YEAR, 2018);
         cal4.set(Calendar.DAY_OF_MONTH, 20);

@@ -47,6 +47,7 @@ public class FioreFlowershop {
     private static String[] dest = {"George Town, Penang", "Taiping, Perak", "Kedah"};
     private static final String shopAddress = "Kedah";
 
+
     private static int firstrun = 0;
 
     public static void main(String[] args) {
@@ -103,6 +104,7 @@ public class FioreFlowershop {
         customizedPackages.enqueue(new CustomizedPackage(styles.getItem(4), sizes.getItem(2), flowers.getItem(4), accessories.getItem(1), priorities.getItem(1), deliveryTypes.getItem(1), customer1));
         customizedPackages.enqueue(new CustomizedPackage(styles.getItem(1), sizes.getItem(2), flowers.getItem(5), accessories.getItem(2), priorities.getItem(1), deliveryTypes.getItem(2), customer));
     }
+
 
     public static void gotoCustomizePackage(Consumer customerLoggedIn) {
         /////// CHIUPEENG DEBUG LOOP //////
@@ -168,6 +170,7 @@ public class FioreFlowershop {
                 florist();
                 break;
             case 5:
+
         {
             try {
                 deliveryStaff();
@@ -268,7 +271,6 @@ public class FioreFlowershop {
                 break;
         }
     }
-
     public static void deliveryStaff() throws ApiException, InterruptedException, IOException {
         System.out.println("\nPlease Select The Options Below.");
         System.out.println("[1] View Ongoing Delivery List");
@@ -283,6 +285,7 @@ public class FioreFlowershop {
             case 2:
             case 3: 
                 Delivery.sortRouteDelivery(deliveryOrder, customizedPackages, shopAddress);
+            break;
             case 4:
             case 5:
             case 6:
@@ -367,7 +370,7 @@ public class FioreFlowershop {
             florist();
         }
     }
-
+  
     public static void sortDeliveryRoute() {
         System.out.println("\nPlease Select The Options Below.");
         System.out.println("[1] Today's Delivery Order List");
