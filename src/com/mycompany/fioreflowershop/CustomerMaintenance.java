@@ -9,6 +9,7 @@ import com.mycompany.fioreflowershop.adt.*;
 import com.mycompany.fioreflowershop.modal.CorporateCustomer;
 import com.mycompany.fioreflowershop.modal.Consumer;
 import com.mycompany.fioreflowershop.modal.User;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Scanner;
@@ -21,6 +22,8 @@ public class CustomerMaintenance {
     private static Consumer customerLoggedIn; 
     private static CorporateCustomer corporateLoggedIn;
     private static ListInterface<User> userSize = new ArrayList<>();
+    private static StackInterface<Calendar> dateStack = new StackADT<>();
+    private static Calendar currentDate; private static Calendar presetDate;
     //ListInterface<Consumer> customer, ListInterface<CorporateCustomer> corporate
     
     public static void customerOptions(){
@@ -33,9 +36,49 @@ public class CustomerMaintenance {
             switch(logOrCreate){
                 case 1: CreateAccount(); break;
                 case 2: CustLogIn(); break;
-                case 3: FioreFlowershop.userTypeSelection();
+                case 3: FioreFlowershop.userTypeSelection(); break;
             }
         }//Welcome message for when user logged in as valid user
+        
+        if(corporateLoggedIn.getCreditSpent() >= corporateLoggedIn.getMonthlyLimit()){
+            System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"Sorry, Your maximum spending limit has reached, please pay before making further orders."+FioreFlowershop.ConsoleColors.RESET);
+            System.out.println("\n" + FioreFlowershop.ConsoleColors.BLUE + "Thanks For Your Patronage ! :D"+FioreFlowershop.ConsoleColors.RESET);
+            FioreFlowershop.userTypeSelection();
+        }
+        
+        try{
+            //Set Preset Date
+            presetDate = Calendar.getInstance();
+            presetDate.set(presetDate.get(Calendar.YEAR), presetDate.get(Calendar.MONTH), 7, 0, 0, 0);
+
+            //Get Current Date
+            currentDate = Calendar.getInstance();
+            currentDate.set(currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH), 
+                    currentDate.get(Calendar.DAY_OF_MONTH), currentDate.get(Calendar.HOUR_OF_DAY), 
+                    currentDate.get(Calendar.MINUTE));
+            
+            //Set the payment status back to false when a new month have passed
+            if(!dateStack.isEmpty()){
+                if(dateStack.peek().get(Calendar.MONTH)+2 == currentDate.get(Calendar.MONTH)+1
+                    || dateStack.peek().get(Calendar.YEAR)+1 == currentDate.get(Calendar.YEAR)){
+                    //New Month, New Invoice Payment
+                    corporateLoggedIn.setPaymentStatus(false);
+                    //If the customer have not paid after the 7th of the following month, restrict it
+                    if(currentDate.after(presetDate) && corporateLoggedIn.getCreditSpent() != 0 && !corporateLoggedIn.getPaymentStatus()){//
+                        System.out.println("\n"+ FioreFlowershop.ConsoleColors.RED +"Sorry, It seems like you have not paid for last month." + FioreFlowershop.ConsoleColors.RESET);
+                        //Redirect back to the main menu, restrict access to making order.
+                        System.out.println("\n" + FioreFlowershop.ConsoleColors.BLUE + "Thanks For Your Patronage ! :D"+FioreFlowershop.ConsoleColors.RESET);
+                        FioreFlowershop.userTypeSelection();
+                    } 
+                }
+            }else {
+                dateStack.push(currentDate);
+            }
+            
+        }catch(Exception e){
+            System.out.println(e.toString());
+        }
+        
         System.out.println("\nWelcome Customers ! Fiore Flowershop is at your service :D ");
         System.out.println("Please Select The Options Below.");
         System.out.println("[1] Make Flower Order");
@@ -50,7 +93,7 @@ public class CustomerMaintenance {
                 int orderChoice = s.nextInt();
                 switch(orderChoice){
                     case 1: FioreFlowershop.gotoCatalogOrders(customerLoggedIn,corporateLoggedIn); break; //catalog flower order
-                    case 2: FioreFlowershop.gotoCustomizePackage(customerLoggedIn);//customizable flower order
+                    case 2: FioreFlowershop.gotoCustomizePackage(customerLoggedIn);break;//customizable flower order
                 }
         } else if (customerOptionsChoice == 2){ //View Ordered Items
             
@@ -64,8 +107,9 @@ public class CustomerMaintenance {
             corporateLoggedIn = null;
             System.out.println("\n" + FioreFlowershop.ConsoleColors.GREEN + "Successfully Logged Out From Corporate Customer Account ! " + FioreFlowershop.ConsoleColors.RESET);
         }
-     }
+            customerOptions();
     }
+}
     
     public static void CreateAccount(){
         boolean passwCheck;      
