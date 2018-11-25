@@ -125,7 +125,92 @@ public class CatalogOrder {
                         }
                     } while (!(isInteger) || retrieveItem < 1 || retrieveItem > 2);
 
-                    
+                    if (retrieveItem == 1) { //Delivery
+                        orderType = "Delivery";
+                        int delivery = 0;
+                        do { //User retrieve item method either delivery or self pickup
+                            System.out.println("Delivery Options");
+                            System.out.println("===========================");
+                            System.out.println("1.Express Delivery (2 days)");
+                            System.out.println("2.Standard Delivery (4 days)");
+                            if (scan.hasNextInt()) {
+                                delivery = scan.nextInt();
+                                isInteger = true;
+                            } else {
+                                isInteger = false;
+                                System.err.println("Please enter shown number only.");
+                                scan.next();
+                            }
+                        } while (!(isInteger) || delivery < 1 || delivery > 2);
+                        Calendar c = Calendar.getInstance();
+                        c.setTime(new Date()); // Set to today date.
+                        //set the date of delivery
+                        if (delivery == 1) { //Express Delivery                                               
+                            c.add(Calendar.DATE, 2); // Adding 2 days
+                            deliveryDate = dateFormat.format(c.getTime());
+
+                            //set the orderType to Delivery and set the deliveryDate
+                            for (int x = 0; x < shoppingCart.getTotalEntries(); x++) {
+                                shoppingCart.getItem(x).setOrderType(orderType);
+                                shoppingCart.getItem(x).setRetrieveDate(deliveryDate);
+                            }
+
+                            System.out.println("");
+                            System.out.println("=====================================================");
+                            System.out.println(FioreFlowershop.ConsoleColors.GREEN + "Your items will be delivered to you by " + deliveryDate);
+                            System.out.println("=====================================================");
+
+                        } else if (delivery == 2) { //Normal Delivery                       
+                            c.add(Calendar.DATE, 4); // Adding 4 days
+                            deliveryDate = dateFormat.format(c.getTime());
+
+                            //set the orderType to Delivery and set the deliveryDate
+                            for (int x = 0; x < shoppingCart.getTotalEntries(); x++) {
+                                shoppingCart.getItem(x).setOrderType(orderType);
+                                shoppingCart.getItem(x).setRetrieveDate(deliveryDate);
+                            }
+
+                            System.out.println("");
+                            System.out.println("=====================================================");
+                            System.out.println(FioreFlowershop.ConsoleColors.GREEN + "Your items will be delviered to you by " + deliveryDate);
+                            System.out.println("=====================================================");
+
+                        }
+                    } else if (retrieveItem == 2) { //Self Pickup
+                        orderType = "Pickup";
+                        String pickDate;
+                        boolean checkDate = false;
+                        do {
+                            System.out.println("When do you want to pickup your items? (yyyy-MM-dd)");
+                            pickDate = scan.next();
+                            if (!pickDate.isEmpty()) {
+                                try {
+                                    if (todayDate.equals(dateFormat.parse(pickDate))) {
+                                        System.err.println(FioreFlowershop.ConsoleColors.RED + "Sorry, you cannot pickup your items by today.");
+                                        checkDate = false;
+                                    } else if (todayDate.after(dateFormat.parse(pickDate))) {
+                                        System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter a valid date after today's date.");
+                                        checkDate = false;
+                                    } else {
+                                        pickupDate = dateFormat.format(dateFormat.parse(pickDate));
+                                        //set the orderType to Delivery and set the deliveryDate
+                                        for (int x = 0; x < shoppingCart.getTotalEntries(); x++) {
+                                            shoppingCart.getItem(x).setOrderType(orderType);
+                                            shoppingCart.getItem(x).setRetrieveDate(pickupDate);
+                                        }
+                                        System.out.println("");
+                                        System.out.println("=====================================================");
+                                        System.out.println(FioreFlowershop.ConsoleColors.GREEN + "You can pickup your items by " + pickupDate);
+                                        System.out.println("=====================================================");
+//                                System.out.print(FioreFlowershop.ConsoleColors.RED + pickupDate); checking on user date input
+                                        checkDate = true;
+                                    }
+                                } catch (Exception e) {
+
+                                }
+                            }
+                        } while (!checkDate);
+                    }
                     System.out.println("");
                     System.out.println(FioreFlowershop.ConsoleColors.GREEN + "Back to Catalog Order Menu....");
                     displayCatalog(freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
