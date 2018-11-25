@@ -50,7 +50,7 @@ public class InvoicePayment {
                     status = false;
                 }
             }
-            if(!status){
+            if(!status){//Error message when no records found
                 System.out.println(FioreFlowershop.ConsoleColors.RED+"Sorry, No Records Found !"+FioreFlowershop.ConsoleColors.RESET);
             }else{
                 System.out.print("\nPlease Enter The Number Listed : "); 
