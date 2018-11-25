@@ -23,13 +23,14 @@ public class CatalogOrder1 {
     private CorporateCustomer corporate = new CorporateCustomer();
     private Consumer customer = new Consumer();
     private Date orderDate;
-    private Long pickupTime; //or delivery time   
+    private String pickupTime; //or delivery time   
     private String orderType;
 
     public CatalogOrder1() {
     }
     
-    public CatalogOrder1(Consumer customer, String orderType, Long pickupTime, String itemName, String itemStyle, String itemSize, String itemFlower, String itemAccessory,double itemPrice,int itemQuantity) {
+    //Constructor that accept normal customer order
+    public CatalogOrder1(Consumer customer, String orderType, String pickupTime, String itemName, String itemStyle, String itemSize, String itemFlower, String itemAccessory,double itemPrice,int itemQuantity) {
         this.customer = customer;
         this.orderType = orderType;
         this.pickupTime = pickupTime;
@@ -42,7 +43,8 @@ public class CatalogOrder1 {
         this.itemQuantity = itemQuantity;    
     }
     
-    public CatalogOrder1(CorporateCustomer corporate,String orderType, Long pickupTime, String itemName, String itemStyle, String itemSize, String itemFlower, String itemAccessory,double itemPrice,int itemQuantity) {
+    //Constructor taht accept corporate customer order
+    public CatalogOrder1(CorporateCustomer corporate,String orderType, String pickupTime, String itemName, String itemStyle, String itemSize, String itemFlower, String itemAccessory,double itemPrice,int itemQuantity) {
         this.corporate = corporate;
         this.orderType = orderType;
         this.pickupTime = pickupTime;
@@ -135,11 +137,11 @@ public class CatalogOrder1 {
         this.orderDate = orderDate;
     }
 
-    public Long getPickupTime() {
+    public String getPickupTime() {
         return pickupTime;
     }
 
-    public void setPickupTime(Long pickupTime) {
+    public void setPickupTime(String pickupTime) {
         this.pickupTime = pickupTime;
     }
 
