@@ -43,9 +43,10 @@ public class FioreFlowershop {
     private static ArrayList<CatalogPackage> bouquetsDiscounted = new ArrayList<>();
     private static ArrayList<CatalogPackage> flowerArrangementDiscounted = new ArrayList<>();
     private static ListInterface<CatalogOrder1> shoppingCart = new ArrayList<>();
-    private static String[] origin = {"George Town, Penang", "Taiping, Perak", "Kedah"};
-    private static String[] dest = {"George Town, Penang", "Taiping, Perak", "Kedah"};
-    private static final String shopAddress = "Kedah";
+    private static String[] origin = {"Taiping", "Penang", "Cheras", "Johor"};
+    private static String[] dest = {"Taiping", "Penang", "Cheras", "Johor"};
+    private static final String shopAddress = "Taiping";
+
 
 
     private static int firstrun = 0;
@@ -285,8 +286,10 @@ public class FioreFlowershop {
             case 2:
             case 3: 
                 Delivery.sortRouteDelivery(deliveryOrder, customizedPackages, shopAddress);
-            break;
+                break;
             case 4:
+                DeliveryOptimization.distanceMatrix(origin, dest);
+                break;
             case 5:
             case 6:
                 userTypeSelection();
