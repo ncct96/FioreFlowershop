@@ -54,7 +54,7 @@ public class InvoicePayment {
                 System.out.println(FioreFlowershop.ConsoleColors.RED+"Sorry, No Records Found !"+FioreFlowershop.ConsoleColors.RESET);
             }else{
                 System.out.print("\nPlease Enter The Number Listed : "); 
-                int corporateChoice = s.nextInt();
+                int corporateChoice = s.nextInt();//Get the corporate customer choice of the user
                 //Get the username of the selected user
                 String corporateName = FioreFlowershop.getShoppingCart().getItem(corporateChoice).getCorporate().getEmail();
                 invoicePaymentP2(FioreFlowershop.getShoppingCart().getItem(corporateChoice), corporateName);
