@@ -24,6 +24,7 @@ public class FioreFlowershop {
 
     private static ListInterface<Consumer> consumer = new ArrayList<>();
     private static ListInterface<CorporateCustomer> corporate = new ArrayList<>();
+    private static ListInterface<User> user = new ArrayList<>();
     private static ListInterface<Order> pickupOrder = new ArrayList<Order>();
     private static ListInterface<Order> deliveryOrder = new ArrayList<Order>();
     private static Scanner s = new Scanner(System.in);
@@ -65,9 +66,22 @@ public class FioreFlowershop {
 
     public static void initializePackages() {
         //consumer initialize
+        Date todayDate = new Date();
+        long pickupTime = todayDate.getTime();
         consumer.add(new Consumer("ceekay", "abcdef123", "ceekay@example.com", "0125566922", "No Address Available"));
-        corporate.add(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", 12321, 21123));
+        corporate.add(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business",5000,true));
         consumer.add(new Consumer("testing", "testing", "testing", "0125566922", "No Address Available"));
+        
+        //Initialize users
+        user.add(new Consumer("ceekay", "abcdef123", "ceekay@example.com", "0125566922", "No Address Available"));
+        user.add(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business",5000,true));
+        user.add(new Consumer("testing", "testing", "testing", "0125566922", "No Address Available"));
+        
+        //Initialize shopping cart
+        shoppingCart.add(new CatalogOrder1(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000,true),
+                "Delivery", pickupTime, (new CatalogPackage("FlowerStrong", "Stylish", "Small", "Rose", "Ribbons", 5, 50.00, 20)), false));
+        shoppingCart.add(new CatalogOrder1(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000,true),
+                "Delivery", pickupTime, (new CatalogPackage("FlowerWeak", "Colourful", "Medium", "Lavender", "Bow Tie", 4, 40.00, 10)),false));
 
         styles.add(new Item("Fan", 10));
         styles.add(new Item("Elliptical", 10));

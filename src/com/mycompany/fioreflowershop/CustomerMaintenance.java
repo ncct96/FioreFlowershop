@@ -143,7 +143,7 @@ public class CustomerMaintenance {
                     System.out.println("\n" + FioreFlowershop.ConsoleColors.RED_BOLD + "Password Mismatched, Please Try Again.\n" + FioreFlowershop.ConsoleColors.RESET);
                 }
             }while(passwCheck == false);
-            CorporateCustomer Corporate = new CorporateCustomer(usern, email, number, address, passw, company, 5000);
+            CorporateCustomer Corporate = new CorporateCustomer(usern, email, number, address, passw, company, 5000,true);
             
             if(userSize != null){
                 for(int i = 1; i <= userSize.getTotalEntries(); i++){
@@ -193,13 +193,14 @@ public class CustomerMaintenance {
                 FioreFlowershop.getCorporate().getItem(i).getPhone(),
                 FioreFlowershop.getCorporate().getItem(i).getAddress(),
                 FioreFlowershop.getCorporate().getItem(i).getMonthlyLimit(), 
-                FioreFlowershop.getCorporate().getItem(i).getCreditSpent());
+                FioreFlowershop.getCorporate().getItem(i).getCreditSpent(),
+                FioreFlowershop.getCorporate().getItem(i).getPaymentStatus());
                 corporateHit = true; break;
             } else {
                 corporateHit = false;
             }
         }
-        if(!customerHit && !corporateHit){
+        if(!customerHit && !corporateHit){//If corporate customer is found 
             System.out.println(FioreFlowershop.ConsoleColors.RED_BOLD + "\nInvalid Login Credentials" + FioreFlowershop.ConsoleColors.RESET);
                 System.out.println("Would you like to try again or create an account?");
                 System.out.println("[1] Login Again");
