@@ -48,8 +48,6 @@ public class FioreFlowershop {
     private static String[] dest = {"Taiping", "Penang", "Cheras", "Johor"};
     private static final String shopAddress = "Taiping";
 
-
-
     private static int firstrun = 0;
 
     public static void main(String[] args) {
@@ -69,19 +67,19 @@ public class FioreFlowershop {
         Date todayDate = new Date();
         long pickupTime = todayDate.getTime();
         consumer.add(new Consumer("ceekay", "abcdef123", "ceekay@example.com", "0125566922", "No Address Available"));
-        corporate.add(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business",5000,true));
+        corporate.add(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000, true));
         consumer.add(new Consumer("testing", "testing", "testing", "0125566922", "No Address Available"));
-        
+
         //Initialize users
         user.add(new Consumer("ceekay", "abcdef123", "ceekay@example.com", "0125566922", "No Address Available"));
-        user.add(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business",5000,true));
+        user.add(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000, true));
         user.add(new Consumer("testing", "testing", "testing", "0125566922", "No Address Available"));
-           
+
         //Initialize shopping cart
-        shoppingCart.add(new CatalogOrder1(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000,true),
-                ,"Delivery", pickupTime, (new CatalogPackage("FlowerStrong", "Stylish", "Small", "Rose", "Ribbons", 5, 50.00, 20)), false));
-        shoppingCart.add(new CatalogOrder1(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000,true),
-                "Delivery", pickupTime, (new CatalogPackage("FlowerWeak", "Colourful", "Medium", "Lavender", "Bow Tie", 4, 40.00, 10)),false));
+        shoppingCart.add(new CatalogOrder1(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000, true),,
+                 "Delivery", pickupTime, (new CatalogPackage("FlowerStrong", "Stylish", "Small", "Rose", "Ribbons", 5, 50.00, 20)), false));
+        shoppingCart.add(new CatalogOrder1(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000, true),
+                "Delivery", pickupTime, (new CatalogPackage("FlowerWeak", "Colourful", "Medium", "Lavender", "Bow Tie", 4, 40.00, 10)), false));
 
         styles.add(new Item("Fan", 10));
         styles.add(new Item("Elliptical", 10));
@@ -119,7 +117,6 @@ public class FioreFlowershop {
         customizedPackages.enqueue(new CustomizedPackage(styles.getItem(4), sizes.getItem(2), flowers.getItem(4), accessories.getItem(1), priorities.getItem(1), deliveryTypes.getItem(1), customer1));
         customizedPackages.enqueue(new CustomizedPackage(styles.getItem(1), sizes.getItem(2), flowers.getItem(5), accessories.getItem(2), priorities.getItem(1), deliveryTypes.getItem(2), customer));
     }
-
 
     public static void gotoCustomizePackage(Consumer customerLoggedIn) {
         /////// CHIUPEENG DEBUG LOOP //////
@@ -184,20 +181,18 @@ public class FioreFlowershop {
             case 4:
                 florist();
                 break;
-            case 5:
-
-        {
-            try {
-                deliveryStaff();
-            } catch (ApiException ex) {
-                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+            case 5: {
+                try {
+                    deliveryStaff();
+                } catch (ApiException ex) {
+                    Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-        }
-                break;
+            break;
             case 6:
                 userTypeSelection();
                 break;
@@ -286,6 +281,7 @@ public class FioreFlowershop {
                 break;
         }
     }
+
     public static void deliveryStaff() throws ApiException, InterruptedException, IOException {
         System.out.println("\nPlease Select The Options Below.");
         System.out.println("[1] View Ongoing Delivery List");
@@ -298,7 +294,7 @@ public class FioreFlowershop {
         switch (deliveryStaffChoice) {
             case 1:
             case 2:
-            case 3: 
+            case 3:
                 Delivery.sortRouteDelivery(deliveryOrder, customizedPackages, shopAddress);
                 break;
             case 4:
@@ -387,7 +383,7 @@ public class FioreFlowershop {
             florist();
         }
     }
-  
+
     public static void sortDeliveryRoute() {
         System.out.println("\nPlease Select The Options Below.");
         System.out.println("[1] Today's Delivery Order List");
