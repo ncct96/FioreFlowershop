@@ -62,7 +62,7 @@ public class InvoicePayment {
         } 
     }
     
-    public static void invoicePaymentP2(CatalogOrder1 shopping, String email){
+    public static void invoicePaymentP2(CatalogOrder1 shopping, String email){//Part 2 of invoice payment
         double affordable = 0; double totalPrice = 0; double discountPrice = 0; int invoiceNum = 100;int credit = 0;
         System.out.println("=================================================================================================");
         System.out.println("\nFiore Flowershop SDN.BHD \t\t\t\t\t\t"+ FioreFlowershop.ConsoleColors.BLACK_BOLD +" INVOICE");
