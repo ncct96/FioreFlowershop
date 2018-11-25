@@ -24,7 +24,7 @@ public class CustomerMaintenance {
     //ListInterface<Consumer> customer, ListInterface<CorporateCustomer> corporate
     
     public static void customerOptions(){
-        if(customerLoggedIn == null && corporateLoggedIn == null){
+        if(customerLoggedIn == null && corporateLoggedIn == null){//Disallow the user from gaining additional features
             System.out.println("\nPlease Login to Gain Access to More Features.\n");
             System.out.println("[1] Create New Account");
             System.out.println("[2] Login To Existing Account");
