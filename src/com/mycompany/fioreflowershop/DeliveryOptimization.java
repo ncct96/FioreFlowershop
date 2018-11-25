@@ -12,7 +12,10 @@ import com.google.maps.errors.ApiException;
 import com.google.maps.model.DistanceMatrix;
 import com.google.maps.model.TravelMode;
 import com.mycompany.fioreflowershop.adt.ListInterface;
+import com.mycompany.fioreflowershop.modal.Consumer;
+import com.mycompany.fioreflowershop.modal.CorporateCustomer;
 import com.mycompany.fioreflowershop.modal.Order;
+import com.mycompany.fioreflowershop.modal.User;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -24,32 +27,63 @@ import java.io.IOException;
  */
 public class DeliveryOptimization {
 
-    public static TSPSolver distanceMatrix(ListInterface<Order> origins, ListInterface<Order> destinations) throws ApiException, InterruptedException, IOException {
+    public static TSPSolver distanceMatrix(String shopAddress, ListInterface<Order> destinations) throws ApiException, InterruptedException, IOException {
         GeoApiContext context = new GeoApiContext.Builder()
                 .apiKey("AIzaSyBXYBscU08iCFkkeKsamT9nmP1tjtO64-w")
                 .build();
 
         DistanceMatrixApiRequest req = DistanceMatrixApi.newRequest(context);
 
-        String[] origin = new String[origins.getTotalEntries()];
-        String[] dest = new String[destinations.getTotalEntries()];
+        String[] origin = new String[destinations.getTotalEntries() + 1];
+        String[] dest = new String[destinations.getTotalEntries() + 1];
+        String add = "";
 
-        // Loop list to string array
-        for (int i = 0; i < origins.getTotalEntries(); i++) {
-            if (origins.getItem(i + 1).getCon().getAddress() != null) {
-                origin[i] = origins.getItem(i + 1).getCon().getAddress();
+        // Add origin address to first row & column of matrix
+        origin[0] = shopAddress;
+        dest[0] = shopAddress;
+
+        // Loop address list to origin & destination string array
+        for (int j = 2; j <= destinations.getTotalEntries() + 1; j++) {
+
+            User user = destinations.getItem(j - 1).getUser();
+
+            if (user instanceof Consumer) {
+                dest[j - 1] = destinations.getItem(j - 1).getUser().getAddress();
+                origin[j - 1] = destinations.getItem(j - 1).getUser().getAddress();
             } else {
-                origin[i] = origins.getItem(i + 1).getCorp().getAddress();
+                CorporateCustomer corp;
+                corp = (CorporateCustomer) destinations.getItem(j - 1).getUser();
+                dest[j - 1] = corp.getAddress();
+                origin[j - 1] = corp.getAddress();
             }
         }
 
-        for (int j = 0; j < destinations.getTotalEntries(); j++) {
-            if (destinations.getItem(j + 1).getCon() != null) {
-                dest[j] = destinations.getItem(j + 1).getCon().getAddress();
-            } else {
-                dest[j] = destinations.getItem(j + 1).getCorp().getAddress();
+        DistanceMatrix t = req.origins(origin).destinations(dest).mode(TravelMode.DRIVING).await();
+
+        double[][] array = new double[origin.length][dest.length];
+        for (int i = 0; i < origin.length; i++) {
+            for (int j = 0; j < dest.length; j++) {
+                array[i][j] = t.rows[i].elements[j].distance.inMeters;
+                //System.out.println(array[i][j]);
             }
         }
+
+        int startNode = 0;
+        TSPSolver solver = new TSPSolver(startNode, array);
+
+        // Prints: [0, 3, 2, 4, 1, 5, 0]
+        //System.out.println("Tour: " + solver.getTour());
+        // Print: 42.0
+        //System.out.println("Tour cost: " + solver.getTourCost());
+        return solver;
+    }
+
+    public static TSPSolver distanceMatrix(String[] origin, String[] dest) throws ApiException, InterruptedException, IOException {
+        GeoApiContext context = new GeoApiContext.Builder()
+                .apiKey("AIzaSyBXYBscU08iCFkkeKsamT9nmP1tjtO64-w")
+                .build();
+
+        DistanceMatrixApiRequest req = DistanceMatrixApi.newRequest(context);
 
         DistanceMatrix t = req.origins(origin).destinations(dest).mode(TravelMode.DRIVING).await();
 
@@ -73,5 +107,4 @@ public class DeliveryOptimization {
         return solver;
 
     }
-
 }
