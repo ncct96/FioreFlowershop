@@ -11,29 +11,21 @@ import java.util.Date;
  *
  * @author Nicholas
  */
-public class Order{
+public class Order {
 
     private int orderID;
     private String orderType;
     private Date date;
-    private CorporateCustomer corp = new CorporateCustomer();
-    private Consumer con = new Consumer();
+    private User user;
 
     public Order() {
     }
 
-    public Order(int orderID, String orderType, CorporateCustomer corp, Date date) {
+    public Order(int orderID, String orderType, User user, Date date) {
         this.orderID = orderID;
         this.orderType = orderType;
-        this.corp = corp;
         this.date = date;
-    }
-
-    public Order(int orderID, String orderType, Consumer con, Date date) {
-        this.orderID = orderID;
-        this.orderType = orderType;
-        this.con = con;
-        this.date = date;
+        this.user = user;
     }
 
     public int getOrderID() {
@@ -44,12 +36,12 @@ public class Order{
         return orderType;
     }
 
-    public CorporateCustomer getCorp() {
-        return corp;
+    public User getUser() {
+        return user;
     }
 
-    public Consumer getCon() {
-        return con;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public void setOrderID(int orderID) {
@@ -60,10 +52,6 @@ public class Order{
         this.orderType = orderType;
     }
 
-    public void setCorp(CorporateCustomer corp) {
-        this.corp = corp;
-    }
-
     public Date getDate() {
         return date;
     }
@@ -71,5 +59,5 @@ public class Order{
     public void setDate(Date date) {
         this.date = new Date();
     }
-    
+
 }
