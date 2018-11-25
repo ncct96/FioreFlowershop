@@ -296,8 +296,8 @@ public class Delivery {
         List<Integer> tour = solver.getTour();
         System.out.println("Today's Delivery Route");
 
-                    System.out.println(shopAddress);
-                    
+        System.out.println(shopAddress);
+
         for (int i = 0; i < tour.size() - 1; i++) {
             int tourCount = tour.get(i).intValue();
 
