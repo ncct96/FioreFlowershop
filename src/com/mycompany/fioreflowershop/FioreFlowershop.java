@@ -435,6 +435,10 @@ public class FioreFlowershop {
     public static ListInterface<CorporateCustomer> getCorporate() {
         return corporate;
     }
+    
+    public static ListInterface<User> getUser(){
+        return user;
+    }
 
     public static ListInterface<CatalogOrder1> getShoppingCart() {
         return shoppingCart;
