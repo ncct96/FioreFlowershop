@@ -19,7 +19,7 @@ import java.util.Scanner;
 public class InvoicePayment {
     static Scanner s = new Scanner(System.in);
     
-    public static void invoiceMaintenance(){
+    public static void invoiceMaintenance(){//Selection of menus
         System.out.println("\nPlease Select The Options Below.");
         System.out.println("[1] Make Corporate Customer Invoice Payment.");
         System.out.println("[2] Generate Invoice Payment for Corporate Customer.");
