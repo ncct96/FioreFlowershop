@@ -195,7 +195,6 @@ public class CustomizePackage {
         System.out.println("\n\n=====================================================");
         System.out.println("Fiore Flowershop");
         System.out.println("=====================================================");
-        //Commit
         System.out.println("Item Type: Customized Package\n");
         System.out.println("Flower: " + order.getFlower().getName() + " - RM " + order.getFlower().getPrice());
         System.out.println("Size: " + order.getSize().getName() + " - Flower x " + order.getSize().getPrice());
