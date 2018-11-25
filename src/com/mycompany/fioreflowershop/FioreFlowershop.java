@@ -203,6 +203,9 @@ public class FioreFlowershop {
                 CatalogMaintenance.productType(navigationMsg, normalPackage, discountedPackage);
                 break;
             case 2: //Delete product
+                navigationMsg = "Delete catalog";
+                CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage);
+                break;
             case 3: //Edit Product
                 navigationMsg = "Edit catalog";
                 CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage);

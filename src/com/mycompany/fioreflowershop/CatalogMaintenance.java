@@ -306,7 +306,13 @@ public class CatalogMaintenance {
         } else if (userMenuOption == 2 && navigationTitle.equals("Edit catalog")) { //Go to edit catalog(monthly ptomotion catalog)
             displayPromotionCatalog(navigationTitle, normalPackage, discountedPackage);
             editCatalog(navigationTitle, normalPackage, discountedPackage, 2);
-        } 
+        } else if (userMenuOption == 1 && navigationTitle.equals("Delete catalog")) {
+            displayNormalCatalog(navigationTitle, normalPackage, discountedPackage);
+            deleteCatalogItem(navigationTitle, normalPackage, discountedPackage, 1);
+        } else if (userMenuOption == 2 && navigationTitle.equals("Delete catalog")) {
+            displayPromotionCatalog(navigationTitle, normalPackage, discountedPackage);
+            deleteCatalogItem(navigationTitle, normalPackage, discountedPackage, 2);
+        }
     }
 
     //Display normal catalog
@@ -1159,5 +1165,49 @@ public class CatalogMaintenance {
         } else if (productField == 13) {
             FioreFlowershop.manager();
         }
-    }    
+    }
+
+    //Delete Catalog
+    public static void deleteCatalogItem(String navigationTitle, ArrayList<CatalogPackage> normalPackage, ArrayList<CatalogPackage> discountedPackage, int arrayType) {
+        int productId = 0, catalogSize = 0;
+        char userConfirmation;
+
+        if (arrayType == 1) {
+            catalogSize = normalPackage.getTotalEntries();
+        } else if (arrayType == 2) {
+            catalogSize = discountedPackage.getTotalEntries();
+        }
+
+        //Ask user to choose which product need to be delete
+        do {
+            System.out.println("Please enter the ID : ");
+            if (scan.hasNextInt()) {
+                productId = scan.nextInt();
+                isInteger = true;
+            } else {
+                isInteger = false;
+                System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter the number only.");
+                scan.next();
+            }
+        } while (!(isInteger) || productId < 1 || productId > catalogSize);
+
+        do {
+            System.out.print("Are you sure you want to delete this record(y/n) ? ");
+            userConfirmation = Character.toLowerCase(scan.next().charAt(0));
+            System.out.println(userConfirmation + " " + arrayType);
+            if (userConfirmation != 'y' && userConfirmation != 'n') {
+                System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter 'y' or 'n' only.");
+            }
+        } while (userConfirmation != 'y' && userConfirmation != 'n');
+
+        if (userConfirmation == 'y' && arrayType == 1) {
+            normalPackage.remove(productId);
+            FioreFlowershop.manager();
+        } else if (userConfirmation == 'y' && arrayType == 2) {
+            discountedPackage.remove(productId);
+            FioreFlowershop.manager();
+        } else if (userConfirmation == 'n') {
+            FioreFlowershop.manager();
+        }
+    }
 }
