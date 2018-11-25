@@ -73,14 +73,12 @@ public class DeliveryOptimization {
 
         // Prints: [0, 3, 2, 4, 1, 5, 0]
         //System.out.println("Tour: " + solver.getTour());
-
         // Print: 42.0
         //System.out.println("Tour cost: " + solver.getTourCost());
-
         return solver;
     }
-    
-        public static TSPSolver distanceMatrix(String[] origin, String[] dest) throws ApiException, InterruptedException, IOException {
+
+    public static TSPSolver distanceMatrix(String[] origin, String[] dest) throws ApiException, InterruptedException, IOException {
         GeoApiContext context = new GeoApiContext.Builder()
                 .apiKey("AIzaSyBXYBscU08iCFkkeKsamT9nmP1tjtO64-w")
                 .build();
