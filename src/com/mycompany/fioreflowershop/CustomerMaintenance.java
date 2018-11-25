@@ -165,7 +165,7 @@ public class CustomerMaintenance {
         }
     }
     
-    public static void CustLogIn(){//Customer Logging In
+    public static void CustLogIn(){//Customer Logging Incascasc
         boolean customerHit = false; boolean corporateHit = false;
         if(customerLoggedIn == null && corporateLoggedIn == null){
         System.out.println("\nPlease Fill In The Confidentials As Prompted");
