@@ -36,7 +36,7 @@ public class InvoicePayment {
         String usern = ""; boolean status = true;
         System.out.println("\nPlease Select The Corporate Customer for to make their payment.");
         if(FioreFlowershop.getShoppingCart() != null){
-            for (int i = 1; i <= FioreFlowershop.getShoppingCart().getTotalEntries() ;i++){
+            for (int i = 1; i <= FioreFlowershop.getShoppingCart().getTotalEntries() ;i++){//Loop the corporate customer that had not paid
                 if(FioreFlowershop.getShoppingCart().getItem(i).getCorporate()!= null && !FioreFlowershop.getShoppingCart().getItem(i).getPaymentStat()){
                     //If duplicate user is found
                     if(usern.equals(FioreFlowershop.getShoppingCart().getItem(i).getCorporate().getEmail())){
