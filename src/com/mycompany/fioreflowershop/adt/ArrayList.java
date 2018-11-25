@@ -21,7 +21,7 @@ public class ArrayList<T> implements ListInterface<T> {
         this(DEFAULT_LIST_SIZE);
     }
 
-    public ArrayList(int defaultSize) {
+      public ArrayList(int defaultSize) {
         totalEntries = 0;
         list = (T[]) new Object[defaultSize];
     }

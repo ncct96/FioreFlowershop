@@ -172,19 +172,25 @@ public class Pickup {
         System.out.println("\nCatalog Order");
         System.out.println("=======================================================");
         for (int k = 1; k <= orderedList.getTotalEntries(); k++) {
-
-            if (orderedList.getItem(k).getCorp().getCompany() != null) {
+                                   
+            if (orderedList.getItem(k).getUser() instanceof CorporateCustomer) {
+                
+                CorporateCustomer corp = (CorporateCustomer)orderedList.getItem(k).getUser();
+                
                 System.out.println("Order ID: " + orderedList.getItem(k).getOrderID());
-                System.out.println("Company Name: " + orderedList.getItem(k).getCorp().getCompany());
-                System.out.println("Contact: " + orderedList.getItem(k).getCorp().getPhone());
+                System.out.println("Company Name: " + corp.getCompany());
+                System.out.println("Contact: " + corp.getPhone());
                 String date = df.format(orderedList.getItem(k).getDate());
                 System.out.println("Pick up Date: " + date);
                 String time = dt.format(orderedList.getItem(k).getDate());
                 System.out.println("Pick up Time: " + time + "\n");
             } else {
+                
+                Consumer con = (Consumer)orderedList.getItem(k).getUser();
+                
                 System.out.println("Order ID: " + orderedList.getItem(k).getOrderID());
-                System.out.println("Name: " + orderedList.getItem(k).getCon().getUsername());
-                System.out.println("Contact: " + orderedList.getItem(k).getCon().getPhone());
+                System.out.println("Name: " + con.getUsername());
+                System.out.println("Contact: " + con.getPhone());
                 String date = df.format(orderedList.getItem(k).getDate());
                 System.out.println("Pick up Date: " + date);
                 String time = dt.format(orderedList.getItem(k).getDate());
