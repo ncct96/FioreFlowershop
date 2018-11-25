@@ -70,6 +70,7 @@ public class FioreFlowershop {
         long pickupTime = todayDate.getTime();
         consumer.add(new Consumer("ceekay", "abcdef123", "ceekay@example.com", "0125566922", "No Address Available"));
         corporate.add(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business",5000,true));
+        corporate.getItem(1).setCreditSpent(1000);
         consumer.add(new Consumer("testing", "testing", "testing", "0125566922", "No Address Available"));
         
         //Initialize users
@@ -206,26 +207,28 @@ public class FioreFlowershop {
 
     public static void manager() {
         System.out.println("\nPlease Select The Options Below.");
-        System.out.println("[1] Add a product to catalog");
-        System.out.println("[2] Remove a product from catalog");
-        System.out.println("[3] Edit the details of product in catalog");
-        System.out.println("[4] Display created catalog");
-        System.out.println("[5] Back");
+        System.out.println("[1] Customer Maintenance");
+        System.out.println("[2] Add a product to catalog");
+        System.out.println("[3] Remove a product from catalog");
+        System.out.println("[4] Edit the details of product in catalog");
+        System.out.println("[5] Display created catalog");
+        System.out.println("[6] Back");
         int managerChoice = s.nextInt();
 
         String navigationMsg;
         switch (managerChoice) {
-            case 1: //Add product
+            case 1:CustomerMaintenance.staffEditType();break;
+            case 2: //Add product
                 navigationMsg = "Create catalog";
                 CatalogMaintenance.productType(navigationMsg, freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
                 break;
-            case 2: //Delete product
-            case 3: //Edit Product
-            case 4: //Display product
+            case 3: //Delete product
+            case 4: //Edit Product
+            case 5: //Display product
                 navigationMsg = "Display catalog";
                 CatalogMaintenance.displayCatalog(navigationMsg, freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
                 break;
-            case 5: //Back to staff selection
+            case 6: //Back to staff selection
                 staffTypeSelection();
                 break;
         }
@@ -241,30 +244,27 @@ public class FioreFlowershop {
             case 1: //Check stock quantity
             case 2: //Restock product
             case 3:
-                userTypeSelection();
+                userTypeSelection();break;
         }
     }
 
     public static void counterStaff() {
         System.out.println("\nPlease Select The Options Below.");
-        System.out.println("[1] Customer Maintenance");
-        System.out.println("[2] Corporate Customer Invoice Maintenance");
-        System.out.println("[3] Order Pickup/Delivery");
-        System.out.println("[4] Consumer Payment Management");
-        System.out.println("[5] View Sales Order");
-        System.out.println("[6] Back");
+        System.out.println("[1] Corporate Customer Invoice Maintenance");
+        System.out.println("[2] Order Pickup/Delivery");
+        System.out.println("[3] Consumer Payment Management");
+        System.out.println("[4] View Sales Order");
+        System.out.println("[5] Back");
         System.out.println("Enter your option: ");
         int counterStaffChoice = s.nextInt();
         switch (counterStaffChoice) {
-            case 1:
-                CustomerMaintenance.staffEditType();
-            case 2: //corporate customer invoice
-            case 3: //order pickup/delivery                
+            case 1: InvoicePayment.invoiceMaintenance();break;
+            case 2: //order pickup/delivery                
                 orderMenu();
                 break;
-            case 4: //consumer payment management
-            case 5: //view sales order
-            case 6:
+            case 3: //consumer payment management
+            case 4: //view sales order
+            case 5:
                 userTypeSelection();
                 break;
         }
