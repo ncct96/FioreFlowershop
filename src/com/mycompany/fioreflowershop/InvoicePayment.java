@@ -32,7 +32,7 @@ public class InvoicePayment {
         }
     }
     
-    public static void invoicePaymentP1(){
+    public static void invoicePaymentP1(){//First part for invoice payment
         String usern = ""; boolean status = true;
         System.out.println("\nPlease Select The Corporate Customer for to make their payment.");
         if(FioreFlowershop.getShoppingCart() != null){
