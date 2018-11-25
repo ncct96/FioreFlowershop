@@ -124,8 +124,7 @@ public class CatalogOrder {
                             scan.next();
                         }
                     } while (!(isInteger) || retrieveItem < 1 || retrieveItem > 2);
-
-                    
+                   
                     System.out.println("");
                     System.out.println(FioreFlowershop.ConsoleColors.GREEN + "Back to Catalog Order Menu....");
                     displayCatalog(freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
