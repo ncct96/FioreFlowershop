@@ -35,7 +35,7 @@ public class CustomerMaintenance {
                 case 2: CustLogIn(); break;
                 case 3: FioreFlowershop.userTypeSelection();
             }
-        }
+        }//Welcome message for when user logged in as valid user
         System.out.println("\nWelcome Customers ! Fiore Flowershop is at your service :D ");
         System.out.println("Please Select The Options Below.");
         System.out.println("[1] Make Flower Order");
