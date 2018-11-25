@@ -38,7 +38,7 @@ public class InvoicePayment {
         if(FioreFlowershop.getShoppingCart() != null){
             for (int i = 1; i <= FioreFlowershop.getShoppingCart().getTotalEntries() ;i++){//Loop the corporate customer that had not paid
                 if(FioreFlowershop.getShoppingCart().getItem(i).getCorporate()!= null && !FioreFlowershop.getShoppingCart().getItem(i).getPaymentStat()){
-                    //If duplicate user is found
+                    //If duplicate user is found, do nothing
                     if(usern.equals(FioreFlowershop.getShoppingCart().getItem(i).getCorporate().getEmail())){
                         
                     }else{//No duplicate user is found
