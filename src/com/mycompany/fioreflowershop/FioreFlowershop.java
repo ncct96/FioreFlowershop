@@ -288,7 +288,7 @@ public class FioreFlowershop {
                 Delivery.sortRouteDelivery(deliveryOrder, customizedPackages, shopAddress);
                 break;
             case 4:
-                DeliveryOptimization.distanceMatrix(origin, dest);
+                //DeliveryOptimization.distanceMatrix(origin, dest);
                 break;
             case 5:
             case 6:
