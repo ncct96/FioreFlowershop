@@ -107,5 +107,6 @@ public class DeliveryOptimization {
         System.out.println("Tour cost: " + solver.getTourCost());
 
         return solver;
+
     }
 }

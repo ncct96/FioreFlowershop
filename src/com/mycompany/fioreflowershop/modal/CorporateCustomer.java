@@ -53,8 +53,6 @@ public class CorporateCustomer extends User{
     public void setMonthlyLimit(int monthlyLimit) {
         this.monthlyLimit = monthlyLimit;
     }
-    
-    
 
     @Override
     public String toString() {

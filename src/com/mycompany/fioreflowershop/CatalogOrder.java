@@ -590,6 +590,7 @@ public class CatalogOrder {
         CorporateCustomer corp2 = new CorporateCustomer("BahLI", "sdgsjhd@gmail", "058017323", "Penang", "211221", "AEON BERHAD", 5000);
         CorporateCustomer corp3 = new CorporateCustomer("BahLI", "sdgsjhd@gmail", "058017323", "Cheras", "211221", "JUSCO BERHAD", 5000);
         CorporateCustomer corp4 = new CorporateCustomer("BahLI", "sdgsjhd@gmail", "058017323", "Johor", "211221", "MOMO BERHAD", 5000);
+
         Calendar cal4 = Calendar.getInstance();
         cal4.set(Calendar.YEAR, 2018);
         cal4.set(Calendar.DAY_OF_MONTH, 20);
