@@ -16,28 +16,37 @@ public class CatalogOrder1 {
     private CorporateCustomer corporate = new CorporateCustomer();
     private Consumer customer = new Consumer();
     private CatalogPackage catalogPack = new CatalogPackage();
-    private Date orderDate;
-    private Long pickupTime; //or delivery time   
+    private String orderDate; //date of the order being made
+    private String retrieveDate; // pickup or delivery date
+    private String pickupTime; //or delivery time   
     private String orderType;
+    private int itemQuantity;
+    private double itemPrice;
     private boolean paymentStatus;
     private int discountRate;
 
     public CatalogOrder1() {
     }
     
-    public CatalogOrder1(Consumer customer, String orderType, Long pickupTime, CatalogPackage catalog) {
+    public CatalogOrder1(Consumer customer,String orderDate, String orderType, String retrieveDate, CatalogPackage catalog,double itemPrice,int itemQuantity) {
         this.customer = customer;
+        this.orderDate = orderDate;
         this.orderType = orderType;
-        this.pickupTime = pickupTime;
-        this.catalogPack = catalog;    
+        this.retrieveDate = retrieveDate;
+        this.catalogPack = catalog;  
+        this.itemPrice = itemPrice;
+        this.itemQuantity = itemQuantity;
     }
     
-    public CatalogOrder1(CorporateCustomer corporate,String orderType, Long pickupTime, CatalogPackage catalog, boolean status) {
+    public CatalogOrder1(CorporateCustomer corporate, String orderDate, String orderType, String retrieveDate, CatalogPackage catalog,double itemPrice,int itemQuantity, boolean status) {
         this.corporate = corporate;
+        this.orderDate = orderDate;
         this.orderType = orderType;
-        this.pickupTime = pickupTime;
+        this.retrieveDate = retrieveDate;
         this.paymentStatus = status;
         this.catalogPack = catalog;
+        this.itemPrice = itemPrice;
+        this.itemQuantity = itemQuantity;
     }
     
     public void setCatalogPackage(CatalogPackage catalog){
@@ -72,21 +81,53 @@ public class CatalogOrder1 {
         this.customer = customer;
     }
 
-    public Date getOrderDate() {
+    public String getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(Date orderDate) {
+    public void setOrderDate(String orderDate) {
         this.orderDate = orderDate;
     }
 
-    public Long getPickupTime() {
+    public String getPickupTime() {
         return pickupTime;
     }
 
-    public void setPickupTime(Long pickupTime) {
+    public void setPickupTime(String pickupTime) {
         this.pickupTime = pickupTime;
     }
+
+    public String getRetrieveDate() {
+        return retrieveDate;
+    }
+
+    public void setRetrieveDate(String retrieveDate) {
+        this.retrieveDate = retrieveDate;
+    }
+
+    public String getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(String orderType) {
+        this.orderType = orderType;
+    }
+
+    public int getItemQuantity() {
+        return itemQuantity;
+    }
+
+    public void setItemQuantity(int itemQuantity) {
+        this.itemQuantity = itemQuantity;
+    }
+
+    public double getItemPrice() {
+        return itemPrice;
+    }
+
+    public void setItemPrice(double itemPrice) {
+        this.itemPrice = itemPrice;
+    } 
 
     @Override
     public String toString() {
