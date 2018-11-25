@@ -200,7 +200,7 @@ public class CustomerMaintenance {
                 corporateHit = false;
             }
         }
-        if(!customerHit && !corporateHit){//If corporate customer is found
+        if(!customerHit && !corporateHit){//If corporate customer is found 
             System.out.println(FioreFlowershop.ConsoleColors.RED_BOLD + "\nInvalid Login Credentials" + FioreFlowershop.ConsoleColors.RESET);
                 System.out.println("Would you like to try again or create an account?");
                 System.out.println("[1] Login Again");
