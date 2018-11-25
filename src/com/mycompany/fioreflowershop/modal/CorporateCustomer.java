@@ -5,6 +5,9 @@
  */
 package com.mycompany.fioreflowershop.modal;
 
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  *
  * @author Admin
@@ -12,29 +15,40 @@ package com.mycompany.fioreflowershop.modal;
 public class CorporateCustomer extends User{
     private String company;
     private int monthlyLimit;
-    private int creditSpent;
-
+    private double creditSpent;
+    private boolean paymentStatus;
+    
     public CorporateCustomer(){
         
     }
     
-    public CorporateCustomer(String username, String email, String phone, String address, int monthLimit, int creditSpent){
+    public CorporateCustomer(String username, String email, String phone, String address, int monthLimit, double creditSpent, boolean paymentStat){
         super(username, email, phone, address);
         this.monthlyLimit = monthLimit;
         this.creditSpent = creditSpent;
+        this.paymentStatus = paymentStat;
     }
     
-    public CorporateCustomer(String username, String email, String phone, String address, String password, String company, int monthLimit){
+    public CorporateCustomer(String username, String email, String phone, String address, String password, String company, int monthLimit, boolean paymentStat){
         super(username, email, phone, address, password);
         this.company = company;
         this.monthlyLimit = monthLimit;
+        this.paymentStatus = paymentStat;
+    }
+    
+    public void setPaymentStatus(boolean paymentStat){
+        this.paymentStatus = paymentStat;
+    }
+    
+    public boolean getPaymentStatus(){
+        return paymentStatus;
     }
 
-    public int getCreditSpent() {
+    public double getCreditSpent() {
         return creditSpent;
     }
 
-    public void setCreditSpent(int creditSpent) {
+    public void setCreditSpent(double creditSpent) {
         this.creditSpent = creditSpent;
     }
     
