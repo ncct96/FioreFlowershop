@@ -185,7 +185,7 @@ public class CustomerMaintenance {
                 customerHit = false;
             }
         }
-        for(int i = 1; i <= FioreFlowershop.getCorporate().getTotalEntries(); i++){
+        for(int i = 1; i <= FioreFlowershop.getCorporate().getTotalEntries(); i++){//Check for corporate customer
             if(FioreFlowershop.getCorporate().getItem(i).getEmail().equals(email) && FioreFlowershop.getCorporate().getItem(i).getPassword().equals(passw)){
                 System.out.println(FioreFlowershop.ConsoleColors.GREEN + "\nWelcome Back " + FioreFlowershop.getCorporate().getItem(i).getUsername() + " !" + FioreFlowershop.ConsoleColors.RESET);
                 corporateLoggedIn = new CorporateCustomer(FioreFlowershop.getCorporate().getItem(i).getUsername(),
