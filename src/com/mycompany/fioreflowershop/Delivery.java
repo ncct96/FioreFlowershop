@@ -11,6 +11,7 @@ import com.mycompany.fioreflowershop.adt.ArrayQueue;
 import com.mycompany.fioreflowershop.adt.ListInterface;
 import com.mycompany.fioreflowershop.adt.QueueInterface;
 import com.mycompany.fioreflowershop.modal.Consumer;
+import com.mycompany.fioreflowershop.modal.CorporateCustomer;
 import com.mycompany.fioreflowershop.modal.CustomizedPackage;
 import com.mycompany.fioreflowershop.modal.Order;
 import java.io.IOException;
@@ -18,8 +19,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Queue;
-import java.util.concurrent.ArrayBlockingQueue;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -170,16 +172,22 @@ public class Delivery {
         System.out.println("=======================================================");
         for (int k = 1; k <= orderedList.getTotalEntries(); k++) {
 
-            if (orderedList.getItem(k).getCorp().getCompany() != null) {
+            if (orderedList.getItem(k).getUser() instanceof CorporateCustomer) {
+
+                CorporateCustomer corp = (CorporateCustomer) orderedList.getItem(k).getUser();
+
                 System.out.println("Order ID: " + orderedList.getItem(k).getOrderID());
-                System.out.println("Company Name: " + orderedList.getItem(k).getCorp().getCompany());
-                System.out.println("Contact: " + orderedList.getItem(k).getCorp().getPhone());
+                System.out.println("Company Name: " + corp.getCompany());
+                System.out.println("Contact: " + corp.getPhone());
                 String date = df.format(orderedList.getItem(k).getDate());
                 System.out.println("Delivery Date: " + date + "\n");
             } else {
+
+                Consumer con = (Consumer) orderedList.getItem(k).getUser();
+
                 System.out.println("Order ID: " + orderedList.getItem(k).getOrderID());
-                System.out.println("Name: " + orderedList.getItem(k).getCon().getUsername());
-                System.out.println("Contact: " + orderedList.getItem(k).getCon().getPhone());
+                System.out.println("Name: " + con.getUsername());
+                System.out.println("Contact: " + con.getPhone());
                 String date = df.format(orderedList.getItem(k).getDate());
                 System.out.println("Delivery Date: " + date + "\n");
             }
@@ -262,32 +270,47 @@ public class Delivery {
     public static void sortRoute(ListInterface<Order> sortedList, QueueInterface<CustomizedPackage> searchQueue, String shopAddress) throws ApiException, InterruptedException, IOException {
 
         Date date = new Date();
-        Consumer con = new Consumer(shopAddress, shopAddress, shopAddress, shopAddress);
-        Order shop = new Order(0, "Delivery", con, date);
-        
-//        ListInterface<Order> sortedCustomOrder = new ArrayList<>();
-        ListInterface<Order> origin = new ArrayList<>((sortedList.getTotalEntries()) + (searchQueue.getBackIndex() + 1) + 1);
-        ListInterface<Order> dest = new ArrayList<>((sortedList.getTotalEntries()) + (searchQueue.getBackIndex() + 1) + 1);
-        
+        TSPSolver solver;
 
-        origin.add(1, shop);
-        dest.add(1, shop);
-        
-        for(int i = 1; i < sortedList.getTotalEntries(); i++){
-            origin.add(sortedList.getItem(i + 1));
-            dest.add(sortedList.getItem(i + 1));
+        ListInterface<Order> dest = new ArrayList<>((sortedList.getTotalEntries()) + (searchQueue.getBackIndex() + 1));
+
+        for (int i = 1; i <= sortedList.getTotalEntries(); i++) {
+            dest.add(sortedList.getItem(i));
         }
 
-        while(!searchQueue.isEmpty()) {
-            origin.add(origin.getTotalEntries() + 1,searchQueue.dequeue());
-            dest.add(origin.getTotalEntries() + 1,searchQueue.dequeue());
+        while (!searchQueue.isEmpty()) {
+            dest.add(dest.getTotalEntries(), searchQueue.dequeue());
         }
-        
+
         try {
-            DeliveryOptimization.distanceMatrix(origin, dest);
+            solver = DeliveryOptimization.distanceMatrix(shopAddress, dest);
+            displaySortRoute(solver, dest, shopAddress);
         } catch (IOException ex) {
             Logger.getLogger(Delivery.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+    }
+
+    public static void displaySortRoute(TSPSolver solver, ListInterface<Order> dest, String shopAddress) {
+
+        List<Integer> tour = solver.getTour();
+        System.out.println("Today's Delivery Route");
+
+        System.out.println(shopAddress);
+
+        for (int i = 0; i < tour.size() - 1; i++) {
+            int tourCount = tour.get(i).intValue();
+
+            if (i > 0 && i < tour.size() - 1) {
+                System.out.println(dest.getItem(tourCount).getUser().getAddress());
+                System.out.println(dest.getItem(tourCount).getOrderID());
+                System.out.println(dest.getItem(tourCount).getOrderType());
+                System.out.println(dest.getItem(tourCount).getDate());
+                System.out.println(dest.getItem(tourCount).getUser().getUsername() + "\n");
+            }
+            System.out.println(shopAddress);
+        }
+
     }
 
 }
