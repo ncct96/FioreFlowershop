@@ -38,12 +38,9 @@ public class FioreFlowershop {
     private static QueueInterface<CustomizedPackage> customizedPackages = new ArrayQueue<>();
 
     //Catalog Maintenance part
-    private static ArrayList<CatalogPackage> freshFlower = new ArrayList<>();
-    private static ArrayList<CatalogPackage> bouquets = new ArrayList<>();
-    private static ArrayList<CatalogPackage> flowerArrangement = new ArrayList<>();
-    private static ArrayList<CatalogPackage> freshFlowerDiscounted = new ArrayList<>();
-    private static ArrayList<CatalogPackage> bouquetsDiscounted = new ArrayList<>();
-    private static ArrayList<CatalogPackage> flowerArrangementDiscounted = new ArrayList<>();
+    private static ArrayList<CatalogPackage> normalPackage = new ArrayList<>();
+    private static ArrayList<CatalogPackage> discountedPackage = new ArrayList<>();
+    
     private static ListInterface<CatalogOrder1> shoppingCart = new ArrayList<>();
     private static String[] origin = {"Taiping", "Penang", "Cheras", "Johor"};
     private static String[] dest = {"Taiping", "Penang", "Cheras", "Johor"};
@@ -78,10 +75,10 @@ public class FioreFlowershop {
         user.add(new Consumer("ceekay", "abcdef123", "ceekay@example.com", "0125566922", "No Address Available"));
         user.add(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business",5000,true));
         user.add(new Consumer("testing", "testing", "testing", "0125566922", "No Address Available"));
-        
+           
         //Initialize shopping cart
         shoppingCart.add(new CatalogOrder1(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000,true),
-                "Delivery", todayDate, (new CatalogPackage("FlowerStrong", "Stylish", "Small", "Rose", "Ribbons", 5, 50.00, 20)), false));
+                ,"Delivery", pickupTime, (new CatalogPackage("FlowerStrong", "Stylish", "Small", "Rose", "Ribbons", 5, 50.00, 20)), false));
         shoppingCart.add(new CatalogOrder1(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000,true),
                 "Delivery", todayDate, (new CatalogPackage("FlowerWeak", "Colourful", "Medium", "Lavender", "Bow Tie", 4, 40.00, 10)),false));
 
@@ -132,20 +129,21 @@ public class FioreFlowershop {
     }
 
     public static void gotoCatalogOrders(Consumer customerLoggedIn, CorporateCustomer corporateLoggedIn) {
-        if (corporateLoggedIn == null) {
-            CatalogOrder.CustomerOrderMain(shoppingCart, customerLoggedIn, freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
-        } else if (customerLoggedIn == null) {
-            CatalogOrder.CorporateOrderMain(shoppingCart, corporateLoggedIn, freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
-        }
+        //Zion part need change since tutor told me use one array so my multiple array is gone
+//        if (corporateLoggedIn == null) {
+//            CatalogOrder.CustomerOrderMain(shoppingCart, customerLoggedIn, freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
+//        } else if (customerLoggedIn == null) {
+//            CatalogOrder.CorporateOrderMain(shoppingCart, corporateLoggedIn, freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
+//        }
     }
 
     //Dummy data - woo for display purpose
     public static void testing() {
-        //testing purpose
-        freshFlower.add(new CatalogPackage("Package 1.0", "Style 1.0", "Small", "Flower 1.0", "Bear 1.0", 10, 100.00, 20));
-        freshFlower.add(new CatalogPackage("Package 1.1", "Style 1.1", "Large", "Flower 1.1", "Bear 1.1", 10, 100.00, 0));
-        bouquets.add(new CatalogPackage("Package 2.0", "Style 2.0", "Small", "Flower 2.0", "Bear 2.0", 10, 100.00, 60));
-        bouquets.add(new CatalogPackage("Package 2.1", "Style 2.1", "Small", "Flower 2.1", "Bear 2.1", 10, 100.00, 0));
+        //testing purpose need to be update
+//        freshFlower.add(new CatalogPackage("Package 1.0", "Style 1.0", "Small", "Flower 1.0", "Bear 1.0", 10, 100.00, 20));
+//        freshFlower.add(new CatalogPackage("Package 1.1", "Style 1.1", "Large", "Flower 1.1", "Bear 1.1", 10, 100.00, 0));
+//        bouquets.add(new CatalogPackage("Package 2.0", "Style 2.0", "Small", "Flower 2.0", "Bear 2.0", 10, 100.00, 60));
+//        bouquets.add(new CatalogPackage("Package 2.1", "Style 2.1", "Small", "Flower 2.1", "Bear 2.1", 10, 100.00, 0));
     }
 
     public static void userTypeSelection() {
@@ -221,13 +219,19 @@ public class FioreFlowershop {
             case 1:CustomerMaintenance.staffEditType();break;
             case 2: //Add product
                 navigationMsg = "Create catalog";
-                CatalogMaintenance.productType(navigationMsg, freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
+                CatalogMaintenance.productType(navigationMsg, normalPackage, discountedPackage);
                 break;
             case 3: //Delete product
+                navigationMsg = "Delete catalog";
+                CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage);
+                break;
             case 4: //Edit Product
+                navigationMsg = "Edit catalog";
+                CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage);
+                break;
             case 5: //Display product
                 navigationMsg = "Display catalog";
-                CatalogMaintenance.displayCatalog(navigationMsg, freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
+                CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage);
                 break;
             case 6: //Back to staff selection
                 staffTypeSelection();

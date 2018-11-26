@@ -11,20 +11,23 @@ package com.mycompany.fioreflowershop.modal;
  */
 public class CatalogPackage implements Comparable<CatalogPackage>{
     //Data field
-    private String name, style, size, flower, accessory;
-    private int quantity;
+    private String name, style, size, flower, accessory, productType, promoMonth;
+    private int promoYear, quantity;
     private double price;
     private int discountRate;
 
     public CatalogPackage() {
     }
 
-    public CatalogPackage(String name, String style, String size, String flower, String accessory, int quantity, double price, int discountRate) {
+    public CatalogPackage(String name, String style, String size, String flower, String accessory, String productType, String promoMonth, int promoYear, int quantity, double price, int discountRate) {
         this.name = name;
         this.style = style;
         this.size = size;
         this.flower = flower;
         this.accessory = accessory;
+        this.productType = productType;
+        this.promoMonth = promoMonth;
+        this.promoYear = promoYear;
         this.quantity = quantity;
         this.price = price;
         this.discountRate = discountRate;
@@ -70,6 +73,30 @@ public class CatalogPackage implements Comparable<CatalogPackage>{
         this.accessory = accessory;
     }
 
+    public String getProductType() {
+        return productType;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
+    }
+
+    public String getPromoMonth() {
+        return promoMonth;
+    }
+
+    public void setPromoMonth(String promoMonth) {
+        this.promoMonth = promoMonth;
+    }
+
+    public int getPromoYear() {
+        return promoYear;
+    }
+
+    public void setPromoYear(int promoYear) {
+        this.promoYear = promoYear;
+    }
+
     public int getQuantity() {
         return quantity;
     }
@@ -96,9 +123,9 @@ public class CatalogPackage implements Comparable<CatalogPackage>{
 
     @Override
     public String toString() {
-        return "CatalogPackage{" + "name=" + name + ", style=" + style + ", size=" + size + ", flower=" + flower + ", accessory=" + accessory + ", quantity=" + quantity + ", price=" + price + ", discountRate=" + discountRate + '}';
-    }       
-
+        return "CatalogPackage{" + "name=" + name + ", style=" + style + ", size=" + size + ", flower=" + flower + ", accessory=" + accessory + ", productType=" + productType + ", promoMonth=" + promoMonth + ", promoYear=" + promoYear + ", quantity=" + quantity + ", price=" + price + ", discountRate=" + discountRate + '}';
+    }
+    
     @Override
     public int compareTo(CatalogPackage o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
