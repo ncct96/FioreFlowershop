@@ -48,6 +48,10 @@ public class CatalogOrder1 {
         this.itemPrice = itemPrice;
         this.itemQuantity = itemQuantity;
     }
+
+    public CatalogOrder1(CorporateCustomer corporateCustomer, String delivery, long pickupTime, CatalogPackage catalogPackage, boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     public void setCatalogPackage(CatalogPackage catalog){
         this.catalogPack = catalog;
