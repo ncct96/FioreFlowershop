@@ -10,6 +10,9 @@ import com.mycompany.fioreflowershop.modal.CatalogOrder1;
 import com.mycompany.fioreflowershop.modal.CorporateCustomer;
 import com.mycompany.fioreflowershop.modal.Consumer;
 import com.mycompany.fioreflowershop.modal.User;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 /**
@@ -17,8 +20,9 @@ import java.util.Scanner;
  * @author Admin
  */
 public class InvoicePayment {
-    static Scanner s = new Scanner(System.in);
-    
+    private static Scanner s = new Scanner(System.in);
+    private static Date today = new Date();
+    private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     public static void invoiceMaintenance(){//Selection of menus
         System.out.println("\nPlease Select The Options Below.");
         System.out.println("[1] Make Corporate Customer Invoice Payment.");
@@ -75,7 +79,7 @@ public class InvoicePayment {
         System.out.println("\nFiore Flowershop SDN.BHD \t\t\t\t\t\t"+ FioreFlowershop.ConsoleColors.BLACK_BOLD +" INVOICE");
         System.out.println("\nQ-5-1, Desa Permai Indah");
         System.out.println("Bandar Gelugor, 11700 Pulau Pinang \t\t\t\t\t" + "INVOICE #["+invoiceNum+"]");
-        System.out.println("Phone : 0125566922 \t\t\t\t\t\t\t" + "DATE: OCT 9, 2018");
+        System.out.println("Phone : 0125566922 \t\t\t\t\t\t\t" + "DATE: " + dateFormat.format(today));
         
         System.out.println("\nTO:");
         System.out.println("[" + shopping.getCorporate().getEmail()+ "]");
@@ -102,6 +106,7 @@ public class InvoicePayment {
             System.out.println("\t\t\t\t\t\t\t Discount :\t\t\t  " + discountPrice);
             System.out.println("\t\t\t\t\t\t\t =========================================");
             System.out.println("\t\t\t\t\t\t\t BALANCE DUE :\t\t\t "+ (totalPrice-discountPrice));
+            invoiceMaintenance();
     }
     
     public static void invoicePaymentP1(){//First part for invoice payment
@@ -172,11 +177,12 @@ public class InvoicePayment {
     
     public static void invoicePaymentP2(CatalogOrder1 shopping, String email){//Part 2 of invoice payment
         double affordable = 0; double totalPrice = 0; double discountPrice = 0; int invoiceNum = 100;int credit = 0;
+        
         System.out.println("\n=================================================================================================");
         System.out.println("\nFiore Flowershop SDN.BHD \t\t\t\t\t\t"+ FioreFlowershop.ConsoleColors.BLACK_BOLD +" INVOICE");
         System.out.println("\nQ-5-1, Desa Permai Indah");
         System.out.println("Bandar Gelugor, 11700 Pulau Pinang \t\t\t\t\t" + "INVOICE #["+invoiceNum+"]");
-        System.out.println("Phone : 0125566922 \t\t\t\t\t\t\t" + "DATE: OCT 9, 2018");
+        System.out.println("Phone : 0125566922 \t\t\t\t\t\t\t" + "DATE: " + dateFormat.format(today));
         
         System.out.println("\nTO:");
         System.out.println("[" + shopping.getCorporate().getEmail()+ "]");
