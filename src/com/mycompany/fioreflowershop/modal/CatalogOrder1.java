@@ -17,7 +17,7 @@ public class CatalogOrder1 {
     private Consumer customer = new Consumer();
     private CatalogPackage catalogPack = new CatalogPackage();
     private Date orderDate;
-    private Long pickupTime; //or delivery time   
+    private Date pickupTime; //or delivery time   
     private String orderType;
     private boolean paymentStatus;
     private int discountRate;
@@ -25,17 +25,17 @@ public class CatalogOrder1 {
     public CatalogOrder1() {
     }
     
-    public CatalogOrder1(Consumer customer, String orderType, Long pickupTime, CatalogPackage catalog) {
+    public CatalogOrder1(Consumer customer, String orderType, Date orderdate, CatalogPackage catalog) {
         this.customer = customer;
         this.orderType = orderType;
-        this.pickupTime = pickupTime;
+        this.orderDate = orderdate;
         this.catalogPack = catalog;    
     }
     
-    public CatalogOrder1(CorporateCustomer corporate,String orderType, Long pickupTime, CatalogPackage catalog, boolean status) {
+    public CatalogOrder1(CorporateCustomer corporate,String orderType, Date orderdate, CatalogPackage catalog, boolean status) {
         this.corporate = corporate;
         this.orderType = orderType;
-        this.pickupTime = pickupTime;
+        this.orderDate = orderdate;
         this.paymentStatus = status;
         this.catalogPack = catalog;
     }
@@ -80,11 +80,11 @@ public class CatalogOrder1 {
         this.orderDate = orderDate;
     }
 
-    public Long getPickupTime() {
+    public Date getPickupTime() {
         return pickupTime;
     }
 
-    public void setPickupTime(Long pickupTime) {
+    public void setPickupTime(Date pickupTime) {
         this.pickupTime = pickupTime;
     }
 

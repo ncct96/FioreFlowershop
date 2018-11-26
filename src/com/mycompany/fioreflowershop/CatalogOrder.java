@@ -51,7 +51,7 @@ public class CatalogOrder {
     private static boolean isInteger;
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private static Date todayDate = new Date();
-    private static long pickupTime = todayDate.getTime(); // or delivery time
+//    private static long pickupTime = todayDate.getTime(); or delivery time
 
     public static void CustomerOrderMain(ListInterface cart, Consumer customerLoggedIn, ArrayList<CatalogPackage> freshFlower, ArrayList<CatalogPackage> bouquets, ArrayList<CatalogPackage> flowerArrangement, ArrayList<CatalogPackage> freshFlowerDiscounted, ArrayList<CatalogPackage> bouquetsDiscounted, ArrayList<CatalogPackage> flowerArrangementDiscounted) {
 //        testing();
@@ -205,7 +205,7 @@ public class CatalogOrder {
 
         //Add in the selected item inside the shoppingCart arraylist
         if (customer != null && corporate == null) {
-            shoppingCart.add(new CatalogOrder1(customer, orderType, pickupTime, catalogPackage));
+            shoppingCart.add(new CatalogOrder1(customer, orderType, todayDate, catalogPackage));
         } else if (customer == null && corporate != null) {
             //ORIGINAL ZION's CODE
 //            shoppingCart.add(new CatalogOrder1(corporate, orderType, pickupTime, catalogPackage, false));
@@ -219,7 +219,7 @@ public class CatalogOrder {
                 }else {
                     corporate.setCreditSpent((freshFlower.getItem(itemSelection).getPrice() * quantity));
                 }
-                shoppingCart.add(new CatalogOrder1(corporate, orderType, pickupTime, catalogPackage, false));
+                shoppingCart.add(new CatalogOrder1(corporate, orderType, todayDate, catalogPackage, false));
             }
         }
 
@@ -349,7 +349,7 @@ public class CatalogOrder {
 
         //Add in the selected item inside the shoppingCart arraylist       
         if (customer != null && corporate == null) {
-            shoppingCart.add(new CatalogOrder1(customer, orderType, pickupTime, catalogPackage));
+            shoppingCart.add(new CatalogOrder1(customer, orderType, todayDate, catalogPackage));
         } else if (customer == null && corporate != null) {
             //ORIGINAL ZION's CODE
             //shoppingCart.add(new CatalogOrder1(corporate, orderType, pickupTime, catalogPackage, false));
@@ -363,7 +363,7 @@ public class CatalogOrder {
                 }else {
                     corporate.setCreditSpent((bouquets.getItem(itemSelection).getPrice() * quantity));
                 }
-                shoppingCart.add(new CatalogOrder1(corporate, orderType, pickupTime, catalogPackage, false));
+                shoppingCart.add(new CatalogOrder1(corporate, orderType, todayDate, catalogPackage, false));
             }
         }
 
@@ -472,7 +472,7 @@ public class CatalogOrder {
 
         //Add in the selected item inside the shoppingCart arraylist
         if (customer != null && corporate == null) {
-            shoppingCart.add(new CatalogOrder1(customer, orderType, pickupTime, catalogPackage));
+            shoppingCart.add(new CatalogOrder1(customer, orderType, todayDate, catalogPackage));
         } else if (customer == null && corporate != null) {
             //ORIGINAL ZION's CODE
             //shoppingCart.add(new CatalogOrder1(corporate, orderType, pickupTime, catalogPackage, false));
@@ -486,7 +486,7 @@ public class CatalogOrder {
                 }else {
                     corporate.setCreditSpent(flowerArrangement.getItem(itemSelection).getPrice() * quantity);
                 }
-                shoppingCart.add(new CatalogOrder1(corporate, orderType, pickupTime, catalogPackage, false));
+                shoppingCart.add(new CatalogOrder1(corporate, orderType, todayDate, catalogPackage, false));
             }
         }
         System.out.println("\nDisplay Shopping Cart");
