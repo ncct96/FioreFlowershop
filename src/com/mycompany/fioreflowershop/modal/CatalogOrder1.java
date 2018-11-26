@@ -16,7 +16,7 @@ public class CatalogOrder1 {
     private CorporateCustomer corporate = new CorporateCustomer();
     private Consumer customer = new Consumer();
     private CatalogPackage catalogPack = new CatalogPackage();
-    private String orderDate; //date of the order being made
+    private Date orderDate; //date of the order being made
     private Date retrieveDate; // pickup or delivery date
     private String pickupTime; //or delivery time   
     private String orderType;
@@ -28,7 +28,7 @@ public class CatalogOrder1 {
     public CatalogOrder1() {
     }
     
-    public CatalogOrder1(Consumer customer,String orderDate, String orderType, Date retrieveDate, CatalogPackage catalog,double itemPrice,int itemQuantity) {
+    public CatalogOrder1(Consumer customer, Date orderDate, String orderType, Date retrieveDate, CatalogPackage catalog,double itemPrice,int itemQuantity) {
         this.customer = customer;
         this.orderDate = orderDate;
         this.orderType = orderType;
@@ -38,7 +38,7 @@ public class CatalogOrder1 {
         this.itemQuantity = itemQuantity;
     }
     
-    public CatalogOrder1(CorporateCustomer corporate, String orderDate, String orderType, Date retrieveDate, CatalogPackage catalog,double itemPrice,int itemQuantity, boolean status) {
+    public CatalogOrder1(CorporateCustomer corporate, Date orderDate, String orderType, Date retrieveDate, CatalogPackage catalog,double itemPrice,int itemQuantity, boolean status) {
         this.corporate = corporate;
         this.orderDate = orderDate;
         this.orderType = orderType;
@@ -81,11 +81,11 @@ public class CatalogOrder1 {
         this.customer = customer;
     }
 
-    public String getOrderDate() {
+    public Date getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(String orderDate) {
+    public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
     }
 

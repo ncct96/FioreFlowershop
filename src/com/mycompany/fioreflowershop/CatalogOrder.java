@@ -53,6 +53,7 @@ public class CatalogOrder {
     private static String orderType;
     private static boolean status = true;
     private static Date todayDate = new Date();
+    private static Date currentDate;
     private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private static DateFormat timeFormat = new SimpleDateFormat("HH:mm");
     private static String pickupDate, pickupTime, deliveryDate = "";
@@ -357,17 +358,28 @@ public class CatalogOrder {
         //Add in the selected item inside the shoppingCart arraylist
         if (customer != null && corporate == null) {
             try {
-                shoppingCart.add(new CatalogOrder1(customer, dateFormat.format(todayDate), orderType, dateFormat.parse(deliveryDate), freshFlower.getItem(itemSelection), itemPrice, quantity));
+                currentDate = dateFormat.parse(dateFormat.format(todayDate));
+                shoppingCart.add(new CatalogOrder1(customer, currentDate, orderType, dateFormat.parse(deliveryDate), freshFlower.getItem(itemSelection), itemPrice, quantity));
             } catch (ParseException ex) {
                 
             }
         } else if (customer == null && corporate != null) {
-            try {
-                shoppingCart.add(new CatalogOrder1(corporate, dateFormat.format(todayDate), orderType, dateFormat.parse(deliveryDate), freshFlower.getItem(itemSelection), itemPrice, quantity, status));
-            } catch (ParseException ex) {
-               
+
+            //CK MADE SOME CHANGES HERE
+            if((corporate.getMonthlyLimit()-corporate.getCreditSpent()) < 0){
+                System.out.println(FioreFlowershop.ConsoleColors.RED+"Sorry, it seems that you will exceed the credit limit after this purchase. Please make payment ASAP."+FioreFlowershop.ConsoleColors.RESET);
+            }else {
+                if(catalogPackage.getDiscountRate()!=0){
+                    corporate.setCreditSpent(((double) (((100 - freshFlower.getItem(itemSelection).getDiscountRate()) * freshFlower.getItem(itemSelection).getPrice() / 100) * quantity)));
+                }else {
+                    corporate.setCreditSpent((freshFlower.getItem(itemSelection).getPrice() * quantity));
+                }
+                try {
+                    currentDate = dateFormat.parse(dateFormat.format(todayDate));
+                    shoppingCart.add(new CatalogOrder1(corporate, currentDate, orderType, dateFormat.parse(deliveryDate), freshFlower.getItem(itemSelection), itemPrice, quantity, status));
+                } catch (ParseException ex) {}
             }
-        }
+        
 
         System.out.println("\nDisplay Shopping Cart");
         System.out.println("================================================================================================");
@@ -416,6 +428,7 @@ public class CatalogOrder {
 //        if (userOption == 'y' || userOption == 'Y') {
 //            catalogMaintenanceMenu();
 //        }
+        }
     }
 
     public static void bouquetsCatalog(ArrayList<CatalogPackage> freshFlower, ArrayList<CatalogPackage> bouquets, ArrayList<CatalogPackage> flowerArrangement, ArrayList<CatalogPackage> freshFlowerDiscounted, ArrayList<CatalogPackage> bouquetsDiscounted, ArrayList<CatalogPackage> flowerArrangementDiscounted) {
@@ -496,17 +509,28 @@ public class CatalogOrder {
         //Add in the selected item inside the shoppingCart arraylist       
         if (customer != null && corporate == null) {
             try {
-                shoppingCart.add(new CatalogOrder1(customer, dateFormat.format(todayDate), orderType, dateFormat.parse(deliveryDate), freshFlower.getItem(itemSelection), itemPrice, quantity));
+                currentDate = dateFormat.parse(dateFormat.format(todayDate));
+                shoppingCart.add(new CatalogOrder1(customer, currentDate, orderType, dateFormat.parse(deliveryDate), freshFlower.getItem(itemSelection), itemPrice, quantity));
             } catch (ParseException ex) {
                 
             }
         } else if (customer == null && corporate != null) {
-            try {
-                shoppingCart.add(new CatalogOrder1(corporate, dateFormat.format(todayDate), orderType, dateFormat.parse(deliveryDate), freshFlower.getItem(itemSelection), itemPrice, quantity, status));
-            } catch (ParseException ex) {
-               
+            //CK MADE SOME CHANGES HERE
+            if((corporate.getMonthlyLimit()-corporate.getCreditSpent()) < 0){
+                System.out.println(FioreFlowershop.ConsoleColors.RED+"Sorry, it seems that you will exceed the credit limit after this purchase. Please make payment ASAP."+FioreFlowershop.ConsoleColors.RESET);
+            }else {
+                if(catalogPackage.getDiscountRate()!=0){
+                    corporate.setCreditSpent((double) (((100 - bouquets.getItem(itemSelection).getDiscountRate()) * bouquets.getItem(itemSelection).getPrice() / 100) * quantity));
+                }else {
+                    corporate.setCreditSpent((bouquets.getItem(itemSelection).getPrice() * quantity));
+                }
+                try {
+                    currentDate = dateFormat.parse(dateFormat.format(todayDate));
+                    shoppingCart.add(new CatalogOrder1(corporate, currentDate, orderType, dateFormat.parse(deliveryDate), freshFlower.getItem(itemSelection), itemPrice, quantity, status));
+                } catch (ParseException ex) { }
             }
         }
+            
 
         System.out.println("\nDisplay Shopping Cart");
         System.out.println("================================================================================================");
@@ -609,16 +633,26 @@ public class CatalogOrder {
         //Add in the selected item inside the shoppingCart arraylist
         if (customer != null && corporate == null) {
             try {
-                shoppingCart.add(new CatalogOrder1(customer, dateFormat.format(todayDate), orderType, dateFormat.parse(deliveryDate), freshFlower.getItem(itemSelection), itemPrice, quantity));
+                currentDate = dateFormat.parse(dateFormat.format(todayDate));
+                shoppingCart.add(new CatalogOrder1(customer, currentDate, orderType, dateFormat.parse(deliveryDate), freshFlower.getItem(itemSelection), itemPrice, quantity));
             } catch (ParseException ex) {
                 
             }
         } else if (customer == null && corporate != null) {
-            try {
-                shoppingCart.add(new CatalogOrder1(corporate, dateFormat.format(todayDate), orderType, dateFormat.parse(deliveryDate), freshFlower.getItem(itemSelection), itemPrice, quantity, status));
-            } catch (ParseException ex) {
-                
-            }
+            //CK MADE SOME CHANGES HERE
+            if((corporate.getMonthlyLimit()-corporate.getCreditSpent()) < 0){
+                System.out.println(FioreFlowershop.ConsoleColors.RED+"Sorry, it seems that you will exceed the credit limit after this purchase. Please make payment ASAP."+FioreFlowershop.ConsoleColors.RESET);
+            }else {
+                if(catalogPackage.getDiscountRate()!=0){
+                    corporate.setCreditSpent((double) (((100 - flowerArrangement.getItem(itemSelection).getDiscountRate()) * flowerArrangement.getItem(itemSelection).getPrice() / 100) * quantity));
+                }else {
+                    corporate.setCreditSpent(flowerArrangement.getItem(itemSelection).getPrice() * quantity);
+                }
+                try {
+                    currentDate = dateFormat.parse(dateFormat.format(todayDate));
+                shoppingCart.add(new CatalogOrder1(corporate, currentDate, orderType, dateFormat.parse(deliveryDate), freshFlower.getItem(itemSelection), itemPrice, quantity, status));
+                } catch (ParseException ex) {}
+            } 
         }
         System.out.println("\nDisplay Shopping Cart");
         System.out.println("================================================================================================");

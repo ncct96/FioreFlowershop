@@ -8,8 +8,10 @@ import com.google.maps.errors.ApiException;
 import com.mycompany.fioreflowershop.adt.*;
 import com.mycompany.fioreflowershop.modal.*;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import java.util.Scanner;
@@ -62,9 +64,17 @@ public class FioreFlowershop {
     }
 
     public static void initializePackages() {
-        //consumer initialize
+        //FOR TESTING ONLY, TOUCHING IS PROHIBITED, YOU HAVE BEEN WARNED
+//        try{
+//            Date todayDate = new Date(); Date todayFormatDate;
+//            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//            todayFormatDate = dateFormat.parse(dateFormat.format(todayDate));
+//            System.out.println(todayFormatDate);
+//        }catch(Exception e){
+//            
+//        }
         Date todayDate = new Date();
-        long pickupTime = todayDate.getTime();
+        //consumer initialize
         consumer.add(new Consumer("ceekay", "abcdef123", "ceekay@example.com", "0125566922", "No Address Available"));
         corporate.add(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business",5000,true));
         corporate.getItem(1).setCreditSpent(1000);
@@ -77,9 +87,9 @@ public class FioreFlowershop {
            
         //Initialize shopping cart
         shoppingCart.add(new CatalogOrder1(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000,true),
-                ,"Delivery", pickupTime, (new CatalogPackage("FlowerStrong", "Stylish", "Small", "Rose", "Ribbons", 5, 50.00, 20)), false));
+                todayDate,"Delivery", todayDate, (new CatalogPackage("FlowerStrong", "Stylish", "Small", "Rose", "Ribbons", "Product Type", "12", 2018, 10,50,20)),200,4,false));
         shoppingCart.add(new CatalogOrder1(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000,true),
-                "Delivery", pickupTime, (new CatalogPackage("FlowerWeak", "Colourful", "Medium", "Lavender", "Bow Tie", 4, 40.00, 10)),false));
+                todayDate,"Delivery", todayDate, (new CatalogPackage("FlowerWeak", "Colourful", "Medium", "Lavender", "Bow Tie","Product Type", "11", 2018, 20, 30, 10)),300,10,false));
 
         styles.add(new Item("Fan", 10));
         styles.add(new Item("Elliptical", 10));
@@ -220,15 +230,15 @@ public class FioreFlowershop {
                 navigationMsg = "Create catalog";
                 CatalogMaintenance.productType(navigationMsg, normalPackage, discountedPackage);
                 break;
-            case 2: //Delete product
+            case 3: //Delete product
                 navigationMsg = "Delete catalog";
                 CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage);
                 break;
-            case 3: //Edit Product
+            case 4: //Edit Product
                 navigationMsg = "Edit catalog";
                 CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage);
                 break;
-            case 4: //Display product
+            case 5: //Display product
                 navigationMsg = "Display catalog";
                 CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage);
                 break;
