@@ -9,7 +9,7 @@ package com.mycompany.fioreflowershop.adt;
  *
  * @author Chiu Peeng
  */
-interface StackInterface<T>{
+public interface StackInterface<T>{
     public void push(T object);
     
     public T pop();
