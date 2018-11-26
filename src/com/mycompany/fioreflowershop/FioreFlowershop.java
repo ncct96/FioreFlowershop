@@ -10,6 +10,7 @@ import com.mycompany.fioreflowershop.modal.*;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import java.util.Scanner;
@@ -67,7 +68,7 @@ public class FioreFlowershop {
     public static void initializePackages() {
         //consumer initialize
         Date todayDate = new Date();
-        long pickupTime = todayDate.getTime();
+        System.out.println(todayDate.getMonth());
         consumer.add(new Consumer("ceekay", "abcdef123", "ceekay@example.com", "0125566922", "No Address Available"));
         corporate.add(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business",5000,true));
         corporate.getItem(1).setCreditSpent(1000);
@@ -80,9 +81,9 @@ public class FioreFlowershop {
         
         //Initialize shopping cart
         shoppingCart.add(new CatalogOrder1(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000,true),
-                "Delivery", pickupTime, (new CatalogPackage("FlowerStrong", "Stylish", "Small", "Rose", "Ribbons", 5, 50.00, 20)), false));
+                "Delivery", todayDate, (new CatalogPackage("FlowerStrong", "Stylish", "Small", "Rose", "Ribbons", 5, 50.00, 20)), false));
         shoppingCart.add(new CatalogOrder1(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000,true),
-                "Delivery", pickupTime, (new CatalogPackage("FlowerWeak", "Colourful", "Medium", "Lavender", "Bow Tie", 4, 40.00, 10)),false));
+                "Delivery", todayDate, (new CatalogPackage("FlowerWeak", "Colourful", "Medium", "Lavender", "Bow Tie", 4, 40.00, 10)),false));
 
         styles.add(new Item("Fan", 10));
         styles.add(new Item("Elliptical", 10));
