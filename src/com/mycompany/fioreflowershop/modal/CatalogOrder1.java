@@ -17,7 +17,7 @@ public class CatalogOrder1 {
     private Consumer customer = new Consumer();
     private CatalogPackage catalogPack = new CatalogPackage();
     private String orderDate; //date of the order being made
-    private String retrieveDate; // pickup or delivery date
+    private Date retrieveDate; // pickup or delivery date
     private String pickupTime; //or delivery time   
     private String orderType;
     private int itemQuantity;
@@ -28,7 +28,7 @@ public class CatalogOrder1 {
     public CatalogOrder1() {
     }
     
-    public CatalogOrder1(Consumer customer,String orderDate, String orderType, String retrieveDate, CatalogPackage catalog,double itemPrice,int itemQuantity) {
+    public CatalogOrder1(Consumer customer,String orderDate, String orderType, Date retrieveDate, CatalogPackage catalog,double itemPrice,int itemQuantity) {
         this.customer = customer;
         this.orderDate = orderDate;
         this.orderType = orderType;
@@ -38,7 +38,7 @@ public class CatalogOrder1 {
         this.itemQuantity = itemQuantity;
     }
     
-    public CatalogOrder1(CorporateCustomer corporate, String orderDate, String orderType, String retrieveDate, CatalogPackage catalog,double itemPrice,int itemQuantity, boolean status) {
+    public CatalogOrder1(CorporateCustomer corporate, String orderDate, String orderType, Date retrieveDate, CatalogPackage catalog,double itemPrice,int itemQuantity, boolean status) {
         this.corporate = corporate;
         this.orderDate = orderDate;
         this.orderType = orderType;
@@ -97,11 +97,11 @@ public class CatalogOrder1 {
         this.pickupTime = pickupTime;
     }
 
-    public String getRetrieveDate() {
+    public Date getRetrieveDate() {
         return retrieveDate;
     }
 
-    public void setRetrieveDate(String retrieveDate) {
+    public void setRetrieveDate(Date retrieveDate) {
         this.retrieveDate = retrieveDate;
     }
 
