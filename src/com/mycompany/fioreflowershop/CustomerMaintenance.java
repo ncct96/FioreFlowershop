@@ -207,7 +207,7 @@ public class CustomerMaintenance {
                 corporateHit = false;
             }
         }
-        if(!customerHit && !corporateHit){//If corporate customer is found 
+        if(!customerHit && !corporateHit){//If corporate customer is not found 
             System.out.println(FioreFlowershop.ConsoleColors.RED_BOLD + "\nInvalid Login Credentials" + FioreFlowershop.ConsoleColors.RESET);
                 System.out.println("Would you like to try again or create an account?");
                 System.out.println("[1] Login Again");
@@ -224,7 +224,7 @@ public class CustomerMaintenance {
                 }
                 
         }
-        customerOptions(); //Test Run only, Supposed to Redirect to other page
+        s.nextLine();customerOptions();
         } else {
             System.out.println(FioreFlowershop.ConsoleColors.RED_BOLD + "\nYou Are Already Logged In ! " + FioreFlowershop.ConsoleColors.RESET);
             //Redirect to other page
