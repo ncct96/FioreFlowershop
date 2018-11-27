@@ -41,7 +41,7 @@ public class FioreFlowershop {
     //Catalog Maintenance part
     private static ArrayList<CatalogPackage> normalPackage = new ArrayList<>();
     private static ArrayList<CatalogPackage> discountedPackage = new ArrayList<>();
-    
+
     private static ListInterface<CatalogOrder1> shoppingCart = new ArrayList<>();
     private static String[] origin = {"Taiping", "Penang", "Cheras", "Johor"};
     private static String[] dest = {"Taiping", "Penang", "Cheras", "Johor"};
@@ -74,7 +74,7 @@ public class FioreFlowershop {
         Date todayDate = new Date();
         //consumer initialize
         consumer.add(new Consumer("ceekay", "abcdef123", "ceekay@example.com", "0125566922", "No Address Available"));
-        corporate.add(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business",5000,true));
+        corporate.add(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000, true));
         corporate.getItem(1).setCreditSpent(1000);
         consumer.add(new Consumer("testing", "testing", "testing", "0125566922", "No Address Available"));
 
@@ -84,10 +84,10 @@ public class FioreFlowershop {
         user.add(new Consumer("testing", "testing", "testing", "0125566922", "No Address Available"));
 
         //Initialize shopping cart
-        shoppingCart.add(new CatalogOrder1(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "Singapore", "abcdef", "Not your business", 5000,true),
-                todayDate,"Delivery", todayDate, (new CatalogPackage("FlowerStrong", "Stylish", "Small", "Rose", "Ribbons", "Product Type", "12", 2018, 10,50,20)),200,4,false));
-        shoppingCart.add(new CatalogOrder1(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000,true),
-                todayDate,"Delivery", todayDate, (new CatalogPackage("FlowerWeak", "Colourful", "Medium", "Lavender", "Bow Tie","Product Type", "11", 2018, 20, 30, 10)),300,10,false));
+        shoppingCart.add(new CatalogOrder1(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "Singapore", "abcdef", "Not your business", 5000, true),
+                todayDate, "Delivery", todayDate, (new CatalogPackage("FlowerStrong", "Stylish", "Small", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20)), 200, 4, false));
+        shoppingCart.add(new CatalogOrder1(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000, true),
+                todayDate, "Delivery", todayDate, (new CatalogPackage("FlowerWeak", "Colourful", "Medium", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10)), 300, 10, false));
 
         styles.add(new Item("Fan", 10));
         styles.add(new Item("Elliptical", 10));
@@ -129,7 +129,7 @@ public class FioreFlowershop {
         cal.add(Calendar.DAY_OF_MONTH, -2);
         specialPackage.setOrderDate(cal.getTime());
         //customizedPackages.enqueue(specialPackage);
-        
+
     }
 
     public static void gotoCustomizePackage(Consumer customerLoggedIn) {
@@ -226,7 +226,9 @@ public class FioreFlowershop {
 
         String navigationMsg;
         switch (managerChoice) {
-            case 1:CustomerMaintenance.staffEditType();break;
+            case 1:
+                CustomerMaintenance.staffEditType();
+                break;
             case 2: //Add product
                 navigationMsg = "Create catalog";
                 CatalogMaintenance.productType(navigationMsg, normalPackage, discountedPackage);
@@ -259,7 +261,8 @@ public class FioreFlowershop {
             case 1: //Check stock quantity
             case 2: //Restock product
             case 3:
-                userTypeSelection();break;
+                userTypeSelection();
+                break;
         }
     }
 
@@ -273,7 +276,9 @@ public class FioreFlowershop {
         System.out.println("Enter your option: ");
         int counterStaffChoice = s.nextInt();
         switch (counterStaffChoice) {
-            case 1: InvoicePayment.invoiceMaintenance();break;
+            case 1:
+                InvoicePayment.invoiceMaintenance();
+                break;
             case 2: //order pickup/delivery                
                 orderMenu();
                 break;
@@ -316,6 +321,15 @@ public class FioreFlowershop {
             case 2:
             case 3:
                 Delivery.sortRouteDelivery(deliveryOrder, customizedPackages, shopAddress);
+                try {
+                    deliveryStaff();
+                } catch (ApiException ex) {
+                    Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 break;
             case 4:
                 //DeliveryOptimization.distanceMatrix(origin, dest);
@@ -415,6 +429,15 @@ public class FioreFlowershop {
 
         if (deliveryChoice == 1) {
             Delivery.sortDeliveryOrder(deliveryOrder, customizedPackages);
+            try {
+                deliveryStaff();
+            } catch (ApiException ex) {
+                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else if (deliveryChoice == 2) {
             try {
                 s.nextLine();
@@ -451,8 +474,8 @@ public class FioreFlowershop {
     public static ListInterface<CorporateCustomer> getCorporate() {
         return corporate;
     }
-    
-    public static ListInterface<User> getUser(){
+
+    public static ListInterface<User> getUser() {
         return user;
     }
 

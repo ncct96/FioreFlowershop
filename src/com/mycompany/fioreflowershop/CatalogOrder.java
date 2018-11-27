@@ -775,12 +775,12 @@ public class CatalogOrder {
         Date e = cal1.getTime();
         Date f = cal3.getTime();
 
-        Order order = new Order(1001, "Pickup", con, a);
-        Order order2 = new Order(1002, "Pickup", corp, b);
-        Order order3 = new Order(1003, "Pickup", corp, c);
-        Order order4 = new Order(1004, "Pickup", corp, d);
-        Order order5 = new Order(1005, "Pickup", corp, e);
-        Order order6 = new Order(1006, "Pickup", con, f);
+        Order order = new Order(1001, "Pickup", a, con, 140.00);
+        Order order2 = new Order(1002, "Pickup", b, corp, 600.00);
+        Order order3 = new Order(1003, "Pickup", c, corp, 95.00);
+        Order order4 = new Order(1004, "Pickup", d, corp, 200.00);
+        Order order5 = new Order(1005, "Pickup", e, corp, 340.00);
+        Order order6 = new Order(1006, "Pickup", f, con, 250.00);
 
         pickupOrder.add(order);
         pickupOrder.add(order2);
@@ -790,6 +790,7 @@ public class CatalogOrder {
         pickupOrder.add(order6);
 
         Consumer con1 = new Consumer("ChenKang", "adgfafgjyaf", "0165554313", "No 13");
+        Consumer con2 = new Consumer("Lim Sim", "ncct7777", "ncct7Z@gmail.com", "0185532123", "Cheras");
         CorporateCustomer corp1 = new CorporateCustomer("David", "sdgsjhd@gmail", "058067843", "Cheras", "211221", "SUNWAY BERHAD", 5000, true);
         CorporateCustomer corp2 = new CorporateCustomer("Louis Lim", "sdgsjhd@gmail", "058017323", "Pv 13 Condominium", "211221", "AEON BERHAD", 5000, true);
         CorporateCustomer corp3 = new CorporateCustomer("Nancy Goh", "sdgsjhd@gmail", "058017323", "Pahang", "211221", "JUSCO BERHAD", 5000, true);
@@ -831,12 +832,13 @@ public class CatalogOrder {
         Date k = cal7.getTime();
         Date l = cal5.getTime();
 
-        Order order7 = new Order(1007, "Delivery", con1, g);
-        Order order8 = new Order(1008, "Delivery", corp1, h);
-        Order order9 = new Order(1009, "Delivery", corp2, j);
-        Order order10 = new Order(1010, "Delivery", corp3, j);
-        Order order11 = new Order(1011, "Delivery", corp4, k);
-        Order order12 = new Order(1012, "Delivery", con1, l);
+        Order order7 = new Order(1007, "Delivery", g, con1, 350.00);
+        Order order8 = new Order(1008, "Delivery", h, corp1, 120.60);
+        Order order9 = new Order(1009, "Delivery", j, corp2, 230.50);
+        Order order10 = new Order(1010, "Delivery", j, corp3, 100.00);
+        Order order11 = new Order(1011, "Delivery", k, corp4, 400.00);
+        Order order12 = new Order(1012, "Delivery", l, con1, 50.00);
+        Order order13 = new Order(1014, "Delivery", j, con2, 50.00);
 
         deliveryOrder.add(order7);
         deliveryOrder.add(order8);
@@ -844,6 +846,7 @@ public class CatalogOrder {
         deliveryOrder.add(order10);
         deliveryOrder.add(order11);
         deliveryOrder.add(order12);
+        deliveryOrder.add(order13);
 
     }
 }
