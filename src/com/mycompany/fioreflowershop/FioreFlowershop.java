@@ -160,15 +160,17 @@ public class FioreFlowershop {
         System.out.println("\nPlease SELECT The Type Of User.");
         System.out.println("[1] Customer ");
         System.out.println("[2] Staff ");
-        int userTypeChoice = s.nextInt();
-        switch (userTypeChoice) {
-            case 1:
-                CustomerMaintenance.customerOptions();
-                break;
-            case 2:
-                staffTypeSelection();
-                break;
+        try{
+            int userTypeChoice = s.nextInt();
+            switch (userTypeChoice) {
+                case 1:CustomerMaintenance.customerOptions();break;
+                case 2:staffTypeSelection();break;
+            } 
+        }catch(Exception e){
+            System.out.println("\n"+ConsoleColors.RED+" An Error Occured. Please Only Enter Number Only."+ConsoleColors.RESET);
+            s.nextLine();userTypeSelection();
         }
+        
     }
 
     public static void staffTypeSelection() {
@@ -179,37 +181,31 @@ public class FioreFlowershop {
         System.out.println("[4] Florist");
         System.out.println("[5] Delivery Staff");
         System.out.println("[6] Back");
-        int staffTypeChoice = s.nextInt();
-        switch (staffTypeChoice) {
-            case 1:
-                manager();
-                break;
-            case 2:
-                inventoryClerk();
-                break;
-            case 3:
-                counterStaff();
-                break;
-            case 4:
-                florist();
-                break;
-            case 5:
-
-        {
-            try {
-                deliveryStaff();
-            } catch (ApiException ex) {
-                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+        try{
+            int staffTypeChoice = s.nextInt();
+            switch (staffTypeChoice) {
+                case 1:manager();break;
+                case 2:inventoryClerk();break;
+                case 3:counterStaff();break;
+                case 4:florist();break;
+                case 5:
+            {
+                try {
+                    deliveryStaff();
+                } catch (ApiException ex) {
+                    Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-        }
-                break;
-            case 6:
-                userTypeSelection();
-                break;
+                    break;
+                case 6:userTypeSelection();break;
+            }
+        }catch(Exception e){
+            System.out.println("\n"+ConsoleColors.RED+" An Error Occured. Please Only Enter Number Only."+ConsoleColors.RESET);
+            s.nextLine();staffTypeSelection();
         }
     }
 
@@ -221,30 +217,26 @@ public class FioreFlowershop {
         System.out.println("[4] Edit the details of product in catalog");
         System.out.println("[5] Display created catalog");
         System.out.println("[6] Back");
-        int managerChoice = s.nextInt();
-
-        String navigationMsg;
-        switch (managerChoice) {
-            case 1:CustomerMaintenance.staffEditType();break;
-            case 2: //Add product
-                navigationMsg = "Create catalog";
-                CatalogMaintenance.productType(navigationMsg, normalPackage, discountedPackage);
-                break;
-            case 3: //Delete product
-                navigationMsg = "Delete catalog";
-                CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage);
-                break;
-            case 4: //Edit Product
-                navigationMsg = "Edit catalog";
-                CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage);
-                break;
-            case 5: //Display product
-                navigationMsg = "Display catalog";
-                CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage);
-                break;
-            case 6: //Back to staff selection
-                staffTypeSelection();
-                break;
+        
+        try{
+            int managerChoice = s.nextInt();
+            String navigationMsg;
+            switch (managerChoice) {
+                case 1:CustomerMaintenance.staffEditType();break;
+                case 2:navigationMsg = "Create catalog";CatalogMaintenance.productType(navigationMsg, normalPackage, discountedPackage);
+                    break;//Add product
+                case 3:navigationMsg = "Delete catalog";CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage);
+                    break;//Delete product
+                case 4:navigationMsg = "Edit catalog";CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage);
+                    break;//Edit Product
+                case 5:navigationMsg = "Display catalog";CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage);
+                    break;//Display product
+                case 6:staffTypeSelection();
+                    break;//Back to staff selection
+            }
+        }catch(Exception e){
+            System.out.println("\n"+ConsoleColors.RED+" An Error Occured. Please Only Enter Number Only."+ConsoleColors.RESET);
+            s.nextLine();manager();
         }
     }
 
@@ -253,12 +245,17 @@ public class FioreFlowershop {
         System.out.println("[1] Check stock quantity.");
         System.out.println("[2] Restock product quantity.");
         System.out.println("[3] Back");
-        int inventoryClerkChoice = s.nextInt();
-        switch (inventoryClerkChoice) {
-            case 1: //Check stock quantity
-            case 2: //Restock product
-            case 3:
-                userTypeSelection();break;
+        try{
+           int inventoryClerkChoice = s.nextInt();
+            switch (inventoryClerkChoice) {
+                case 1: //Check stock quantity
+                case 2: //Restock product
+                case 3:
+                    userTypeSelection();break;
+            } 
+        }catch(Exception e){
+            System.out.println("\n"+ConsoleColors.RED+" An Error Occured. Please Only Enter Number Only."+ConsoleColors.RESET);
+            s.nextLine();inventoryClerk();
         }
     }
 
@@ -270,17 +267,18 @@ public class FioreFlowershop {
         System.out.println("[4] View Sales Order");
         System.out.println("[5] Back");
         System.out.println("Enter your option: ");
-        int counterStaffChoice = s.nextInt();
-        switch (counterStaffChoice) {
-            case 1: InvoicePayment.invoiceMaintenance();break;
-            case 2: //order pickup/delivery                
-                orderMenu();
-                break;
-            case 3: //consumer payment management
-            case 4: //view sales order
-            case 5:
-                staffTypeSelection();
-                break;
+        try{
+            int counterStaffChoice = s.nextInt();
+            switch (counterStaffChoice) {
+                case 1: InvoicePayment.invoiceMaintenance();break;
+                case 2:orderMenu();break;//order pickup/delivery 
+                case 3: //consumer payment management
+                case 4: //view sales order
+                case 5:staffTypeSelection();break;
+            }   
+        }catch(Exception e){
+            System.out.println("\n"+ConsoleColors.RED+" An Error Occured. Please Only Enter Number Only."+ConsoleColors.RESET);
+            s.nextLine();counterStaff();
         }
     }
 
@@ -289,16 +287,18 @@ public class FioreFlowershop {
         System.out.println("[1] View Order List");
         System.out.println("[2] Generate Itemized Bill");
         System.out.println("[3] Back");
-        int floristChoice = s.nextInt();
-        switch (floristChoice) {
-            case 1:
-                orderMenu();
-                break;
-            case 2:
-            case 3:
-                staffTypeSelection();
-                break;
+        try{
+           int floristChoice = s.nextInt();
+           switch (floristChoice) {
+               case 1:orderMenu();break;
+               case 2:
+               case 3:staffTypeSelection();break;
+           } 
+        }catch(Exception e){
+            System.out.println("\n"+ConsoleColors.RED+" An Error Occured. Please Only Enter Number Only."+ConsoleColors.RESET);
+            s.nextLine();florist();
         }
+        
     }
     public static void deliveryStaff() throws ApiException, InterruptedException, IOException {
         System.out.println("\nPlease Select The Options Below.");
@@ -308,20 +308,20 @@ public class FioreFlowershop {
         System.out.println("[4] View Delivery Payments");
         System.out.println("[5] Generate Payment Receipt");
         System.out.println("[6] Back");
-        int deliveryStaffChoice = s.nextInt();
-        switch (deliveryStaffChoice) {
-            case 1:
-            case 2:
-            case 3: 
-                Delivery.sortRouteDelivery(deliveryOrder, customizedPackages, shopAddress);
-                break;
-            case 4:
-                //DeliveryOptimization.distanceMatrix(origin, dest);
-                break;
-            case 5:
-            case 6:
-                userTypeSelection();
-                break;
+        try{
+            int deliveryStaffChoice = s.nextInt();
+            switch (deliveryStaffChoice) {
+                case 1:
+                case 2:
+                case 3:Delivery.sortRouteDelivery(deliveryOrder, customizedPackages, shopAddress);break;
+                case 4://DeliveryOptimization.distanceMatrix(origin, dest);
+                    break;
+                case 5:
+                case 6:userTypeSelection();break;
+            } 
+        }catch(Exception e){
+            System.out.println("\n"+ConsoleColors.RED+" An Error Occured. Please Only Enter Number Only."+ConsoleColors.RESET);
+            s.nextLine();userTypeSelection();
         }
     }
 
