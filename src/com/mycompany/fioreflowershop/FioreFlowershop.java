@@ -123,7 +123,13 @@ public class FioreFlowershop {
         customizedPackages.enqueue(new CustomizedPackage(styles.getItem(1), sizes.getItem(2), flowers.getItem(3), accessories.getItem(3), priorities.getItem(2), deliveryTypes.getItem(2), customer1));
         customizedPackages.enqueue(new CustomizedPackage(styles.getItem(3), sizes.getItem(1), flowers.getItem(2), accessories.getItem(1), priorities.getItem(2), deliveryTypes.getItem(2), customer));
         customizedPackages.enqueue(new CustomizedPackage(styles.getItem(4), sizes.getItem(2), flowers.getItem(4), accessories.getItem(1), priorities.getItem(1), deliveryTypes.getItem(1), customer1));
-        customizedPackages.enqueue(new CustomizedPackage(styles.getItem(1), sizes.getItem(2), flowers.getItem(5), accessories.getItem(2), priorities.getItem(1), deliveryTypes.getItem(2), customer));
+        CustomizedPackage specialPackage = new CustomizedPackage(styles.getItem(1), sizes.getItem(2), flowers.getItem(5), accessories.getItem(2), priorities.getItem(1), deliveryTypes.getItem(2), customer);
+        specialPackage.setDeliveryDate(Calendar.getInstance().getTime());
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_MONTH, -2);
+        specialPackage.setOrderDate(cal.getTime());
+        customizedPackages.enqueue(specialPackage);
+        
     }
 
     public static void gotoCustomizePackage(Consumer customerLoggedIn) {
