@@ -57,7 +57,7 @@ public class FioreFlowershop {
             CatalogOrder.initializeData(pickupOrder, deliveryOrder);
             initializePackages();
         }
-        //testing();
+        testing();
         userTypeSelection();
     }
 
@@ -71,6 +71,7 @@ public class FioreFlowershop {
 //        }catch(Exception e){
 //            
 //        }
+        Date todayDate = new Date();
         //consumer initialize
         consumer.add(new Consumer("ceekay", "abcdef123", "ceekay@example.com", "0125566922", "No Address Available"));
         corporate.add(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000, true));
@@ -143,16 +144,24 @@ public class FioreFlowershop {
 
     public static void gotoCatalogOrders(Consumer customerLoggedIn, CorporateCustomer corporateLoggedIn) {
         //Zion part need change since tutor told me use one array so my multiple array is gone
-//        if (corporateLoggedIn == null) {
-//            CatalogOrder.CustomerOrderMain(shoppingCart, customerLoggedIn, freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
-//        } else if (customerLoggedIn == null) {
-//            CatalogOrder.CorporateOrderMain(shoppingCart, corporateLoggedIn, freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
-//        }
+
+        if (corporateLoggedIn == null) {
+            CatalogOrder.CustomerOrderMain(shoppingCart, customerLoggedIn, normalPackage, discountedPackage);
+        } else if (customerLoggedIn == null) {
+            CatalogOrder.CorporateOrderMain(shoppingCart, corporateLoggedIn, normalPackage, discountedPackage);
+        }
+
     }
 
     //Dummy data - woo for display purpose
     public static void testing() {
         //testing purpose need to be update
+        normalPackage.add(new CatalogPackage("Package 1.0", "Style 1.0", "Small", "Flower 1.0", "Bear 1.0", "Fresh flower", "", 0, 10, 55.00, 0));
+        normalPackage.add(new CatalogPackage("Package 2.0", "Style 2.0", "Small", "Flower 2.0", "Bear 2.0", "Fresh flower", "", 0, 10, 77.00, 0));
+        normalPackage.add(new CatalogPackage("Package 3.0", "Style 1.0", "Small", "Flower 1.0", "Bear 1.0", "Bouquets", "", 0, 10, 80.00, 0));
+        normalPackage.add(new CatalogPackage("Package 4.0", "Style 2.0", "Small", "Flower 2.0", "Bear 2.0", "Bouquets", "r", 0, 10, 60.00, 0));
+        normalPackage.add(new CatalogPackage("Package 5.0", "Style 1.0", "Small", "Flower 1.0", "Bear 1.0", "Flower arrangement", "", 0, 10, 120.00, 0));
+        normalPackage.add(new CatalogPackage("Package 6.0", "Style 2.0", "Small", "Flower 2.0", "Bear 2.0", "Flower arrangement", "", 0, 10, 90.00, 0));
 //        freshFlower.add(new CatalogPackage("Package 1.0", "Style 1.0", "Small", "Flower 1.0", "Bear 1.0", 10, 100.00, 20));
 //        freshFlower.add(new CatalogPackage("Package 1.1", "Style 1.1", "Large", "Flower 1.1", "Bear 1.1", 10, 100.00, 0));
 //        bouquets.add(new CatalogPackage("Package 2.0", "Style 2.0", "Small", "Flower 2.0", "Bear 2.0", 10, 100.00, 60));
@@ -174,7 +183,6 @@ public class FioreFlowershop {
             System.out.println("\n"+ConsoleColors.RED+" An Error Occured. Please Only Enter Number Only."+ConsoleColors.RESET);
             s.nextLine();userTypeSelection();
         }
-        
     }
 
     public static void staffTypeSelection() {
@@ -228,7 +236,6 @@ public class FioreFlowershop {
         System.out.println("[4] Edit the details of product in catalog");
         System.out.println("[5] Display created catalog");
         System.out.println("[6] Back");
-        
         try{
             int managerChoice = s.nextInt();
             String navigationMsg;
@@ -309,7 +316,6 @@ public class FioreFlowershop {
             System.out.println("\n"+ConsoleColors.RED+" An Error Occured. Please Only Enter Number Only."+ConsoleColors.RESET);
             s.nextLine();florist();
         }
-        
     }
 
     public static void deliveryStaff() throws ApiException, InterruptedException, IOException {
@@ -320,20 +326,29 @@ public class FioreFlowershop {
         System.out.println("[4] View Delivery Payments");
         System.out.println("[5] Generate Payment Receipt");
         System.out.println("[6] Back");
-        try{
-            int deliveryStaffChoice = s.nextInt();
-            switch (deliveryStaffChoice) {
-                case 1:
-                case 2:
-                case 3:Delivery.sortRouteDelivery(deliveryOrder, customizedPackages, shopAddress);break;
-                case 4://DeliveryOptimization.distanceMatrix(origin, dest);
-                    break;
-                case 5:
-                case 6:userTypeSelection();break;
-            } 
-        }catch(Exception e){
-            System.out.println("\n"+ConsoleColors.RED+" An Error Occured. Please Only Enter Number Only."+ConsoleColors.RESET);
-            s.nextLine();userTypeSelection();
+        int deliveryStaffChoice = s.nextInt();
+        switch (deliveryStaffChoice) {
+            case 1:
+            case 2:
+            case 3:
+                Delivery.sortRouteDelivery(deliveryOrder, customizedPackages, shopAddress);
+                try {
+                    deliveryStaff();
+                } catch (ApiException ex) {
+                    Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
+            case 4:
+                //DeliveryOptimization.distanceMatrix(origin, dest);
+                break;
+            case 5:
+            case 6:
+                userTypeSelection();
+                break;
         }
     }
 
