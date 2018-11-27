@@ -67,7 +67,7 @@ public class Delivery {
             }
         }
 
-        for (int i = -1; i <= count; i++) {
+        for (int i = -1; i < count; i++) {
 
             if (!customOrder.isEmpty()) {
                 CustomizedPackage order = customOrder.dequeue();
@@ -104,6 +104,8 @@ public class Delivery {
 
         QueueInterface<CustomizedPackage> customOrder = customizeOrder;
 
+        int count = customOrder.getBackIndex();
+
         ListInterface<Order> unOrderList = deliveryOrder;
 
         QueueInterface<CustomizedPackage> searchQueue = new ArrayQueue<>();
@@ -132,7 +134,7 @@ public class Delivery {
             }
         }
 
-        for (int i = -1; i <= customOrder.getBackIndex(); i++) {
+        for (int i = -1; i < count; i++) {
 
             CustomizedPackage tempCustomOrder = customOrder.dequeue();
             CuslistCal.setTime(tempCustomOrder.getDeliveryDate());
@@ -207,8 +209,8 @@ public class Delivery {
                 CustomizedPackage order = customOrder.dequeue();
                 if (order.getDeliveryType().getName().equals("Deliver")) {
                     System.out.println("Order ID: " + order.getOrderNum());
-                    System.out.println("Consumer name: " + order.getCustomer().getUsername());
-                    System.out.println("Contact: " + order.getCustomer().getPhone());
+                    System.out.println("Consumer name: " + order.getUser().getUsername());
+                    System.out.println("Contact: " + order.getUser().getPhone());
                     System.out.println("Delivery date: " + order.getDeliveryDateString() + "\n");
                     showQueue.enqueue(order);
                 }
@@ -225,6 +227,8 @@ public class Delivery {
         QueueInterface<CustomizedPackage> customOrder = customizeOrder;
 
         ListInterface<Order> unOrderList = deliveryOrder;
+
+        int count = customOrder.getBackIndex();
 
         QueueInterface<CustomizedPackage> searchQueue = new ArrayQueue<>();
 
@@ -252,7 +256,7 @@ public class Delivery {
             }
         }
 
-        for (int i = -1; i <= customOrder.getBackIndex(); i++) {
+        for (int i = -1; i < count; i++) {
 
             CustomizedPackage tempCustomOrder = customOrder.dequeue();
             CuslistCal.setTime(tempCustomOrder.getDeliveryDate());
@@ -295,7 +299,7 @@ public class Delivery {
 
     public static void displaySortRoute(TSPSolver solver, ListInterface<Order> dest, String shopAddress) {
 
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         Date date = new Date();
         List<Integer> tour = solver.getTour();
         System.out.println("Date: " + dateFormat.format(date));
@@ -309,12 +313,12 @@ public class Delivery {
             int tourCount = tour.get(i).intValue();
 
             if (i > 0 && i < tour.size() - 1) {
-                System.out.println("Delivery Order " + (i + 1));
+                System.out.println("Delivery Order " + (i));
                 System.out.println("================");
                 System.out.println("Address: " + dest.getItem(tourCount).getUser().getAddress());
                 System.out.println("Order ID: " + dest.getItem(tourCount).getOrderID());
                 System.out.println("Name: " + dest.getItem(tourCount).getUser().getUsername());
-                System.out.println("Delivery Date: " + dest.getItem(tourCount).getDate());
+                System.out.println("Delivery Date: " + dateFormat.format(dest.getItem(tourCount).getDate()));
                 System.out.println("Order type: " + dest.getItem(tourCount).getOrderType() + "\n");
             }
         }
