@@ -206,7 +206,7 @@ public class CustomerMaintenance {
                     case 2: CreateAccount(); break;
                 }
         }
-        customerOptions(); //Test Run only, Supposed to Redirect to other page
+        s.nextLine();customerOptions(); //Test Run only, Supposed to Redirect to other page
         } else {
             System.out.println(FioreFlowershop.ConsoleColors.RED_BOLD + "\nYou Are Already Logged In ! " + FioreFlowershop.ConsoleColors.RESET);
             //Redirect to other page
