@@ -280,7 +280,7 @@ public class FioreFlowershop {
             case 3: //consumer payment management
             case 4: //view sales order
             case 5:
-                userTypeSelection();
+                staffTypeSelection();
                 break;
         }
     }
