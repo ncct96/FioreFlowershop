@@ -74,6 +74,7 @@ public class FioreFlowershop {
 //            
 //        }
         Date todayDate = new Date();
+        System.out.println(todayDate.getYear()+1900);
         //consumer initialize
         consumer.add(new Consumer("ceekay", "abcdef123", "ceekay@example.com", "0125566922", "No Address Available"));
         corporate.add(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business",5000,true));
