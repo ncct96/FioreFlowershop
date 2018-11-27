@@ -70,6 +70,7 @@ public class DeliveryOptimization {
         }
 
         int startNode = 0;
+        // Pass to Dynamic Programming algorithm
         TSPSolver solver = new TSPSolver(startNode, array, arrayDuration);
 
         // Prints: [0, 3, 2, 4, 1, 5, 0]
