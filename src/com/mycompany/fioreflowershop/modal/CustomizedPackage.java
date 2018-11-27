@@ -23,6 +23,32 @@ public class CustomizedPackage extends Order{
     private Consumer customer;
     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
+    public CustomizedPackage(Item style, Item size, Item flower, Item accessory, Item priority, Item deliveryType, Consumer customer) {
+        orderNum = orderNo;
+        ++orderNo;
+       
+        Date todayDate = Calendar.getInstance().getTime();
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, priority.getQuantity());      
+        Date addDate = cal.getTime();
+        
+        deliveryDate = df.format(addDate);
+        orderDate = df.format(todayDate);
+        
+        this.style = style;
+        this.size = size;
+        this.flower = flower;
+        this.accessory = accessory;
+        this.priority = priority;
+        this.deliveryType = deliveryType;
+        this.customer = customer;
+    }
+
+    public CustomizedPackage() {
+        orderNum = orderNo;
+        ++orderNo;
+    }
+    
     public Item getDeliveryType() {
         return deliveryType;
     }
@@ -40,7 +66,15 @@ public class CustomizedPackage extends Order{
     public String getOrderDateString() {
         return orderDate;
     }
+    
+    public void setOrderDateString(String orderDate) {
+        this.orderDate = orderDate;
+    }
 
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = df.format(orderDate);
+    }
+    
     public Consumer getCustomer() {
         return customer;
     }
@@ -87,6 +121,14 @@ public class CustomizedPackage extends Order{
         return deliveryDate;
     }
 
+    public void setDeliveryDateString(String deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
+    
+    public void setDeliveryDate(Date deliveryDate) {
+        this.deliveryDate = df.format(deliveryDate);
+    }
+    
     public void setStyle(Item style) {
         this.style = style;
     }
@@ -121,32 +163,6 @@ public class CustomizedPackage extends Order{
 
     public void setPriority(Item priority) {
         this.priority = priority;
-    }
-
-    public CustomizedPackage(Item style, Item size, Item flower, Item accessory, Item priority, Item deliveryType, Consumer customer) {
-        orderNum = orderNo;
-        ++orderNo;
-       
-        Date todayDate = Calendar.getInstance().getTime();
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, priority.getQuantity());      
-        Date addDate = cal.getTime();
-        
-        deliveryDate = df.format(addDate);
-        orderDate = df.format(todayDate);
-        
-        this.style = style;
-        this.size = size;
-        this.flower = flower;
-        this.accessory = accessory;
-        this.priority = priority;
-        this.deliveryType = deliveryType;
-        this.customer = customer;
-    }
-
-    public CustomizedPackage() {
-        orderNum = orderNo;
-        ++orderNo;
     }
 
     public double CalculateOrder() {
