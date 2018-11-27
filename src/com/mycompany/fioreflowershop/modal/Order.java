@@ -17,15 +17,17 @@ public class Order {
     private String orderType;
     private Date date;
     private User user;
+    private double paymentAmt;
 
     public Order() {
     }
 
-    public Order(int orderID, String orderType, User user, Date date) {
+    public Order(int orderID, String orderType, Date date, User user, double paymentAmt) {
         this.orderID = orderID;
         this.orderType = orderType;
         this.date = date;
         this.user = user;
+        this.paymentAmt = paymentAmt;
     }
 
     public int getOrderID() {
@@ -58,6 +60,14 @@ public class Order {
 
     public void setDate(Date date) {
         this.date = new Date();
+    }
+
+    public double getPaymentAmt() {
+        return paymentAmt;
+    }
+
+    public void setPaymentAmt(double paymentAmt) {
+        this.paymentAmt = paymentAmt;
     }
 
 }

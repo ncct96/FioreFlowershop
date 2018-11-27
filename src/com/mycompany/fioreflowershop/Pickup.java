@@ -211,8 +211,8 @@ public class Pickup {
                 CustomizedPackage order = customOrder.dequeue();
                 if (order.getDeliveryType().getName().equals("Pickup")) {
                     System.out.println("Order ID: " + order.getOrderNum());
-                    System.out.println("Consumer name: " + order.getCustomer().getUsername());
-                    System.out.println("Contact: " + order.getCustomer().getPhone());
+                    System.out.println("Consumer name: " + order.getUser().getUsername());
+                    System.out.println("Contact: " + order.getUser().getPhone());
                     System.out.println("Pick up date: " + order.getDeliveryDateString() + "\n");
                     showQueue.enqueue(order);
                 }
