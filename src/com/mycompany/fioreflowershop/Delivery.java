@@ -219,7 +219,7 @@ public class Delivery {
 
     }
 
-    public static void sortRouteDelivery(ListInterface<Order> deliveryOrder, QueueInterface customizeOrder, String shopAddress) throws ApiException, InterruptedException, IOException {
+    public static void sortRouteDelivery(ListInterface<Order> deliveryOrder, QueueInterface<CustomizedPackage> customizeOrder, String shopAddress) throws ApiException, InterruptedException, IOException {
         ListInterface<Order> sortedList = new ArrayList<>();
 
         QueueInterface<CustomizedPackage> customOrder = customizeOrder;
@@ -295,24 +295,31 @@ public class Delivery {
 
     public static void displaySortRoute(TSPSolver solver, ListInterface<Order> dest, String shopAddress) {
 
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
         List<Integer> tour = solver.getTour();
-        System.out.println("Today's Delivery Route");
+        System.out.println("Date: " + dateFormat.format(date));
+        System.out.println("===========================");
+        System.out.println("Today's Delivery Route (Nearest to Furthest) ");
+        System.out.println("================================================" + "\n\n");
 
-        System.out.println(shopAddress);
+        System.out.println("Origin: " + shopAddress + "\n");
 
         for (int i = 0; i < tour.size() - 1; i++) {
             int tourCount = tour.get(i).intValue();
 
             if (i > 0 && i < tour.size() - 1) {
-                System.out.println(dest.getItem(tourCount).getUser().getAddress());
-                System.out.println(dest.getItem(tourCount).getOrderID());
-                System.out.println(dest.getItem(tourCount).getOrderType());
-                System.out.println(dest.getItem(tourCount).getDate());
-                System.out.println(dest.getItem(tourCount).getUser().getUsername() + "\n");
+                System.out.println("Delivery Order " + (i + 1));
+                System.out.println("================");
+                System.out.println("Address: " + dest.getItem(tourCount).getUser().getAddress());
+                System.out.println("Order ID: " + dest.getItem(tourCount).getOrderID());
+                System.out.println("Name: " + dest.getItem(tourCount).getUser().getUsername());
+                System.out.println("Delivery Date: " + dest.getItem(tourCount).getDate());
+                System.out.println("Order type: " + dest.getItem(tourCount).getOrderType() + "\n");
             }
-            System.out.println(shopAddress);
         }
 
+        System.out.println("Origin: " + shopAddress);
     }
 
 }

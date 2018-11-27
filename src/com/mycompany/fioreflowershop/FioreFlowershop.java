@@ -84,7 +84,7 @@ public class FioreFlowershop {
         user.add(new Consumer("testing", "testing", "testing", "0125566922", "No Address Available"));
 
         //Initialize shopping cart
-        shoppingCart.add(new CatalogOrder1(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000,true),
+        shoppingCart.add(new CatalogOrder1(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "Singapore", "abcdef", "Not your business", 5000,true),
                 todayDate,"Delivery", todayDate, (new CatalogPackage("FlowerStrong", "Stylish", "Small", "Rose", "Ribbons", "Product Type", "12", 2018, 10,50,20)),200,4,false));
         shoppingCart.add(new CatalogOrder1(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000,true),
                 todayDate,"Delivery", todayDate, (new CatalogPackage("FlowerWeak", "Colourful", "Medium", "Lavender", "Bow Tie","Product Type", "11", 2018, 20, 30, 10)),300,10,false));
