@@ -14,51 +14,51 @@ import java.util.Date;
  *
  * @author Chiu Peeng
  */
-public class CustomizedPackage extends Order{
+public class CustomizedPackage extends Order {
 
     private static int orderNo = 1;
     private int orderNum;
     private String orderDate, deliveryDate;
     private Item style, size, flower, accessory, priority, deliveryType;
-    private Consumer customer;
+    private User user;
     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-    public CustomizedPackage(Item style, Item size, Item flower, Item accessory, Item priority, Item deliveryType, Consumer customer) {
+    public CustomizedPackage(Item style, Item size, Item flower, Item accessory, Item priority, Item deliveryType, User user) {
         orderNum = orderNo;
         ++orderNo;
-       
+
         Date todayDate = Calendar.getInstance().getTime();
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, priority.getQuantity());      
+        cal.add(Calendar.DATE, priority.getQuantity());
         Date addDate = cal.getTime();
-        
+
         deliveryDate = df.format(addDate);
         orderDate = df.format(todayDate);
-        
+
         this.style = style;
         this.size = size;
         this.flower = flower;
         this.accessory = accessory;
         this.priority = priority;
         this.deliveryType = deliveryType;
-        this.customer = customer;
+        this.user = user;
     }
 
     public CustomizedPackage() {
         orderNum = orderNo;
         ++orderNo;
     }
-    
+
     public Item getDeliveryType() {
         return deliveryType;
     }
 
     public Date getOrderDate() {
         Date date = new Date();
-        try{
+        try {
             date = df.parse(orderDate);
-        }catch(Exception e){
-            
+        } catch (Exception e) {
+
         }
         return date;
     }
@@ -66,7 +66,7 @@ public class CustomizedPackage extends Order{
     public String getOrderDateString() {
         return orderDate;
     }
-    
+
     public void setOrderDateString(String orderDate) {
         this.orderDate = orderDate;
     }
@@ -74,13 +74,13 @@ public class CustomizedPackage extends Order{
     public void setOrderDate(Date orderDate) {
         this.orderDate = df.format(orderDate);
     }
-    
-    public Consumer getCustomer() {
-        return customer;
+
+    public User getUser() {
+        return user;
     }
 
-    public void setCustomer(Consumer customer) {
-        this.customer = customer;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public void setDeliveryType(Item deliveryType) {
@@ -109,10 +109,10 @@ public class CustomizedPackage extends Order{
 
     public Date getDeliveryDate() {
         Date date = new Date();
-        try{
+        try {
             date = df.parse(deliveryDate);
-        }catch(Exception e){
-            
+        } catch (Exception e) {
+
         }
         return date;
     }
@@ -124,11 +124,11 @@ public class CustomizedPackage extends Order{
     public void setDeliveryDateString(String deliveryDate) {
         this.deliveryDate = deliveryDate;
     }
-    
+
     public void setDeliveryDate(Date deliveryDate) {
         this.deliveryDate = df.format(deliveryDate);
     }
-    
+
     public void setStyle(Item style) {
         this.style = style;
     }
