@@ -64,13 +64,13 @@ public class DeliveryOptimization {
         for (int i = 0; i < origin.length; i++) {
             for (int j = 0; j < dest.length; j++) {
                 array[i][j] = t.rows[i].elements[j].distance.inMeters;
-                arrayDuration[i][j] = t.rows[i].elements[j].duration.inSeconds;
+                //arrayDuration[i][j] = t.rows[i].elements[j].duration.inSeconds;
                 //System.out.println(array[i][j]);
             }
         }
 
         int startNode = 0;
-        // Pass to Dynamic Programming algorithm
+        // Pass to Dynamic Programming algorithm to solve
         TSPSolver solver = new TSPSolver(startNode, array, arrayDuration);
 
         // Prints: [0, 3, 2, 4, 1, 5, 0]
