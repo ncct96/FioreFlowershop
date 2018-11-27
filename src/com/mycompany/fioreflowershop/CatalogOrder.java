@@ -31,10 +31,10 @@ public class CatalogOrder {
     static ListInterface<Order> conOrder = new ArrayList<>();
     static ListInterface<Order> corpOrder = new ArrayList<>();
 
-//    //Define item array of CatalgPackage class
-//    private static ArrayList<CatalogPackage> freshFlower = new ArrayList<>();
-//    private static ArrayList<CatalogPackage> bouquets = new ArrayList<>();
-//    private static ArrayList<CatalogPackage> flowerArrangement = new ArrayList<>();
+    //Define item array of CatalgPackage class
+    private static ArrayList<CatalogPackage> freshFlower = new ArrayList<>();
+    private static ArrayList<CatalogPackage> bouquets = new ArrayList<>();
+    private static ArrayList<CatalogPackage> flowerArrangement = new ArrayList<>();
 //    private static ArrayList<CatalogPackage> freshFlowerDiscounted = new ArrayList<>();
 //    private static ArrayList<CatalogPackage> bouquetsDiscounted = new ArrayList<>();
 //    private static ArrayList<CatalogPackage> flowerArrangementDiscounted = new ArrayList<>();
@@ -48,7 +48,6 @@ public class CatalogOrder {
     private static int itemSelection;
     private static double itemPrice;
     private static int quantity;
-    private static double payAmount;
     private static boolean isInteger;
     private static String orderType;
     private static boolean status = true;
@@ -57,23 +56,24 @@ public class CatalogOrder {
     private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private static DateFormat timeFormat = new SimpleDateFormat("HH:mm");
     private static String pickupDate, pickupTime, deliveryDate = "";
+    private static int freshFlowerCounter = 0, bouquetsCounter = 0, flowerArrangementCounter = 0;
 
-    public static void CustomerOrderMain(ListInterface cart, Consumer customerLoggedIn, ArrayList<CatalogPackage> freshFlower, ArrayList<CatalogPackage> bouquets, ArrayList<CatalogPackage> flowerArrangement, ArrayList<CatalogPackage> freshFlowerDiscounted, ArrayList<CatalogPackage> bouquetsDiscounted, ArrayList<CatalogPackage> flowerArrangementDiscounted) {
+    public static void CustomerOrderMain(ListInterface cart, Consumer customerLoggedIn, ArrayList<CatalogPackage> normalPackage, ArrayList<CatalogPackage> discountedPackage) {
 //        testing();
         //ListInterface<CatalogOrder1> sCart = cart;
         customer = customerLoggedIn;
-        displayCatalog(freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
+        displayCatalog(normalPackage, discountedPackage);
 
     }
 
-    public static void CorporateOrderMain(ListInterface cart, CorporateCustomer customerLoggedIn, ArrayList<CatalogPackage> freshFlower, ArrayList<CatalogPackage> bouquets, ArrayList<CatalogPackage> flowerArrangement, ArrayList<CatalogPackage> freshFlowerDiscounted, ArrayList<CatalogPackage> bouquetsDiscounted, ArrayList<CatalogPackage> flowerArrangementDiscounted) {
+    public static void CorporateOrderMain(ListInterface cart, CorporateCustomer customerLoggedIn, ArrayList<CatalogPackage> normalPackage, ArrayList<CatalogPackage> discountedPackage) {
         //ListInterface<CatalogOrder1> sCart = cart;
         corporate = customerLoggedIn;
-        displayCatalog(freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
+        displayCatalog(normalPackage, discountedPackage);
     }
 
     //Display the catalog or monthly promotion catalog
-    public static void displayCatalog(ArrayList<CatalogPackage> freshFlower, ArrayList<CatalogPackage> bouquets, ArrayList<CatalogPackage> flowerArrangement, ArrayList<CatalogPackage> freshFlowerDiscounted, ArrayList<CatalogPackage> bouquetsDiscounted, ArrayList<CatalogPackage> flowerArrangementDiscounted) {
+    public static void displayCatalog(ArrayList<CatalogPackage> normalPackage, ArrayList<CatalogPackage> discountedPackage) {
         do {
             System.out.println("\n Catalog Order");
             System.out.println("===================");
@@ -92,7 +92,7 @@ public class CatalogOrder {
             }
         } while (!(isInteger) || userMenuOption < 1 || userMenuOption > 3);
         if (userMenuOption == 1) {
-            typeSelection(freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
+            typeSelection(normalPackage, discountedPackage);
         } else if (userMenuOption == 2) {
             if (!shoppingCart.isEmpty()) {
                 System.out.println("\nDisplay Shopping Cart");
@@ -152,7 +152,7 @@ public class CatalogOrder {
                             deliveryDate = dateFormat.format(c.getTime());
 
                             //set the orderType to Delivery and set the deliveryDate
-                            for (int x = 0; x < shoppingCart.getTotalEntries(); x++) {
+                            for (int x = 1; x < shoppingCart.getTotalEntries() + 1; x++) {
                                 shoppingCart.getItem(x).setOrderType(orderType);
                                 try {
                                     shoppingCart.getItem(x).setRetrieveDate(dateFormat.parse(deliveryDate));
@@ -171,12 +171,12 @@ public class CatalogOrder {
                             deliveryDate = dateFormat.format(c.getTime());
 
                             //set the orderType to Delivery and set the deliveryDate
-                            for (int x = 0; x < shoppingCart.getTotalEntries(); x++) {
+                            for (int x = 1; x < shoppingCart.getTotalEntries() + 1; x++) {
                                 shoppingCart.getItem(x).setOrderType(orderType);
-                                try{
-                                shoppingCart.getItem(x).setRetrieveDate(dateFormat.parse(deliveryDate));
-                                }catch(Exception ex){
-                                    
+                                try {
+                                    shoppingCart.getItem(x).setRetrieveDate(dateFormat.parse(deliveryDate));
+                                } catch (Exception ex) {
+
                                 }
                             }
 
@@ -195,21 +195,16 @@ public class CatalogOrder {
                             pickDate = scan.next();
                             if (!pickDate.isEmpty()) {
                                 try {
-                                    if (todayDate.equals(dateFormat.parse(pickDate))) {
-                                        System.err.println(FioreFlowershop.ConsoleColors.RED + "Sorry, you cannot pickup your items by today.");
-                                        checkDate = false;
-                                    } else if (todayDate.after(dateFormat.parse(pickDate))) {
-                                        System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter a valid date after today's date.");
-                                        checkDate = false;
-                                    } else {
+                                    Date pickDate2 = dateFormat.parse(pickDate);
+                                    if(pickDate2.after(todayDate)){
                                         pickupDate = dateFormat.format(dateFormat.parse(pickDate));
                                         //set the orderType to Delivery and set the deliveryDate
-                                        for (int x = 0; x < shoppingCart.getTotalEntries(); x++) {
+                                        for (int x = 1; x < shoppingCart.getTotalEntries() + 1; x++) {
                                             shoppingCart.getItem(x).setOrderType(orderType);
-                                            try{
-                                            shoppingCart.getItem(x).setRetrieveDate(dateFormat.parse(pickupDate));
-                                            }catch(Exception ex){
-                                                
+                                            try {
+                                                shoppingCart.getItem(x).setRetrieveDate(dateFormat.parse(pickupDate));
+                                            } catch (Exception ex) {
+
                                             }
                                         }
                                         System.out.println("");
@@ -218,7 +213,14 @@ public class CatalogOrder {
                                         System.out.println("=====================================================");
 //                                System.out.print(FioreFlowershop.ConsoleColors.RED + pickupDate); checking on user date input
                                         checkDate = true;
-                                    }
+                                    }else if (todayDate.equals(dateFormat.parse(pickDate))) {
+                                        System.err.println(FioreFlowershop.ConsoleColors.RED + "Sorry, you cannot pickup your items by today.");
+                                        checkDate = false;
+                                    } else if (todayDate.after(dateFormat.parse(pickDate))) {
+                                        System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter a valid date after today's date.");
+                                        checkDate = false;
+                                    } 
+                                        
                                 } catch (Exception e) {
 
                                 }
@@ -227,15 +229,15 @@ public class CatalogOrder {
                     }
                     System.out.println("");
                     System.out.println(FioreFlowershop.ConsoleColors.GREEN + "Back to Catalog Order Menu....");
-                    displayCatalog(freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
+                    displayCatalog(normalPackage, discountedPackage);
                 } else {
                     System.out.println("");
                     System.out.println(FioreFlowershop.ConsoleColors.GREEN + "Back to Catalog Order Menu....");
-                    displayCatalog(freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
+                    displayCatalog(normalPackage, discountedPackage);
                 }
             } else if (shoppingCart.isEmpty()) {
                 System.out.println(FioreFlowershop.ConsoleColors.RED + "Your shopping cart is empty. You have not add in any item yet.");
-                displayCatalog(freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
+                displayCatalog(normalPackage, discountedPackage);
             }
 
         } else if (userMenuOption == 3) {
@@ -246,7 +248,7 @@ public class CatalogOrder {
 //        }
     }
 
-    public static void typeSelection(ArrayList<CatalogPackage> freshFlower, ArrayList<CatalogPackage> bouquets, ArrayList<CatalogPackage> flowerArrangement, ArrayList<CatalogPackage> freshFlowerDiscounted, ArrayList<CatalogPackage> bouquetsDiscounted, ArrayList<CatalogPackage> flowerArrangementDiscounted) {
+    public static void typeSelection(ArrayList<CatalogPackage> normalPackage, ArrayList<CatalogPackage> discountedPackage) {
         do {
 
             System.out.println("\nNormal Catalog - Type Selection");
@@ -266,44 +268,41 @@ public class CatalogOrder {
             }
         } while (!(isInteger) || userMenuOption < 1 || userMenuOption > 4);
         if (userMenuOption == 4) {
-            displayCatalog(freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
+            displayCatalog(normalPackage, discountedPackage);
         } else if (userMenuOption == 1) {
-            freshFlowerCatalog(freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
+            freshFlowerCatalog(normalPackage, discountedPackage);
         } else if (userMenuOption == 2) {
-            bouquetsCatalog(freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
+            bouquetsCatalog(normalPackage, discountedPackage);
         } else if (userMenuOption == 3) {
-            flowerArrangementCatalog(freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
+            flowerArrangementCatalog(normalPackage, discountedPackage);
         }
 
     }
 
     //Display the normal catalog
-    public static void freshFlowerCatalog(ArrayList<CatalogPackage> freshFlower, ArrayList<CatalogPackage> bouquets, ArrayList<CatalogPackage> flowerArrangement, ArrayList<CatalogPackage> freshFlowerDiscounted, ArrayList<CatalogPackage> bouquetsDiscounted, ArrayList<CatalogPackage> flowerArrangementDiscounted) {
+    public static void freshFlowerCatalog(ArrayList<CatalogPackage> normalPackage, ArrayList<CatalogPackage> discountedPackage) {        
         CatalogPackage catalogPackage = new CatalogPackage();
         System.out.println("\nDisplay catalog - normal catalog");
         System.out.println("================================================================================================");
         System.out.println("Product types\t\t\t\t\tPrice\t\t\tDiscounted price");
-        if (freshFlower.getTotalEntries() != 0) {
-            System.out.println("Fresh Flower");
-            System.out.println("==================");
+        System.out.println("Fresh Flower");
+        System.out.println("==================");
+        for (int i = 1; i < normalPackage.getTotalEntries() + 1; i++) {
+            catalogPackage = normalPackage.getItem(i);
+            if (catalogPackage.getProductType().equals("Fresh flower")) {
+                freshFlower.add(new CatalogPackage(catalogPackage.getName(), catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getProductType(), catalogPackage.getPromoMonth(), catalogPackage.getPromoYear(), catalogPackage.getQuantity(), catalogPackage.getPrice(), catalogPackage.getDiscountRate()));
+                freshFlowerCounter++;
+//                    System.out.printf("%s,%s,%s,%s \t     RM%.2f\t\t\t RM%.2f\n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getPrice(), discountRate);
+            }
+        }
+        if (freshFlowerCounter != 0 && freshFlower.getTotalEntries() != 0) {
             for (int i = 1; i < freshFlower.getTotalEntries() + 1; i++) {
-                catalogPackage = freshFlower.getItem(i);
-                double discountRate = (double) ((100 - catalogPackage.getDiscountRate()) * catalogPackage.getPrice() / 100);
-                if (discountRate == catalogPackage.getPrice()) {
-                    System.out.printf("%d. %s\n", i, catalogPackage.getName());
-                    System.out.printf("%s,%s,%s,%s \t     RM%.2f\t\t\t    - \n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getPrice());
-                } else {
-                    System.out.printf("%d. %s\n", i, catalogPackage.getName());
-                    System.out.printf("%s,%s,%s,%s \t     RM%.2f\t\t\t RM%.2f\n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getPrice(), discountRate);
-                }
-
-                if (catalogPackage.getDiscountRate() > 0) {
-                    freshFlowerDiscounted.add(catalogPackage);
-                }
+                System.out.printf("%d. %s\n", i, freshFlower.getItem(i).getName());
+                System.out.printf("%s,%s,%s,%s \t        RM%.2f\t\t\t  - \n\n", freshFlower.getItem(i).getStyle(), freshFlower.getItem(i).getSize(), freshFlower.getItem(i).getFlower(), freshFlower.getItem(i).getAccessory(), freshFlower.getItem(i).getPrice());
             }
         } else if (freshFlower.getTotalEntries() == 0) {
             System.err.println("\nSorry, the item type you have selected is not available yet.");
-            typeSelection(freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
+            typeSelection(normalPackage, discountedPackage);
         }
 
         do {
@@ -317,24 +316,24 @@ public class CatalogOrder {
                 System.err.println("Please enter your choice in number only.");
                 scan.next();
             }
-
         } while (itemSelection == 0 || itemSelection > freshFlower.getTotalEntries() || !(isInteger));
-        catalogPackage = freshFlower.getItem(itemSelection);
+        
+//        catalogPackage = freshFlower.getItem(itemSelection);
         System.out.println("\nDisplay catalog - Quantity Selection");
         System.out.println("================================================================================================");
         System.out.println("Product types\t\t\t\tPrice\t\t\tDiscounted price");
-        double discountRate = (double) ((100 - catalogPackage.getDiscountRate()) * catalogPackage.getPrice() / 100);
-        if (discountRate == catalogPackage.getPrice()) {
-            System.out.printf("%s\n", catalogPackage.getName());
-            System.out.printf("%s,%s,%s,%s \tRM%.2f\t\t\t  - \n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getPrice());
-        } else {
-            System.out.printf("%s\n", catalogPackage.getName());
-            System.out.printf("%s,%s,%s,%s \tRM%.2f\t\t   RM%.2f\n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getPrice(), discountRate);
-        }
+//        double discountRate = (double) ((100 - catalogPackage.getDiscountRate()) * catalogPackage.getPrice() / 100);
+//        if (discountRate == catalogPackage.getPrice()) {
+//            System.out.printf("%s\n", catalogPackage.getName());
+//            System.out.printf("%s,%s,%s,%s \tRM%.2f\t\t\t  - \n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getPrice());
+//        } else {
+        System.out.printf("%s\n", freshFlower.getItem(itemSelection).getName());
+        System.out.printf("%s,%s,%s,%s \tRM%.2f\t\t   -\n\n", freshFlower.getItem(itemSelection).getStyle(), freshFlower.getItem(itemSelection).getSize(), freshFlower.getItem(itemSelection).getFlower(), freshFlower.getItem(itemSelection).getAccessory(), freshFlower.getItem(itemSelection).getPrice());
+//        }
 
-        if (catalogPackage.getDiscountRate() > 0) {
-            freshFlowerDiscounted.add(catalogPackage);
-        }
+//        if (catalogPackage.getDiscountRate() > 0) {
+//            freshFlowerDiscounted.add(catalogPackage);
+//        }
         do {
             System.out.print("Please enter quantity of this item you want to order:");
 //            quantity = scan.nextInt();
@@ -349,11 +348,11 @@ public class CatalogOrder {
         } while (!(isInteger));
 
         //Calculate total price of the selected item
-        if (discountRate == catalogPackage.getPrice()) {
-            itemPrice = freshFlower.getItem(itemSelection).getPrice() * quantity;
-        } else {
-            itemPrice = (double) (((100 - freshFlower.getItem(itemSelection).getDiscountRate()) * freshFlower.getItem(itemSelection).getPrice() / 100) * quantity);
-        }
+//        if (discountRate == catalogPackage.getPrice()) {
+        itemPrice = freshFlower.getItem(itemSelection).getPrice() * quantity;
+//        } else {
+//            itemPrice = (double) (((100 - freshFlower.getItem(itemSelection).getDiscountRate()) * freshFlower.getItem(itemSelection).getPrice() / 100) * quantity);
+//        }
 
         //Add in the selected item inside the shoppingCart arraylist
         if (customer != null && corporate == null) {
@@ -361,47 +360,47 @@ public class CatalogOrder {
                 currentDate = dateFormat.parse(dateFormat.format(todayDate));
                 shoppingCart.add(new CatalogOrder1(customer, currentDate, orderType, dateFormat.parse(deliveryDate), freshFlower.getItem(itemSelection), itemPrice, quantity));
             } catch (ParseException ex) {
-                
+
             }
         } else if (customer == null && corporate != null) {
-
+            
             //CK MADE SOME CHANGES HERE
-            if((corporate.getMonthlyLimit()-corporate.getCreditSpent()) < 0){
-                System.out.println(FioreFlowershop.ConsoleColors.RED+"Sorry, it seems that you will exceed the credit limit after this purchase. Please make payment ASAP."+FioreFlowershop.ConsoleColors.RESET);
-            }else {
-                if(catalogPackage.getDiscountRate()!=0){
+            if ((corporate.getMonthlyLimit() - corporate.getCreditSpent()) < 0) {
+                System.out.println(FioreFlowershop.ConsoleColors.RED + "Sorry, it seems that you will exceed the credit limit after this purchase. Please make payment ASAP." + FioreFlowershop.ConsoleColors.RESET);
+            } else {
+                if (freshFlower.getItem(itemSelection).getDiscountRate() != 0) {
                     corporate.setCreditSpent(((double) (((100 - freshFlower.getItem(itemSelection).getDiscountRate()) * freshFlower.getItem(itemSelection).getPrice() / 100) * quantity)));
-                }else {
+                } else {
                     corporate.setCreditSpent((freshFlower.getItem(itemSelection).getPrice() * quantity));
                 }
                 try {
                     currentDate = dateFormat.parse(dateFormat.format(todayDate));
                     shoppingCart.add(new CatalogOrder1(corporate, currentDate, orderType, dateFormat.parse(deliveryDate), freshFlower.getItem(itemSelection), itemPrice, quantity, status));
-                } catch (ParseException ex) {}
+                } catch (ParseException ex) {
+                }
             }
-        
 
-        System.out.println("\nDisplay Shopping Cart");
-        System.out.println("================================================================================================");
-        System.out.println("Product types\t\t\t\tPrice\t\tQuantity");
-        if (!shoppingCart.isEmpty()) {
-            for (int i = 1; i < shoppingCart.getTotalEntries() + 1; i++) {
-                System.out.printf("%s\n", shoppingCart.getItem(i).getCatalogPackage().getName());
-                System.out.printf("%s,%s,%s,%s \tRM%7.2f\t   %d\n\n", shoppingCart.getItem(i).getCatalogPackage().getStyle(), shoppingCart.getItem(i).getCatalogPackage().getSize(), shoppingCart.getItem(i).getCatalogPackage().getFlower(), shoppingCart.getItem(i).getCatalogPackage().getAccessory(), shoppingCart.getItem(i).getItemPrice(), shoppingCart.getItem(i).getItemQuantity());
-            }
+            System.out.println("\nDisplay Shopping Cart");
+            System.out.println("================================================================================================");
+            System.out.println("Product types\t\t\t\tPrice\t\tQuantity");
+            if (!shoppingCart.isEmpty()) {
+                for (int i = 1; i < shoppingCart.getTotalEntries() + 1; i++) {
+                    System.out.printf("%s\n", shoppingCart.getItem(i).getCatalogPackage().getName());
+                    System.out.printf("%s,%s,%s,%s \tRM%7.2f\t   %d\n\n", shoppingCart.getItem(i).getCatalogPackage().getStyle(), shoppingCart.getItem(i).getCatalogPackage().getSize(), shoppingCart.getItem(i).getCatalogPackage().getFlower(), shoppingCart.getItem(i).getCatalogPackage().getAccessory(), shoppingCart.getItem(i).getItemPrice(), shoppingCart.getItem(i).getItemQuantity());
+                }
 //            discountRate = (double) ((100 - freshFlower.getItem(itemSelection).getDiscountRate()) * freshFlower.getItem(itemSelection).getPrice() / 100);
 //            System.out.printf("%s\n", freshFlower.getItem(itemSelection).getName());
 //            System.out.printf("%s,%s,%s,%s \tRM%.2f\t   %d\n\n", freshFlower.getItem(itemSelection).getStyle(), freshFlower.getItem(itemSelection).getSize(), freshFlower.getItem(itemSelection).getFlower(), freshFlower.getItem(itemSelection).getAccessory(), discountRate * quantity, quantity);
 
-        }
-        System.out.print("Do you wish to browse through fresh flower? (Y/y = Yes, other keys = No)");
-        String con = scan.next();
+            }
+            System.out.print("Do you wish to browse through fresh flower? (Y/y = Yes, other keys = No)");
+            String con = scan.next();
 
-        if (con.equalsIgnoreCase("Y")) {
-            freshFlowerCatalog(freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
-        } else {
-            typeSelection(freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
-        }
+            if (con.equalsIgnoreCase("Y")) {
+                freshFlowerCatalog(normalPackage, discountedPackage);
+            } else {
+                typeSelection(normalPackage, discountedPackage);
+            }
 
 //        System.out.println("\nDiscounted Product List");
 //        System.out.println("================================================================================================");
@@ -431,31 +430,35 @@ public class CatalogOrder {
         }
     }
 
-    public static void bouquetsCatalog(ArrayList<CatalogPackage> freshFlower, ArrayList<CatalogPackage> bouquets, ArrayList<CatalogPackage> flowerArrangement, ArrayList<CatalogPackage> freshFlowerDiscounted, ArrayList<CatalogPackage> bouquetsDiscounted, ArrayList<CatalogPackage> flowerArrangementDiscounted) {
+    public static void bouquetsCatalog(ArrayList<CatalogPackage> normalPackage, ArrayList<CatalogPackage> discountedPackage) {
         CatalogPackage catalogPackage = new CatalogPackage();
         System.out.println("\nDisplay catalog - normal catalog");
         System.out.println("================================================================================================");
         System.out.println("Product types\t\t\t\t\tPrice\t\t\tDiscounted price");
-        if (bouquets.getTotalEntries() != 0) {
+        for (int i = 1; i < normalPackage.getTotalEntries() + 1; i++) {
+            catalogPackage = normalPackage.getItem(i);
+            if (catalogPackage.getProductType().equals("Bouquets")) {
+                bouquets.add(new CatalogPackage(catalogPackage.getName(), catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getProductType(), catalogPackage.getPromoMonth(), catalogPackage.getPromoYear(), catalogPackage.getQuantity(), catalogPackage.getPrice(), catalogPackage.getDiscountRate()));
+                bouquetsCounter++;
+            }
+        }
+        if (bouquetsCounter != 0 && bouquets.getTotalEntries() != 0) {
             System.out.println("\nBouquets");
             System.out.println("==================");
             for (int i = 1; i < bouquets.getTotalEntries() + 1; i++) {
-                catalogPackage = bouquets.getItem(i);
-                double discountRate = (double) ((100 - catalogPackage.getDiscountRate()) * catalogPackage.getPrice() / 100);
-                if (discountRate == catalogPackage.getPrice()) {
-                    System.out.printf("%d. %s\n", i, catalogPackage.getName());
-                    System.out.printf("%s,%s,%s,%s \t\tRM%.2f\t\t  - \n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getPrice());
-                } else {
-                    System.out.printf("%d. %s\n", i, catalogPackage.getName());
-                    System.out.printf("%s,%s,%s,%s \t\tRM%.2f\t\t RM%.2f\n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getPrice(), discountRate);
-                }
-                if (catalogPackage.getDiscountRate() > 0) {
-                    bouquetsDiscounted.add(catalogPackage);
-                }
+                System.out.printf("%d. %s\n", i, bouquets.getItem(i).getName());
+                System.out.printf("%s,%s,%s,%s \t\tRM%.2f\t\t  - \n\n", bouquets.getItem(i).getStyle(), bouquets.getItem(i).getSize(), bouquets.getItem(i).getFlower(), bouquets.getItem(i).getAccessory(), bouquets.getItem(i).getPrice());
+//                } else {
+//                    System.out.printf("%d. %s\n", i, catalogPackage.getName());
+//                    System.out.printf("%s,%s,%s,%s \t\tRM%.2f\t\t RM%.2f\n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getPrice(), discountRate);
+//                }
+//                if (catalogPackage.getDiscountRate() > 0) {
+//                    bouquetsDiscounted.add(catalogPackage);
+//                }
             }
         } else if (bouquets.getTotalEntries() == 0) {
             System.err.println("\nSorry, the item type you have selected is not available yet.");
-            typeSelection(freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
+            typeSelection(normalPackage, discountedPackage);
         }
         do {
             System.out.print("Please enter your choice in number:");
@@ -470,22 +473,13 @@ public class CatalogOrder {
             }
 
         } while (itemSelection == 0 || itemSelection > bouquets.getTotalEntries() || !(isInteger));
-        catalogPackage = bouquets.getItem(itemSelection);
+//        catalogPackage = bouquets.getItem(itemSelection);
         System.out.println("\nDisplay catalog - Quantity Selection");
         System.out.println("================================================================================================");
         System.out.println("Product types\t\t\t\tPrice\t\t\tDiscounted price");
-        double discountRate = (double) ((100 - catalogPackage.getDiscountRate()) * catalogPackage.getPrice() / 100);
-        if (discountRate == bouquets.getItem(itemSelection).getPrice()) {
-            System.out.printf("%s\n", catalogPackage.getName());
-            System.out.printf("%s,%s,%s,%s \tRM%.2f\t\t\t  - \n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getPrice());
-        } else {
-            System.out.printf("%s\n", catalogPackage.getName());
-            System.out.printf("%s,%s,%s,%s \tRM%.2f\t\t   RM%.2f\n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getPrice(), discountRate);
-        }
+        System.out.printf("%s\n", bouquets.getItem(itemSelection).getName());
+        System.out.printf("%s,%s,%s,%s \tRM%.2f\t\t\t  - \n\n", bouquets.getItem(itemSelection).getStyle(), bouquets.getItem(itemSelection).getSize(), bouquets.getItem(itemSelection).getFlower(), bouquets.getItem(itemSelection).getAccessory(), bouquets.getItem(itemSelection).getPrice());
 
-        if (catalogPackage.getDiscountRate() > 0) {
-            bouquetsDiscounted.add(catalogPackage);
-        }
         do {
             System.out.print("Please enter quantity of this item you want to order:");
 //            quantity = scan.nextInt();
@@ -500,37 +494,37 @@ public class CatalogOrder {
         } while (!(isInteger));
 
         //Calculate total price of the selected item
-        if (discountRate == catalogPackage.getPrice()) {
-            itemPrice = bouquets.getItem(itemSelection).getPrice() * quantity;
-        } else {
-            itemPrice = (double) (((100 - bouquets.getItem(itemSelection).getDiscountRate()) * bouquets.getItem(itemSelection).getPrice() / 100) * quantity);
-        }
+//        if (discountRate == bouquets.getItem(itemSelection).getPrice()) {
+        itemPrice = bouquets.getItem(itemSelection).getPrice() * quantity;
+//        } else {
+//            itemPrice = (double) (((100 - bouquets.getItem(itemSelection).getDiscountRate()) * bouquets.getItem(itemSelection).getPrice() / 100) * quantity);
+//        }
 
         //Add in the selected item inside the shoppingCart arraylist       
         if (customer != null && corporate == null) {
             try {
                 currentDate = dateFormat.parse(dateFormat.format(todayDate));
-                shoppingCart.add(new CatalogOrder1(customer, currentDate, orderType, dateFormat.parse(deliveryDate), freshFlower.getItem(itemSelection), itemPrice, quantity));
+                shoppingCart.add(new CatalogOrder1(customer, currentDate, orderType, dateFormat.parse(deliveryDate), bouquets.getItem(itemSelection), itemPrice, quantity));
             } catch (ParseException ex) {
-                
+
             }
         } else if (customer == null && corporate != null) {
             //CK MADE SOME CHANGES HERE
-            if((corporate.getMonthlyLimit()-corporate.getCreditSpent()) < 0){
-                System.out.println(FioreFlowershop.ConsoleColors.RED+"Sorry, it seems that you will exceed the credit limit after this purchase. Please make payment ASAP."+FioreFlowershop.ConsoleColors.RESET);
-            }else {
-                if(catalogPackage.getDiscountRate()!=0){
+            if ((corporate.getMonthlyLimit() - corporate.getCreditSpent()) < 0) {
+                System.out.println(FioreFlowershop.ConsoleColors.RED + "Sorry, it seems that you will exceed the credit limit after this purchase. Please make payment ASAP." + FioreFlowershop.ConsoleColors.RESET);
+            } else {
+                if (catalogPackage.getDiscountRate() != 0) {
                     corporate.setCreditSpent((double) (((100 - bouquets.getItem(itemSelection).getDiscountRate()) * bouquets.getItem(itemSelection).getPrice() / 100) * quantity));
-                }else {
+                } else {
                     corporate.setCreditSpent((bouquets.getItem(itemSelection).getPrice() * quantity));
                 }
                 try {
                     currentDate = dateFormat.parse(dateFormat.format(todayDate));
-                    shoppingCart.add(new CatalogOrder1(corporate, currentDate, orderType, dateFormat.parse(deliveryDate), freshFlower.getItem(itemSelection), itemPrice, quantity, status));
-                } catch (ParseException ex) { }
+                    shoppingCart.add(new CatalogOrder1(corporate, currentDate, orderType, dateFormat.parse(deliveryDate), bouquets.getItem(itemSelection), itemPrice, quantity, status));
+                } catch (ParseException ex) {
+                }
             }
         }
-            
 
         System.out.println("\nDisplay Shopping Cart");
         System.out.println("================================================================================================");
@@ -548,37 +542,35 @@ public class CatalogOrder {
         con = scan.next();
 
         if (con.equalsIgnoreCase("Y")) {
-            bouquetsCatalog(freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
+            bouquetsCatalog(normalPackage, discountedPackage);
         } else {
-            typeSelection(freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
+            typeSelection(normalPackage, discountedPackage);
         }
     }
 
-    public static void flowerArrangementCatalog(ArrayList<CatalogPackage> freshFlower, ArrayList<CatalogPackage> bouquets, ArrayList<CatalogPackage> flowerArrangement, ArrayList<CatalogPackage> freshFlowerDiscounted, ArrayList<CatalogPackage> bouquetsDiscounted, ArrayList<CatalogPackage> flowerArrangementDiscounted) {
+    public static void flowerArrangementCatalog(ArrayList<CatalogPackage> normalPackage, ArrayList<CatalogPackage> discountedPackage) {
         CatalogPackage catalogPackage = new CatalogPackage();
         System.out.println("\nDisplay catalog - normal catalog");
         System.out.println("================================================================================================");
         System.out.println("Product types\t\t\t\tQuantity\tPrice\t\t\tDiscounted price");
-        if (flowerArrangement.getTotalEntries() != 0) {
+        for (int i = 1; i < normalPackage.getTotalEntries() + 1; i++) {
+            catalogPackage = normalPackage.getItem(i);
+            if (catalogPackage.getProductType().equals("Flower arrangement")) {
+                flowerArrangement.add(new CatalogPackage(catalogPackage.getName(), catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getProductType(), catalogPackage.getPromoMonth(), catalogPackage.getPromoYear(), catalogPackage.getQuantity(), catalogPackage.getPrice(), catalogPackage.getDiscountRate()));
+                flowerArrangementCounter++;
+//                    System.out.printf("%s,%s,%s,%s \t     RM%.2f\t\t\t RM%.2f\n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getPrice(), discountRate);
+            }
+        }
+        if (flowerArrangementCounter != 0 && flowerArrangement.getTotalEntries() != 0) {
             System.out.println("\nFlower Arrangement");
             System.out.println("==================");
-            for (int i = 1; i < flowerArrangement.getTotalEntries() + 1; i++) {
-                catalogPackage = flowerArrangement.getItem(i);
-                double discountRate = (double) ((100 - catalogPackage.getDiscountRate()) * catalogPackage.getPrice() / 100);
-                if (discountRate == catalogPackage.getPrice()) {
-                    System.out.printf("%s\n", catalogPackage.getName());
-                    System.out.printf("%s,%s,%s,%s \t   %d\t\t RM%.2f\t\t  - \n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getQuantity(), catalogPackage.getPrice());
-                } else {
-                    System.out.printf("%s\n", catalogPackage.getName());
-                    System.out.printf("%s,%s,%s,%s \t   %d\t\t RM%.2f\t\t RM%.2f\n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getQuantity(), catalogPackage.getPrice(), discountRate);
-                }
-                if (catalogPackage.getDiscountRate() > 0) {
-                    flowerArrangementDiscounted.add(catalogPackage);
-                }
+            for (int i = 1; i < flowerArrangement.getTotalEntries() + 1; i++) {                
+                System.out.printf("%s\n", flowerArrangement.getItem(i).getName());
+                System.out.printf("%s,%s,%s,%s \t   %d\t\t RM%.2f\t\t  - \n\n", flowerArrangement.getItem(i).getStyle(), flowerArrangement.getItem(i).getSize(), flowerArrangement.getItem(i).getFlower(), flowerArrangement.getItem(i).getAccessory(), flowerArrangement.getItem(i).getQuantity(), flowerArrangement.getItem(i).getPrice());                                
             }
         } else if (flowerArrangement.getTotalEntries() == 0) {
             System.err.println("\nSorry, the item type you have selected is not available yet.");
-            typeSelection(freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
+            typeSelection(normalPackage, discountedPackage);
         }
         do {
             System.out.print("Please enter your choice in number:");
@@ -597,18 +589,10 @@ public class CatalogOrder {
         System.out.println("\nDisplay catalog - Quantity Selection");
         System.out.println("================================================================================================");
         System.out.println("Product types\t\t\t\tPrice\t\t\tDiscounted price");
-        double discountRate = (double) ((100 - catalogPackage.getDiscountRate()) * catalogPackage.getPrice() / 100);
-        if (discountRate == catalogPackage.getPrice()) {
-            System.out.printf("%s\n", catalogPackage.getName());
-            System.out.printf("%s,%s,%s,%s \tRM%.2f\t\t\t  - \n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getPrice());
-        } else {
-            System.out.printf("%s\n", catalogPackage.getName());
-            System.out.printf("%s,%s,%s,%s \tRM%.2f\t\t   RM%.2f\n\n", catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getPrice(), discountRate);
-        }
 
-        if (catalogPackage.getDiscountRate() > 0) {
-            flowerArrangementDiscounted.add(catalogPackage);
-        }
+        System.out.printf("%s\n", flowerArrangement.getItem(itemSelection).getName());
+        System.out.printf("%s,%s,%s,%s \tRM%.2f\t\t\t  - \n\n", flowerArrangement.getItem(itemSelection).getStyle(), flowerArrangement.getItem(itemSelection).getSize(), flowerArrangement.getItem(itemSelection).getFlower(), flowerArrangement.getItem(itemSelection).getAccessory(), flowerArrangement.getItem(itemSelection).getPrice());
+              
         do {
             System.out.print("Please enter quantity of this item you want to order:");
 //            quantity = scan.nextInt();
@@ -624,35 +608,32 @@ public class CatalogOrder {
         } while (!(isInteger));
 
         //Calculate total price of the selected item
-        if (discountRate == catalogPackage.getPrice()) {
-            itemPrice = flowerArrangement.getItem(itemSelection).getPrice() * quantity;
-        } else {
-            itemPrice = (double) (((100 - flowerArrangement.getItem(itemSelection).getDiscountRate()) * flowerArrangement.getItem(itemSelection).getPrice() / 100) * quantity);
-        }
+        itemPrice = flowerArrangement.getItem(itemSelection).getPrice() * quantity;
 
         //Add in the selected item inside the shoppingCart arraylist
         if (customer != null && corporate == null) {
             try {
                 currentDate = dateFormat.parse(dateFormat.format(todayDate));
-                shoppingCart.add(new CatalogOrder1(customer, currentDate, orderType, dateFormat.parse(deliveryDate), freshFlower.getItem(itemSelection), itemPrice, quantity));
+                shoppingCart.add(new CatalogOrder1(customer, currentDate, orderType, dateFormat.parse(deliveryDate), flowerArrangement.getItem(itemSelection), itemPrice, quantity));
             } catch (ParseException ex) {
-                
+
             }
         } else if (customer == null && corporate != null) {
             //CK MADE SOME CHANGES HERE
-            if((corporate.getMonthlyLimit()-corporate.getCreditSpent()) < 0){
-                System.out.println(FioreFlowershop.ConsoleColors.RED+"Sorry, it seems that you will exceed the credit limit after this purchase. Please make payment ASAP."+FioreFlowershop.ConsoleColors.RESET);
-            }else {
-                if(catalogPackage.getDiscountRate()!=0){
+            if ((corporate.getMonthlyLimit() - corporate.getCreditSpent()) < 0) {
+                System.out.println(FioreFlowershop.ConsoleColors.RED + "Sorry, it seems that you will exceed the credit limit after this purchase. Please make payment ASAP." + FioreFlowershop.ConsoleColors.RESET);
+            } else {
+                if (catalogPackage.getDiscountRate() != 0) {
                     corporate.setCreditSpent((double) (((100 - flowerArrangement.getItem(itemSelection).getDiscountRate()) * flowerArrangement.getItem(itemSelection).getPrice() / 100) * quantity));
-                }else {
+                } else {
                     corporate.setCreditSpent(flowerArrangement.getItem(itemSelection).getPrice() * quantity);
                 }
                 try {
                     currentDate = dateFormat.parse(dateFormat.format(todayDate));
-                shoppingCart.add(new CatalogOrder1(corporate, currentDate, orderType, dateFormat.parse(deliveryDate), freshFlower.getItem(itemSelection), itemPrice, quantity, status));
-                } catch (ParseException ex) {}
-            } 
+                    shoppingCart.add(new CatalogOrder1(corporate, currentDate, orderType, dateFormat.parse(deliveryDate), flowerArrangement.getItem(itemSelection), itemPrice, quantity, status));
+                } catch (ParseException ex) {
+                }
+            }
         }
         System.out.println("\nDisplay Shopping Cart");
         System.out.println("================================================================================================");
@@ -668,9 +649,9 @@ public class CatalogOrder {
         String con = scan.next();
 
         if (con.equalsIgnoreCase("Y")) {
-            flowerArrangementCatalog(freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
+            flowerArrangementCatalog(normalPackage, discountedPackage);
         } else {
-            typeSelection(freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
+            typeSelection(normalPackage, discountedPackage);
         }
 
     }
