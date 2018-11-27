@@ -790,9 +790,9 @@ public class CatalogOrder {
         pickupOrder.add(order6);
 
         Consumer con1 = new Consumer("ChenKang", "adgfafgjyaf", "0165554313", "No 13");
-        CorporateCustomer corp1 = new CorporateCustomer("David", "sdgsjhd@gmail", "058067843", "Penang", "211221", "SUNWAY BERHAD", 5000, true);
+        CorporateCustomer corp1 = new CorporateCustomer("David", "sdgsjhd@gmail", "058067843", "Cheras", "211221", "SUNWAY BERHAD", 5000, true);
         CorporateCustomer corp2 = new CorporateCustomer("Louis", "sdgsjhd@gmail", "058017323", "Pv 13 Condominium", "211221", "AEON BERHAD", 5000, true);
-        CorporateCustomer corp3 = new CorporateCustomer("Levis", "sdgsjhd@gmail", "058017323", "Cheras", "211221", "JUSCO BERHAD", 5000, true);
+        CorporateCustomer corp3 = new CorporateCustomer("Levis", "sdgsjhd@gmail", "058017323", "Pahang", "211221", "JUSCO BERHAD", 5000, true);
         CorporateCustomer corp4 = new CorporateCustomer("Jacob", "sdgsjhd@gmail", "058017323", "Johor", "211221", "MOMO BERHAD", 5000, true);
         Calendar cal4 = Calendar.getInstance();
         cal4.set(Calendar.YEAR, 2018);
