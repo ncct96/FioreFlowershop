@@ -495,6 +495,7 @@ public class CustomerMaintenance {
         System.out.print("Credit Limit : ");
         int creditLimit = s.nextInt();
         do{
+            s.nextLine();
             System.out.print("Password : ");
             passw = s.nextLine();
             System.out.print("Retype Password : ");
@@ -521,7 +522,7 @@ public class CustomerMaintenance {
             FioreFlowershop.getUser().add(Corporate);
             System.out.println("\n" + FioreFlowershop.ConsoleColors.GREEN + "New Account Successfully Created ! " + FioreFlowershop.ConsoleColors.RESET);
         }
-        customerOptions();
+        FioreFlowershop.manager();
     }
     
     public static void staffNextOption(){
@@ -533,7 +534,8 @@ public class CustomerMaintenance {
            int staffNextOpt = s.nextInt();
             switch(staffNextOpt){
                 case 1: staffEditType(); break;
-                case 2: FioreFlowershop.userTypeSelection(); break;
+                case 2: staffEditCorporate();break;
+                case 3: FioreFlowershop.userTypeSelection(); break;
             } 
         }catch(Exception e){
             System.out.println("\n" + FioreFlowershop.ConsoleColors.RED + "Please only Enter Number Listed. Please Try Again." + FioreFlowershop.ConsoleColors.RESET);
