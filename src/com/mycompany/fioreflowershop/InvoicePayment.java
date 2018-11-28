@@ -39,7 +39,7 @@ public class InvoicePayment {
                 case 3:FioreFlowershop.counterStaff();break;
             }
         }catch (Exception e){
-            System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"An Error had occured. Please Enter The Numbers Stated"+FioreFlowershop.ConsoleColors.RESET);
+            System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"An Error had occurred. Please Enter The Numbers Stated"+FioreFlowershop.ConsoleColors.RESET);
             System.out.println(FioreFlowershop.ConsoleColors.BLUE+"\nRedirecting Back to Invoice Maintenance Menu......" + FioreFlowershop.ConsoleColors.RESET);
             s.nextLine();invoiceMaintenance();
         }
@@ -54,7 +54,7 @@ public class InvoicePayment {
             yearEntered = Integer.parseInt(dateEntered.substring(0,4));
             monthEntered = Integer.parseInt(dateEntered.substring(5,7));
         }catch(Exception e){
-            System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"An Error had occured. Please enter the format as stated."+FioreFlowershop.ConsoleColors.RESET);
+            System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"An Error had occurred. Please enter the format as stated."+FioreFlowershop.ConsoleColors.RESET);
             System.out.println(FioreFlowershop.ConsoleColors.BLUE+"\nRedirecting Back to Invoice Maintenance Menu......" + FioreFlowershop.ConsoleColors.RESET);
             s.nextLine();generateInvoiceP1();
         }
@@ -95,7 +95,7 @@ public class InvoicePayment {
                 String newEmail = FioreFlowershop.getShoppingCart().getItem(choiceCorp).getCorporate().getEmail();
                 generateInvoiceP2(FioreFlowershop.getShoppingCart().getItem(choiceCorp),newEmail);
             }catch(Exception e){
-                System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"\nAn Error had occured. Please Enter The Number of the Corporate Customer."+FioreFlowershop.ConsoleColors.RESET);
+                System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"\nAn Error had occurred. Please Enter The Number of the Corporate Customer."+FioreFlowershop.ConsoleColors.RESET);
                 System.out.println(FioreFlowershop.ConsoleColors.BLUE+"\nRedirecting Back to Invoice Maintenance Menu......" + FioreFlowershop.ConsoleColors.RESET);
                 s.nextLine();invoiceMaintenance();
             }
@@ -147,7 +147,7 @@ public class InvoicePayment {
             yearEntered = Integer.parseInt(dateEntered.substring(0,4));
             monthEntered = Integer.parseInt(dateEntered.substring(5,7));
         }catch(Exception e){
-            System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"\nAn Error had occured. Please enter the format as stated."+FioreFlowershop.ConsoleColors.RESET);
+            System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"\nAn Error had occurred. Please enter the format as stated."+FioreFlowershop.ConsoleColors.RESET);
             s.nextLine();invoiceMaintenance();
         }
         if(FioreFlowershop.getShoppingCart() != null){
@@ -186,7 +186,7 @@ public class InvoicePayment {
                 String newEmail = FioreFlowershop.getShoppingCart().getItem(choiceCorp).getCorporate().getEmail();
                 invoicePaymentP2(FioreFlowershop.getShoppingCart().getItem(choiceCorp),newEmail);
             }catch(Exception e){
-                System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"\nAn Error had occured. Please Enter The Number of the Corporate Customer."+FioreFlowershop.ConsoleColors.RESET);
+                System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"\nAn Error had occurred. Please Enter The Number of the Corporate Customer."+FioreFlowershop.ConsoleColors.RESET);
                 s.nextLine();invoiceMaintenance();
             }
                 

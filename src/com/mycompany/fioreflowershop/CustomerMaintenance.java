@@ -28,7 +28,7 @@ public class CustomerMaintenance {
     
     public static void customerOptions(){
         if(customerLoggedIn == null && corporateLoggedIn == null){//Disallow the user from gaining additional features
-            System.out.println("\nPlease Login to Gain Access to More Features.\n");
+            System.out.println("\nPlease Login to Gain Access to More Features.");
             System.out.println("[1] Create New Account");
             System.out.println("[2] Login To Existing Account");
             System.out.println("[3] Back to Main Menu");
@@ -40,7 +40,7 @@ public class CustomerMaintenance {
                     case 3: FioreFlowershop.userTypeSelection(); break;
                 } 
             }catch(Exception e){
-                System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+" An Error Occured. Please Only Enter Number Only."+FioreFlowershop.ConsoleColors.RESET);
+                System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+" An Error Occurred. Please Only Enter Number Only."+FioreFlowershop.ConsoleColors.RESET);
                 customerOptions();
             }
             
@@ -122,7 +122,7 @@ public class CustomerMaintenance {
         }   
         }catch(Exception e){
             System.out.println("Customer Options2 "+e.toString());
-             System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"An Error Occured. Please Only Enter Number Only."+FioreFlowershop.ConsoleColors.RESET);
+             System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"An Error Occurred. Please Only Enter Number Only."+FioreFlowershop.ConsoleColors.RESET);
              customerOptions();
         }
         
@@ -220,7 +220,7 @@ public class CustomerMaintenance {
                         case 2: CreateAccount(); break;
                     } 
                 }catch(Exception e){
-                    System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"Please Only Enter Number Only."+FioreFlowershop.ConsoleColors.RESET);
+                    System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"An Error Occurred. Please Only Enter Number Only."+FioreFlowershop.ConsoleColors.RESET);
                     s.nextLine();customerOptions();
                 }
                 
