@@ -27,8 +27,8 @@ public class FioreFlowershop {
     private static ListInterface<Consumer> consumer = new ArrayList<>();
     private static ListInterface<CorporateCustomer> corporate = new ArrayList<>();
     private static ListInterface<User> user = new ArrayList<>();
-    private static ListInterface<Order> pickupOrder = new ArrayList<Order>();
-    private static ListInterface<Order> deliveryOrder = new ArrayList<Order>();
+    private static LinkedList<Order> pickupOrder = new LinkedList<Order>();
+    private static LinkedList<Order> deliveryOrder = new LinkedList<Order>();
     private static Scanner s = new Scanner(System.in);
     private static ArrayList<Item> styles = new ArrayList<>();
     private static ArrayList<Item> sizes = new ArrayList<>();
@@ -39,10 +39,10 @@ public class FioreFlowershop {
     private static QueueInterface<CustomizedPackage> customizedPackages = new ArrayQueue<>();
 
     //Catalog Maintenance part
-    private static ArrayList<CatalogPackage> normalPackage = new ArrayList<>();
-    private static ArrayList<CatalogPackage> discountedPackage = new ArrayList<>();
+    private static LinkedList<CatalogPackage> normalPackage = new LinkedList<>();
+    private static LinkedList<CatalogPackage> discountedPackage = new LinkedList<>();
 
-    private static ListInterface<CatalogOrder1> shoppingCart = new ArrayList<>();
+    private static LinkedList<CatalogOrders> shoppingCart = new LinkedList<>();
     private static String[] origin = {"Taiping", "Penang", "Cheras", "Johor"};
     private static String[] dest = {"Taiping", "Penang", "Cheras", "Johor"};
     private static final String shopAddress = "Taiping";
@@ -84,9 +84,9 @@ public class FioreFlowershop {
         user.add(new Consumer("testing", "testing", "testing", "0125566922", "No Address Available"));
 
         //Initialize shopping cart
-        shoppingCart.add(new CatalogOrder1(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000, true),
+        shoppingCart.add(new CatalogOrders(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000, true),
                 todayDate, "Delivery", todayDate, (new CatalogPackage("FlowerStrong", "Stylish", "Small", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20)), 200, 4, false));
-        shoppingCart.add(new CatalogOrder1(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000, true),
+        shoppingCart.add(new CatalogOrders(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000, true),
                 todayDate, "Delivery", todayDate, (new CatalogPackage("FlowerWeak", "Colourful", "Medium", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10)), 300, 10, false));
 
         styles.add(new Item("Fan", 10));
@@ -404,6 +404,7 @@ public class FioreFlowershop {
             System.out.println("\nPlease Select The Options Below.");
             System.out.println("1. Today's Pick Up Order List");
             System.out.println("2. Search Pick Up Order List by Date");
+            System.out.println("3. Search Pick Up Order by Order ID to Pay");
             System.out.println("Enter your option: ");
 
             int pickupChoice = s.nextInt();
@@ -430,8 +431,13 @@ public class FioreFlowershop {
                             .getName()).log(Level.SEVERE, null, ex);
                 }
 
-            } else {
+            } else if (pickupChoice == 3) {
+                s.nextLine();
+                System.out.print("Please enter Order ID to pay: ");
 
+                String orderID = s.nextLine();
+
+                Pickup.searchPOrderID(orderID, shoppingCart, customizedPackages);
             }
 
         } else if (choice == 2) {
@@ -541,7 +547,7 @@ public class FioreFlowershop {
         return user;
     }
 
-    public static ListInterface<CatalogOrder1> getShoppingCart() {
+    public static ListInterface<CatalogOrders> getShoppingCart() {
         return shoppingCart;
 
     }

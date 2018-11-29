@@ -6,10 +6,12 @@
 package com.mycompany.fioreflowershop;
 
 import static com.mycompany.fioreflowershop.Delivery.displaySortedDelivery;
-import com.mycompany.fioreflowershop.adt.ArrayList;
+import com.mycompany.fioreflowershop.adt.LinkedList;
 import com.mycompany.fioreflowershop.adt.ArrayQueue;
+import com.mycompany.fioreflowershop.adt.LinkedList;
 import com.mycompany.fioreflowershop.adt.ListInterface;
 import com.mycompany.fioreflowershop.adt.QueueInterface;
+import com.mycompany.fioreflowershop.modal.CatalogOrders;
 import com.mycompany.fioreflowershop.modal.Consumer;
 import com.mycompany.fioreflowershop.modal.CorporateCustomer;
 import com.mycompany.fioreflowershop.modal.CustomizedPackage;
@@ -31,11 +33,12 @@ import java.util.Scanner;
 public class Pickup {
 
     static Scanner sc = new Scanner(System.in);
-    ListInterface<CustomizedPackage> customPackageList = new ArrayList<>();
+
+    ListInterface<CustomizedPackage> customPackageList = new LinkedList<>();
 
     public static void searchPickUp(ListInterface pickupOrder, Date date, QueueInterface<CustomizedPackage> customOrder) {
         ListInterface<Order> unOrderList = pickupOrder;
-        ListInterface<Order> matchedList = new ArrayList<>();
+        ListInterface<Order> matchedList = new LinkedList<>();
         QueueInterface<CustomizedPackage> searchQueue = new ArrayQueue<>();
 
         int count = customOrder.getBackIndex();
@@ -99,7 +102,7 @@ public class Pickup {
 
     public static void sortPickupOrder(ListInterface<Order> pickupOrder, QueueInterface customizeOrder) {
 
-        ListInterface<Order> sortedList = new ArrayList<>();
+        ListInterface<Order> sortedList = new LinkedList<>();
 
         QueueInterface<CustomizedPackage> customOrder = customizeOrder;
 
@@ -172,11 +175,11 @@ public class Pickup {
         System.out.println("\nCatalog Order");
         System.out.println("=======================================================");
         for (int k = 1; k <= orderedList.getTotalEntries(); k++) {
-                                   
+
             if (orderedList.getItem(k).getUser() instanceof CorporateCustomer) {
-                
-                CorporateCustomer corp = (CorporateCustomer)orderedList.getItem(k).getUser();
-                
+
+                CorporateCustomer corp = (CorporateCustomer) orderedList.getItem(k).getUser();
+
                 System.out.println("Order ID: " + orderedList.getItem(k).getOrderID());
                 System.out.println("Company Name: " + corp.getCompany());
                 System.out.println("Contact: " + corp.getPhone());
@@ -185,9 +188,9 @@ public class Pickup {
                 String time = dt.format(orderedList.getItem(k).getDate());
                 System.out.println("Pick up Time: " + time + "\n");
             } else {
-                
-                Consumer con = (Consumer)orderedList.getItem(k).getUser();
-                
+
+                Consumer con = (Consumer) orderedList.getItem(k).getUser();
+
                 System.out.println("Order ID: " + orderedList.getItem(k).getOrderID());
                 System.out.println("Name: " + con.getUsername());
                 System.out.println("Contact: " + con.getPhone());
@@ -221,6 +224,13 @@ public class Pickup {
             System.out.println(FioreFlowershop.ConsoleColors.RED + "No record found!");
         }
 
+    }
+
+    public static void searchPOrderID(String orderID, LinkedList<CatalogOrders> pickUpOrder, QueueInterface<CustomizedPackage> customOrder) {
+        
+        ListInterface<CatalogOrders> pickuporder = pickUpOrder;
+        
+        pickUpOrder.getIterator();
     }
 
 //    for(int i = 0; i < customPack ; i++ ){

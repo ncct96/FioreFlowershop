@@ -11,10 +11,10 @@ import java.util.Date;
  *
  * @author Zion Tseu
  */
-public class CatalogOrder1 {
+public class CatalogOrders extends Order {
 //    private CatalogPackage item;
-    private CorporateCustomer corporate = new CorporateCustomer();
-    private Consumer customer = new Consumer();
+
+    private User user;
     private CatalogPackage catalogPack = new CatalogPackage();
     private Date orderDate; //date of the order being made
     private Date retrieveDate; // pickup or delivery date
@@ -25,21 +25,21 @@ public class CatalogOrder1 {
     private boolean paymentStatus;
     private int discountRate;
 
-    public CatalogOrder1() {
+    public CatalogOrders() {
     }
-    
-    public CatalogOrder1(Consumer customer, Date orderDate, String orderType, Date retrieveDate, CatalogPackage catalog,double itemPrice,int itemQuantity) {
-        this.customer = customer;
+
+    public CatalogOrders(User user, Date orderDate, String orderType, Date retrieveDate, CatalogPackage catalog, double itemPrice, int itemQuantity) {
+        this.user = user;
         this.orderDate = orderDate;
         this.orderType = orderType;
         this.retrieveDate = retrieveDate;
-        this.catalogPack = catalog;  
+        this.catalogPack = catalog;
         this.itemPrice = itemPrice;
         this.itemQuantity = itemQuantity;
     }
-    
-    public CatalogOrder1(CorporateCustomer corporate, Date orderDate, String orderType, Date retrieveDate, CatalogPackage catalog,double itemPrice,int itemQuantity, boolean status) {
-        this.corporate = corporate;
+
+    public CatalogOrders(User user, Date orderDate, String orderType, Date retrieveDate, CatalogPackage catalog, double itemPrice, int itemQuantity, boolean status) {
+        this.user = user;
         this.orderDate = orderDate;
         this.orderType = orderType;
         this.retrieveDate = retrieveDate;
@@ -49,40 +49,28 @@ public class CatalogOrder1 {
         this.itemQuantity = itemQuantity;
     }
 
-    public CatalogOrder1(CorporateCustomer corporateCustomer, String delivery, long pickupTime, CatalogPackage catalogPackage, boolean b) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    public void setCatalogPackage(CatalogPackage catalog){
+    public void setCatalogPackage(CatalogPackage catalog) {
         this.catalogPack = catalog;
     }
-    
-    public CatalogPackage getCatalogPackage(){
+
+    public CatalogPackage getCatalogPackage() {
         return catalogPack;
     }
 
-    public void setPaymentStat(boolean paymentStat){
+    public void setPaymentStat(boolean paymentStat) {
         this.paymentStatus = paymentStat;
     }
-    
-    public boolean getPaymentStat(){
+
+    public boolean getPaymentStat() {
         return paymentStatus;
     }
-    
-    public CorporateCustomer getCorporate() {
-        return corporate;
+
+    public User getUser() {
+        return user;
     }
 
-    public void setCorporate(CorporateCustomer corporate) {
-        this.corporate = corporate;
-    }
-
-    public Consumer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Consumer customer) {
-        this.customer = customer;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Date getOrderDate() {
@@ -131,11 +119,11 @@ public class CatalogOrder1 {
 
     public void setItemPrice(double itemPrice) {
         this.itemPrice = itemPrice;
-    } 
+    }
 
     @Override
     public String toString() {
-        return "CatalogOrder1{" + "itemName=" + catalogPack.getName() + ", itemStyle=" + catalogPack.getStyle() + ", itemSize=" + catalogPack.getSize() + ", itemFlower=" + catalogPack.getFlower() + ", itemAccesscory=" + catalogPack.getAccessory() + ", itemQuantity=" + catalogPack.getQuantity() + ", itemPrice=" + catalogPack.getPrice() + ", corporate=" + corporate + ", customer=" + customer + ", orderDate=" + orderDate + ", pickupTime=" + pickupTime + '}';
+        return "CatalogOrder1{" + "itemName=" + catalogPack.getName() + ", itemStyle=" + catalogPack.getStyle() + ", itemSize=" + catalogPack.getSize() + ", itemFlower=" + catalogPack.getFlower() + ", itemAccesscory=" + catalogPack.getAccessory() + ", itemQuantity=" + catalogPack.getQuantity() + ", itemPrice=" + catalogPack.getPrice() + ", corporate=" + user + ", customer=" + user + ", orderDate=" + orderDate + ", pickupTime=" + pickupTime + '}';
     }
-    
+
 }

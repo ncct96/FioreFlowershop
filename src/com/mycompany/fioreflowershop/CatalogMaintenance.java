@@ -7,6 +7,7 @@ package com.mycompany.fioreflowershop;
 
 import com.mycompany.fioreflowershop.modal.CatalogPackage;
 import com.mycompany.fioreflowershop.adt.ArrayList;
+import com.mycompany.fioreflowershop.adt.LinkedList;
 import java.util.Calendar;
 import java.util.Scanner;
 
@@ -24,7 +25,7 @@ public class CatalogMaintenance {
     static Scanner scan = new Scanner(System.in);
 
     //Display item type (Add)
-    public static void productType(String navigationTitle, ArrayList<CatalogPackage> normalPackage, ArrayList<CatalogPackage> discountedPackage) {
+    public static void productType(String navigationTitle, LinkedList<CatalogPackage> normalPackage, LinkedList<CatalogPackage> discountedPackage) {
         //Product type menu
         int productTypes = 0;
         do {
@@ -249,7 +250,7 @@ public class CatalogMaintenance {
     }
 
     //Display the catalog or monthly promotion catalog
-    public static void displayCatalogType(String navigationTitle, ArrayList<CatalogPackage> normalPackage, ArrayList<CatalogPackage> discountedPackage) {
+    public static void displayCatalogType(String navigationTitle, LinkedList<CatalogPackage> normalPackage, LinkedList<CatalogPackage> discountedPackage) {
         int userMenuOption = 1;
         do {
             System.out.println("\n" + navigationTitle);
@@ -317,7 +318,7 @@ public class CatalogMaintenance {
     }
 
     //Display normal catalog
-    public static void displayNormalCatalog(String navigationTitle, ArrayList<CatalogPackage> normalPackage, ArrayList<CatalogPackage> discountedPackage) {
+    public static void displayNormalCatalog(String navigationTitle, LinkedList<CatalogPackage> normalPackage, LinkedList<CatalogPackage> discountedPackage) {
         int freshFlowerCounter = 0, bouquetsCounter = 0, flowerArrangementCounter = 0;
         CatalogPackage catalogPackage = new CatalogPackage();
         System.out.println("\nDisplay catalog - normal catalog");
@@ -370,7 +371,7 @@ public class CatalogMaintenance {
         }
     }
 
-    public static void displayPromotionCatalog(String navigationTitle, ArrayList<CatalogPackage> normalPackage, ArrayList<CatalogPackage> discountedPackage) {
+    public static void displayPromotionCatalog(String navigationTitle, LinkedList<CatalogPackage> normalPackage, LinkedList<CatalogPackage> discountedPackage) {
         //Get current month & year
         Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
@@ -459,7 +460,7 @@ public class CatalogMaintenance {
     }
 
     //Edit Catalog
-    public static void editCatalog(String navigationTitle, ArrayList<CatalogPackage> normalPackage, ArrayList<CatalogPackage> discountedPackage, int arrayType) {
+    public static void editCatalog(String navigationTitle, LinkedList<CatalogPackage> normalPackage, LinkedList<CatalogPackage> discountedPackage, int arrayType) {
         //Data decleration
         int productId = 0, catalogSize = 0, productField = 0, sizeOption = 0, productTypes = 0, quantity = 0, discountRate = 0, promoYear = 0, month = 0;
         String name, style, flower, acessories, size = "", promoMonth = "";
@@ -1169,7 +1170,7 @@ public class CatalogMaintenance {
     }
 
     //Delete Catalog
-    public static void deleteCatalogItem(String navigationTitle, ArrayList<CatalogPackage> normalPackage, ArrayList<CatalogPackage> discountedPackage, int arrayType) {
+    public static void deleteCatalogItem(String navigationTitle, LinkedList<CatalogPackage> normalPackage, LinkedList<CatalogPackage> discountedPackage, int arrayType) {
         int productId = 0, catalogSize = 0;
         char userConfirmation;
 

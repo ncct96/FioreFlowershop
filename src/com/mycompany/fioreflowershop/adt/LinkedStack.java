@@ -9,6 +9,57 @@ package com.mycompany.fioreflowershop.adt;
  *
  * @author Nicholas
  */
-public class LinkedStack {
+/*public class LinkedStack<T> implements StackInterface<T> {
     
-}
+    private Node<T> topNode;
+    
+    public LinkedStack() {
+        topNode = null;
+    }
+    
+    @Override
+    public void push(T newEntry) {
+        Node<T> newNode = new Node<>(newEntry);
+        
+        if (isEmpty()) {
+            topNode = newNode;
+        } else {
+            newNode.setNext(topNode);
+            topNode = newNode;
+            
+        }
+    }
+    
+    @Override
+    public T pop() {
+        T data = null;
+        
+        if (!isEmpty()) {
+            data = topNode.getData();
+            topNode = topNode.getNext();
+        }
+        
+        return data;
+    }
+    
+    @Override
+    public T peek() {
+        T data = null;
+        
+        if (!isEmpty()) {
+            data = topNode.getData();
+        }
+        
+        return data;
+    }
+    
+    @Override
+    public boolean isEmpty() {
+        return (topNode == null);
+    }
+    
+    @Override
+    public void clear() {
+        topNode = null;
+    }
+}*/

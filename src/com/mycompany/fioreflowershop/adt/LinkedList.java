@@ -5,11 +5,14 @@
  */
 package com.mycompany.fioreflowershop.adt;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 /**
  *
  * @author Nicholas
  */
-public class LinkedList<T> implements ListInterface<T> {
+public class LinkedList<T> implements ListIteratorInterface<T> {
 
     private Node<T> firstNode;
     private int numberOfEntries;
@@ -170,5 +173,40 @@ public class LinkedList<T> implements ListInterface<T> {
         }
 
         return currentNode;
+    }
+
+    @Override
+    public Iterator<T> getIterator() {
+        return new LinkedListIterator<>();
+    }
+
+    public class LinkedListIterator<T> implements Iterator<T> {
+
+        private Node currentNode;
+
+        public LinkedListIterator() {
+            currentNode = firstNode;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return currentNode != null;
+        }
+
+        @Override
+        public T next() {
+            if (hasNext()) {
+                T returnData = (T) firstNode.getData();
+                currentNode = currentNode.getNext();
+                return returnData;
+            } else {
+                throw new NoSuchElementException("Illegal call to next(); iterator is after end of list.");
+            }
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
     }
 }
