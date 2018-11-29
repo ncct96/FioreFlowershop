@@ -6,10 +6,12 @@
 package com.mycompany.fioreflowershop;
 
 import static com.mycompany.fioreflowershop.Delivery.displaySortedDelivery;
-import com.mycompany.fioreflowershop.adt.ArrayList;
+import com.mycompany.fioreflowershop.adt.LinkedList;
 import com.mycompany.fioreflowershop.adt.ArrayQueue;
+import com.mycompany.fioreflowershop.adt.LinkedList;
 import com.mycompany.fioreflowershop.adt.ListInterface;
 import com.mycompany.fioreflowershop.adt.QueueInterface;
+import com.mycompany.fioreflowershop.modal.CatalogOrders;
 import com.mycompany.fioreflowershop.modal.Consumer;
 import com.mycompany.fioreflowershop.modal.CorporateCustomer;
 import com.mycompany.fioreflowershop.modal.CustomizedPackage;
@@ -21,6 +23,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -31,11 +34,12 @@ import java.util.Scanner;
 public class Pickup {
 
     static Scanner sc = new Scanner(System.in);
-    ListInterface<CustomizedPackage> customPackageList = new ArrayList<>();
+
+    ListInterface<CustomizedPackage> customPackageList = new LinkedList<>();
 
     public static void searchPickUp(ListInterface pickupOrder, Date date, QueueInterface<CustomizedPackage> customOrder) {
         ListInterface<Order> unOrderList = pickupOrder;
-        ListInterface<Order> matchedList = new ArrayList<>();
+        ListInterface<Order> matchedList = new LinkedList<>();
         QueueInterface<CustomizedPackage> searchQueue = new ArrayQueue<>();
 
         int count = customOrder.getBackIndex();
@@ -54,7 +58,7 @@ public class Pickup {
 
         for (int i = 1; i <= unOrderList.getTotalEntries(); i++) {
 
-            listCal.setTime(unOrderList.getItem(i).getDate());
+            listCal.setTime(unOrderList.getItem(i).getOrderDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
@@ -84,7 +88,7 @@ public class Pickup {
         for (int i = 1; i < matchedList.getTotalEntries() - 1; i++) {
             int index = i;
             for (int j = i; j <= matchedList.getTotalEntries(); j++) {
-                if (matchedList.getItem(j).getDate().before(matchedList.getItem(index).getDate())) {
+                if (matchedList.getItem(j).getOrderDate().before(matchedList.getItem(index).getOrderDate())) {
                     index = j; //searching for lowest index  
                 }
             }
@@ -99,7 +103,7 @@ public class Pickup {
 
     public static void sortPickupOrder(ListInterface<Order> pickupOrder, QueueInterface customizeOrder) {
 
-        ListInterface<Order> sortedList = new ArrayList<>();
+        ListInterface<Order> sortedList = new LinkedList<>();
 
         QueueInterface<CustomizedPackage> customOrder = customizeOrder;
 
@@ -120,7 +124,7 @@ public class Pickup {
         userYear = cal.get(Calendar.YEAR);
 
         for (int j = 1; j <= unOrderList.getTotalEntries(); j++) {
-            listCal.setTime(unOrderList.getItem(j).getDate());
+            listCal.setTime(unOrderList.getItem(j).getOrderDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
@@ -148,7 +152,7 @@ public class Pickup {
         for (int i = 1; i < sortedList.getTotalEntries() - 1; i++) {
             int index = i;
             for (int j = i; j <= sortedList.getTotalEntries(); j++) {
-                if (sortedList.getItem(j).getDate().before(sortedList.getItem(index).getDate())) {
+                if (sortedList.getItem(j).getOrderDate().before(sortedList.getItem(index).getOrderDate())) {
                     index = j; //searching for lowest index  
                 }
             }
@@ -172,28 +176,28 @@ public class Pickup {
         System.out.println("\nCatalog Order");
         System.out.println("=======================================================");
         for (int k = 1; k <= orderedList.getTotalEntries(); k++) {
-                                   
+
             if (orderedList.getItem(k).getUser() instanceof CorporateCustomer) {
-                
-                CorporateCustomer corp = (CorporateCustomer)orderedList.getItem(k).getUser();
-                
+
+                CorporateCustomer corp = (CorporateCustomer) orderedList.getItem(k).getUser();
+
                 System.out.println("Order ID: " + orderedList.getItem(k).getOrderID());
                 System.out.println("Company Name: " + corp.getCompany());
                 System.out.println("Contact: " + corp.getPhone());
-                String date = df.format(orderedList.getItem(k).getDate());
+                String date = df.format(orderedList.getItem(k).getOrderDate());
                 System.out.println("Pick up Date: " + date);
-                String time = dt.format(orderedList.getItem(k).getDate());
+                String time = dt.format(orderedList.getItem(k).getOrderDate());
                 System.out.println("Pick up Time: " + time + "\n");
             } else {
-                
-                Consumer con = (Consumer)orderedList.getItem(k).getUser();
-                
+
+                Consumer con = (Consumer) orderedList.getItem(k).getUser();
+
                 System.out.println("Order ID: " + orderedList.getItem(k).getOrderID());
                 System.out.println("Name: " + con.getUsername());
                 System.out.println("Contact: " + con.getPhone());
-                String date = df.format(orderedList.getItem(k).getDate());
+                String date = df.format(orderedList.getItem(k).getOrderDate());
                 System.out.println("Pick up Date: " + date);
-                String time = dt.format(orderedList.getItem(k).getDate());
+                String time = dt.format(orderedList.getItem(k).getOrderDate());
                 System.out.println("Pick up Time: " + time + "\n");
 
             }
@@ -223,8 +227,22 @@ public class Pickup {
 
     }
 
+    public static void searchPOrderID(String orderID, LinkedList<CatalogOrders> pickUpOrder, QueueInterface<CustomizedPackage> customOrder) {
+
+        ListInterface<CatalogOrders> pickuporder = pickUpOrder;
+
+        Iterator<CatalogOrders> iterator = pickUpOrder.getIterator();
+
+        while (iterator.hasNext()) {
+            CatalogOrders order = iterator.next();
+            //if(order..equals(orderID)){
+
+        }
+    }
+
+}
+
 //    for(int i = 0; i < customPack ; i++ ){
 //    
 //}
 //    
-}

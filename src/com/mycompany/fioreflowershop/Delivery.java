@@ -53,7 +53,7 @@ public class Delivery {
 
         for (int i = 1; i <= unOrderList.getTotalEntries(); i++) {
 
-            listCal.setTime(unOrderList.getItem(i).getDate());
+            listCal.setTime(unOrderList.getItem(i).getOrderDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
@@ -87,7 +87,7 @@ public class Delivery {
         for (int i = 1; i < matchedList.getTotalEntries() - 1; i++) {
             int index = i;
             for (int j = i; j <= matchedList.getTotalEntries(); j++) {
-                if (matchedList.getItem(j).getDate().before(matchedList.getItem(index).getDate())) {
+                if (matchedList.getItem(j).getOrderDate().before(matchedList.getItem(index).getOrderDate())) {
                     index = j; //searching for lowest index  
                 }
             }
@@ -124,7 +124,7 @@ public class Delivery {
         userYear = cal.get(Calendar.YEAR);
 
         for (int j = 1; j <= unOrderList.getTotalEntries(); j++) {
-            listCal.setTime(unOrderList.getItem(j).getDate());
+            listCal.setTime(unOrderList.getItem(j).getOrderDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
@@ -152,7 +152,7 @@ public class Delivery {
         for (int i = 1; i < sortedList.getTotalEntries() - 1; i++) {
             int index = i;
             for (int j = i; j <= sortedList.getTotalEntries(); j++) {
-                if (sortedList.getItem(j).getDate().before(sortedList.getItem(index).getDate())) {
+                if (sortedList.getItem(j).getOrderDate().before(sortedList.getItem(index).getOrderDate())) {
                     index = j; //searching for lowest index  
                 }
             }
@@ -184,7 +184,7 @@ public class Delivery {
                 System.out.println("Order ID: " + orderedList.getItem(k).getOrderID());
                 System.out.println("Company Name: " + corp.getCompany());
                 System.out.println("Contact: " + corp.getPhone());
-                String date = df.format(orderedList.getItem(k).getDate());
+                String date = df.format(orderedList.getItem(k).getOrderDate());
                 System.out.println("Delivery Date: " + date + "\n");
             } else {
 
@@ -193,7 +193,7 @@ public class Delivery {
                 System.out.println("Order ID: " + orderedList.getItem(k).getOrderID());
                 System.out.println("Name: " + con.getUsername());
                 System.out.println("Contact: " + con.getPhone());
-                String date = df.format(orderedList.getItem(k).getDate());
+                String date = df.format(orderedList.getItem(k).getOrderDate());
                 System.out.println("Delivery Date: " + date + "\n");
             }
         }
@@ -246,7 +246,7 @@ public class Delivery {
         userYear = cal.get(Calendar.YEAR);
 
         for (int j = 1; j <= unOrderList.getTotalEntries(); j++) {
-            listCal.setTime(unOrderList.getItem(j).getDate());
+            listCal.setTime(unOrderList.getItem(j).getOrderDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
@@ -327,7 +327,7 @@ public class Delivery {
                     System.out.println("Company Name: " + corp.getCompany());
                     System.out.println("Name: " + dest.getItem(tourCount).getUser().getUsername());
                     System.out.println("Contact: " + dest.getItem(tourCount).getUser().getPhone());
-                    System.out.println("Delivery Date: " + dateFormat.format(dest.getItem(tourCount).getDate()));
+                    System.out.println("Delivery Date: " + dateFormat.format(dest.getItem(tourCount).getOrderDate()));
                     System.out.println("Order type: " + dest.getItem(tourCount).getOrderType());
                     System.out.println("Payment: RM" + dest.getItem(tourCount).getPaymentAmt() + "\n");
                 } else {
@@ -337,7 +337,7 @@ public class Delivery {
                     System.out.println("Order ID: " + dest.getItem(tourCount).getOrderID());
                     System.out.println("Name: " + dest.getItem(tourCount).getUser().getUsername());
                     System.out.println("Contact: " + dest.getItem(tourCount).getUser().getPhone());
-                    System.out.println("Delivery Date: " + dateFormat.format(dest.getItem(tourCount).getDate()));
+                    System.out.println("Delivery Date: " + dateFormat.format(dest.getItem(tourCount).getOrderDate()));
                     System.out.println("Order type: " + dest.getItem(tourCount).getOrderType());
                     System.out.println("Payment: RM" + dest.getItem(tourCount).getPaymentAmt() + "\n");
                 }

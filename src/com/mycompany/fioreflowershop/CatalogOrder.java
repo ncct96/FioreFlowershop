@@ -6,12 +6,13 @@
 package com.mycompany.fioreflowershop;
 
 import com.mycompany.fioreflowershop.adt.ArrayList;
+import com.mycompany.fioreflowershop.adt.LinkedList;
 import com.mycompany.fioreflowershop.adt.ListInterface;
 import com.mycompany.fioreflowershop.modal.CatalogPackage;
 import com.mycompany.fioreflowershop.modal.Consumer;
 import com.mycompany.fioreflowershop.modal.CorporateCustomer;
 import com.mycompany.fioreflowershop.modal.Order;
-import com.mycompany.fioreflowershop.modal.CatalogOrder1;
+import com.mycompany.fioreflowershop.modal.CatalogOrders;
 import com.mycompany.fioreflowershop.modal.User;
 import java.util.Scanner;
 import java.util.Calendar;
@@ -26,7 +27,7 @@ import java.text.SimpleDateFormat;
  */
 public class CatalogOrder {
 
-    static ListInterface<CatalogOrder1> shoppingCart = FioreFlowershop.getShoppingCart();
+    static ListInterface<CatalogOrders> shoppingCart = FioreFlowershop.getShoppingCart();
 
     static ListInterface<Order> conOrder = new ArrayList<>();
     static ListInterface<Order> corpOrder = new ArrayList<>();
@@ -58,7 +59,7 @@ public class CatalogOrder {
     private static String pickupDate, pickupTime, deliveryDate = "";
     private static int freshFlowerCounter = 0, bouquetsCounter = 0, flowerArrangementCounter = 0;
 
-    public static void CustomerOrderMain(ListInterface cart, Consumer customerLoggedIn, ArrayList<CatalogPackage> normalPackage, ArrayList<CatalogPackage> discountedPackage) {
+    public static void CustomerOrderMain(LinkedList<CatalogOrders> cart, Consumer customerLoggedIn, LinkedList<CatalogPackage> normalPackage, LinkedList<CatalogPackage> discountedPackage) {
 //        testing();
         //ListInterface<CatalogOrder1> sCart = cart;
         customer = customerLoggedIn;
@@ -66,14 +67,14 @@ public class CatalogOrder {
 
     }
 
-    public static void CorporateOrderMain(ListInterface cart, CorporateCustomer customerLoggedIn, ArrayList<CatalogPackage> normalPackage, ArrayList<CatalogPackage> discountedPackage) {
+    public static void CorporateOrderMain(LinkedList<CatalogOrders> cart, CorporateCustomer customerLoggedIn, LinkedList<CatalogPackage> normalPackage, LinkedList<CatalogPackage> discountedPackage) {
         //ListInterface<CatalogOrder1> sCart = cart;
         corporate = customerLoggedIn;
         displayCatalog(normalPackage, discountedPackage);
     }
 
     //Display the catalog or monthly promotion catalog
-    public static void displayCatalog(ArrayList<CatalogPackage> normalPackage, ArrayList<CatalogPackage> discountedPackage) {
+    public static void displayCatalog(LinkedList<CatalogPackage> normalPackage, LinkedList<CatalogPackage> discountedPackage) {
         do {
             System.out.println("\n Catalog Order");
             System.out.println("===================");
@@ -248,7 +249,7 @@ public class CatalogOrder {
 //        }
     }
 
-    public static void typeSelection(ArrayList<CatalogPackage> normalPackage, ArrayList<CatalogPackage> discountedPackage) {
+    public static void typeSelection(LinkedList<CatalogPackage> normalPackage, LinkedList<CatalogPackage> discountedPackage) {
         do {
 
             System.out.println("\nNormal Catalog - Type Selection");
@@ -280,7 +281,7 @@ public class CatalogOrder {
     }
 
     //Display the normal catalog
-    public static void freshFlowerCatalog(ArrayList<CatalogPackage> normalPackage, ArrayList<CatalogPackage> discountedPackage) {
+    public static void freshFlowerCatalog(LinkedList<CatalogPackage> normalPackage, LinkedList<CatalogPackage> discountedPackage) {
         CatalogPackage catalogPackage = new CatalogPackage();
         System.out.println("\nDisplay catalog - normal catalog");
         System.out.println("================================================================================================");
@@ -356,7 +357,7 @@ public class CatalogOrder {
                 currentDate = dateFormat.parse(dateFormat.format(todayDate));
                 
                 //replace deliveryDate with currentDate since parsing of String deliveryDate will result in throwing the exception cannot parse "" and skip adding in shoppingCart 
-                shoppingCart.add(new CatalogOrder1(customer, currentDate, orderType, currentDate, freshFlower.getItem(itemSelection), itemPrice, quantity));
+               // shoppingCart.add(new CatalogOrders(customer, currentDate, orderType, currentDate, freshFlower.getItem(itemSelection), itemPrice, quantity));
             } catch (ParseException ex) {
 
             }
@@ -373,7 +374,7 @@ public class CatalogOrder {
                 }
                 try {
                     currentDate = dateFormat.parse(dateFormat.format(todayDate));
-                    shoppingCart.add(new CatalogOrder1(corporate, currentDate, orderType, currentDate, new CatalogPackage(freshFlower.getItem(itemSelection).getName(), freshFlower.getItem(itemSelection).getStyle(), freshFlower.getItem(itemSelection).getSize(), freshFlower.getItem(itemSelection).getFlower(), freshFlower.getItem(itemSelection).getAccessory(), freshFlower.getItem(itemSelection).getProductType(), freshFlower.getItem(itemSelection).getPromoMonth(), freshFlower.getItem(itemSelection).getPromoYear(), freshFlower.getItem(itemSelection).getQuantity(), freshFlower.getItem(itemSelection).getPrice(), freshFlower.getItem(itemSelection).getDiscountRate()), itemPrice, quantity, status));
+                    //shoppingCart.add(new CatalogOrders(corporate, currentDate, orderType, currentDate, new CatalogPackage(freshFlower.getItem(itemSelection).getName(), freshFlower.getItem(itemSelection).getStyle(), freshFlower.getItem(itemSelection).getSize(), freshFlower.getItem(itemSelection).getFlower(), freshFlower.getItem(itemSelection).getAccessory(), freshFlower.getItem(itemSelection).getProductType(), freshFlower.getItem(itemSelection).getPromoMonth(), freshFlower.getItem(itemSelection).getPromoYear(), freshFlower.getItem(itemSelection).getQuantity(), freshFlower.getItem(itemSelection).getPrice(), freshFlower.getItem(itemSelection).getDiscountRate()), itemPrice, quantity, status));
                 } catch (ParseException ex) {
                 }
             }
@@ -428,7 +429,7 @@ public class CatalogOrder {
         }
     }
 
-    public static void bouquetsCatalog(ArrayList<CatalogPackage> normalPackage, ArrayList<CatalogPackage> discountedPackage) {
+    public static void bouquetsCatalog(LinkedList<CatalogPackage> normalPackage, LinkedList<CatalogPackage> discountedPackage) {
         CatalogPackage catalogPackage = new CatalogPackage();
         System.out.println("\nDisplay catalog - normal catalog");
         System.out.println("================================================================================================");
@@ -502,7 +503,7 @@ public class CatalogOrder {
         if (customer != null && corporate == null) {
             try {
                 currentDate = dateFormat.parse(dateFormat.format(todayDate));
-                shoppingCart.add(new CatalogOrder1(customer, currentDate, orderType, currentDate, bouquets.getItem(itemSelection), itemPrice, quantity));
+                //shoppingCart.add(new CatalogOrders(customer, currentDate, orderType, currentDate, bouquets.getItem(itemSelection), itemPrice, quantity));
             } catch (ParseException ex) {
 
             }
@@ -518,7 +519,7 @@ public class CatalogOrder {
                 }
                 try {
                     currentDate = dateFormat.parse(dateFormat.format(todayDate));
-                    shoppingCart.add(new CatalogOrder1(corporate, currentDate, orderType, currentDate, bouquets.getItem(itemSelection), itemPrice, quantity, status));
+                    //shoppingCart.add(new CatalogOrders(corporate, currentDate, orderType, currentDate, bouquets.getItem(itemSelection), itemPrice, quantity, status));
                 } catch (ParseException ex) {
                 }
             }
@@ -546,7 +547,7 @@ public class CatalogOrder {
         }
     }
 
-    public static void flowerArrangementCatalog(ArrayList<CatalogPackage> normalPackage, ArrayList<CatalogPackage> discountedPackage) {
+    public static void flowerArrangementCatalog(LinkedList<CatalogPackage> normalPackage, LinkedList<CatalogPackage> discountedPackage) {
         CatalogPackage catalogPackage = new CatalogPackage();
         System.out.println("\nDisplay catalog - normal catalog");
         System.out.println("================================================================================================");
@@ -612,7 +613,7 @@ public class CatalogOrder {
         if (customer != null && corporate == null) {
             try {
                 currentDate = dateFormat.parse(dateFormat.format(todayDate));
-                shoppingCart.add(new CatalogOrder1(customer, currentDate, orderType, currentDate, flowerArrangement.getItem(itemSelection), itemPrice, quantity));
+                //shoppingCart.add(new CatalogOrders(customer, currentDate, orderType, currentDate, flowerArrangement.getItem(itemSelection), itemPrice, quantity));
             } catch (ParseException ex) {
 
             }
@@ -628,7 +629,7 @@ public class CatalogOrder {
                 }
                 try {
                     currentDate = dateFormat.parse(dateFormat.format(todayDate));
-                    shoppingCart.add(new CatalogOrder1(corporate, currentDate, orderType, currentDate, flowerArrangement.getItem(itemSelection), itemPrice, quantity, status));
+                    //shoppingCart.add(new CatalogOrders(corporate, currentDate, orderType, currentDate, flowerArrangement.getItem(itemSelection), itemPrice, quantity, status));
                 } catch (ParseException ex) {
                 }
             }
