@@ -73,22 +73,27 @@ public class FioreFlowershop {
 //        }
         Date todayDate = new Date();
         //consumer initialize
-        consumer.add(new Consumer("ceekay", "abcdef123", "ceekay@example.com", "0125566922", "No Address Available"));
-        corporate.add(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000, true));
+        CorporateCustomer cc1 = new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000, true);
+        Consumer c1 = new Consumer("ceekay", "abcdef123", "ceekay@example.com", "0125566922", "No Address Available");
+        Consumer c2 = new Consumer("testing", "testing", "testing", "0125566922", "No Address Available");
+        consumer.add(c1);
+        consumer.add(c2);
+        corporate.add(cc1);
         corporate.getItem(1).setCreditSpent(1000);
-        consumer.add(new Consumer("testing", "testing", "testing", "0125566922", "No Address Available"));
 
         //Initialize users
-        user.add(new Consumer("ceekay", "abcdef123", "ceekay@example.com", "0125566922", "No Address Available"));
-        user.add(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000, true));
-        user.add(new Consumer("testing", "testing", "testing", "0125566922", "No Address Available"));
+        user.add(c1);
+        user.add(c2);
+        user.add(cc1);
 
         //Initialize shopping cart
-//        shoppingCart.add(new CatalogOrders(todayDate, new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000, true), todayDate,
-//                 todayDate, (new CatalogPackage("FlowerStrong", "Stylish", "Small", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20)), 4, 200, false, 1000, "Delivery"));
-//        shoppingCart.add(new CatalogOrders(new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000, true),
-//                todayDate, "Delivery", todayDate, (new CatalogPackage("FlowerWeak", "Colourful", "Medium", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10)), 300, 10, false));
-
+        CatalogPackage cp1 = new CatalogPackage("FlowerStrong", "Stylish", "Small", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20);
+        CatalogPackage cp2 = new CatalogPackage("FlowerWeak", "Colourful", "Medium","Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10);
+        CatalogOrders ct1 =  new CatalogOrders(todayDate, cc1, todayDate, cp1, 4, 200, false, 20, 1000, "Delivery");
+        CatalogOrders ct2 = new CatalogOrders(todayDate, cc1, todayDate, cp2, 10, 300, false, 20, 1001, "Delivery");
+        shoppingCart.add(ct1);
+        shoppingCart.add(ct2);
+        
         styles.add(new Item("Fan", 10));
         styles.add(new Item("Elliptical", 10));
         styles.add(new Item("Vertical", 10));
