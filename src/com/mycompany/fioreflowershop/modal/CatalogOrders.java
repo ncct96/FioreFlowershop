@@ -24,8 +24,8 @@ public class CatalogOrders extends Order {
     public CatalogOrders() {
     }
 
-    public CatalogOrders(Date date, User user, Date retrieveDate, CatalogPackage catalogPack, int itemQuantity, double itemPrice, boolean paymentStatus, int discountRate, int orderID, String orderType) {
-        super(orderID, orderType, date, user);
+    public CatalogOrders(Date orderDate, User user, Date retrieveDate, CatalogPackage catalogPack, int itemQuantity, double itemPrice, boolean paymentStatus, int discountRate, int orderID, String orderType) {
+        super(orderID, orderType, orderDate, user);
         this.retrieveDate = retrieveDate;
         this.catalogPack = catalogPack;
         this.itemQuantity = itemQuantity;
