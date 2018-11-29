@@ -357,7 +357,7 @@ public class CatalogOrder {
                 currentDate = dateFormat.parse(dateFormat.format(todayDate));
                 
                 //replace deliveryDate with currentDate since parsing of String deliveryDate will result in throwing the exception cannot parse "" and skip adding in shoppingCart 
-                shoppingCart.add(new CatalogOrders(customer, currentDate, orderType, currentDate, freshFlower.getItem(itemSelection), itemPrice, quantity));
+               // shoppingCart.add(new CatalogOrders(customer, currentDate, orderType, currentDate, freshFlower.getItem(itemSelection), itemPrice, quantity));
             } catch (ParseException ex) {
 
             }
@@ -374,7 +374,7 @@ public class CatalogOrder {
                 }
                 try {
                     currentDate = dateFormat.parse(dateFormat.format(todayDate));
-                    shoppingCart.add(new CatalogOrders(corporate, currentDate, orderType, currentDate, new CatalogPackage(freshFlower.getItem(itemSelection).getName(), freshFlower.getItem(itemSelection).getStyle(), freshFlower.getItem(itemSelection).getSize(), freshFlower.getItem(itemSelection).getFlower(), freshFlower.getItem(itemSelection).getAccessory(), freshFlower.getItem(itemSelection).getProductType(), freshFlower.getItem(itemSelection).getPromoMonth(), freshFlower.getItem(itemSelection).getPromoYear(), freshFlower.getItem(itemSelection).getQuantity(), freshFlower.getItem(itemSelection).getPrice(), freshFlower.getItem(itemSelection).getDiscountRate()), itemPrice, quantity, status));
+                    //shoppingCart.add(new CatalogOrders(corporate, currentDate, orderType, currentDate, new CatalogPackage(freshFlower.getItem(itemSelection).getName(), freshFlower.getItem(itemSelection).getStyle(), freshFlower.getItem(itemSelection).getSize(), freshFlower.getItem(itemSelection).getFlower(), freshFlower.getItem(itemSelection).getAccessory(), freshFlower.getItem(itemSelection).getProductType(), freshFlower.getItem(itemSelection).getPromoMonth(), freshFlower.getItem(itemSelection).getPromoYear(), freshFlower.getItem(itemSelection).getQuantity(), freshFlower.getItem(itemSelection).getPrice(), freshFlower.getItem(itemSelection).getDiscountRate()), itemPrice, quantity, status));
                 } catch (ParseException ex) {
                 }
             }
@@ -503,7 +503,7 @@ public class CatalogOrder {
         if (customer != null && corporate == null) {
             try {
                 currentDate = dateFormat.parse(dateFormat.format(todayDate));
-                shoppingCart.add(new CatalogOrders(customer, currentDate, orderType, currentDate, bouquets.getItem(itemSelection), itemPrice, quantity));
+                //shoppingCart.add(new CatalogOrders(customer, currentDate, orderType, currentDate, bouquets.getItem(itemSelection), itemPrice, quantity));
             } catch (ParseException ex) {
 
             }
@@ -519,7 +519,7 @@ public class CatalogOrder {
                 }
                 try {
                     currentDate = dateFormat.parse(dateFormat.format(todayDate));
-                    shoppingCart.add(new CatalogOrders(corporate, currentDate, orderType, currentDate, bouquets.getItem(itemSelection), itemPrice, quantity, status));
+                    //shoppingCart.add(new CatalogOrders(corporate, currentDate, orderType, currentDate, bouquets.getItem(itemSelection), itemPrice, quantity, status));
                 } catch (ParseException ex) {
                 }
             }
@@ -613,7 +613,7 @@ public class CatalogOrder {
         if (customer != null && corporate == null) {
             try {
                 currentDate = dateFormat.parse(dateFormat.format(todayDate));
-                shoppingCart.add(new CatalogOrders(customer, currentDate, orderType, currentDate, flowerArrangement.getItem(itemSelection), itemPrice, quantity));
+                //shoppingCart.add(new CatalogOrders(customer, currentDate, orderType, currentDate, flowerArrangement.getItem(itemSelection), itemPrice, quantity));
             } catch (ParseException ex) {
 
             }
@@ -629,7 +629,7 @@ public class CatalogOrder {
                 }
                 try {
                     currentDate = dateFormat.parse(dateFormat.format(todayDate));
-                    shoppingCart.add(new CatalogOrders(corporate, currentDate, orderType, currentDate, flowerArrangement.getItem(itemSelection), itemPrice, quantity, status));
+                    //shoppingCart.add(new CatalogOrders(corporate, currentDate, orderType, currentDate, flowerArrangement.getItem(itemSelection), itemPrice, quantity, status));
                 } catch (ParseException ex) {
                 }
             }

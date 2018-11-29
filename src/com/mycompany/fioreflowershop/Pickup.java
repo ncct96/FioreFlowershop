@@ -23,6 +23,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -57,7 +58,7 @@ public class Pickup {
 
         for (int i = 1; i <= unOrderList.getTotalEntries(); i++) {
 
-            listCal.setTime(unOrderList.getItem(i).getDate());
+            listCal.setTime(unOrderList.getItem(i).getOrderDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
@@ -87,7 +88,7 @@ public class Pickup {
         for (int i = 1; i < matchedList.getTotalEntries() - 1; i++) {
             int index = i;
             for (int j = i; j <= matchedList.getTotalEntries(); j++) {
-                if (matchedList.getItem(j).getDate().before(matchedList.getItem(index).getDate())) {
+                if (matchedList.getItem(j).getOrderDate().before(matchedList.getItem(index).getOrderDate())) {
                     index = j; //searching for lowest index  
                 }
             }
@@ -123,7 +124,7 @@ public class Pickup {
         userYear = cal.get(Calendar.YEAR);
 
         for (int j = 1; j <= unOrderList.getTotalEntries(); j++) {
-            listCal.setTime(unOrderList.getItem(j).getDate());
+            listCal.setTime(unOrderList.getItem(j).getOrderDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
@@ -151,7 +152,7 @@ public class Pickup {
         for (int i = 1; i < sortedList.getTotalEntries() - 1; i++) {
             int index = i;
             for (int j = i; j <= sortedList.getTotalEntries(); j++) {
-                if (sortedList.getItem(j).getDate().before(sortedList.getItem(index).getDate())) {
+                if (sortedList.getItem(j).getOrderDate().before(sortedList.getItem(index).getOrderDate())) {
                     index = j; //searching for lowest index  
                 }
             }
@@ -183,9 +184,9 @@ public class Pickup {
                 System.out.println("Order ID: " + orderedList.getItem(k).getOrderID());
                 System.out.println("Company Name: " + corp.getCompany());
                 System.out.println("Contact: " + corp.getPhone());
-                String date = df.format(orderedList.getItem(k).getDate());
+                String date = df.format(orderedList.getItem(k).getOrderDate());
                 System.out.println("Pick up Date: " + date);
-                String time = dt.format(orderedList.getItem(k).getDate());
+                String time = dt.format(orderedList.getItem(k).getOrderDate());
                 System.out.println("Pick up Time: " + time + "\n");
             } else {
 
@@ -194,9 +195,9 @@ public class Pickup {
                 System.out.println("Order ID: " + orderedList.getItem(k).getOrderID());
                 System.out.println("Name: " + con.getUsername());
                 System.out.println("Contact: " + con.getPhone());
-                String date = df.format(orderedList.getItem(k).getDate());
+                String date = df.format(orderedList.getItem(k).getOrderDate());
                 System.out.println("Pick up Date: " + date);
-                String time = dt.format(orderedList.getItem(k).getDate());
+                String time = dt.format(orderedList.getItem(k).getOrderDate());
                 System.out.println("Pick up Time: " + time + "\n");
 
             }
@@ -227,14 +228,21 @@ public class Pickup {
     }
 
     public static void searchPOrderID(String orderID, LinkedList<CatalogOrders> pickUpOrder, QueueInterface<CustomizedPackage> customOrder) {
-        
+
         ListInterface<CatalogOrders> pickuporder = pickUpOrder;
-        
-        pickUpOrder.getIterator();
+
+        Iterator<CatalogOrders> iterator = pickUpOrder.getIterator();
+
+        while (iterator.hasNext()) {
+            CatalogOrders order = iterator.next();
+            //if(order..equals(orderID)){
+
+        }
     }
+
+}
 
 //    for(int i = 0; i < customPack ; i++ ){
 //    
 //}
 //    
-}
