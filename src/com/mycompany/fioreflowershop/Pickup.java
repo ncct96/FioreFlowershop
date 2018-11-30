@@ -230,10 +230,11 @@ public class Pickup {
 
     public static void searchPOrderID(String orderID, LinkedList<CatalogOrders> pickUpOrder, QueueInterface<CustomizedPackage> customOrder) {
 
-        ListInterface<CatalogOrders> pickuporder = pickUpOrder;
-        ListInterface<CatalogOrders> matchOrder = new LinkedList<>();
+        Scanner s = new Scanner(System.in);
+        LinkedList<CatalogOrders> pickuporder = pickUpOrder;
+        LinkedList<CatalogOrders> matchOrder = new LinkedList<>();
 
-        Iterator<CatalogOrders> iterator = pickUpOrder.getIterator();
+        Iterator<CatalogOrders> iterator = pickuporder.getIterator();
 
         while (iterator.hasNext()) {
             CatalogOrders order = iterator.next();
@@ -270,7 +271,22 @@ public class Pickup {
                 System.out.println("Total Amount: " + matchOrder.getItem(1).getItemPrice());
                 System.out.println("Quantity: " + matchOrder.getItem(1).getItemQuantity());
                 System.out.println("Payment Status: " + matchOrder.getItem(1).getPaymentStat());
+                System.out.println("Order Status: " + matchOrder.getItem(1).getOrderStatus());
             }
+            
+            System.out.println("1. Pick Up & Pay");
+            System.out.println("2. Back");
+            System.out.println("\n Your selection: ");
+            int payChoice = s.nextInt();
+            
+            if(payChoice == 1){
+                System.out.println("Total Amount: " + matchOrder.getItem(1).getItemPrice());
+                matchOrder.getItem(1).setPaymentStat(true);
+                matchOrder.getItem(1).setOrderStatus("Picked Up");
+            }
+            
+            FioreFlowershop.counterStaff();
+            
         }
 
     }
