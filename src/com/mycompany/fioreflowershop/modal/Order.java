@@ -16,20 +16,24 @@ public class Order {
     private String orderID;
     private String orderType;
     private Date orderDate;
+    private Date retrieveDate; // For pickup/delivery date
     private User user;
     private String orderStatus;
+    private boolean paymentStatus;
     private double orderAmt;
 
     public Order() {
     }
 
-    public Order(String orderID, String orderType, Date orderDate, User user, String orderStatus, double orderAmt) {
+    public Order(String orderID, String orderType, Date orderDate, User user, String orderStatus, double orderAmt, boolean paymentStatus, Date retrieveDate) {
         this.orderID = orderID;
         this.orderType = orderType;
         this.orderDate = orderDate;
         this.user = user;
         this.orderStatus = orderStatus;
         this.orderAmt = orderAmt;
+        this.paymentStatus = paymentStatus;
+        this.retrieveDate = retrieveDate;
     }
 
     public Order(String orderID, String orderType, Date orderDate, User user) {
@@ -85,6 +89,22 @@ public class Order {
 
     public void setOrderAmt(double orderAmt) {
         this.orderAmt = orderAmt;
+    }
+
+    public boolean isPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(boolean paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public Date getRetrieveDate() {
+        return retrieveDate;
+    }
+
+    public void setRetrieveDate(Date retrieveDate) {
+        this.retrieveDate = retrieveDate;
     }
 
 }

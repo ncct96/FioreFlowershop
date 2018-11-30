@@ -15,47 +15,26 @@ public class CatalogOrders extends Order {
 //    private CatalogPackage item;
 
     private CatalogPackage catalogPack = new CatalogPackage();
-    private Date retrieveDate; // pickup or delivery date
     private int itemQuantity;
-    private double itemPrice;
-    private boolean paymentStatus;
-    private int discountRate;
+    private double itemPrice;  
+    private int discountRate; 
 
     public CatalogOrders() {
     }
 
-    public CatalogOrders(Date orderDate, User user, Date retrieveDate, CatalogPackage catalogPack, int itemQuantity, double itemPrice, boolean paymentStatus, int discountRate, String orderID, String orderType) {
-        super(orderID, orderType, orderDate, user);
-        this.retrieveDate = retrieveDate;
-        this.catalogPack = catalogPack;
+    public CatalogOrders(int itemQuantity, double itemPrice, int discountRate, String orderID, String orderType, Date orderDate, User user, String orderStatus, double orderAmt, boolean paymentStatus, Date retrieveDate) {
+        super(orderID, orderType, orderDate, user, orderStatus, orderAmt, paymentStatus, retrieveDate);
         this.itemQuantity = itemQuantity;
         this.itemPrice = itemPrice;
-        this.paymentStatus = paymentStatus;
         this.discountRate = discountRate;
     }
 
-    public void setCatalogPackage(CatalogPackage catalog) {
+    public void setCatalogPack(CatalogPackage catalog) {
         this.catalogPack = catalog;
     }
 
-    public CatalogPackage getCatalogPackage() {
+    public CatalogPackage getCatalogPack() {
         return catalogPack;
-    }
-
-    public void setPaymentStat(boolean paymentStat) {
-        this.paymentStatus = paymentStat;
-    }
-
-    public boolean getPaymentStat() {
-        return paymentStatus;
-    }
-
-    public Date getRetrieveDate() {
-        return retrieveDate;
-    }
-
-    public void setRetrieveDate(Date retrieveDate) {
-        this.retrieveDate = retrieveDate;
     }
 
     public int getItemQuantity() {
@@ -74,22 +53,6 @@ public class CatalogOrders extends Order {
         this.itemPrice = itemPrice;
     }
 
-    public CatalogPackage getCatalogPack() {
-        return catalogPack;
-    }
-
-    public void setCatalogPack(CatalogPackage catalogPack) {
-        this.catalogPack = catalogPack;
-    }
-
-    public boolean isPaymentStatus() {
-        return paymentStatus;
-    }
-
-    public void setPaymentStatus(boolean paymentStatus) {
-        this.paymentStatus = paymentStatus;
-    }
-
     public int getDiscountRate() {
         return discountRate;
     }
@@ -97,7 +60,6 @@ public class CatalogOrders extends Order {
     public void setDiscountRate(int discountRate) {
         this.discountRate = discountRate;
     }
-    
 
     @Override
     public String toString() {
