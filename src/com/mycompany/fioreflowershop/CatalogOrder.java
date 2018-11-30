@@ -31,8 +31,8 @@ public class CatalogOrder {
     
     static LinkedList<CatalogOrders> shoppingCart = FioreFlowershop.getShoppingCart();
 
-    static ListInterface<Order> conOrder = new ArrayList<>();
-    static ListInterface<Order> corpOrder = new ArrayList<>();
+    static LinkedList<Order> conOrder = new LinkedList<>();
+    static LinkedList<Order> corpOrder = new LinkedList<>();
 
     //Define item array of CatalgPackage class
     private static LinkedList<CatalogPackage> freshFlower = new LinkedList<>();
