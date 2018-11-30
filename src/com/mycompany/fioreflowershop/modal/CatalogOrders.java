@@ -74,6 +74,31 @@ public class CatalogOrders extends Order {
         this.itemPrice = itemPrice;
     }
 
+    public CatalogPackage getCatalogPack() {
+        return catalogPack;
+    }
+
+    public void setCatalogPack(CatalogPackage catalogPack) {
+        this.catalogPack = catalogPack;
+    }
+
+    public boolean isPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(boolean paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public int getDiscountRate() {
+        return discountRate;
+    }
+
+    public void setDiscountRate(int discountRate) {
+        this.discountRate = discountRate;
+    }
+    
+
     @Override
     public String toString() {
         return "CatalogOrder1{" + "itemName=" + catalogPack.getName() + ", itemStyle=" + catalogPack.getStyle() + ", itemSize=" + catalogPack.getSize() + ", itemFlower=" + catalogPack.getFlower() + ", itemAccesscory=" + catalogPack.getAccessory() + ", itemQuantity=" + catalogPack.getQuantity() + ", itemPrice=" + catalogPack.getPrice() + ", corporate=" + super.getUser() + ", customer=" + super.getUser() + ", orderDate=" + super.getOrderDate() + '}';
