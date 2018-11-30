@@ -23,12 +23,15 @@ import java.util.logging.Logger;
  * @author Chiu Peeng
  */
 public class FioreFlowershop {
+    
+    // Lines 95 - 98, 154-158
 
     private static ListInterface<Consumer> consumer = new ArrayList<>();
     private static ListInterface<CorporateCustomer> corporate = new ArrayList<>();
     private static ListInterface<User> user = new ArrayList<>();
     private static LinkedList<Order> pickupOrder = new LinkedList<Order>();
     private static LinkedList<Order> deliveryOrder = new LinkedList<Order>();
+    private static LinkedList<Order> paidOrder = new LinkedList<Order>();
     private static Scanner s = new Scanner(System.in);
     private static ArrayList<Item> styles = new ArrayList<>();
     private static ArrayList<Item> sizes = new ArrayList<>();
@@ -89,10 +92,10 @@ public class FioreFlowershop {
         //Initialize shopping cart
         CatalogPackage cp1 = new CatalogPackage("FlowerStrong", "Stylish", "Small", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20);
         CatalogPackage cp2 = new CatalogPackage("FlowerWeak", "Colourful", "Medium", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10);
-        CatalogOrders ct1 = new CatalogOrders(todayDate, cc1, todayDate, cp1, 4, 200, false, 20, "C0006", "Delivery");
-        CatalogOrders ct2 = new CatalogOrders(todayDate, cc1, todayDate, cp2, 10, 300, false, 20, "C0007", "Delivery");
-        shoppingCart.add(ct1);
-        shoppingCart.add(ct2);
+        //CatalogOrders ct1 = new CatalogOrders(todayDate, cc1, todayDate, cp1, 4, 200, false, 20, "C0006", "Delivery");
+        //CatalogOrders ct2 = new CatalogOrders(todayDate, cc1, todayDate, cp2, 10, 300, false, 20, "C0007", "Delivery");
+        //shoppingCart.add(ct1);
+        //shoppingCart.add(ct2);
 
         styles.add(new Item("Fan", 10));
         styles.add(new Item("Elliptical", 10));
@@ -148,11 +151,11 @@ public class FioreFlowershop {
     public static void gotoCatalogOrders(Consumer customerLoggedIn, CorporateCustomer corporateLoggedIn) {
         //Zion part need change since tutor told me use one array so my multiple array is gone
 
-        if (corporateLoggedIn == null) {
-            CatalogOrder.CustomerOrderMain(shoppingCart, customerLoggedIn, normalPackage, discountedPackage);
-        } else if (customerLoggedIn == null) {
-            CatalogOrder.CorporateOrderMain(shoppingCart, corporateLoggedIn, normalPackage, discountedPackage);
-        }
+//        if (corporateLoggedIn == null) {
+//            CatalogOrder.CustomerOrderMain(shoppingCart, customerLoggedIn, normalPackage, discountedPackage);
+//        } else if (customerLoggedIn == null) {
+//            CatalogOrder.CorporateOrderMain(shoppingCart, corporateLoggedIn, normalPackage, discountedPackage);
+//        }
 
     }
 
@@ -442,7 +445,7 @@ public class FioreFlowershop {
 
                 String orderID = s.nextLine();
 
-                Pickup.searchPOrderID(orderID, shoppingCart, customizedPackages);
+//                Pickup.searchPOrderID(orderID, shoppingCart, customizedPackages, paidOrder);
             }
 
         } else if (choice == 2) {
