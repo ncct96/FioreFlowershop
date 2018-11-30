@@ -552,7 +552,7 @@ public class FioreFlowershop {
         return user;
     }
 
-    public static ListInterface<CatalogOrders> getShoppingCart() {
+    public static LinkedList<CatalogOrders> getShoppingCart() {
         return shoppingCart;
 
     }
