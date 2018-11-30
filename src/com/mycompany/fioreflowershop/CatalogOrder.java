@@ -95,6 +95,9 @@ public class CatalogOrder {
         
         //initialize items into catalog
         CatalogPackage catalogPackage = new CatalogPackage();
+        freshFlower.clear();
+        bouquets.clear();
+        flowerArrangement.clear();
         for (int i = 1; i < normalPackage.getTotalEntries() + 1; i++) {
             catalogPackage = normalPackage.getItem(i);
             if (catalogPackage.getProductType().equals("Fresh flower")) {
