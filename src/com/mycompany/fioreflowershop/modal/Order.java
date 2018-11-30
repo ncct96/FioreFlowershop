@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public class Order {
 
-    private int orderID;
+    private String orderID;
     private String orderType;
     private Date orderDate;
     private User user;
@@ -22,7 +22,7 @@ public class Order {
     public Order() {
     }
 
-    public Order(int orderID, String orderType, Date orderDate, User user, double paymentAmt) {
+    public Order(String orderID, String orderType, Date orderDate, User user, double paymentAmt) {
         this.orderID = orderID;
         this.orderType = orderType;
         this.orderDate = orderDate;
@@ -30,16 +30,14 @@ public class Order {
         this.paymentAmt = paymentAmt;
     }
 
-    public Order(int orderID, String orderType, Date orderDate, User user) {
+    public Order(String orderID, String orderType, Date orderDate, User user) {
         this.orderID = orderID;
         this.orderType = orderType;
         this.orderDate = orderDate;
         this.user = user;
     }
-    
-    
 
-    public int getOrderID() {
+    public String getOrderID() {
         return orderID;
     }
 
@@ -55,7 +53,7 @@ public class Order {
         this.user = user;
     }
 
-    public void setOrderID(int orderID) {
+    public void setOrderID(String orderID) {
         this.orderID = orderID;
     }
 

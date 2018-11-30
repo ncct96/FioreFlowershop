@@ -17,6 +17,7 @@ import com.mycompany.fioreflowershop.modal.CorporateCustomer;
 import com.mycompany.fioreflowershop.modal.CustomizedPackage;
 import com.mycompany.fioreflowershop.modal.Item;
 import com.mycompany.fioreflowershop.modal.Order;
+import com.mycompany.fioreflowershop.modal.User;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -230,16 +231,49 @@ public class Pickup {
     public static void searchPOrderID(String orderID, LinkedList<CatalogOrders> pickUpOrder, QueueInterface<CustomizedPackage> customOrder) {
 
         ListInterface<CatalogOrders> pickuporder = pickUpOrder;
+        ListInterface<CatalogOrders> matchOrder = new LinkedList<>();
 
         Iterator<CatalogOrders> iterator = pickUpOrder.getIterator();
 
         while (iterator.hasNext()) {
             CatalogOrders order = iterator.next();
-            //if(order..equals(orderID)){
-
+            if (order.getOrderID().equals(orderID)) {
+                matchOrder.add(order);
+            }
         }
-    }
 
+        if (matchOrder.isEmpty()) {
+            System.out.println("No record found! Please try again!");
+        } else {
+            User user = matchOrder.getItem(1).getUser();
+
+            if ( user instanceof Consumer) {
+                System.out.println("Order ID: " + matchOrder.getItem(1).getOrderID());
+                System.out.println("Order Type: " + matchOrder.getItem(1).getOrderType());
+                System.out.println("Order Date: " + matchOrder.getItem(1).getOrderDate());
+                System.out.println("Username: " + matchOrder.getItem(1).getUser().getUsername());
+                System.out.println("Contact: " + matchOrder.getItem(1).getUser().getPhone());
+                System.out.println("Order Details: " + matchOrder.getItem(1).getCatalogPackage().toString());
+                System.out.println("Total Amount: " + matchOrder.getItem(1).getItemPrice());
+                System.out.println("Quantity: " + matchOrder.getItem(1).getItemQuantity());
+                System.out.println("Payment Status: " + matchOrder.getItem(1).getPaymentStat());
+            } else {
+
+                CorporateCustomer corp = (CorporateCustomer) matchOrder.getItem(1).getUser();
+
+                System.out.println("Order ID: " + matchOrder.getItem(1).getOrderID());
+                System.out.println("Order Type: " + matchOrder.getItem(1).getOrderType());
+                System.out.println("Order Date: " + matchOrder.getItem(1).getOrderDate());
+                System.out.println("Company Name: " + corp.getCompany());
+                System.out.println("Contact: " + matchOrder.getItem(1).getUser().getPhone());
+                System.out.println("Order Details: " + matchOrder.getItem(1).getCatalogPackage().toString());
+                System.out.println("Total Amount: " + matchOrder.getItem(1).getItemPrice());
+                System.out.println("Quantity: " + matchOrder.getItem(1).getItemQuantity());
+                System.out.println("Payment Status: " + matchOrder.getItem(1).getPaymentStat());
+            }
+        }
+
+    }
 }
 
 //    for(int i = 0; i < customPack ; i++ ){

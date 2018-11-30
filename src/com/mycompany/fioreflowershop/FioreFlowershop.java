@@ -88,12 +88,12 @@ public class FioreFlowershop {
 
         //Initialize shopping cart
         CatalogPackage cp1 = new CatalogPackage("FlowerStrong", "Stylish", "Small", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20);
-        CatalogPackage cp2 = new CatalogPackage("FlowerWeak", "Colourful", "Medium","Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10);
-        CatalogOrders ct1 =  new CatalogOrders(todayDate, cc1, todayDate, cp1, 4, 200, false, 20, 1000, "Delivery");
-        CatalogOrders ct2 = new CatalogOrders(todayDate, cc1, todayDate, cp2, 10, 300, false, 20, 1001, "Delivery");
+        CatalogPackage cp2 = new CatalogPackage("FlowerWeak", "Colourful", "Medium", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10);
+        CatalogOrders ct1 = new CatalogOrders(todayDate, cc1, todayDate, cp1, 4, 200, false, 20, "C0006", "Delivery");
+        CatalogOrders ct2 = new CatalogOrders(todayDate, cc1, todayDate, cp2, 10, 300, false, 20, "C0007", "Delivery");
         shoppingCart.add(ct1);
         shoppingCart.add(ct2);
-        
+
         styles.add(new Item("Fan", 10));
         styles.add(new Item("Elliptical", 10));
         styles.add(new Item("Vertical", 10));
