@@ -8,8 +8,10 @@ package com.mycompany.fioreflowershop;
 import com.google.maps.errors.ApiException;
 import com.mycompany.fioreflowershop.adt.ArrayList;
 import com.mycompany.fioreflowershop.adt.ArrayQueue;
+import com.mycompany.fioreflowershop.adt.LinkedList;
 import com.mycompany.fioreflowershop.adt.ListInterface;
 import com.mycompany.fioreflowershop.adt.QueueInterface;
+import com.mycompany.fioreflowershop.modal.CatalogOrders;
 import com.mycompany.fioreflowershop.modal.Consumer;
 import com.mycompany.fioreflowershop.modal.CorporateCustomer;
 import com.mycompany.fioreflowershop.modal.CustomizedPackage;
@@ -222,12 +224,12 @@ public class Delivery {
 
     }
 
-    public static void sortRouteDelivery(ListInterface<Order> deliveryOrder, QueueInterface<CustomizedPackage> customizeOrder, String shopAddress) throws ApiException, InterruptedException, IOException {
-        ListInterface<Order> sortedList = new ArrayList<>();
+    public static void sortRouteDelivery(LinkedList<Order> deliveryOrder, QueueInterface<CustomizedPackage> customizeOrder, String shopAddress) throws ApiException, InterruptedException, IOException {
+        LinkedList<Order> sortedList = new LinkedList<>();
 
         QueueInterface<CustomizedPackage> customOrder = customizeOrder;
 
-        ListInterface<Order> unOrderList = deliveryOrder;
+        LinkedList<Order> unOrderList = deliveryOrder;
 
         int count = customOrder.getBackIndex();
 
@@ -274,12 +276,12 @@ public class Delivery {
         sortRoute(sortedList, searchQueue, shopAddress);
     }
 
-    public static void sortRoute(ListInterface<Order> sortedList, QueueInterface<CustomizedPackage> searchQueue, String shopAddress) throws ApiException, InterruptedException, IOException {
+    public static void sortRoute(LinkedList<Order> sortedList, QueueInterface<CustomizedPackage> searchQueue, String shopAddress) throws ApiException, InterruptedException, IOException {
 
         Date date = new Date();
         TSPSolver solver;
 
-        ListInterface<Order> dest = new ArrayList<>((sortedList.getTotalEntries()) + (searchQueue.getBackIndex() + 1));
+        LinkedList<Order> dest = new LinkedList<>();
 
         for (int i = 1; i <= sortedList.getTotalEntries(); i++) {
             dest.add(sortedList.getItem(i));
@@ -298,7 +300,7 @@ public class Delivery {
 
     }
 
-    public static void displaySortRoute(TSPSolver solver, ListInterface<Order> dest, String shopAddress) {
+    public static void displaySortRoute(TSPSolver solver, LinkedList<Order> dest, String shopAddress) {
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         Date date = new Date();
@@ -329,7 +331,7 @@ public class Delivery {
                     System.out.println("Contact: " + dest.getItem(tourCount).getUser().getPhone());
                     System.out.println("Delivery Date: " + dateFormat.format(dest.getItem(tourCount).getOrderDate()));
                     System.out.println("Order type: " + dest.getItem(tourCount).getOrderType());
-                    System.out.println("Payment: RM" + dest.getItem(tourCount).getPaymentAmt() + "\n");
+                    System.out.println("Payment: RM" + dest.getItem(tourCount).getOrderAmt() + "\n");
                 } else {
                     System.out.println("Delivery Order " + (i));
                     System.out.println("================");
@@ -339,9 +341,9 @@ public class Delivery {
                     System.out.println("Contact: " + dest.getItem(tourCount).getUser().getPhone());
                     System.out.println("Delivery Date: " + dateFormat.format(dest.getItem(tourCount).getOrderDate()));
                     System.out.println("Order type: " + dest.getItem(tourCount).getOrderType());
-                    System.out.println("Payment: RM" + dest.getItem(tourCount).getPaymentAmt() + "\n");
+                    System.out.println("Payment: RM" + dest.getItem(tourCount).getOrderAmt() + "\n");
                 }
-                totalPayment += dest.getItem(tourCount).getPaymentAmt();
+                totalPayment += dest.getItem(tourCount).getOrderAmt();
             }
         }
 

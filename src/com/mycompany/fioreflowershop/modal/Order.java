@@ -17,17 +17,19 @@ public class Order {
     private String orderType;
     private Date orderDate;
     private User user;
-    private double paymentAmt;
+    private String orderStatus;
+    private double orderAmt;
 
     public Order() {
     }
 
-    public Order(String orderID, String orderType, Date orderDate, User user, double paymentAmt) {
+    public Order(String orderID, String orderType, Date orderDate, User user, String orderStatus, double orderAmt) {
         this.orderID = orderID;
         this.orderType = orderType;
         this.orderDate = orderDate;
         this.user = user;
-        this.paymentAmt = paymentAmt;
+        this.orderStatus = orderStatus;
+        this.orderAmt = orderAmt;
     }
 
     public Order(String orderID, String orderType, Date orderDate, User user) {
@@ -69,12 +71,20 @@ public class Order {
         this.orderDate = new Date();
     }
 
-    public double getPaymentAmt() {
-        return paymentAmt;
+    public String getOrderStatus() {
+        return orderStatus;
     }
 
-    public void setPaymentAmt(double paymentAmt) {
-        this.paymentAmt = paymentAmt;
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    public double getOrderAmt() {
+        return orderAmt;
+    }
+
+    public void setOrderAmt(double orderAmt) {
+        this.orderAmt = orderAmt;
     }
 
 }

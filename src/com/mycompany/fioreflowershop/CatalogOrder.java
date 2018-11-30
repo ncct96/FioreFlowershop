@@ -797,12 +797,12 @@ public class CatalogOrder {
         Date e = cal1.getTime();
         Date f = cal3.getTime();
 
-        Order order = new Order("C0001", "Pickup", a, con, 140.00);
-        Order order2 = new Order("C0001", "Pickup", b, corp, 600.00);
-        Order order3 = new Order("C0002", "Pickup", c, corp, 95.00);
-        Order order4 = new Order("C0003", "Pickup", d, corp, 200.00);
-        Order order5 = new Order("C0004", "Pickup", e, corp, 340.00);
-        Order order6 = new Order("C0002", "Pickup", f, con, 250.00);
+        Order order = new Order("C0001", "Pickup", a, con, "Processed", 400.00);
+        Order order2 = new Order("C0001", "Pickup", b, corp, "Processed", 100.00);
+        Order order3 = new Order("C0002", "Pickup", c, corp, "Processed", 500.00);
+        Order order4 = new Order("C0003", "Pickup", d, corp, "Processed", 250.00);
+        Order order5 = new Order("C0004", "Pickup", e, corp, "Processed", 1450.00);
+        Order order6 = new Order("C0002", "Pickup", f, con, "Processed", 200.00);
 
         pickupOrder.add(order);
         pickupOrder.add(order2);
@@ -854,13 +854,13 @@ public class CatalogOrder {
         Date k = cal7.getTime();
         Date l = cal5.getTime();
 
-        Order order7 = new Order("C0001", "Delivery", g, con1, 350.00);
-        Order order8 = new Order("CP0001", "Delivery", h, corp1, 120.60);
-        Order order9 = new Order("CP0002", "Delivery", j, corp2, 230.50);
-        Order order10 = new Order("CP0003", "Delivery", j, corp3, 100.00);
-        Order order11 = new Order("C0002", "Delivery", k, corp4, 400.00);
-        Order order12 = new Order("C0003", "Delivery", l, con1, 50.00);
-        Order order13 = new Order("C0004", "Delivery", j, con2, 50.00);
+        Order order7 = new Order("C0001", "Delivery", g, con1, "Processed", 20.00);
+        Order order8 = new Order("CP0001", "Delivery", h, corp1, "Processed", 99.00);
+        Order order9 = new Order("CP0002", "Delivery", j, corp2, "Processed", 100.00);
+        Order order10 = new Order("CP0003", "Delivery", j, corp3, "Processed", 600.00);
+        Order order11 = new Order("C0002", "Delivery", k, corp4, "Processed", 200.00);
+        Order order12 = new Order("C0003", "Delivery", l, con1, "Processed", 210.00);
+        Order order13 = new Order("C0004", "Delivery", j, con2, "Processed", 450.00);
 
         deliveryOrder.add(order7);
         deliveryOrder.add(order8);
