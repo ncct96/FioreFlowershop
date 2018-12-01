@@ -13,7 +13,6 @@ import java.util.Date;
  */
 public class Order {
 
-    private String orderID;
     private String orderType;
     private Date orderDate;
     private Date retrieveDate; // For pickup/delivery date
@@ -25,8 +24,7 @@ public class Order {
     public Order() {
     }
 
-    public Order(String orderID, String orderType, Date orderDate, User user, String orderStatus, double orderAmt, boolean paymentStatus, Date retrieveDate) {
-        this.orderID = orderID;
+    public Order(String orderType, Date orderDate, User user, String orderStatus, double orderAmt, boolean paymentStatus, Date retrieveDate) {
         this.orderType = orderType;
         this.orderDate = orderDate;
         this.user = user;
@@ -36,15 +34,10 @@ public class Order {
         this.retrieveDate = retrieveDate;
     }
 
-    public Order(String orderID, String orderType, Date orderDate, User user) {
-        this.orderID = orderID;
+    public Order(String orderType, Date orderDate, User user) {
         this.orderType = orderType;
         this.orderDate = orderDate;
         this.user = user;
-    }
-
-    public String getOrderID() {
-        return orderID;
     }
 
     public String getOrderType() {
@@ -57,10 +50,6 @@ public class Order {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public void setOrderID(String orderID) {
-        this.orderID = orderID;
     }
 
     public void setOrderType(String orderType) {
