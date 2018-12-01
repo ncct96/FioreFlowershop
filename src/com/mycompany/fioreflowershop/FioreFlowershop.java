@@ -33,12 +33,8 @@ public class FioreFlowershop {
     private static LinkedList<Order> deliveryOrder = new LinkedList<Order>();
     private static LinkedList<Order> paidOrder = new LinkedList<Order>();
     private static Scanner s = new Scanner(System.in);
-    private static ArrayList<Item> styles = new ArrayList<>();
-    private static ArrayList<Item> sizes = new ArrayList<>();
-    private static ArrayList<Item> flowers = new ArrayList<>();
-    private static ArrayList<Item> accessories = new ArrayList<>();
-    private static ArrayList<Item> priorities = new ArrayList<>();
-    private static ArrayList<Item> deliveryTypes = new ArrayList<>();
+    
+    private static ItemCatalogue itemCatalogue = new ItemCatalogue();
     private static QueueInterface<CustomizedPackage> customizedPackages = new ArrayQueue<>();
 
     //Catalog Maintenance part
@@ -97,6 +93,13 @@ public class FioreFlowershop {
         //shoppingCart.add(ct1);
         //shoppingCart.add(ct2);
 
+        ListIteratorInterface<Item> styles = new LinkedList<>();
+        ListIteratorInterface<Item> sizes = new LinkedList<>();
+        ListIteratorInterface<Item> flowers = new LinkedList<>();
+        ListIteratorInterface<Item> accessories = new LinkedList<>();
+        ListIteratorInterface<Item> priorities = new LinkedList<>();
+        ListIteratorInterface<Item> deliveryTypes = new LinkedList<>();
+    
         styles.add(new Item("Fan", 10));
         styles.add(new Item("Elliptical", 10));
         styles.add(new Item("Vertical", 10));
@@ -131,13 +134,19 @@ public class FioreFlowershop {
         customizedPackages.enqueue(new CustomizedPackage(styles.getItem(1), sizes.getItem(2), flowers.getItem(3), accessories.getItem(3), priorities.getItem(2), deliveryTypes.getItem(2), customer1));
         customizedPackages.enqueue(new CustomizedPackage(styles.getItem(3), sizes.getItem(1), flowers.getItem(2), accessories.getItem(1), priorities.getItem(2), deliveryTypes.getItem(2), customer));
         customizedPackages.enqueue(new CustomizedPackage(styles.getItem(4), sizes.getItem(2), flowers.getItem(4), accessories.getItem(1), priorities.getItem(1), deliveryTypes.getItem(1), customer1));
-        CustomizedPackage specialPackage = new CustomizedPackage(styles.getItem(1), sizes.getItem(2), flowers.getItem(5), accessories.getItem(2), priorities.getItem(1), deliveryTypes.getItem(2), customer);
-        specialPackage.setDeliveryDate(Calendar.getInstance().getTime());
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DAY_OF_MONTH, -2);
-        specialPackage.setOrderDate(cal.getTime());
+//        CustomizedPackage specialPackage = new CustomizedPackage(styles.getItem(1), sizes.getItem(2), flowers.getItem(5), accessories.getItem(2), priorities.getItem(1), deliveryTypes.getItem(2), customer);
+//        specialPackage.setDeliveryDate(Calendar.getInstance().getTime());
+//        Calendar cal = Calendar.getInstance();
+//        cal.add(Calendar.DAY_OF_MONTH, -2);
+//        specialPackage.setOrderDate(cal.getTime());
         //customizedPackages.enqueue(specialPackage);
 
+        itemCatalogue.setStyles(styles);
+        itemCatalogue.setSizes(sizes);
+        itemCatalogue.setFlowers(flowers);
+        itemCatalogue.setAccessories(accessories);
+        itemCatalogue.setPriorities(priorities);
+        itemCatalogue.setDeliveryTypes(deliveryTypes);
     }
 
     public static void gotoCustomizePackage(Consumer customerLoggedIn) {
@@ -145,7 +154,7 @@ public class FioreFlowershop {
 //        for (int i = 0; i < 3; i++) {
 //            CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
 //        }
-        CustomizePackage.customizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customerLoggedIn, customizedPackages);
+        CustomizePackage.customizePackageControl(itemCatalogue, customerLoggedIn, customizedPackages);
     }
 
     public static void gotoCatalogOrders(Consumer customerLoggedIn, CorporateCustomer corporateLoggedIn) {
