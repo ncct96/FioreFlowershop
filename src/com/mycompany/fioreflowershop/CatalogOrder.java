@@ -748,19 +748,19 @@ public class CatalogOrder {
         Date e = cal1.getTime();
         Date f = cal3.getTime();
 
-        Order order = new Order("C0001", "Pickup", a, con, "Processed", 400.00, false, a);
-        Order order2 = new Order("C0001", "Pickup", b, corp, "Processed", 100.00, false, b);
-        Order order3 = new Order("C0002", "Pickup", c, corp, "Processed", 500.00, false, c);
-        Order order4 = new Order("C0003", "Pickup", d, corp, "Processed", 250.00, false, d);
-        Order order5 = new Order("C0004", "Pickup", e, corp, "Processed", 1450.00, false, e);
-        Order order6 = new Order("C0002", "Pickup", f, con, "Processed", 200.00, false, f);
+//        Order order = new CatalogOrders("C0001", "Pickup", a, con, "Processed", 400.00, false, a);
+//        Order order2 = new CatalogOrders("C0001", "Pickup", b, corp, "Processed", 100.00, false, b);
+//        Order order3 = new CatalogOrders("C0002", "Pickup", c, corp, "Processed", 500.00, false, c);
+//        Order order4 = new CatalogOrders("C0003", "Pickup", d, corp, "Processed", 250.00, false, d);
+//        Order order5 = new CatalogOrders("C0004", "Pickup", e, corp, "Processed", 1450.00, false, e);
+//        Order order6 = new CatalogOrders("C0002", "Pickup", f, con, "Processed", 200.00, false, f);
 
-        pickupOrder.add(order);
-        pickupOrder.add(order2);
-        pickupOrder.add(order3);
-        pickupOrder.add(order4);
-        pickupOrder.add(order5);
-        pickupOrder.add(order6);
+//        pickupOrder.add(order);
+//        pickupOrder.add(order2);
+//        pickupOrder.add(order3);
+//        pickupOrder.add(order4);
+//        pickupOrder.add(order5);
+//        pickupOrder.add(order6);
 
         Consumer con1 = new Consumer("ChenKang", "adgfafgjyaf", "0165554313", "No 13");
         Consumer con2 = new Consumer("Lim Sim", "ncct7777", "ncct7Z@gmail.com", "0185532123", "Cheras");
@@ -805,21 +805,21 @@ public class CatalogOrder {
         Date k = cal7.getTime();
         Date l = cal5.getTime();
 
-        Order order7 = new Order("C0001", "Delivery", g, con1, "Processed", 20.00, false, f);
-        Order order8 = new Order("CP0001", "Delivery", h, corp1, "Processed", 99.00, false, f);
-        Order order9 = new Order("CP0002", "Delivery", j, corp2, "Processed", 100.00, false, f);
-        Order order10 = new Order("CP0003", "Delivery", j, corp3, "Processed", 600.00, false, f);
-        Order order11 = new Order("C0002", "Delivery", k, corp4, "Processed", 200.00, false, f);
-        Order order12 = new Order("C0003", "Delivery", l, con1, "Processed", 210.00, false, f);
-        Order order13 = new Order("C0004", "Delivery", j, con2, "Processed", 450.00, false, f);
+//        Order order7 = new Order("C0001", "Delivery", g, con1, "Processed", 20.00, false, f);
+//        Order order8 = new Order("CP0001", "Delivery", h, corp1, "Processed", 99.00, false, f);
+//        Order order9 = new Order("CP0002", "Delivery", j, corp2, "Processed", 100.00, false, f);
+//        Order order10 = new Order("CP0003", "Delivery", j, corp3, "Processed", 600.00, false, f);
+//        Order order11 = new Order("C0002", "Delivery", k, corp4, "Processed", 200.00, false, f);
+//        Order order12 = new Order("C0003", "Delivery", l, con1, "Processed", 210.00, false, f);
+//        Order order13 = new Order("C0004", "Delivery", j, con2, "Processed", 450.00, false, f);
 
-        deliveryOrder.add(order7);
-        deliveryOrder.add(order8);
-        deliveryOrder.add(order9);
-        deliveryOrder.add(order10);
-        deliveryOrder.add(order11);
-        deliveryOrder.add(order12);
-        deliveryOrder.add(order13);
+//        deliveryOrder.add(order7);
+//        deliveryOrder.add(order8);
+//        deliveryOrder.add(order9);
+//        deliveryOrder.add(order10);
+//        deliveryOrder.add(order11);
+//        deliveryOrder.add(order12);
+//        deliveryOrder.add(order13);
 
     }
 }

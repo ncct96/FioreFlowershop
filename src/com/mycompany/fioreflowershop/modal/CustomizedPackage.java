@@ -16,15 +16,15 @@ import java.util.Date;
  */
 public class CustomizedPackage extends Order {
 
+    private String orderID;
     private static int orderNo = 1;
-    private int orderNum;
     private String orderDate, deliveryDate;
     private Item style, size, flower, accessory, priority, deliveryType;
     private User user;
     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
     public CustomizedPackage(Item style, Item size, Item flower, Item accessory, Item priority, Item deliveryType, User user) {
-        orderNum = orderNo;
+        orderID = "CP" + orderNo;
         ++orderNo;
 
         Date todayDate = Calendar.getInstance().getTime();
@@ -45,7 +45,7 @@ public class CustomizedPackage extends Order {
     }
 
     public CustomizedPackage() {
-        orderNum = orderNo;
+        orderID = "CP" + orderNo;
         ++orderNo;
     }
 
@@ -99,12 +99,12 @@ public class CustomizedPackage extends Order {
         return style;
     }
 
-    public int getOrderNum() {
-        return orderNum;
+    public String getOrderID() {
+        return orderID;
     }
 
-    public void setOrderNum(int orderNum) {
-        this.orderNum = orderNum;
+    public void setOrderID(String orderID) {
+        this.orderID = orderID;
     }
 
     public Date getDeliveryDate() {

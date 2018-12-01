@@ -14,19 +14,31 @@ import java.util.Date;
 public class CatalogOrders extends Order {
 //    private CatalogPackage item;
 
+    private String orderID;
+    private static int orderNo = 1000;
     private CatalogPackage catalogPack = new CatalogPackage();
     private int itemQuantity;
-    private double itemPrice;  
-    private int discountRate; 
+    private double itemPrice;
+    private int discountRate;
 
     public CatalogOrders() {
     }
 
-    public CatalogOrders(int itemQuantity, double itemPrice, int discountRate, String orderID, String orderType, Date orderDate, User user, String orderStatus, double orderAmt, boolean paymentStatus, Date retrieveDate) {
-        super(orderID, orderType, orderDate, user, orderStatus, orderAmt, paymentStatus, retrieveDate);
+    public CatalogOrders(String orderID, int itemQuantity, double itemPrice, int discountRate, String orderType, Date orderDate, User user, String orderStatus, double orderAmt, boolean paymentStatus, Date retrieveDate) {
+        super(orderType, orderDate, user, orderStatus, orderAmt, paymentStatus, retrieveDate);
+        this.orderID = orderID + orderNo;
+        ++orderNo;
         this.itemQuantity = itemQuantity;
         this.itemPrice = itemPrice;
         this.discountRate = discountRate;
+    }
+
+    public String getOrderID() {
+        return orderID;
+    }
+
+    public void setOrderID(String orderID) {
+        this.orderID = orderID;
     }
 
     public void setCatalogPack(CatalogPackage catalog) {

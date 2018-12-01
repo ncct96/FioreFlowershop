@@ -179,11 +179,17 @@ public class Delivery {
         System.out.println("=======================================================");
         for (int k = 1; k <= orderedList.getTotalEntries(); k++) {
 
+            Order order = orderedList.getItem(k);
+
             if (orderedList.getItem(k).getUser() instanceof CorporateCustomer) {
 
                 CorporateCustomer corp = (CorporateCustomer) orderedList.getItem(k).getUser();
 
-                System.out.println("Order ID: " + orderedList.getItem(k).getOrderID());
+                if (order instanceof CatalogOrders) {
+                    System.out.println("Order ID: " + ((CatalogOrders) order).getOrderID());
+                } else {
+                    System.out.println("Order ID: " + ((CustomizedPackage) order).getOrderID());
+                }
                 System.out.println("Company Name: " + corp.getCompany());
                 System.out.println("Contact: " + corp.getPhone());
                 String date = df.format(orderedList.getItem(k).getOrderDate());
@@ -192,7 +198,11 @@ public class Delivery {
 
                 Consumer con = (Consumer) orderedList.getItem(k).getUser();
 
-                System.out.println("Order ID: " + orderedList.getItem(k).getOrderID());
+                if (order instanceof CatalogOrders) {
+                    System.out.println("Order ID: " + ((CatalogOrders) order).getOrderID());
+                } else {
+                    System.out.println("Order ID: " + ((CustomizedPackage) order).getOrderID());
+                }
                 System.out.println("Name: " + con.getUsername());
                 System.out.println("Contact: " + con.getPhone());
                 String date = df.format(orderedList.getItem(k).getOrderDate());
@@ -211,7 +221,7 @@ public class Delivery {
             for (int i = -1; i <= customOrder.getBackIndex(); i++) {
                 CustomizedPackage order = customOrder.dequeue();
                 if (order.getDeliveryType().getName().equals("Deliver")) {
-                    System.out.println("Order ID: " + order.getOrderNum());
+                    System.out.println("Order ID: " + order.getOrderID());
                     System.out.println("Consumer name: " + order.getUser().getUsername());
                     System.out.println("Contact: " + order.getUser().getPhone());
                     System.out.println("Delivery date: " + order.getDeliveryDateString() + "\n");
@@ -319,13 +329,19 @@ public class Delivery {
 
             if (i > 0 && i < tour.size() - 1) {
                 user = dest.getItem(tourCount).getUser();
+                Order order = dest.getItem(tourCount);
 
                 if (user instanceof CorporateCustomer) {
                     CorporateCustomer corp = (CorporateCustomer) dest.getItem(tourCount).getUser();
                     System.out.println("Delivery Order " + (i));
                     System.out.println("================");
                     System.out.println("Address: " + dest.getItem(tourCount).getUser().getAddress());
-                    System.out.println("Order ID: " + dest.getItem(tourCount).getOrderID());
+                    if (order instanceof CatalogOrders) {
+                        System.out.println("Order ID: " + ((CatalogOrders) order).getOrderID());
+                    } else {
+                        System.out.println("Order ID: " + ((CustomizedPackage) order).getOrderID());
+
+                    }
                     System.out.println("Company Name: " + corp.getCompany());
                     System.out.println("Name: " + dest.getItem(tourCount).getUser().getUsername());
                     System.out.println("Contact: " + dest.getItem(tourCount).getUser().getPhone());
@@ -336,7 +352,12 @@ public class Delivery {
                     System.out.println("Delivery Order " + (i));
                     System.out.println("================");
                     System.out.println("Address: " + dest.getItem(tourCount).getUser().getAddress());
-                    System.out.println("Order ID: " + dest.getItem(tourCount).getOrderID());
+                    if (order instanceof CatalogOrders) {
+                        System.out.println("Order ID: " + ((CatalogOrders) order).getOrderID());
+                    } else {
+                        System.out.println("Order ID: " + ((CustomizedPackage) order).getOrderID());
+
+                    }
                     System.out.println("Name: " + dest.getItem(tourCount).getUser().getUsername());
                     System.out.println("Contact: " + dest.getItem(tourCount).getUser().getPhone());
                     System.out.println("Delivery Date: " + dateFormat.format(dest.getItem(tourCount).getOrderDate()));
