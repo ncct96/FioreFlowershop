@@ -18,18 +18,19 @@ public class CatalogOrders extends Order {
     private static int orderNo = 1000;
     private CatalogPackage catalogPack = new CatalogPackage();
     private int itemQuantity;
-    private double itemPrice;
+//    private double itemPrice;
     private int discountRate;
 
     public CatalogOrders() {
     }
 
-    public CatalogOrders(String orderID, int itemQuantity, double itemPrice, int discountRate, String orderType, Date orderDate, User user, String orderStatus, double orderAmt, boolean paymentStatus, Date retrieveDate) {
+    public CatalogOrders(String orderID, CatalogPackage catalogPack, int itemQuantity, int discountRate, String orderType, Date orderDate, User user, String orderStatus, double orderAmt, boolean paymentStatus, Date retrieveDate) {
         super(orderType, orderDate, user, orderStatus, orderAmt, paymentStatus, retrieveDate);
         this.orderID = orderID + orderNo;
         ++orderNo;
+        this.catalogPack = catalogPack;
         this.itemQuantity = itemQuantity;
-        this.itemPrice = itemPrice;
+//        this.itemPrice = itemPrice;
         this.discountRate = discountRate;
     }
 
@@ -57,13 +58,13 @@ public class CatalogOrders extends Order {
         this.itemQuantity = itemQuantity;
     }
 
-    public double getItemPrice() {
-        return itemPrice;
-    }
-
-    public void setItemPrice(double itemPrice) {
-        this.itemPrice = itemPrice;
-    }
+//    public double getItemPrice() {
+//        return itemPrice;
+//    }
+//
+//    public void setItemPrice(double itemPrice) {
+//        this.itemPrice = itemPrice;
+//    }
 
     public int getDiscountRate() {
         return discountRate;
