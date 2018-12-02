@@ -160,11 +160,11 @@ public class FioreFlowershop {
     public static void gotoCatalogOrders(Consumer customerLoggedIn, CorporateCustomer corporateLoggedIn) {
         //Zion part need change since tutor told me use one array so my multiple array is gone
 
-//        if (corporateLoggedIn == null) {
-//            CatalogOrder.CustomerOrderMain(shoppingCart, customerLoggedIn, normalPackage, discountedPackage);
-//        } else if (customerLoggedIn == null) {
-//            CatalogOrder.CorporateOrderMain(shoppingCart, corporateLoggedIn, normalPackage, discountedPackage);
-//        }
+        if (corporateLoggedIn == null) {
+            CatalogOrder.CustomerOrderMain(shoppingCart, customerLoggedIn, normalPackage, discountedPackage);
+        } else if (customerLoggedIn == null) {
+            CatalogOrder.CorporateOrderMain(shoppingCart, corporateLoggedIn, normalPackage, discountedPackage);
+        }
 
     }
 
