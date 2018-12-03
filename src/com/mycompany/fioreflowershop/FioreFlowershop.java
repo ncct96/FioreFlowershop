@@ -23,9 +23,8 @@ import java.util.logging.Logger;
  * @author Chiu Peeng
  */
 public class FioreFlowershop {
-    
-    // Lines 95 - 98, 154-158
 
+    // Lines 95 - 98, 154-158
     private static ListInterface<Consumer> consumer = new ArrayList<>();
     private static ListInterface<CorporateCustomer> corporate = new ArrayList<>();
     private static ListInterface<User> user = new ArrayList<>();
@@ -33,7 +32,7 @@ public class FioreFlowershop {
     private static LinkedList<Order> deliveryOrder = new LinkedList<Order>();
     private static LinkedList<Order> paidOrder = new LinkedList<Order>();
     private static Scanner s = new Scanner(System.in);
-    
+
     private static ItemCatalogue itemCatalogue = new ItemCatalogue();
     private static QueueInterface<CustomizedPackage> customizedPackages = new ArrayQueue<>();
 
@@ -99,7 +98,7 @@ public class FioreFlowershop {
         ListIteratorInterface<Item> accessories = new LinkedList<>();
         ListIteratorInterface<Item> priorities = new LinkedList<>();
         ListIteratorInterface<Item> deliveryTypes = new LinkedList<>();
-    
+
         styles.add(new Item("Fan", 10));
         styles.add(new Item("Elliptical", 10));
         styles.add(new Item("Vertical", 10));
@@ -149,12 +148,17 @@ public class FioreFlowershop {
         itemCatalogue.setDeliveryTypes(deliveryTypes);
     }
 
-    public static void gotoCustomizePackage(Consumer customerLoggedIn) {
+    public static void gotoCustomizePackage(Consumer customerLoggedIn, int selection) {
         /////// CHIUPEENG DEBUG LOOP //////
 //        for (int i = 0; i < 3; i++) {
 //            CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
 //        }
-        CustomizePackage.customizePackageControl(itemCatalogue, customerLoggedIn, customizedPackages);
+        if (selection == 1) {
+            CustomizePackage.customizePackageControl(itemCatalogue, customerLoggedIn, customizedPackages);
+        }
+        else if(selection == 2){
+            CustomizePackage.displayOrderHistory(customerLoggedIn, customizedPackages);
+        }
     }
 
     public static void gotoCatalogOrders(Consumer customerLoggedIn, CorporateCustomer corporateLoggedIn) {
