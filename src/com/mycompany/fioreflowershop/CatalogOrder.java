@@ -758,7 +758,7 @@ public class CatalogOrder {
     }   
     public static void initializeData(ListInterface pickupOrder, ListInterface deliveryOrder) {
 
-        Consumer con = new Consumer("Ncct96", "adgfafgjyaf", "0128198471", "Ipoh");
+        Consumer con = new Consumer("Ncct96", "adgfafgjyaf", "ncct@gmail.com","0128198471", "Ipoh");
         CorporateCustomer corp = new CorporateCustomer("Ah Hock", "sdgsjhd@gmail", "0165939123", "Penang", "211221", "TARUC", 5000, true);
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR, 2018);
@@ -809,7 +809,7 @@ public class CatalogOrder {
 //        pickupOrder.add(order4);
 //        pickupOrder.add(order5);
 //        pickupOrder.add(order6);
-        Consumer con1 = new Consumer("ChenKang", "adgfafgjyaf", "0165554313", "No 13");
+        Consumer con1 = new Consumer("ChenKang", "adgfafgjyaf", "chenkang@hotmail.com","0165554313", "No 13");
         Consumer con2 = new Consumer("Lim Sim", "ncct7777", "ncct7Z@gmail.com", "0185532123", "Cheras");
         CorporateCustomer corp1 = new CorporateCustomer("David", "sdgsjhd@gmail", "058067843", "Cheras", "211221", "SUNWAY BERHAD", 5000, true);
         CorporateCustomer corp2 = new CorporateCustomer("Louis Lim", "sdgsjhd@gmail", "058017323", "Pv 13 Condominium", "211221", "AEON BERHAD", 5000, true);

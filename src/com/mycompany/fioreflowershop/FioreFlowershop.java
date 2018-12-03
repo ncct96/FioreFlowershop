@@ -88,8 +88,8 @@ public class FioreFlowershop {
         //Initialize shopping cart
         CatalogPackage cp1 = new CatalogPackage("FlowerStrong", "Stylish", "Small", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20);
         CatalogPackage cp2 = new CatalogPackage("FlowerWeak", "Colourful", "Medium", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10);
-        CatalogOrders ct1 = new CatalogOrders("1001", cp1, 4, 20, "Delivery", todayDate, cc1, "Order Status", 200, false, todayDate);
-        CatalogOrders ct2 = new CatalogOrders("1002",cp2 , 5, 10, "Delivery", todayDate, cc1, "Order Status", 300, false, todayDate);
+        CatalogOrders ct1 = new CatalogOrders("C", cp1, 4, 20, "Delivery", todayDate, cc1, "Order Status", 200, false, todayDate);
+        CatalogOrders ct2 = new CatalogOrders("C",cp2 , 5, 10, "Delivery", todayDate, cc1, "Order Status", 300, false, todayDate);
         shoppingCart.add(ct1);
         shoppingCart.add(ct2);
 
@@ -128,8 +128,8 @@ public class FioreFlowershop {
         deliveryTypes.add(new Item("Pickup", 0));
         deliveryTypes.add(new Item("Deliver", 10));
 
-        Consumer customer = new Consumer("Johan", "ncct66@gmail.com", "0165919413", "Gelanggang Squash IAB Genting Highlands, Genting Highlands, 69000 Genting Highlands, Pahang");
-        Consumer customer1 = new Consumer("Baba", "ncct66@gmail.com", "0165919413", "7, Jalan Legoland, Medini, 79250 Nusajaya, Johor");
+        Consumer customer = new Consumer("Johan", "ncct66@gmail.com", "abc123","0165919413", "Gelanggang Squash IAB Genting Highlands, Genting Highlands, 69000 Genting Highlands, Pahang");
+        Consumer customer1 = new Consumer("Baba", "ncct66@gmail.com", "abc123","0165919413", "7, Jalan Legoland, Medini, 79250 Nusajaya, Johor");
         customizedPackages.enqueue(new CustomizedPackage(styles.getItem(2), sizes.getItem(3), flowers.getItem(1), accessories.getItem(4), priorities.getItem(3), deliveryTypes.getItem(1), customer));
         customizedPackages.enqueue(new CustomizedPackage(styles.getItem(1), sizes.getItem(2), flowers.getItem(3), accessories.getItem(3), priorities.getItem(2), deliveryTypes.getItem(2), customer1));
         customizedPackages.enqueue(new CustomizedPackage(styles.getItem(3), sizes.getItem(1), flowers.getItem(2), accessories.getItem(1), priorities.getItem(2), deliveryTypes.getItem(2), customer));

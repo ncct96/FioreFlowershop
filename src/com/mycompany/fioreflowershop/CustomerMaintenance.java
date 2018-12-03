@@ -187,7 +187,7 @@ public class CustomerMaintenance {
         
         for(int i = 1; i <= FioreFlowershop.getCustomer().getTotalEntries(); i++){
             if(FioreFlowershop.getCustomer().getItem(i).getEmail().equals(email) && FioreFlowershop.getCustomer().getItem(i).getPassword().equals(passw)){
-                customerLoggedIn = new Consumer(FioreFlowershop.getCustomer().getItem(i).getUsername(),FioreFlowershop.getCustomer().getItem(i).getEmail(),
+                customerLoggedIn = new Consumer(FioreFlowershop.getCustomer().getItem(i).getUsername(),FioreFlowershop.getCustomer().getItem(i).getPassword(),FioreFlowershop.getCustomer().getItem(i).getEmail(),
                 FioreFlowershop.getCustomer().getItem(i).getPhone(), FioreFlowershop.getCustomer().getItem(i).getAddress());
                 System.out.println(FioreFlowershop.ConsoleColors.GREEN + "\nWelcome Back " + customerLoggedIn.getUsername() + " !" + FioreFlowershop.ConsoleColors.RESET);
                 customerHit = true; break;
