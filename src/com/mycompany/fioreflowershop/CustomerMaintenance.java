@@ -21,8 +21,9 @@ public class CustomerMaintenance {
     static Scanner s = new Scanner (System.in);
     private static Consumer customerLoggedIn; 
     private static CorporateCustomer corporateLoggedIn;
-    private static ListInterface<User> userSize = new ArrayList<>();
-    private static StackInterface<Calendar> dateStack = new StackADT<>();
+    private static ListInterface<User> userSize = new LinkedList<>();
+//    private static StackInterface<Calendar> dateStack = new LinkedStack<>(); //Need to change
+    private static Calendar dateStack = Calendar.getInstance();
     private static Calendar currentDate; private static Calendar presetDate;
     //ListInterface<Consumer> customer, ListInterface<CorporateCustomer> corporate
     
@@ -66,9 +67,9 @@ public class CustomerMaintenance {
                         currentDate.get(Calendar.MINUTE));
 
                 //Set the payment status back to false when a new month have passed
-                if(!dateStack.isEmpty() && corporateLoggedIn.getCreditSpent() != 0){
-                    if(dateStack.peek().get(Calendar.MONTH)+2 == currentDate.get(Calendar.MONTH)+1
-                        || dateStack.peek().get(Calendar.YEAR)+1 == currentDate.get(Calendar.YEAR)){
+                if(!dateStack.equals(null) && corporateLoggedIn.getCreditSpent() != 0){
+                    if(dateStack.get(Calendar.MONTH)+2 == currentDate.get(Calendar.MONTH)+1
+                        || dateStack.get(Calendar.YEAR)+1 == currentDate.get(Calendar.YEAR)){
                         //New Month, New Invoice Payment
                         corporateLoggedIn.setPaymentStatus(false);
                         //If the customer have not paid after the 7th of the following month, restrict it
@@ -81,7 +82,8 @@ public class CustomerMaintenance {
                         } 
                     }
                 }else {
-                    dateStack.push(currentDate);
+//                    dateStack.push(currentDate);
+                      dateStack = currentDate;
                 }  
             }catch(Exception e){
                 System.out.println(e.toString());

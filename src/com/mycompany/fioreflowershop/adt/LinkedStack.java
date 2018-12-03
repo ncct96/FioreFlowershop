@@ -9,7 +9,7 @@ package com.mycompany.fioreflowershop.adt;
  *
  * @author Nicholas
  */
-/*public class LinkedStack<T> implements StackInterface<T> {
+public class LinkedStack<T> implements StackInterface<T> {
     
     private Node<T> topNode;
     
@@ -62,4 +62,19 @@ package com.mycompany.fioreflowershop.adt;
     public void clear() {
         topNode = null;
     }
-}*/
+
+    @Override
+    public T get(int index) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void remove(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int size() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+}
