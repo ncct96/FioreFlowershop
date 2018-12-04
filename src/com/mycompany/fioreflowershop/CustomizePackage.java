@@ -21,18 +21,17 @@ import java.util.Scanner;
  */
 public class CustomizePackage {
 
+    private static final String ANSI_RESET = "\u001B[0m";
+    private static final String ANSI_BLACK = "\u001B[30m";
+    private static final String ANSI_RED = "\u001B[31m";
+    private static final String ANSI_GREEN = "\u001B[32m";
+    private static final String ANSI_YELLOW = "\u001B[33m";
+    private static final String ANSI_BLUE = "\u001B[34m";
+    private static final String ANSI_PURPLE = "\u001B[35m";
+    private static final String ANSI_CYAN = "\u001B[36m";
+    private static final String ANSI_WHITE = "\u001B[37m";
+
     public static void customizePackageControl(ItemCatalogue itemCatalogue, Consumer customer, QueueInterface<CustomizedPackage> customizedPackages) {
-
-        final String ANSI_RESET = "\u001B[0m";
-        final String ANSI_BLACK = "\u001B[30m";
-        final String ANSI_RED = "\u001B[31m";
-        final String ANSI_GREEN = "\u001B[32m";
-        final String ANSI_YELLOW = "\u001B[33m";
-        final String ANSI_BLUE = "\u001B[34m";
-        final String ANSI_PURPLE = "\u001B[35m";
-        final String ANSI_CYAN = "\u001B[36m";
-        final String ANSI_WHITE = "\u001B[37m";
-
         int style = 0, size = 0, flower = 0, accessory = 0, priority = 0, deliveryType = 0;
         Scanner scan = new Scanner(System.in);
         boolean cancel = false;
@@ -242,5 +241,48 @@ public class CustomizePackage {
         System.out.println("=====================================================");
         System.out.println("Thank you for your purchase!");
         System.out.println("=====================================================");
+    }
+
+    public static void displayOrderHistory(Consumer customer, QueueInterface<CustomizedPackage> customizedPackages) {
+        QueueInterface<CustomizedPackage> displayQueue = customizedPackages;
+        Boolean found = false;
+        System.out.println("Your Order History:");
+        System.out.println("================================================");
+        while (!displayQueue.isEmpty()) {
+            CustomizedPackage order = displayQueue.dequeue();
+            if (order.getUser().getUsername() == customer.getUsername() && order.getUser().getPassword() == customer.getPassword()) {
+                System.out.println(order.getOrderDateString() + " " + order.getOrderID() + " | " + order.getFlower().getName() + " " + order.getSize().getName() + " | RM" + order.CalculateOrder());
+                found = true;
+            }
+        }
+        if (!found) {
+            System.out.println("No order history found");
+        }
+
+        System.out.println("================================================");
+    }
+
+    public static void itemsMenu(QueueInterface<CustomizedPackage> customizedPackages) {
+        System.out.println(ANSI_GREEN + "[1]" + ANSI_RESET + "Update Stock Quantity");
+        System.out.println(ANSI_GREEN + "[2]" + ANSI_RESET + "Add New Items");
+        System.out.println(ANSI_GREEN + "[3]" + ANSI_RESET + "Delete Items");
+        Scanner scan = new Scanner(System.in);
+        int selection = scan.nextInt();
+
+        if(selection == 1){ updateStock(); }
+        else if(selection == 2){ addItems(); }
+        else{ deleteItems(); }
+    }
+    
+    public static void updateStock(){
+        
+    }
+    
+    public static void addItems(){
+        
+    }
+    
+    public static void deleteItems(){
+        
     }
 }

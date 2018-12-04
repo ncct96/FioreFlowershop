@@ -23,9 +23,8 @@ import java.util.logging.Logger;
  * @author Chiu Peeng
  */
 public class FioreFlowershop {
-    
-    // Lines 95 - 98, 154-158
 
+    // Lines 95 - 98, 154-158
     private static ListInterface<Consumer> consumer = new ArrayList<>();
     private static ListInterface<CorporateCustomer> corporate = new ArrayList<>();
     private static ListInterface<User> user = new ArrayList<>();
@@ -33,7 +32,7 @@ public class FioreFlowershop {
     private static LinkedList<Order> deliveryOrder = new LinkedList<Order>();
     private static LinkedList<Order> paidOrder = new LinkedList<Order>();
     private static Scanner s = new Scanner(System.in);
-    
+
     private static ItemCatalogue itemCatalogue = new ItemCatalogue();
     private static QueueInterface<CustomizedPackage> customizedPackages = new ArrayQueue<>();
 
@@ -88,10 +87,10 @@ public class FioreFlowershop {
         //Initialize shopping cart
         CatalogPackage cp1 = new CatalogPackage("FlowerStrong", "Stylish", "Small", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20);
         CatalogPackage cp2 = new CatalogPackage("FlowerWeak", "Colourful", "Medium", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10);
-        //CatalogOrders ct1 = new CatalogOrders(todayDate, cc1, todayDate, cp1, 4, 200, false, 20, "C0006", "Delivery");
-        //CatalogOrders ct2 = new CatalogOrders(todayDate, cc1, todayDate, cp2, 10, 300, false, 20, "C0007", "Delivery");
-        //shoppingCart.add(ct1);
-        //shoppingCart.add(ct2);
+        CatalogOrders ct1 = new CatalogOrders("1001", cp1, 4, 20, "Delivery", todayDate, cc1, "Order Status", 200, false, todayDate);
+        CatalogOrders ct2 = new CatalogOrders("1002",cp2 , 5, 10, "Delivery", todayDate, cc1, "Order Status", 300, false, todayDate);
+        shoppingCart.add(ct1);
+        shoppingCart.add(ct2);
 
         ListIteratorInterface<Item> styles = new LinkedList<>();
         ListIteratorInterface<Item> sizes = new LinkedList<>();
@@ -99,7 +98,7 @@ public class FioreFlowershop {
         ListIteratorInterface<Item> accessories = new LinkedList<>();
         ListIteratorInterface<Item> priorities = new LinkedList<>();
         ListIteratorInterface<Item> deliveryTypes = new LinkedList<>();
-    
+
         styles.add(new Item("Fan", 10));
         styles.add(new Item("Elliptical", 10));
         styles.add(new Item("Vertical", 10));
@@ -149,12 +148,17 @@ public class FioreFlowershop {
         itemCatalogue.setDeliveryTypes(deliveryTypes);
     }
 
-    public static void gotoCustomizePackage(Consumer customerLoggedIn) {
+    public static void gotoCustomizePackage(Consumer customerLoggedIn, int selection) {
         /////// CHIUPEENG DEBUG LOOP //////
 //        for (int i = 0; i < 3; i++) {
 //            CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
 //        }
-        CustomizePackage.customizePackageControl(itemCatalogue, customerLoggedIn, customizedPackages);
+        if (selection == 1) {
+            CustomizePackage.customizePackageControl(itemCatalogue, customerLoggedIn, customizedPackages);
+        }
+        else if(selection == 2){
+            CustomizePackage.displayOrderHistory(customerLoggedIn, customizedPackages);
+        }
     }
 
     public static void gotoCatalogOrders(Consumer customerLoggedIn, CorporateCustomer corporateLoggedIn) {
