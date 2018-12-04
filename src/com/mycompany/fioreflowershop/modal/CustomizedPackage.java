@@ -21,10 +21,13 @@ public class CustomizedPackage extends Order {
     private String orderDate, deliveryDate;
     private Item style, size, flower, accessory, priority, deliveryType;
     private User user;
+    private boolean paymentStatus;
     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-    public CustomizedPackage(Item style, Item size, Item flower, Item accessory, Item priority, Item deliveryType, User user) {
+    public CustomizedPackage(Item style, Item size, Item flower, Item accessory, Item priority, Item deliveryType, User user, boolean paymentStatus) {
+        super(paymentStatus);
         orderID = "CP" + orderNo;
+        this.orderID = orderID;
         ++orderNo;
 
         Date todayDate = Calendar.getInstance().getTime();
