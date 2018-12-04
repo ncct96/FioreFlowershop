@@ -28,6 +28,7 @@ public class CustomerMaintenance {
     //ListInterface<Consumer> customer, ListInterface<CorporateCustomer> corporate
     
     public static void customerOptions(){
+        double reminderRange = 0;
         if(customerLoggedIn == null && corporateLoggedIn == null){//Disallow the user from gaining additional features
             System.out.println("\nPlease Login to Gain Access to More Features.");
             System.out.println("[1] Create New Account");
@@ -55,6 +56,7 @@ public class CustomerMaintenance {
 //            }
 //        }
         if(corporateLoggedIn != null){
+            reminderRange = corporateLoggedIn.getMonthlyLimit()*.9;
             try{
                 //Set Preset Date
                 presetDate = Calendar.getInstance();
@@ -89,7 +91,11 @@ public class CustomerMaintenance {
                 System.out.println(e.toString());
             }
         }
-        
+        if(corporateLoggedIn instanceof CorporateCustomer && corporateLoggedIn.getCreditSpent() >= reminderRange){
+            System.out.println(FioreFlowershop.ConsoleColors.RED_BOLD+"Your Credit Spent For this Month is close to reaching the limit"+FioreFlowershop.ConsoleColors.RESET);
+            System.out.println(FioreFlowershop.ConsoleColors.RED_BOLD+"Your Credit Spent : "+String.format("%.0f", corporateLoggedIn.getCreditSpent())+FioreFlowershop.ConsoleColors.RESET);
+            System.out.println(FioreFlowershop.ConsoleColors.RED_BOLD+"Your Maximum Limit : "+corporateLoggedIn.getMonthlyLimit()+FioreFlowershop.ConsoleColors.RESET);
+        }
         System.out.println("\nWelcome Customers ! Fiore Flowershop is at your service :D ");
         System.out.println("Please Select The Options Below.");
         System.out.println("[1] Make Flower Order");
