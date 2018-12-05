@@ -5,6 +5,7 @@
  */
 package com.mycompany.fioreflowershop.modal;
 
+import com.mycompany.fioreflowershop.FioreFlowershop;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -70,7 +71,9 @@ public class CorporateCustomer extends User{
 
     @Override
     public String toString() {
-        return super.toString()+ "\nCompany Name : " + company + "\nCredit Spent : " + creditSpent + "\nPreset Credit Limit : " + monthlyLimit;
+        return super.toString()+"\n"+FioreFlowershop.ConsoleColors.BLUE+"Company Name : " + company +FioreFlowershop.ConsoleColors.RESET
+                +"\n"+FioreFlowershop.ConsoleColors.BLUE + "Credit Spent : " + creditSpent +FioreFlowershop.ConsoleColors.RESET
+                +"\n"+FioreFlowershop.ConsoleColors.BLUE + "Preset Credit Limit : " + monthlyLimit +FioreFlowershop.ConsoleColors.RESET;
     }
     
 }

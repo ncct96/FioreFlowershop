@@ -255,35 +255,39 @@ public class FioreFlowershop {
     public static void manager() {
         System.out.println("\nPlease Select The Options Below.");
         System.out.println("[1] Customer Maintenance");
-        System.out.println("[2] Add a product to catalog");
-        System.out.println("[3] Remove a product from catalog");
-        System.out.println("[4] Edit the details of product in catalog");
-        System.out.println("[5] Display created catalog");
-        System.out.println("[6] Back");
+        System.out.println("[2] Create Corporate Customer Account");
+        System.out.println("[3] Add a product to catalog");
+        System.out.println("[4] Remove a product from catalog");
+        System.out.println("[5] Edit the details of product in catalog");
+        System.out.println("[6] Display created catalog");
+        System.out.println("[7] Back");
         try {
-            int managerChoice = s.nextInt();
+            int managerChoice = s.nextInt(); s.nextLine();
             String navigationMsg;
             switch (managerChoice) {
                 case 1:
                     CustomerMaintenance.staffEditType();
                     break;
                 case 2:
+                    CustomerMaintenance.staffCreateCorporate();
+                    break;
+                case 3:
                     navigationMsg = "Create catalog";
                     CatalogMaintenance.productType(navigationMsg, normalPackage, discountedPackage);
                     break;//Add product
-                case 3:
+                case 4:
                     navigationMsg = "Delete catalog";
                     CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage);
                     break;//Delete product
-                case 4:
+                case 5:
                     navigationMsg = "Edit catalog";
                     CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage);
                     break;//Edit Product
-                case 5:
+                case 6:
                     navigationMsg = "Display catalog";
                     CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage);
                     break;//Display product
-                case 6:
+                case 7:
                     staffTypeSelection();
                     break;//Back to staff selection
             }
@@ -322,7 +326,7 @@ public class FioreFlowershop {
         System.out.println("[3] Consumer Payment Management");
         System.out.println("[4] View Sales Order");
         System.out.println("[5] Back");
-        System.out.println("Enter your option: ");
+        System.out.print("Enter your option: ");
         try {
             int counterStaffChoice = s.nextInt();
             switch (counterStaffChoice) {
