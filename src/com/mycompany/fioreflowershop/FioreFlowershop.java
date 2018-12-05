@@ -263,7 +263,8 @@ public class FioreFlowershop {
         System.out.println("[3] Remove a product from catalog");
         System.out.println("[4] Edit the details of product in catalog");
         System.out.println("[5] Display created catalog");
-        System.out.println("[6] Back");
+        System.out.println("[6] Edit customize floral arrangement customization options");
+        System.out.println("[7] Back");
         try {
             int managerChoice = s.nextInt();
             String navigationMsg;
@@ -288,6 +289,9 @@ public class FioreFlowershop {
                     CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage);
                     break;//Display product
                 case 6:
+                    CustomizePackage.itemsMenu(itemCatalogue, customizedPackages);
+                    break;
+                case 7:
                     staffTypeSelection();
                     break;//Back to staff selection
             }
@@ -302,13 +306,17 @@ public class FioreFlowershop {
         System.out.println("\nPlease Select The Options Below.");
         System.out.println("[1] Check stock quantity.");
         System.out.println("[2] Restock product quantity.");
-        System.out.println("[3] Back");
+        System.out.println("[3] Edit customize floral arrangement customization options");
+        System.out.println("[4] Back");
         try {
             int inventoryClerkChoice = s.nextInt();
             switch (inventoryClerkChoice) {
                 case 1: //Check stock quantity
                 case 2: //Restock product
                 case 3:
+                    CustomizePackage.itemsMenu(itemCatalogue, customizedPackages);
+                    break;
+                case 4:
                     userTypeSelection();
                     break;
             }
@@ -325,7 +333,8 @@ public class FioreFlowershop {
         System.out.println("[2] Order Pickup/Delivery");
         System.out.println("[3] Consumer Payment Management");
         System.out.println("[4] View Sales Order");
-        System.out.println("[5] Back");
+        System.out.println("[5] Edit customize floral arrangement customization options");
+        System.out.println("[6] Back");
         System.out.println("Enter your option: ");
         try {
             int counterStaffChoice = s.nextInt();
@@ -339,6 +348,9 @@ public class FioreFlowershop {
                 case 3: //consumer payment management
                 case 4: //view sales order
                 case 5:
+                    CustomizePackage.itemsMenu(itemCatalogue, customizedPackages);
+                    break;
+                case 6:
                     staffTypeSelection();
                     break;
             }
