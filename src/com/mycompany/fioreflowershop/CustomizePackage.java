@@ -564,28 +564,31 @@ public class CustomizePackage {
 
     public static void updateOrders(QueueInterface<CustomizedPackage> customizedPackages, QueueInterface<CustomizedPackage> readyOrders) {
         while (true) {
-            CustomizedPackage currentOrder = customizedPackages.getFront();
             Scanner scan = new Scanner(System.in);
             char selection;
 
             if (!customizedPackages.isEmpty()) {
+                System.out.println("==================================");
                 System.out.println("Next Order");
+                System.out.println("==================================");
                 System.out.println("Job ID: " + customizedPackages.getFront().getOrderID());
                 System.out.println("Delivery Date: " + customizedPackages.getFront().getDeliveryDateString());
                 System.out.println("Priority: " + customizedPackages.getFront().getPriority());
                 System.out.println("Arrangement: " + customizedPackages.getFront().getSize() + " " + customizedPackages.getFront().getStyle() + " " + customizedPackages.getFront().getFlower());
                 System.out.println("Accessories: " + customizedPackages.getFront().getAccessory());
+                System.out.println("==================================");
                 do {
-                    System.out.print("Complete order?" + ANSI_GREEN + "[Y/N]" + ANSI_RESET);
+                    System.out.print("Complete order?" + ANSI_GREEN + "[Y/N]" + ANSI_RESET + " ");
                     selection = Character.toUpperCase(scan.next().charAt(0));
-                } while (selection != 'Y' || selection != 'N');
+                } while (selection != 'Y' && selection != 'N');
 
                 if (selection == 'Y') {
                     System.out.println("Order marked as ready to deliver!");
+                    readyOrders.enqueue(customizedPackages.dequeue());
                     do {
-                        System.out.print("Continue to next order?" + ANSI_GREEN + "[Y/N]" + ANSI_RESET);
+                        System.out.print("Continue to next order?" + ANSI_GREEN + "[Y/N]" + ANSI_RESET + " ");
                         selection = Character.toUpperCase(scan.next().charAt(0));
-                    } while (selection != 'Y' || selection != 'N');
+                    } while (selection != 'Y' && selection != 'N');
                     
                     if(selection == 'N'){
                         break;

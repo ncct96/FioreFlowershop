@@ -35,7 +35,8 @@ public class FioreFlowershop {
 
     private static ItemCatalogue itemCatalogue = new ItemCatalogue();
     private static QueueInterface<CustomizedPackage> customizedPackages = new ArrayQueue<>();
-
+    private static QueueInterface<CustomizedPackage> readyOrders = new ArrayQueue<>();
+    
     //Catalog Maintenance part
     private static LinkedList<CatalogPackage> normalPackage = new LinkedList<>();
     private static LinkedList<CatalogPackage> discountedPackage = new LinkedList<>();
@@ -362,7 +363,8 @@ public class FioreFlowershop {
         System.out.println("\nPlease Select The Options Below.");
         System.out.println("[1] View Order List");
         System.out.println("[2] Generate Itemized Bill");
-        System.out.println("[3] Back");
+        System.out.println("[3] View Customized Floral Arrangement Jobs");
+        System.out.println("[4] Back");
         try {
             int floristChoice = s.nextInt(); s.nextLine();
             switch (floristChoice) {
@@ -371,6 +373,9 @@ public class FioreFlowershop {
                     break;
                 case 2:
                 case 3:
+                    CustomizePackage.updateOrders(customizedPackages, readyOrders);
+                    break;
+                case 4:
                     staffTypeSelection();
                     break;
             }
