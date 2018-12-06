@@ -87,8 +87,10 @@ public class FioreFlowershop {
         //Initialize shopping cart
         CatalogPackage cp1 = new CatalogPackage("FlowerStrong", "Stylish", "Small", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20);
         CatalogPackage cp2 = new CatalogPackage("FlowerWeak", "Colourful", "Medium", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10);
+
         CatalogOrders ct1 = new CatalogOrders("1001", cp1, 4, 20, "Delivery", todayDate, cc1, "Order Status", 200, false, todayDate);
         CatalogOrders ct2 = new CatalogOrders("1002",cp2 , 5, 10, "Delivery", todayDate, cc1, "Order Status", 300, false, todayDate);
+
         shoppingCart.add(ct1);
         shoppingCart.add(ct2);
 
@@ -124,15 +126,15 @@ public class FioreFlowershop {
         priorities.add(new Item("Normal", 1.5, 4));
         priorities.add(new Item("Express", 3, 2));
 
-        deliveryTypes.add(new Item("Pickup", 0));
-        deliveryTypes.add(new Item("Deliver", 10));
+        deliveryTypes.add(new Item("Pick up", 0));
+        deliveryTypes.add(new Item("Delivery", 10));
 
-        Consumer customer = new Consumer("Johan", "ncct66@gmail.com", "0165919413", "Gelanggang Squash IAB Genting Highlands, Genting Highlands, 69000 Genting Highlands, Pahang");
-        Consumer customer1 = new Consumer("Baba", "ncct66@gmail.com", "0165919413", "7, Jalan Legoland, Medini, 79250 Nusajaya, Johor");
-        customizedPackages.enqueue(new CustomizedPackage(styles.getItem(2), sizes.getItem(3), flowers.getItem(1), accessories.getItem(4), priorities.getItem(3), deliveryTypes.getItem(1), customer));
-        customizedPackages.enqueue(new CustomizedPackage(styles.getItem(1), sizes.getItem(2), flowers.getItem(3), accessories.getItem(3), priorities.getItem(2), deliveryTypes.getItem(2), customer1));
-        customizedPackages.enqueue(new CustomizedPackage(styles.getItem(3), sizes.getItem(1), flowers.getItem(2), accessories.getItem(1), priorities.getItem(2), deliveryTypes.getItem(2), customer));
-        customizedPackages.enqueue(new CustomizedPackage(styles.getItem(4), sizes.getItem(2), flowers.getItem(4), accessories.getItem(1), priorities.getItem(1), deliveryTypes.getItem(1), customer1));
+        Consumer customer = new Consumer("Johan","abcdef", "ncct66@gmail.com", "0165919413", "Gelanggang Squash IAB Genting Highlands, Genting Highlands, 69000 Genting Highlands, Pahang");
+        Consumer customer1 = new Consumer("Baba","abcdef", "ncct66@gmail.com", "0165919413", "7, Jalan Legoland, Medini, 79250 Nusajaya, Johor");
+        customizedPackages.enqueue(new CustomizedPackage(styles.getItem(2), sizes.getItem(3), flowers.getItem(1), accessories.getItem(4), priorities.getItem(3), deliveryTypes.getItem(1), customer, false));
+        customizedPackages.enqueue(new CustomizedPackage(styles.getItem(1), sizes.getItem(2), flowers.getItem(3), accessories.getItem(3), priorities.getItem(2), deliveryTypes.getItem(2), customer1, false));
+        customizedPackages.enqueue(new CustomizedPackage(styles.getItem(3), sizes.getItem(1), flowers.getItem(2), accessories.getItem(1), priorities.getItem(2), deliveryTypes.getItem(2), customer, false));
+        customizedPackages.enqueue(new CustomizedPackage(styles.getItem(4), sizes.getItem(2), flowers.getItem(4), accessories.getItem(1), priorities.getItem(1), deliveryTypes.getItem(1), customer1, false));
 //        CustomizedPackage specialPackage = new CustomizedPackage(styles.getItem(1), sizes.getItem(2), flowers.getItem(5), accessories.getItem(2), priorities.getItem(1), deliveryTypes.getItem(2), customer);
 //        specialPackage.setDeliveryDate(Calendar.getInstance().getTime());
 //        Calendar cal = Calendar.getInstance();
@@ -193,7 +195,7 @@ public class FioreFlowershop {
         System.out.println("[1] Customer ");
         System.out.println("[2] Staff ");
         try {
-            int userTypeChoice = s.nextInt();
+            int userTypeChoice = s.nextInt(); s.nextLine();
             switch (userTypeChoice) {
                 case 1:
                     CustomerMaintenance.customerOptions();
@@ -204,7 +206,6 @@ public class FioreFlowershop {
             }
         } catch (Exception e) {
             System.out.println("\n" + ConsoleColors.RED + " An Error Occured. Please Only Enter Number Only." + ConsoleColors.RESET);
-            s.nextLine();
             userTypeSelection();
         }
     }
@@ -219,7 +220,7 @@ public class FioreFlowershop {
         System.out.println("[6] Back");
 
         try {
-            int staffTypeChoice = s.nextInt();
+            int staffTypeChoice = s.nextInt(); s.nextLine();
             switch (staffTypeChoice) {
                 case 1:
                     manager();
@@ -251,7 +252,6 @@ public class FioreFlowershop {
             }
         } catch (Exception e) {
             System.out.println("\n" + ConsoleColors.RED + " An Error Occured. Please Only Enter Number Only." + ConsoleColors.RESET);
-            s.nextLine();
             staffTypeSelection();
         }
     }
@@ -259,45 +259,44 @@ public class FioreFlowershop {
     public static void manager() {
         System.out.println("\nPlease Select The Options Below.");
         System.out.println("[1] Customer Maintenance");
-        System.out.println("[2] Add a product to catalog");
-        System.out.println("[3] Remove a product from catalog");
-        System.out.println("[4] Edit the details of product in catalog");
-        System.out.println("[5] Display created catalog");
-        System.out.println("[6] Edit customize floral arrangement customization options");
+        System.out.println("[2] Create Corporate Customer Account");
+        System.out.println("[3] Add a product to catalog");
+        System.out.println("[4] Remove a product from catalog");
+        System.out.println("[5] Edit the details of product in catalog");
+        System.out.println("[6] Display created catalog");
         System.out.println("[7] Back");
         try {
-            int managerChoice = s.nextInt();
+            int managerChoice = s.nextInt(); s.nextLine();
             String navigationMsg;
             switch (managerChoice) {
                 case 1:
                     CustomerMaintenance.staffEditType();
                     break;
                 case 2:
+                    CustomerMaintenance.staffCreateCorporate();
+                    break;
+                case 3:
                     navigationMsg = "Create catalog";
                     CatalogMaintenance.productType(navigationMsg, normalPackage, discountedPackage);
                     break;//Add product
-                case 3:
+                case 4:
                     navigationMsg = "Delete catalog";
                     CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage);
                     break;//Delete product
-                case 4:
+                case 5:
                     navigationMsg = "Edit catalog";
                     CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage);
                     break;//Edit Product
-                case 5:
+                case 6:
                     navigationMsg = "Display catalog";
                     CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage);
                     break;//Display product
-                case 6:
-                    CustomizePackage.itemsMenu(itemCatalogue, customizedPackages);
-                    break;
                 case 7:
                     staffTypeSelection();
                     break;//Back to staff selection
             }
         } catch (Exception e) {
             System.out.println("\n" + ConsoleColors.RED + " An Error Occured. Please Only Enter Number Only." + ConsoleColors.RESET);
-            s.nextLine();
             manager();
         }
     }
@@ -309,7 +308,7 @@ public class FioreFlowershop {
         System.out.println("[3] Edit customize floral arrangement customization options");
         System.out.println("[4] Back");
         try {
-            int inventoryClerkChoice = s.nextInt();
+            int inventoryClerkChoice = s.nextInt(); s.nextLine();
             switch (inventoryClerkChoice) {
                 case 1: //Check stock quantity
                 case 2: //Restock product
@@ -322,7 +321,6 @@ public class FioreFlowershop {
             }
         } catch (Exception e) {
             System.out.println("\n" + ConsoleColors.RED + " An Error Occured. Please Only Enter Number Only." + ConsoleColors.RESET);
-            s.nextLine();
             inventoryClerk();
         }
     }
@@ -333,11 +331,11 @@ public class FioreFlowershop {
         System.out.println("[2] Order Pickup/Delivery");
         System.out.println("[3] Consumer Payment Management");
         System.out.println("[4] View Sales Order");
-        System.out.println("[5] Edit customize floral arrangement customization options");
-        System.out.println("[6] Back");
-        System.out.println("Enter your option: ");
+        System.out.println("[5] Back");
+        System.out.print("Enter your option: ");
+
         try {
-            int counterStaffChoice = s.nextInt();
+            int counterStaffChoice = s.nextInt(); s.nextLine();
             switch (counterStaffChoice) {
                 case 1:
                     InvoicePayment.invoiceMaintenance();
@@ -356,7 +354,6 @@ public class FioreFlowershop {
             }
         } catch (Exception e) {
             System.out.println("\n" + ConsoleColors.RED + " An Error Occured. Please Only Enter Number Only." + ConsoleColors.RESET);
-            s.nextLine();
             counterStaff();
         }
     }
@@ -367,7 +364,7 @@ public class FioreFlowershop {
         System.out.println("[2] Generate Itemized Bill");
         System.out.println("[3] Back");
         try {
-            int floristChoice = s.nextInt();
+            int floristChoice = s.nextInt(); s.nextLine();
             switch (floristChoice) {
                 case 1:
                     orderMenu();
@@ -379,7 +376,6 @@ public class FioreFlowershop {
             }
         } catch (Exception e) {
             System.out.println("\n" + ConsoleColors.RED + " An Error Occured. Please Only Enter Number Only." + ConsoleColors.RESET);
-            s.nextLine();
             florist();
         }
     }
@@ -392,7 +388,7 @@ public class FioreFlowershop {
         System.out.println("[4] View Delivery Payments");
         System.out.println("[5] Generate Payment Receipt");
         System.out.println("[6] Back");
-        int deliveryStaffChoice = s.nextInt();
+        int deliveryStaffChoice = s.nextInt(); s.nextLine();
         switch (deliveryStaffChoice) {
             case 1:
             case 2:
@@ -431,7 +427,7 @@ public class FioreFlowershop {
         System.out.println("[3] Back");
         System.out.println("Enter your option: ");
 
-        int choice = s.nextInt();
+        int choice = s.nextInt(); s.nextLine();
 
         if (choice == 1) {
             System.out.println("\nPlease Select The Options Below.");
@@ -470,7 +466,7 @@ public class FioreFlowershop {
 
                 String orderID = s.nextLine();
 
-//                Pickup.searchPOrderID(orderID, shoppingCart, customizedPackages, paidOrder);
+                Pickup.searchUserPickUp(orderID, shoppingCart, customizedPackages, paidOrder);
             }
 
         } else if (choice == 2) {
@@ -480,7 +476,7 @@ public class FioreFlowershop {
             System.out.println("[3] Back");
             System.out.println("Enter your option: ");
 
-            int deliveryChoice = s.nextInt();
+            int deliveryChoice = s.nextInt(); 
 
             if (deliveryChoice == 1) {
                 Delivery.sortDeliveryOrder(deliveryOrder, customizedPackages);
@@ -518,7 +514,7 @@ public class FioreFlowershop {
         System.out.println("[3] Back");
         System.out.println("Enter your option: ");
 
-        int deliveryChoice = s.nextInt();
+        int deliveryChoice = s.nextInt(); 
 
         if (deliveryChoice == 1) {
             Delivery.sortDeliveryOrder(deliveryOrder, customizedPackages);
