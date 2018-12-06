@@ -35,7 +35,7 @@ public class FioreFlowershop {
 
     private static ItemCatalogue itemCatalogue = new ItemCatalogue();
     private static QueueInterface<CustomizedPackage> customizedPackages = new ArrayQueue<>();
-    private static QueueInterface<CustomizedPackage> readyOrders = new ArrayQueue<>();
+    private static ListIteratorInterface<CustomizedPackage> readyOrders = new LinkedList<>();
     
     //Catalog Maintenance part
     private static LinkedList<CatalogPackage> normalPackage = new LinkedList<>();

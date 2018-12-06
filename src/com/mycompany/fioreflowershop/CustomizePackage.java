@@ -5,13 +5,8 @@
  */
 package com.mycompany.fioreflowershop;
 
-import com.mycompany.fioreflowershop.modal.Item;
-import com.mycompany.fioreflowershop.adt.ArrayList;
-import com.mycompany.fioreflowershop.adt.ArrayQueue;
-import com.mycompany.fioreflowershop.adt.QueueInterface;
-import com.mycompany.fioreflowershop.modal.Consumer;
-import com.mycompany.fioreflowershop.modal.CustomizedPackage;
-import com.mycompany.fioreflowershop.modal.ItemCatalogue;
+import com.mycompany.fioreflowershop.modal.*;
+import com.mycompany.fioreflowershop.adt.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -562,7 +557,7 @@ public class CustomizePackage {
 
     }
 
-    public static void updateOrders(QueueInterface<CustomizedPackage> customizedPackages, QueueInterface<CustomizedPackage> readyOrders) {
+    public static void updateOrders(QueueInterface<CustomizedPackage> customizedPackages, ListInterface<CustomizedPackage> readyOrders) {
         while (true) {
             Scanner scan = new Scanner(System.in);
             char selection;
@@ -584,7 +579,7 @@ public class CustomizePackage {
 
                 if (selection == 'Y') {
                     System.out.println("Order marked as ready to deliver!");
-                    readyOrders.enqueue(customizedPackages.dequeue());
+                    readyOrders.add(customizedPackages.dequeue());
                     do {
                         System.out.print("Continue to next order?" + ANSI_GREEN + "[Y/N]" + ANSI_RESET + " ");
                         selection = Character.toUpperCase(scan.next().charAt(0));
