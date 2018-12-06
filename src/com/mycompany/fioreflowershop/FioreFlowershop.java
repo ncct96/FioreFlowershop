@@ -458,7 +458,7 @@ public class FioreFlowershop {
 
                 String orderID = s.nextLine();
 
-//                Pickup.searchPOrderID(orderID, shoppingCart, customizedPackages, paidOrder);
+                Pickup.searchUserPickUp(orderID, shoppingCart, customizedPackages, paidOrder);
             }
 
         } else if (choice == 2) {
