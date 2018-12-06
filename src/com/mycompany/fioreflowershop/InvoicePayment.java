@@ -33,7 +33,7 @@ public class InvoicePayment {
         System.out.println("[3] Back to Main Menu.");
         
         try{
-            int invoiceChoice = s.nextInt();
+            int invoiceChoice = s.nextInt(); s.nextLine();
             switch(invoiceChoice){
                 case 1:invoicePaymentP1();break;
                 case 2:generateInvoiceP1();break; 
@@ -42,13 +42,13 @@ public class InvoicePayment {
         }catch (Exception e){
             System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"An Error had occurred. Please Enter The Numbers Stated"+FioreFlowershop.ConsoleColors.RESET);
             System.out.println(FioreFlowershop.ConsoleColors.BLUE+"\nRedirecting Back to Invoice Maintenance Menu......" + FioreFlowershop.ConsoleColors.RESET);
-            s.nextLine();invoiceMaintenance();
+            invoiceMaintenance();
         }
     }
     
     public static void generateInvoiceP1(){
         s.nextLine();
-        String usern = ""; boolean stat = true;int yearEntered = 0;int monthEntered = 0;
+        String usern = ""; boolean stat = false;int yearEntered = 0;int monthEntered = 0;
         try{
             System.out.print("Please Enter the Month and Year for Invoice (Eg. 2018-11) : ");
             String dateEntered = s.nextLine();
@@ -57,7 +57,7 @@ public class InvoicePayment {
         }catch(Exception e){
             System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"An Error had occurred. Please enter the format as stated."+FioreFlowershop.ConsoleColors.RESET);
             System.out.println(FioreFlowershop.ConsoleColors.BLUE+"\nRedirecting Back to Invoice Maintenance Menu......" + FioreFlowershop.ConsoleColors.RESET);
-            s.nextLine();generateInvoiceP1();
+            generateInvoiceP1();
         }
         if(FioreFlowershop.getShoppingCart() != null){
         System.out.println("\n====================================================");
@@ -92,13 +92,13 @@ public class InvoicePayment {
         }else{
             try{
                 System.out.print("\nPlease Enter The Number of Corporate Customer for Invoice Generations : ");
-                int choiceCorp = s.nextInt();
+                int choiceCorp = s.nextInt(); s.nextLine();
                 String newEmail = FioreFlowershop.getShoppingCart().getItem(choiceCorp).getUser().getEmail();
                 generateInvoiceP2(FioreFlowershop.getShoppingCart().getItem(choiceCorp),newEmail);
             }catch(Exception e){
                 System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"\nAn Error had occurred. Please Enter The Number of the Corporate Customer."+FioreFlowershop.ConsoleColors.RESET);
                 System.out.println(FioreFlowershop.ConsoleColors.BLUE+"\nRedirecting Back to Invoice Maintenance Menu......" + FioreFlowershop.ConsoleColors.RESET);
-                s.nextLine();invoiceMaintenance();
+                invoiceMaintenance();
             }
                 
         }
@@ -186,12 +186,12 @@ public class InvoicePayment {
         }else{
             try{
                 System.out.print("\nPlease Enter The Number of Corporate Customer for Invoice Generations : ");
-                int choiceCorp = s.nextInt();
+                int choiceCorp = s.nextInt(); s.nextLine();
                 String newEmail = FioreFlowershop.getShoppingCart().getItem(choiceCorp).getUser().getEmail();
                 invoicePaymentP2(FioreFlowershop.getShoppingCart().getItem(choiceCorp),newEmail);
             }catch(Exception e){
                 System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"\nAn Error had occurred. Please Enter The Number of the Corporate Customer."+FioreFlowershop.ConsoleColors.RESET);
-                s.nextLine();invoiceMaintenance();
+                invoiceMaintenance();
             }
                 
         }
@@ -281,8 +281,8 @@ public class InvoicePayment {
                 }
             }else {//Normal Transaction carried out
                 System.out.println("\n\nCurrent Corporate Customer's Credit Limit: " + cc.getMonthlyLimit());
-                System.out.println("Current Corporate Customer's Affordable Limit: " + affordable);
-                System.out.println("After Payment Balance: "+ (affordable-(totalPrice-discountPrice)));
+                System.out.println("Current Corporate Customer's Affordable Limit: " + FioreFlowershop.ConsoleColors.BLUE +affordable + FioreFlowershop.ConsoleColors.RESET);
+                System.out.println("After Payment Balance: "+ FioreFlowershop.ConsoleColors.RED +(affordable-(totalPrice-discountPrice))+ FioreFlowershop.ConsoleColors.RESET);
                 s.nextLine();
                 System.out.print("\nDo you wish to make this payment? [Press Enter for Yes]");
                 String enter = s.nextLine();

@@ -5,6 +5,8 @@
  */
 package com.mycompany.fioreflowershop.modal;
 
+import com.mycompany.fioreflowershop.FioreFlowershop;
+
 /**
  *
  * @author Admin
@@ -77,7 +79,11 @@ public class User{
 
     @Override
     public String toString() {
-        return "\nUsername : " + username + "\nEmail : " + email + "\nContact Number : " + phone +"\nAddress : " + address + "\nPassword : " + password;
+        return  "\n"+FioreFlowershop.ConsoleColors.BLUE + "Username : " + username +FioreFlowershop.ConsoleColors.RESET
+                +"\n"+FioreFlowershop.ConsoleColors.BLUE + "Email : " + email +FioreFlowershop.ConsoleColors.RESET
+                +"\n"+FioreFlowershop.ConsoleColors.BLUE +  "Contact Number : " + phone +FioreFlowershop.ConsoleColors.RESET
+                +"\n"+FioreFlowershop.ConsoleColors.BLUE + "Address : " + address +FioreFlowershop.ConsoleColors.RESET
+                +"\n"+FioreFlowershop.ConsoleColors.BLUE + "Password : " + password +FioreFlowershop.ConsoleColors.RESET;
     }
     
 }
