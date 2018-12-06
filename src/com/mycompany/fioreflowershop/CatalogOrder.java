@@ -456,10 +456,14 @@ public class CatalogOrder {
         if (shoppingCart.isEmpty()) {
             creditSpent += itemPrice;
         } else if (!shoppingCart.isEmpty()) {
+            creditSpent = 0;
+            for(int i = 1; i < shoppingCart.getTotalEntries()+ 1; i++){
+                creditSpent += shoppingCart.getItem(i).getOrderAmt();
+            }
             creditSpent += itemPrice;
         }
-        corporate.setCreditSpent(creditSpent); //set credit spent for checking
-        System.out.print(creditSpent);
+        
+        corporate.setCreditSpent(creditSpent); //set credit spent for checking       
         //Add in the selected item inside the shoppingCart arraylist
         if (customer != null && corporate == null) {
             try {
@@ -580,6 +584,10 @@ public class CatalogOrder {
         if (shoppingCart.isEmpty()) {
             creditSpent += itemPrice;
         } else if (!shoppingCart.isEmpty()) {
+            creditSpent = 0;
+            for(int i = 1; i < shoppingCart.getTotalEntries()+ 1; i++){
+                creditSpent += shoppingCart.getItem(i).getOrderAmt();
+            }
             creditSpent += itemPrice;
         }
         corporate.setCreditSpent(creditSpent); //set credit spent for checking
@@ -705,6 +713,10 @@ public class CatalogOrder {
         if (shoppingCart.isEmpty()) {
             creditSpent += itemPrice;
         } else if (!shoppingCart.isEmpty()) {
+            creditSpent = 0;
+            for(int i = 1; i < shoppingCart.getTotalEntries()+ 1; i++){
+                creditSpent += shoppingCart.getItem(i).getOrderAmt();
+            }
             creditSpent += itemPrice;
         }
         corporate.setCreditSpent(creditSpent); //set credit spent for checking
