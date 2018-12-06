@@ -113,10 +113,10 @@ public class CustomerMaintenance {
                     int orderChoice = s.nextInt();
                     switch(orderChoice){
                         case 1: FioreFlowershop.gotoCatalogOrders(customerLoggedIn,corporateLoggedIn); break; //catalog flower order
-                        case 2: FioreFlowershop.gotoCustomizePackage(customerLoggedIn);break;//customizable flower order
+                        case 2: FioreFlowershop.gotoCustomizePackage(customerLoggedIn, 1);break;//customizable flower order
                     }
             } else if (customerOptionsChoice == 2){ //View Ordered Items
-
+                    FioreFlowershop.gotoCustomizePackage(customerLoggedIn, 2);
             } else if(customerOptionsChoice == 3){ //Edit Flower Order
 
             } else if(customerOptionsChoice == 4){

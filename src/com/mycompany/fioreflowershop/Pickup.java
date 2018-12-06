@@ -237,8 +237,12 @@ public class Pickup {
         }
 
     }
+    
+    public static void dateSorting(){
+        
+    }
 
-    public static void searchPOrderID(String orderID, LinkedList<Order> pickUpOrder, QueueInterface<CustomizedPackage> customOrder, LinkedList<Order> paidOrder) {
+    public static void searchUserPickUp(String userID, LinkedList<Order> pickUpOrder, QueueInterface<CustomizedPackage> customOrder, LinkedList<Order> paidOrder) {
 
         Scanner s = new Scanner(System.in);
         LinkedList<Order> pickuporder = pickUpOrder;
@@ -248,15 +252,24 @@ public class Pickup {
 
         while (iterator.hasNext()) {
             Order order = iterator.next();
-            if (((CatalogOrders) order).getOrderID().equals(orderID)) {
-                matchOrder.add(order);
-            } else if (((CustomizedPackage) order).getOrderID().equals(orderID)) {
-                matchOrder.add(order);
+
+            // Add matched order id of CatalogOrders & Pick up type in list
+            if (order instanceof CatalogOrders) {
+                if (((CatalogOrders) order).getUser().getUsername().equals(userID) && ((CatalogOrders) order).getOrderType().equals("Pick Up")) {
+
+                    matchOrder.add(order);
+
+                }
+            } else {
+                if (((CustomizedPackage) order).getUser().getUsername().equals(userID) && (((CustomizedPackage) order).getDeliveryType().equals("Pick Up"))) {
+
+                    matchOrder.add(order);
+                }
             }
         }
 
         if (matchOrder.isEmpty()) {
-            System.out.println("No record found! Please try again!");
+            System.out.println("No order with pending payment found! Please try again!");
         } else {
             User user = matchOrder.getItem(1).getUser();
 
@@ -302,7 +315,7 @@ public class Pickup {
                     System.out.println("Payment Status: " + ((CatalogOrders) order).isPaymentStatus());
                     System.out.println("Order Status: " + matchOrder.getItem(1).getOrderStatus());
                 } else {
-                    System.out.println("Order ID: " +((CustomizedPackage) order).getOrderID());
+                    System.out.println("Order ID: " + ((CustomizedPackage) order).getOrderID());
                     System.out.println("Order Type: " + matchOrder.getItem(1).getOrderType());
                     System.out.println("Order Date: " + matchOrder.getItem(1).getOrderDate());
                     System.out.println("Company Name: " + corp.getCompany());
