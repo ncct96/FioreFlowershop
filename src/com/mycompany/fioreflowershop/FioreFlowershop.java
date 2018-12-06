@@ -42,6 +42,7 @@ public class FioreFlowershop {
     private static LinkedList<CatalogPackage> discountedPackage = new LinkedList<>();
 
     private static LinkedList<CatalogOrders> shoppingCart = new LinkedList<>();
+    private static LinkedQueue<CatalogOrders> catalogOrder = new LinkedQueue<>();
     private static String[] origin = {"Taiping", "Penang", "Cheras", "Johor"};
     private static String[] dest = {"Taiping", "Penang", "Cheras", "Johor"};
     private static final String shopAddress = "Taiping";
@@ -92,8 +93,8 @@ public class FioreFlowershop {
         CatalogOrders ct1 = new CatalogOrders("1001", cp1, 4, 20, "Delivery", todayDate, cc1, "Order Status", 200, false, todayDate);
         CatalogOrders ct2 = new CatalogOrders("1002",cp2 , 5, 10, "Delivery", todayDate, cc1, "Order Status", 300, false, todayDate);
 
-        shoppingCart.add(ct1);
-        shoppingCart.add(ct2);
+//        shoppingCart.add(ct1);
+//        shoppingCart.add(ct2);        
 
         ListIteratorInterface<Item> styles = new LinkedList<>();
         ListIteratorInterface<Item> sizes = new LinkedList<>();
@@ -168,9 +169,9 @@ public class FioreFlowershop {
         //Zion part need change since tutor told me use one array so my multiple array is gone
 
         if (corporateLoggedIn == null) {
-            CatalogOrder.CustomerOrderMain(shoppingCart, customerLoggedIn, normalPackage, discountedPackage);
+            CatalogOrder.CustomerOrderMain(shoppingCart, catalogOrder, customerLoggedIn, normalPackage, discountedPackage);
         } else if (customerLoggedIn == null) {
-            CatalogOrder.CorporateOrderMain(shoppingCart, corporateLoggedIn, normalPackage, discountedPackage);
+            CatalogOrder.CorporateOrderMain(shoppingCart, catalogOrder, corporateLoggedIn, normalPackage, discountedPackage);
         }
 
     }
@@ -584,6 +585,10 @@ public class FioreFlowershop {
     public static LinkedList<CatalogOrders> getShoppingCart() {
         return shoppingCart;
 
+    }
+    
+    public static LinkedQueue<CatalogOrders> getCatalogOrder(){
+        return catalogOrder;
     }
 
     public class ConsoleColors {
