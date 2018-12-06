@@ -513,6 +513,5 @@ public class CustomizePackage {
     }
 
     public static void deleteItems(ItemCatalogue itemCatalogue) {
-
     }
 }

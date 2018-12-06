@@ -146,7 +146,7 @@ public class Delivery {
             month = CuslistCal.get(Calendar.MONTH) + 1;
             year = CuslistCal.get(Calendar.YEAR);
 
-            if (day == userDay && month == userMonth && year == userYear) {
+            if (day == userDay && month == userMonth && year == userYear && tempCustomOrder.getDeliveryType().equals("Delivery")) {
                 searchQueue.enqueue(tempCustomOrder);
             }
         }

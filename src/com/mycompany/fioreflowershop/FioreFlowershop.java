@@ -87,8 +87,10 @@ public class FioreFlowershop {
         //Initialize shopping cart
         CatalogPackage cp1 = new CatalogPackage("FlowerStrong", "Stylish", "Small", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20);
         CatalogPackage cp2 = new CatalogPackage("FlowerWeak", "Colourful", "Medium", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10);
-        CatalogOrders ct1 = new CatalogOrders("C", cp1, 4, 20, "Delivery", todayDate, cc1, "Order Status", 200, false, todayDate);
-        CatalogOrders ct2 = new CatalogOrders("C",cp2 , 5, 10, "Delivery", todayDate, cc1, "Order Status", 300, false, todayDate);
+
+        CatalogOrders ct1 = new CatalogOrders("1001", cp1, 4, 20, "Delivery", todayDate, cc1, "Order Status", 200, false, todayDate);
+        CatalogOrders ct2 = new CatalogOrders("1002",cp2 , 5, 10, "Delivery", todayDate, cc1, "Order Status", 300, false, todayDate);
+
         shoppingCart.add(ct1);
         shoppingCart.add(ct2);
 
@@ -464,7 +466,7 @@ public class FioreFlowershop {
 
                 String orderID = s.nextLine();
 
-//                Pickup.searchPOrderID(orderID, shoppingCart, customizedPackages, paidOrder);
+                Pickup.searchUserPickUp(orderID, shoppingCart, customizedPackages, paidOrder);
             }
 
         } else if (choice == 2) {
