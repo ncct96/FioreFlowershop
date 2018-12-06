@@ -280,7 +280,53 @@ public class CustomizePackage {
     }
 
     public static void updateStock(ItemCatalogue itemCatalogue) {
+        Scanner scan = new Scanner(System.in);
+        int selection, newQuantity;
 
+        while (true) {
+            try {
+                do {
+                    System.out.println("Select the type of customization item");
+                    System.out.println(ANSI_GREEN + "[1] " + ANSI_RESET + "Flowers");
+                    System.out.println(ANSI_GREEN + "[2] " + ANSI_RESET + "Accessories");
+                    System.out.println("===========================");
+                    System.out.println(ANSI_GREEN + "[3] " + ANSI_RESET + "Return to previous menu");
+                    selection = scan.nextInt();
+                } while (selection < 1 || selection > 3);
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
+                scan.next();
+            }
+        }
+
+        if (selection == 1) {
+            for (int i = 1; i <= itemCatalogue.getFlowers().getTotalEntries(); i++) {
+                System.out.print(ANSI_GREEN + "[" + i + "]" + ANSI_RESET);
+                System.out.printf(" %s: RM%.2f\n", itemCatalogue.getFlowers().getItem(i).getName(), itemCatalogue.getFlowers().getItem(i).getQuantity());
+            }
+
+            while (true) {
+                try {
+                    do {
+                        System.out.print("Select the item to update: ");
+                        selection = scan.nextInt();
+                    } while (selection < 1 || selection > itemCatalogue.getFlowers().getTotalEntries());
+
+                    do {
+                        System.out.print("Enter the new stock quantity: ");
+                        newQuantity = scan.nextInt();
+                    } while (selection < 0);
+                    break;
+                } catch (InputMismatchException e) {
+                    System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
+                    scan.next();
+                }
+            }
+
+            System.out.println("Stock quantity successfully updated!");
+            itemCatalogue.getFlowers().getItem(selection).setQuantity(newQuantity);
+        }
     }
 
     public static void addItems(ItemCatalogue itemCatalogue) {
@@ -514,5 +560,40 @@ public class CustomizePackage {
 
     public static void deleteItems(ItemCatalogue itemCatalogue) {
 
+    }
+
+    public static void updateOrders(QueueInterface<CustomizedPackage> customizedPackages, QueueInterface<CustomizedPackage> readyOrders) {
+        while (true) {
+            CustomizedPackage currentOrder = customizedPackages.getFront();
+            Scanner scan = new Scanner(System.in);
+            char selection;
+
+            if (!customizedPackages.isEmpty()) {
+                System.out.println("Next Order");
+                System.out.println("Job ID: " + customizedPackages.getFront().getOrderID());
+                System.out.println("Delivery Date: " + customizedPackages.getFront().getDeliveryDateString());
+                System.out.println("Priority: " + customizedPackages.getFront().getPriority());
+                System.out.println("Arrangement: " + customizedPackages.getFront().getSize() + " " + customizedPackages.getFront().getStyle() + " " + customizedPackages.getFront().getFlower());
+                System.out.println("Accessories: " + customizedPackages.getFront().getAccessory());
+                do {
+                    System.out.print("Complete order?" + ANSI_GREEN + "[Y/N]" + ANSI_RESET);
+                    selection = Character.toUpperCase(scan.next().charAt(0));
+                } while (selection != 'Y' || selection != 'N');
+
+                if (selection == 'Y') {
+                    System.out.println("Order marked as ready to deliver!");
+                    do {
+                        System.out.print("Continue to next order?" + ANSI_GREEN + "[Y/N]" + ANSI_RESET);
+                        selection = Character.toUpperCase(scan.next().charAt(0));
+                    } while (selection != 'Y' || selection != 'N');
+                    
+                    if(selection == 'N'){
+                        break;
+                    }
+                } else {
+                    break;
+                }
+            }
+        }
     }
 }
