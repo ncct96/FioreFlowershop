@@ -20,11 +20,12 @@ public class CatalogOrders extends Order {
     private int itemQuantity;
 //    private double itemPrice;
     private int discountRate;
+    private Date retrieveTime;
 
     public CatalogOrders() {
     }
 
-    public CatalogOrders(String orderID, CatalogPackage catalogPack, int itemQuantity, int discountRate, String orderType, Date orderDate, User user, String orderStatus, double orderAmt, boolean paymentStatus, Date retrieveDate) {
+    public CatalogOrders(String orderID, CatalogPackage catalogPack, int itemQuantity, int discountRate, String orderType, Date orderDate, User user, String orderStatus, double orderAmt, boolean paymentStatus, Date retrieveDate, Date retrieveTime) {
         super(orderType, orderDate, user, orderStatus, orderAmt, paymentStatus, retrieveDate);
         orderID = "CO" + orderNo;
         this.orderID = orderID;
@@ -33,6 +34,7 @@ public class CatalogOrders extends Order {
         this.itemQuantity = itemQuantity;
 //        this.itemPrice = itemPrice;
         this.discountRate = discountRate;
+        this.retrieveTime = retrieveTime;
     }
 
     public String getOrderID() {
@@ -74,6 +76,14 @@ public class CatalogOrders extends Order {
     public void setDiscountRate(int discountRate) {
         this.discountRate = discountRate;
     }   
+
+    public Date getRetrieveTime() {
+        return retrieveTime;
+    }
+
+    public void setRetrieveTime(Date retrieveTime) {
+        this.retrieveTime = retrieveTime;
+    }
 
     @Override
     public String toString() {
