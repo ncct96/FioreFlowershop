@@ -18,7 +18,7 @@ public class Order {
     private Date retrieveDate; // For pickup/delivery date
     private User user;
     private String orderStatus;
-    private boolean paymentStatus;
+    private boolean paymentStatus = false;
     private double orderAmt;
 
     public Order() {
@@ -38,6 +38,10 @@ public class Order {
         this.orderType = orderType;
         this.orderDate = orderDate;
         this.user = user;
+    }
+
+    public Order(boolean paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 
     public String getOrderType() {

@@ -18,13 +18,16 @@ public class CustomizedPackage extends Order {
 
     private String orderID;
     private static int orderNo = 1;
-    private String orderDate, deliveryDate;
+    private String orderDate, deliveryDate, deliverDate;
     private Item style, size, flower, accessory, priority, deliveryType;
     private User user;
+    private boolean paymentStatus;
     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-    public CustomizedPackage(Item style, Item size, Item flower, Item accessory, Item priority, Item deliveryType, User user) {
+    public CustomizedPackage(Item style, Item size, Item flower, Item accessory, Item priority, Item deliveryType, User user, boolean paymentStatus) {
+        super(paymentStatus);
         orderID = "CP" + orderNo;
+        this.orderID = orderID;
         ++orderNo;
 
         Date todayDate = Calendar.getInstance().getTime();
@@ -73,6 +76,28 @@ public class CustomizedPackage extends Order {
 
     public void setOrderDate(Date orderDate) {
         this.orderDate = df.format(orderDate);
+    }
+    
+    public Date getDeliverDate() {
+        Date date = new Date();
+        try {
+            date = df.parse(deliverDate);
+        } catch (Exception e) {
+
+        }
+        return date;
+    }
+
+    public String getDeliverDateString() {
+        return deliverDate;
+    }
+
+    public void setDeliverDateString(String deliverDate) {
+        this.deliverDate = deliverDate;
+    }
+
+    public void setDeliverDate(Date deliverDate) {
+        this.deliverDate = df.format(deliverDate);
     }
 
     public User getUser() {

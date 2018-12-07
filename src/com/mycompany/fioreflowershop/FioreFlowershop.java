@@ -23,9 +23,8 @@ import java.util.logging.Logger;
  * @author Chiu Peeng
  */
 public class FioreFlowershop {
-    
-    // Lines 95 - 98, 154-158
 
+    // Lines 95 - 98, 154-158
     private static ListInterface<Consumer> consumer = new ArrayList<>();
     private static ListInterface<CorporateCustomer> corporate = new ArrayList<>();
     private static ListInterface<User> user = new ArrayList<>();
@@ -33,10 +32,11 @@ public class FioreFlowershop {
     private static LinkedList<Order> deliveryOrder = new LinkedList<Order>();
     private static LinkedList<Order> paidOrder = new LinkedList<Order>();
     private static Scanner s = new Scanner(System.in);
-    
+
     private static ItemCatalogue itemCatalogue = new ItemCatalogue();
     private static QueueInterface<CustomizedPackage> customizedPackages = new ArrayQueue<>();
-
+    private static ListIteratorInterface<CustomizedPackage> readyOrders = new LinkedList<>();
+    
     //Catalog Maintenance part
     private static LinkedList<CatalogPackage> normalPackage = new LinkedList<>();
     private static LinkedList<CatalogPackage> discountedPackage = new LinkedList<>();
@@ -113,7 +113,7 @@ public class FioreFlowershop {
         ListIteratorInterface<Item> accessories = new LinkedList<>();
         ListIteratorInterface<Item> priorities = new LinkedList<>();
         ListIteratorInterface<Item> deliveryTypes = new LinkedList<>();
-    
+
         styles.add(new Item("Fan", 10));
         styles.add(new Item("Elliptical", 10));
         styles.add(new Item("Vertical", 10));
@@ -139,15 +139,15 @@ public class FioreFlowershop {
         priorities.add(new Item("Normal", 1.5, 4));
         priorities.add(new Item("Express", 3, 2));
 
-        deliveryTypes.add(new Item("Pickup", 0));
-        deliveryTypes.add(new Item("Deliver", 10));
+        deliveryTypes.add(new Item("Pick up", 0));
+        deliveryTypes.add(new Item("Delivery", 10));
 
-        Consumer customer = new Consumer("Johan", "ncct66@gmail.com", "abc123","0165919413", "Gelanggang Squash IAB Genting Highlands, Genting Highlands, 69000 Genting Highlands, Pahang");
-        Consumer customer1 = new Consumer("Baba", "ncct66@gmail.com", "abc123","0165919413", "7, Jalan Legoland, Medini, 79250 Nusajaya, Johor");
-        customizedPackages.enqueue(new CustomizedPackage(styles.getItem(2), sizes.getItem(3), flowers.getItem(1), accessories.getItem(4), priorities.getItem(3), deliveryTypes.getItem(1), customer));
-        customizedPackages.enqueue(new CustomizedPackage(styles.getItem(1), sizes.getItem(2), flowers.getItem(3), accessories.getItem(3), priorities.getItem(2), deliveryTypes.getItem(2), customer1));
-        customizedPackages.enqueue(new CustomizedPackage(styles.getItem(3), sizes.getItem(1), flowers.getItem(2), accessories.getItem(1), priorities.getItem(2), deliveryTypes.getItem(2), customer));
-        customizedPackages.enqueue(new CustomizedPackage(styles.getItem(4), sizes.getItem(2), flowers.getItem(4), accessories.getItem(1), priorities.getItem(1), deliveryTypes.getItem(1), customer1));
+        Consumer customer = new Consumer("Johan","abcdef", "ncct66@gmail.com", "0165919413", "Gelanggang Squash IAB Genting Highlands, Genting Highlands, 69000 Genting Highlands, Pahang");
+        Consumer customer1 = new Consumer("Baba","abcdef", "ncct66@gmail.com", "0165919413", "7, Jalan Legoland, Medini, 79250 Nusajaya, Johor");
+        customizedPackages.enqueue(new CustomizedPackage(styles.getItem(2), sizes.getItem(3), flowers.getItem(1), accessories.getItem(4), priorities.getItem(3), deliveryTypes.getItem(1), customer, false));
+        customizedPackages.enqueue(new CustomizedPackage(styles.getItem(1), sizes.getItem(2), flowers.getItem(3), accessories.getItem(3), priorities.getItem(2), deliveryTypes.getItem(2), customer1, false));
+        customizedPackages.enqueue(new CustomizedPackage(styles.getItem(3), sizes.getItem(1), flowers.getItem(2), accessories.getItem(1), priorities.getItem(2), deliveryTypes.getItem(2), customer, false));
+        customizedPackages.enqueue(new CustomizedPackage(styles.getItem(4), sizes.getItem(2), flowers.getItem(4), accessories.getItem(1), priorities.getItem(1), deliveryTypes.getItem(1), customer1, false));
 //        CustomizedPackage specialPackage = new CustomizedPackage(styles.getItem(1), sizes.getItem(2), flowers.getItem(5), accessories.getItem(2), priorities.getItem(1), deliveryTypes.getItem(2), customer);
 //        specialPackage.setDeliveryDate(Calendar.getInstance().getTime());
 //        Calendar cal = Calendar.getInstance();
@@ -163,12 +163,17 @@ public class FioreFlowershop {
         itemCatalogue.setDeliveryTypes(deliveryTypes);
     }
 
-    public static void gotoCustomizePackage(Consumer customerLoggedIn) {
+    public static void gotoCustomizePackage(Consumer customerLoggedIn, int selection) {
         /////// CHIUPEENG DEBUG LOOP //////
 //        for (int i = 0; i < 3; i++) {
 //            CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
 //        }
-        CustomizePackage.customizePackageControl(itemCatalogue, customerLoggedIn, customizedPackages);
+        if (selection == 1) {
+            CustomizePackage.customizePackageControl(itemCatalogue, customerLoggedIn, customizedPackages);
+        }
+        else if(selection == 2){
+            CustomizePackage.displayOrderHistory(customerLoggedIn, customizedPackages);
+        }
     }
 
     public static void gotoCatalogOrders(Consumer customerLoggedIn, CorporateCustomer corporateLoggedIn) {
@@ -313,13 +318,17 @@ public class FioreFlowershop {
         System.out.println("\nPlease Select The Options Below.");
         System.out.println("[1] Check stock quantity.");
         System.out.println("[2] Restock product quantity.");
-        System.out.println("[3] Back");
+        System.out.println("[3] Edit customize floral arrangement customization options");
+        System.out.println("[4] Back");
         try {
             int inventoryClerkChoice = s.nextInt(); s.nextLine();
             switch (inventoryClerkChoice) {
                 case 1: //Check stock quantity
                 case 2: //Restock product
                 case 3:
+                    CustomizePackage.itemsMenu(itemCatalogue, customizedPackages);
+                    break;
+                case 4:
                     userTypeSelection();
                     break;
             }
@@ -337,6 +346,7 @@ public class FioreFlowershop {
         System.out.println("[4] View Sales Order");
         System.out.println("[5] Back");
         System.out.print("Enter your option: ");
+
         try {
             int counterStaffChoice = s.nextInt(); s.nextLine();
             switch (counterStaffChoice) {
@@ -349,6 +359,9 @@ public class FioreFlowershop {
                 case 3: //consumer payment management
                 case 4: //view sales order
                 case 5:
+                    CustomizePackage.itemsMenu(itemCatalogue, customizedPackages);
+                    break;
+                case 6:
                     staffTypeSelection();
                     break;
             }
@@ -362,7 +375,8 @@ public class FioreFlowershop {
         System.out.println("\nPlease Select The Options Below.");
         System.out.println("[1] View Order List");
         System.out.println("[2] Generate Itemized Bill");
-        System.out.println("[3] Back");
+        System.out.println("[3] View Customized Floral Arrangement Jobs");
+        System.out.println("[4] Back");
         try {
             int floristChoice = s.nextInt(); s.nextLine();
             switch (floristChoice) {
@@ -371,6 +385,9 @@ public class FioreFlowershop {
                     break;
                 case 2:
                 case 3:
+                    CustomizePackage.updateOrders(customizedPackages, readyOrders);
+                    break;
+                case 4:
                     staffTypeSelection();
                     break;
             }
@@ -466,7 +483,7 @@ public class FioreFlowershop {
 
                 String orderID = s.nextLine();
 
-//                Pickup.searchPOrderID(orderID, shoppingCart, customizedPackages, paidOrder);
+                Pickup.searchUserPickUp(orderID, shoppingCart, customizedPackages, paidOrder);
             }
 
         } else if (choice == 2) {

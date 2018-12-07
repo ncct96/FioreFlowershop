@@ -5,13 +5,8 @@
  */
 package com.mycompany.fioreflowershop;
 
-import com.mycompany.fioreflowershop.modal.Item;
-import com.mycompany.fioreflowershop.adt.ArrayList;
-import com.mycompany.fioreflowershop.adt.ArrayQueue;
-import com.mycompany.fioreflowershop.adt.QueueInterface;
-import com.mycompany.fioreflowershop.modal.Consumer;
-import com.mycompany.fioreflowershop.modal.CustomizedPackage;
-import com.mycompany.fioreflowershop.modal.ItemCatalogue;
+import com.mycompany.fioreflowershop.modal.*;
+import com.mycompany.fioreflowershop.adt.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -21,18 +16,17 @@ import java.util.Scanner;
  */
 public class CustomizePackage {
 
+    private static final String ANSI_RESET = "\u001B[0m";
+    private static final String ANSI_BLACK = "\u001B[30m";
+    private static final String ANSI_RED = "\u001B[31m";
+    private static final String ANSI_GREEN = "\u001B[32m";
+    private static final String ANSI_YELLOW = "\u001B[33m";
+    private static final String ANSI_BLUE = "\u001B[34m";
+    private static final String ANSI_PURPLE = "\u001B[35m";
+    private static final String ANSI_CYAN = "\u001B[36m";
+    private static final String ANSI_WHITE = "\u001B[37m";
+
     public static void customizePackageControl(ItemCatalogue itemCatalogue, Consumer customer, QueueInterface<CustomizedPackage> customizedPackages) {
-
-        final String ANSI_RESET = "\u001B[0m";
-        final String ANSI_BLACK = "\u001B[30m";
-        final String ANSI_RED = "\u001B[31m";
-        final String ANSI_GREEN = "\u001B[32m";
-        final String ANSI_YELLOW = "\u001B[33m";
-        final String ANSI_BLUE = "\u001B[34m";
-        final String ANSI_PURPLE = "\u001B[35m";
-        final String ANSI_CYAN = "\u001B[36m";
-        final String ANSI_WHITE = "\u001B[37m";
-
         int style = 0, size = 0, flower = 0, accessory = 0, priority = 0, deliveryType = 0;
         Scanner scan = new Scanner(System.in);
         boolean cancel = false;
@@ -198,7 +192,7 @@ public class CustomizePackage {
             }
         }
         if (!cancel) {
-            CustomizedPackage order = new CustomizedPackage(itemCatalogue.getStyles().getItem(style), itemCatalogue.getSizes().getItem(size), itemCatalogue.getFlowers().getItem(flower), itemCatalogue.getAccessories().getItem(accessory), itemCatalogue.getPriorities().getItem(priority), itemCatalogue.getDeliveryTypes().getItem(deliveryType), customer);
+            CustomizedPackage order = new CustomizedPackage(itemCatalogue.getStyles().getItem(style), itemCatalogue.getSizes().getItem(size), itemCatalogue.getFlowers().getItem(flower), itemCatalogue.getAccessories().getItem(accessory), itemCatalogue.getPriorities().getItem(priority), itemCatalogue.getDeliveryTypes().getItem(deliveryType), customer, false);
             customizedPackages.enqueue(order);
             order.minusQuantity();
 
@@ -242,5 +236,362 @@ public class CustomizePackage {
         System.out.println("=====================================================");
         System.out.println("Thank you for your purchase!");
         System.out.println("=====================================================");
+    }
+
+    public static void displayOrderHistory(Consumer customer, QueueInterface<CustomizedPackage> customizedPackages) {
+        QueueInterface<CustomizedPackage> displayQueue = customizedPackages;
+        Boolean found = false;
+        System.out.println("Your Order History:");
+        System.out.println("================================================");
+        while (!displayQueue.isEmpty()) {
+            CustomizedPackage order = displayQueue.dequeue();
+            if (order.getUser().getUsername() == customer.getUsername() && order.getUser().getPassword() == customer.getPassword()) {
+                System.out.println(order.getOrderDateString() + " " + order.getOrderID() + " | " + order.getFlower().getName() + " " + order.getSize().getName() + " | RM" + order.CalculateOrder());
+                found = true;
+            }
+        }
+        if (!found) {
+            System.out.println("No order history found");
+        }
+
+        System.out.println("================================================");
+    }
+
+    public static void itemsMenu(ItemCatalogue itemCatalogue, QueueInterface<CustomizedPackage> customizedPackages) {
+        System.out.println("What do you wish to do?");
+        System.out.println(ANSI_GREEN + "[1] " + ANSI_RESET + "Update Stock Quantity");
+        System.out.println(ANSI_GREEN + "[2] " + ANSI_RESET + "Add New Items");
+        System.out.println(ANSI_GREEN + "[3] " + ANSI_RESET + "Delete Items");
+        Scanner scan = new Scanner(System.in);
+        int selection = scan.nextInt();
+
+        if (selection == 1) {
+            updateStock(itemCatalogue);
+        } else if (selection == 2) {
+            addItems(itemCatalogue);
+        } else {
+            deleteItems(itemCatalogue);
+        }
+    }
+
+    public static void updateStock(ItemCatalogue itemCatalogue) {
+        Scanner scan = new Scanner(System.in);
+        int selection, newQuantity;
+
+        while (true) {
+            try {
+                do {
+                    System.out.println("Select the type of customization item");
+                    System.out.println(ANSI_GREEN + "[1] " + ANSI_RESET + "Flowers");
+                    System.out.println(ANSI_GREEN + "[2] " + ANSI_RESET + "Accessories");
+                    System.out.println("===========================");
+                    System.out.println(ANSI_GREEN + "[3] " + ANSI_RESET + "Return to previous menu");
+                    selection = scan.nextInt();
+                } while (selection < 1 || selection > 3);
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
+                scan.next();
+            }
+        }
+
+        if (selection == 1) {
+            for (int i = 1; i <= itemCatalogue.getFlowers().getTotalEntries(); i++) {
+                System.out.print(ANSI_GREEN + "[" + i + "]" + ANSI_RESET);
+                System.out.printf(" %s: RM%.2f\n", itemCatalogue.getFlowers().getItem(i).getName(), itemCatalogue.getFlowers().getItem(i).getQuantity());
+            }
+
+            while (true) {
+                try {
+                    do {
+                        System.out.print("Select the item to update: ");
+                        selection = scan.nextInt();
+                    } while (selection < 1 || selection > itemCatalogue.getFlowers().getTotalEntries());
+
+                    do {
+                        System.out.print("Enter the new stock quantity: ");
+                        newQuantity = scan.nextInt();
+                    } while (selection < 0);
+                    break;
+                } catch (InputMismatchException e) {
+                    System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
+                    scan.next();
+                }
+            }
+
+            System.out.println("Stock quantity successfully updated!");
+            itemCatalogue.getFlowers().getItem(selection).setQuantity(newQuantity);
+        }
+    }
+
+    public static void addItems(ItemCatalogue itemCatalogue) {
+        Scanner scan = new Scanner(System.in);
+        int selection, position;
+        Item newItem = new Item();
+
+        while (true) {
+            try {
+                do {
+                    System.out.println("What type of stock do you wish to add?");
+                    System.out.println(ANSI_GREEN + "[1] " + ANSI_RESET + "Arrangement Styles");
+                    System.out.println(ANSI_GREEN + "[2] " + ANSI_RESET + "Arrangement Sizes");
+                    System.out.println(ANSI_GREEN + "[3] " + ANSI_RESET + "Flowers");
+                    System.out.println(ANSI_GREEN + "[4] " + ANSI_RESET + "Accessories");
+                    System.out.println("===========================");
+                    System.out.println(ANSI_GREEN + "[5] " + ANSI_RESET + "Return to previous menu");
+                    selection = scan.nextInt();
+                } while (selection < 1 || selection > 5);
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
+                scan.next();
+            }
+        }
+        if (selection == 1) {
+            scan.nextLine();
+            System.out.print("Enter the name of the new arrangement style: ");
+            newItem.setName(scan.nextLine());
+
+            while (true) {
+                try {
+                    System.out.print("Enter the price of the arrangement style: RM");
+                    newItem.setPrice(scan.nextDouble());
+                    break;
+                } catch (InputMismatchException e) {
+                    System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
+                    scan.next();
+                }
+            }
+
+            while (true) {
+                try {
+                    do {
+                        System.out.print("Enter the stock quantity: ");
+                        newItem.setPrice(scan.nextInt());
+                    } while (newItem.getQuantity() < 0);
+                    break;
+                } catch (InputMismatchException e) {
+                    System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
+                    scan.next();
+                }
+            }
+
+            System.out.println("Select the position to display the new item in the catalogue");
+            System.out.println("(If you select a position with an existing item, that item will be moved down one slot together with all proceeding items)");
+            System.out.println("=========================================================================================================================");
+            for (int i = 1; i <= itemCatalogue.getStyles().getTotalEntries(); i++) {
+                System.out.print(ANSI_GREEN + "[" + i + "]" + ANSI_RESET);
+                System.out.printf(" %s: RM%.2f\n", itemCatalogue.getStyles().getItem(i).getName(), itemCatalogue.getStyles().getItem(i).getPrice());
+            }
+            System.out.println(ANSI_GREEN + "[" + (itemCatalogue.getStyles().getTotalEntries() + 1) + "]" + ANSI_RESET + "[ NEW SLOT ]");
+
+            while (true) {
+                try {
+                    do {
+                        System.out.print("Position: ");
+                        position = scan.nextInt();
+                    } while (position < 0 || position > itemCatalogue.getStyles().getTotalEntries());
+                    break;
+                } catch (InputMismatchException e) {
+                    System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
+                    scan.next();
+                }
+            }
+
+            System.out.println("Item successfully added!");
+            itemCatalogue.getStyles().add(position, newItem);
+        } else if (selection == 2) {
+            scan.nextLine();
+            System.out.print("Enter the name of the new arrangement size: ");
+            newItem.setName(scan.nextLine());
+
+            while (true) {
+                try {
+                    System.out.print("Enter the price of the arrangement size: RM");
+                    newItem.setPrice(scan.nextDouble());
+                    break;
+                } catch (InputMismatchException e) {
+                    System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
+                    scan.next();
+                }
+            }
+
+            newItem.setQuantity(0);
+            System.out.println("Select the position to display the new item in the catalogue");
+            System.out.println("(If you select a position with an existing item, that item will be moved down one slot together with all proceeding items)");
+            System.out.println("=========================================================================================================================");
+            for (int i = 1; i <= itemCatalogue.getSizes().getTotalEntries(); i++) {
+                System.out.print(ANSI_GREEN + "[" + i + "]" + ANSI_RESET);
+                System.out.printf(" %s: RM%.2f\n", itemCatalogue.getSizes().getItem(i).getName(), itemCatalogue.getStyles().getItem(i).getPrice());
+            }
+            System.out.println(ANSI_GREEN + "[" + (itemCatalogue.getSizes().getTotalEntries() + 1) + "]" + ANSI_RESET + "[ NEW SLOT ]");
+
+            while (true) {
+                try {
+                    do {
+                        System.out.print("Position: ");
+                        position = scan.nextInt();
+                    } while (position < 0 || position > itemCatalogue.getSizes().getTotalEntries());
+                    break;
+                } catch (InputMismatchException e) {
+                    System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
+                    scan.next();
+                }
+            }
+
+            System.out.println("Item successfully added!");
+            itemCatalogue.getSizes().add(position, newItem);
+        } else if (selection == 3) {
+            scan.nextLine();
+            System.out.print("Enter the name of the new flower: ");
+            newItem.setName(scan.nextLine());
+
+            while (true) {
+                try {
+                    System.out.print("Enter the price of the flower: RM");
+                    newItem.setPrice(scan.nextDouble());
+                    break;
+                } catch (InputMismatchException e) {
+                    System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
+                    scan.next();
+                }
+            }
+
+            while (true) {
+                try {
+                    do {
+                        System.out.print("Enter the stock quantity: ");
+                        newItem.setPrice(scan.nextInt());
+                    } while (newItem.getQuantity() < 0);
+                    break;
+                } catch (InputMismatchException e) {
+                    System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
+                    scan.next();
+                }
+            }
+
+            System.out.println("Select the position to display the new item in the catalogue");
+            System.out.println("(If you select a position with an existing item, that item will be moved down one slot together with all proceeding items)");
+            System.out.println("=========================================================================================================================");
+            for (int i = 1; i <= itemCatalogue.getFlowers().getTotalEntries(); i++) {
+                System.out.print(ANSI_GREEN + "[" + i + "]" + ANSI_RESET);
+                System.out.printf(" %s: RM%.2f\n", itemCatalogue.getFlowers().getItem(i).getName(), itemCatalogue.getFlowers().getItem(i).getPrice());
+            }
+            System.out.println(ANSI_GREEN + "[" + (itemCatalogue.getFlowers().getTotalEntries() + 1) + "]" + ANSI_RESET + "[ NEW SLOT ]");
+
+            while (true) {
+                try {
+                    do {
+                        System.out.print("Position: ");
+                        position = scan.nextInt();
+                    } while (position < 0 || position > itemCatalogue.getFlowers().getTotalEntries());
+                    break;
+                } catch (InputMismatchException e) {
+                    System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
+                    scan.next();
+                }
+            }
+
+            System.out.println("Item successfully added!");
+            itemCatalogue.getFlowers().add(position, newItem);
+        } else if (selection == 4) {
+            scan.nextLine();
+            System.out.print("Enter the name of the new accessory: ");
+            newItem.setName(scan.nextLine());
+
+            while (true) {
+                try {
+                    System.out.print("Enter the price of the accessory: RM");
+                    newItem.setPrice(scan.nextDouble());
+                    break;
+                } catch (InputMismatchException e) {
+                    System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
+                    scan.next();
+                }
+            }
+
+            while (true) {
+                try {
+                    do {
+                        System.out.print("Enter the stock quantity: ");
+                        newItem.setPrice(scan.nextInt());
+                    } while (newItem.getQuantity() < 0);
+                    break;
+                } catch (InputMismatchException e) {
+                    System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
+                    scan.next();
+                }
+            }
+
+            System.out.println("Select the position to display the new item in the catalogue");
+            System.out.println("(If you select a position with an existing item, that item will be moved down one slot together with all proceeding items)");
+            System.out.println("=========================================================================================================================");
+            for (int i = 1; i <= itemCatalogue.getAccessories().getTotalEntries(); i++) {
+                System.out.print(ANSI_GREEN + "[" + i + "]" + ANSI_RESET);
+                System.out.printf(" %s: RM%.2f\n", itemCatalogue.getAccessories().getItem(i).getName(), itemCatalogue.getAccessories().getItem(i).getPrice());
+            }
+            System.out.println(ANSI_GREEN + "[" + (itemCatalogue.getAccessories().getTotalEntries() + 1) + "]" + ANSI_RESET + "[ NEW SLOT ]");
+
+            while (true) {
+                try {
+                    do {
+                        System.out.print("Position: ");
+                        position = scan.nextInt();
+                    } while (position < 0 || position > itemCatalogue.getAccessories().getTotalEntries());
+                    break;
+                } catch (InputMismatchException e) {
+                    System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
+                    scan.next();
+                }
+            }
+
+            System.out.println("Item successfully added!");
+            itemCatalogue.getFlowers().add(position, newItem);
+        } else {
+
+        }
+
+    }
+
+    public static void deleteItems(ItemCatalogue itemCatalogue) {
+
+    }
+
+    public static void updateOrders(QueueInterface<CustomizedPackage> customizedPackages, ListInterface<CustomizedPackage> readyOrders) {
+        while (true) {
+            Scanner scan = new Scanner(System.in);
+            char selection;
+
+            if (!customizedPackages.isEmpty()) {
+                System.out.println("==================================");
+                System.out.println("Next Order");
+                System.out.println("==================================");
+                System.out.println("Job ID: " + customizedPackages.getFront().getOrderID());
+                System.out.println("Delivery Date: " + customizedPackages.getFront().getDeliveryDateString());
+                System.out.println("Priority: " + customizedPackages.getFront().getPriority());
+                System.out.println("Arrangement: " + customizedPackages.getFront().getSize() + " " + customizedPackages.getFront().getStyle() + " " + customizedPackages.getFront().getFlower());
+                System.out.println("Accessories: " + customizedPackages.getFront().getAccessory());
+                System.out.println("==================================");
+                do {
+                    System.out.print("Complete order?" + ANSI_GREEN + "[Y/N]" + ANSI_RESET + " ");
+                    selection = Character.toUpperCase(scan.next().charAt(0));
+                } while (selection != 'Y' && selection != 'N');
+
+                if (selection == 'Y') {
+                    System.out.println("Order marked as ready to deliver!");
+                    readyOrders.add(customizedPackages.dequeue());
+                    do {
+                        System.out.print("Continue to next order?" + ANSI_GREEN + "[Y/N]" + ANSI_RESET + " ");
+                        selection = Character.toUpperCase(scan.next().charAt(0));
+                    } while (selection != 'Y' && selection != 'N');
+                    
+                    if(selection == 'N'){
+                        break;
+                    }
+                } else {
+                    break;
+                }
+            }
+        }
     }
 }
