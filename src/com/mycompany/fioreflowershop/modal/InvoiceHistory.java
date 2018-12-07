@@ -14,18 +14,26 @@ import java.util.Date;
 public class InvoiceHistory {
     private String invoiceNumber;
     private CatalogOrders catalogOrder;
-    private User user;
+    private CorporateCustomer corp;
     private Date datepay;
     
     public InvoiceHistory(){
         
     }
     
-    public InvoiceHistory(int invoiceNum ,CatalogOrders cart, User user, Date paid){
+    public InvoiceHistory(int invoiceNum ,CatalogOrders cart, CorporateCustomer corp, Date paid){
         invoiceNumber = "IH"+invoiceNum;
         this.catalogOrder = cart;
-        this.user = user;
+        this.corp = corp;
         this.datepay = paid;
+    }
+
+    public Date getDatepay() {
+        return datepay;
+    }
+
+    public void setDatepay(Date datepay) {
+        this.datepay = datepay;
     }
 
     public String getInvoiceNumber() {
@@ -44,12 +52,12 @@ public class InvoiceHistory {
         this.catalogOrder = catalogOrder;
     }
 
-    public User getUser() {
-        return user;
+    public CorporateCustomer getCorp() {
+        return corp;
     }
 
-    public void setCorp(User user) {
-        this.user = user;
+    public void setCorp(CorporateCustomer corp) {
+        this.corp = corp;
     }
     
 }

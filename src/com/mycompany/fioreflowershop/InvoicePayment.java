@@ -26,6 +26,7 @@ public class InvoicePayment {
     private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private static CorporateCustomer cc;
     private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    private static InvoiceHistory ih;
     private static ListInterface<InvoiceHistory> paymentHistory = new LinkedList<>();
     private static int invoiceNumber = 1000;
     
@@ -72,13 +73,15 @@ public class InvoicePayment {
                 String enteredID = s.nextLine();
                 for(int a = 1; a <= paymentHistory.getTotalEntries(); a++){
                     if(paymentHistory.getItem(a).getInvoiceNumber().equals(enteredID)){
-                        
+                        ih =  paymentHistory.getItem(a);
+                        stat = true;
+                        break;
                     }else{
                         stat = false;
                     }
                 }
                 if(stat){
-                   viewPaymentHistory2(enteredID); 
+                   viewPaymentHistory2(ih,enteredID); 
                 }else{
                     System.out.println(FioreFlowershop.ConsoleColors.RED+"\nPlease Enter A Valid Invoice Number, Try Again !"+FioreFlowershop.ConsoleColors.RESET);
                     invoiceMaintenance();
@@ -104,12 +107,39 @@ public class InvoicePayment {
 //        }
     }
     
-    public static void viewPaymentHistory2(String invoiceID){
-        
+    public static void viewPaymentHistory2(InvoiceHistory ih, String invoiceID){
+        System.out.println("=================================================================================================");
+        System.out.println("\nFiore Flowershop SDN.BHD \t\t\t\t\t\t"+ FioreFlowershop.ConsoleColors.BLACK_BOLD +" INVOICE");
+        System.out.println("\nQ-5-1, Desa Permai Indah \t\t\t\t\t\t"+" STATUS : PAID");
+        System.out.println("Bandar Gelugor, 11700 Pulau Pinang \t\t\t\t\t" + "INVOICE #["+invoiceID+"]");
+        System.out.println("Phone : 0125566922 \t\t\t\t\t\t\t" + "DATE: " + dateFormat.format(ih.getDatepay()));
+
+        System.out.println("\nTO:");
+        System.out.println("[" + ih.getCorp().getEmail()+ "]");
+        System.out.println("[" + ih.getCorp().getCompany() +"]");
+        System.out.println("["+ ih.getCorp().getAddress() +"]");
+        System.out.println("[City, ST ZIP Code]");
+        System.out.println("[" + ih.getCorp().getPhone() + "]");
+        System.out.println("==================================================================================================================");
+        System.out.println("Date Ordered | Description \t\t\t  | Quantity    |  Discount Rate(%) | Unit Price(RM) |  Total(RM)");
+        System.out.println("==================================================================================================================");
+        for(int i = 1; i <= paymentHistory.getTotalEntries(); i++){
+            if(paymentHistory.getItem(i).getInvoiceNumber().equals(invoiceID)){
+                System.out.println(sdf.format(paymentHistory.getItem(i).getCatalogOrder().getOrderDate())+"   | "
+                        + paymentHistory.getItem(i).getCatalogOrder().getCatalogPack().getName()+ "\t\t\t  | \t" 
+                        + paymentHistory.getItem(i).getCatalogOrder().getItemQuantity()+ "\t|\t" 
+                        + paymentHistory.getItem(i).getCatalogOrder().getCatalogPack().getDiscountRate()+ "\t    |\t" 
+                        + paymentHistory.getItem(i).getCatalogOrder().getCatalogPack().getPrice() + " \t     |   " 
+                        + paymentHistory.getItem(i).getCatalogOrder().getCatalogPack().getPrice()*paymentHistory.getItem(i).getCatalogOrder().getItemQuantity());
+            }
+        }
     }
     
     public static void generateInvoiceP1(){
-        String usern = ""; boolean stat = true;int yearEntered = 0;int monthEntered = 0;
+        String usern = ""; boolean stat = true;int yearEntered = 0;int monthEntered = 0;int count = 0;
+        System.out.println("\n====================================================");
+        System.out.println("\t Invoice Generation");
+        System.out.println("======================================================");
         try{
             System.out.print("\nPlease Enter the Month and Year for Invoice (Eg. 2018-11) : ");
             String dateEntered = s.nextLine();
@@ -138,16 +168,13 @@ public class InvoicePayment {
                         System.out.println(FioreFlowershop.ConsoleColors.BLUE + "[" + i + "] " + FioreFlowershop.ConsoleColors.RESET
                         + FioreFlowershop.getShoppingCart().getItem(i).getUser().getEmail());
                         usern = FioreFlowershop.getShoppingCart().getItem(i).getUser().getEmail();
+                        count++;
                     }
-                }else{
-                    stat = false;
                 }
-            }else {
-                stat = false;
             }
         }
     }
-        if(!stat){
+        if(count <= 0){
                 System.out.println(FioreFlowershop.ConsoleColors.RED+"\nSorry, No Records Found !"+FioreFlowershop.ConsoleColors.RESET);
                 invoiceMaintenance();
         }else{
@@ -172,13 +199,13 @@ public class InvoicePayment {
     }
     
     public static void generateInvoiceP2(CorporateCustomer user){
-        double totalPrice = 0; double discountPrice = 0; int invoiceNum = 100;
+        double totalPrice = 0; double discountPrice = 0;
         if(user instanceof CorporateCustomer){
             cc = (CorporateCustomer) user;
             System.out.println("=================================================================================================");
             System.out.println("\nFiore Flowershop SDN.BHD \t\t\t\t\t\t"+ FioreFlowershop.ConsoleColors.BLACK_BOLD +" INVOICE");
             System.out.println("\nQ-5-1, Desa Permai Indah");
-            System.out.println("Bandar Gelugor, 11700 Pulau Pinang \t\t\t\t\t" + "INVOICE #["+invoiceNum+"]");
+            System.out.println("Bandar Gelugor, 11700 Pulau Pinang \t\t\t\t\t" + "INVOICE #["+invoiceNumber+"]");
             System.out.println("Phone : 0125566922 \t\t\t\t\t\t\t" + "DATE: " + dateFormat.format(today));
 
             System.out.println("\nTO:");
@@ -211,9 +238,12 @@ public class InvoicePayment {
     }
     
     public static void invoicePaymentP1(){//First part for invoice payment
-        String usern = ""; boolean stat = true;int monthEntered = 0; int yearEntered = 0;
+        String usern = "";int monthEntered = 0; int yearEntered = 0;int count = 0;
+        System.out.println("\n====================================================");
+        System.out.println("\t Invoice Payment");
+        System.out.println("======================================================");
         try{
-            System.out.print("Please Enter the Month and Year for Invoice (Eg. 2018-11) : ");
+            System.out.print("\nPlease Enter the Month and Year for Invoice (Eg. 2018-11) : ");
             String dateEntered = s.nextLine();
             yearEntered = Integer.parseInt(dateEntered.substring(0,4));
             monthEntered = Integer.parseInt(dateEntered.substring(5,7));
@@ -239,15 +269,12 @@ public class InvoicePayment {
                             System.out.println(FioreFlowershop.ConsoleColors.BLUE + "[" + i + "] " + FioreFlowershop.ConsoleColors.RESET
                             + FioreFlowershop.getShoppingCart().getItem(i).getUser().getEmail());
                             usern = FioreFlowershop.getShoppingCart().getItem(i).getUser().getEmail();
+                            count++;
                         } 
-                }else{
-                    stat = false;
                 }
-            }else {
-                stat = false;
             }
         }
-        if(!stat){
+        if(count <= 0){
                 System.out.println(FioreFlowershop.ConsoleColors.RED+"\nSorry, No Records Found !"+FioreFlowershop.ConsoleColors.RESET);
                 invoiceMaintenance();
         }else{
@@ -380,10 +407,10 @@ public class InvoicePayment {
                     //Store paid invoice into an invoice link list
                     for(int l = 1;l <= FioreFlowershop.getShoppingCart().getTotalEntries(); l++){
                         if(FioreFlowershop.getShoppingCart().getItem(l).getUser().equals(user)){
-                            paymentHistory.add(new InvoiceHistory(invoiceNumber,FioreFlowershop.getShoppingCart().getItem(l), user, today));
+                            paymentHistory.add(new InvoiceHistory(invoiceNumber,FioreFlowershop.getShoppingCart().getItem(l), cc, today));
                         }
                     }
-                        ++invoiceNumber;
+                        ++invoiceNumber; 
                         System.out.println(FioreFlowershop.ConsoleColors.GREEN+"\nPayment Success, Thanks for the Patronage :D "+ FioreFlowershop.ConsoleColors.RESET);
                         System.out.println(FioreFlowershop.ConsoleColors.BLUE+"Redirecting Back to User Selection Menu......" + FioreFlowershop.ConsoleColors.RESET);
                         FioreFlowershop.userTypeSelection();
