@@ -73,7 +73,7 @@ public class CatalogOrders extends Order {
 
     public void setDiscountRate(int discountRate) {
         this.discountRate = discountRate;
-    }
+    }   
 
     @Override
     public String toString() {
