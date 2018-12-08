@@ -42,7 +42,7 @@ public class FioreFlowershop {
     private static LinkedList<CatalogPackage> discountedPackage = new LinkedList<>();
 
     private static LinkedList<CatalogOrders> shoppingCart = new LinkedList<>();
-    private static LinkedQueue<CatalogOrders> catalogOrder = new LinkedQueue<>();
+    private static LinkedList<CatalogOrders> catalogOrder = new LinkedList<>();
     private static String[] origin = {"Taiping", "Penang", "Cheras", "Johor"};
     private static String[] dest = {"Taiping", "Penang", "Cheras", "Johor"};
     private static final String shopAddress = "Taiping";
@@ -90,8 +90,8 @@ public class FioreFlowershop {
         CatalogPackage cp1 = new CatalogPackage("FlowerStrong", "Stylish", "Small", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20);
         CatalogPackage cp2 = new CatalogPackage("FlowerWeak", "Colourful", "Medium", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10);
 
-        CatalogOrders ct1 = new CatalogOrders("1001", cp1, 4, 20, "Delivery", todayDate, cc1, "Order Status", 200, false, todayDate);
-        CatalogOrders ct2 = new CatalogOrders("1002",cp2 , 5, 10, "Delivery", todayDate, cc1, "Order Status", 300, false, todayDate);
+        CatalogOrders ct1 = new CatalogOrders("1001", cp1, 4, 20, "Delivery", todayDate, cc1, "Order Status", 200, false, todayDate, todayDate);
+        CatalogOrders ct2 = new CatalogOrders("1002",cp2 , 5, 10, "Delivery", todayDate, cc1, "Order Status", 300, false, todayDate, todayDate);
 
 //        shoppingCart.add(ct1);
 //        shoppingCart.add(ct2);        
@@ -587,7 +587,7 @@ public class FioreFlowershop {
 
     }
     
-    public static LinkedQueue<CatalogOrders> getCatalogOrder(){
+    public static LinkedList<CatalogOrders> getCatalogOrder(){
         return catalogOrder;
     }
 
