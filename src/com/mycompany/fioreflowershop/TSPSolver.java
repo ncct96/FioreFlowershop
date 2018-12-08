@@ -172,7 +172,7 @@ public class TSPSolver {
         // Return early if there are more elements left to select than what is available.
         int elementsLeftToPick = n - at;
         if (elementsLeftToPick < r) {
-            return;
+            return; 
         }
 
         // We selected 'r' elements so we found a valid subset!

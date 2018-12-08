@@ -6,7 +6,6 @@
 package com.mycompany.fioreflowershop;
 
 import com.google.maps.errors.ApiException;
-import com.mycompany.fioreflowershop.adt.ArrayList;
 import com.mycompany.fioreflowershop.adt.ArrayQueue;
 import com.mycompany.fioreflowershop.adt.LinkedList;
 import com.mycompany.fioreflowershop.adt.ListInterface;
@@ -34,13 +33,11 @@ import java.util.logging.Logger;
  */
 public class Delivery {
 
-    public static void searchDelivery(ListInterface deliveryOrder, Date date, QueueInterface<CustomizedPackage> customOrder) {
-        ListInterface<Order> unOrderList = deliveryOrder;
-        ListInterface<Order> matchedList = new ArrayList<>();
-        QueueInterface<CustomizedPackage> searchQueue = new ArrayQueue<>();
+    public static void searchDelivery(LinkedList<CatalogOrders> deliveryOrder, Date date, LinkedList<CustomizedPackage> customOrder) {
+        LinkedList<CatalogOrders> unOrderList = deliveryOrder;
+        LinkedList<Order> matchedList = new LinkedList<>();
 
-        int count = customOrder.getBackIndex();
-
+        //int count = customOrder.getBackIndex();
         Calendar cal = Calendar.getInstance();
         Calendar listCal = Calendar.getInstance();
         Calendar cal1 = Calendar.getInstance();
@@ -70,22 +67,38 @@ public class Delivery {
             }
         }
 
-        for (int i = -1; i < count; i++) {
+        for (int i = 1; i <= customOrder.getTotalEntries(); i++) {
 
-            if (!customOrder.isEmpty()) {
-                CustomizedPackage order = customOrder.dequeue();
-                CuslistCal.setTime(order.getDeliveryDate());
+            listCal.setTime(customOrder.getItem(i).getOrderDate());
 
-                day = CuslistCal.get(Calendar.DAY_OF_MONTH);
-                month = CuslistCal.get(Calendar.MONTH) + 1;
-                year = CuslistCal.get(Calendar.YEAR);
+            day = listCal.get(Calendar.DAY_OF_MONTH);
+            month = listCal.get(Calendar.MONTH) + 1;
+            year = listCal.get(Calendar.YEAR);
 
-                if (day == userDay && month == userMonth && year == userYear) {
-                    searchQueue.enqueue(order);
-                }
+            userDay = cal.get(Calendar.DAY_OF_MONTH);
+            userMonth = cal.get(Calendar.MONTH) + 1;
+            userYear = cal.get(Calendar.YEAR);
+
+            if (day == userDay && month == userMonth && year == userYear) {
+                matchedList.add(customOrder.getItem(i));
             }
         }
 
+//        for (int i = -1; i < count; i++) {
+//
+//            if (!customOrder.isEmpty()) {
+//                CustomizedPackage order = customOrder.dequeue();
+//                CuslistCal.setTime(order.getDeliveryDate());
+//
+//                day = CuslistCal.get(Calendar.DAY_OF_MONTH);
+//                month = CuslistCal.get(Calendar.MONTH) + 1;
+//                year = CuslistCal.get(Calendar.YEAR);
+//
+//                if (day == userDay && month == userMonth && year == userYear) {
+//                    searchQueue.enqueue(order);
+//                }
+//            }
+//        }
         for (int i = 1; i < matchedList.getTotalEntries() - 1; i++) {
             int index = i;
             for (int j = i; j <= matchedList.getTotalEntries(); j++) {
@@ -98,18 +111,17 @@ public class Delivery {
             matchedList.replace(i, smallerOrder);
 
         }
-        displaySortedDelivery(matchedList, searchQueue);
+        displaySortedDelivery(matchedList);
     }
 
-    public static void sortDeliveryOrder(ListInterface<Order> deliveryOrder, QueueInterface customizeOrder) {
+    public static void sortDeliveryOrder(LinkedList<CatalogOrders> deliveryOrder, LinkedList<CustomizedPackage> customizeOrder) {
 
-        ListInterface<Order> sortedList = new ArrayList<>();
+        LinkedList<Order> sortedList = new LinkedList<>();
 
-        QueueInterface<CustomizedPackage> customOrder = customizeOrder;
+        LinkedList<CustomizedPackage> customOrder = customizeOrder;
 
-        int count = customOrder.getBackIndex();
-
-        ListInterface<Order> unOrderList = deliveryOrder;
+        //int count = customOrder.getBackIndex();
+        ListInterface<CatalogOrders> unOrderList = deliveryOrder;
 
         QueueInterface<CustomizedPackage> searchQueue = new ArrayQueue<>();
 
@@ -137,20 +149,19 @@ public class Delivery {
             }
         }
 
-        for (int i = -1; i < count; i++) {
-
-            CustomizedPackage tempCustomOrder = customOrder.dequeue();
-            CuslistCal.setTime(tempCustomOrder.getDeliveryDate());
-
-            day = CuslistCal.get(Calendar.DAY_OF_MONTH);
-            month = CuslistCal.get(Calendar.MONTH) + 1;
-            year = CuslistCal.get(Calendar.YEAR);
-
-            if (day == userDay && month == userMonth && year == userYear && tempCustomOrder.getDeliveryType().equals("Delivery")) {
-                searchQueue.enqueue(tempCustomOrder);
-            }
-        }
-
+//        for (int i = -1; i < count; i++) {
+//
+//            CustomizedPackage tempCustomOrder = customOrder.dequeue();
+//            CuslistCal.setTime(tempCustomOrder.getDeliveryDate());
+//
+//            day = CuslistCal.get(Calendar.DAY_OF_MONTH);
+//            month = CuslistCal.get(Calendar.MONTH) + 1;
+//            year = CuslistCal.get(Calendar.YEAR);
+//
+//            if (day == userDay && month == userMonth && year == userYear && tempCustomOrder.getDeliveryType().equals("Delivery")) {
+//                searchQueue.enqueue(tempCustomOrder);
+//            }
+//        }
         for (int i = 1; i < sortedList.getTotalEntries() - 1; i++) {
             int index = i;
             for (int j = i; j <= sortedList.getTotalEntries(); j++) {
@@ -163,13 +174,12 @@ public class Delivery {
             sortedList.replace(i, smallerOrder);
         }
 
-        displaySortedDelivery(sortedList, searchQueue);
+        displaySortedDelivery(sortedList);
 
     }
 
-    public static void displaySortedDelivery(ListInterface<Order> orderedList, QueueInterface<CustomizedPackage> customOrder) {
+    public static void displaySortedDelivery(LinkedList<Order> orderedList) {
 
-        QueueInterface<CustomizedPackage> showQueue = new ArrayQueue<>();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         DateFormat dt = new SimpleDateFormat("HH:mm");
 
@@ -217,33 +227,28 @@ public class Delivery {
         System.out.println("\nCustomized Package");
         System.out.println("=======================================================");
 
-        if (!customOrder.isEmpty()) {
-            for (int i = -1; i <= customOrder.getBackIndex(); i++) {
-                CustomizedPackage order = customOrder.dequeue();
-                if (order.getDeliveryType().getName().equals("Deliver")) {
-                    System.out.println("Order ID: " + order.getOrderID());
-                    System.out.println("Consumer name: " + order.getUser().getUsername());
-                    System.out.println("Contact: " + order.getUser().getPhone());
-                    System.out.println("Delivery date: " + order.getDeliveryDateString() + "\n");
-                    showQueue.enqueue(order);
-                }
-            }
-        } else {
-            System.out.println(FioreFlowershop.ConsoleColors.RED + "No record found!");
-        }
-
+//        if (!customOrder.isEmpty()) {
+//            for (int i = -1; i <= customOrder.getBackIndex(); i++) {
+//                CustomizedPackage order = customOrder.dequeue();
+//                if (order.getDeliveryType().getName().equals("Deliver")) {
+//                    System.out.println("Order ID: " + order.getOrderID());
+//                    System.out.println("Consumer name: " + order.getUser().getUsername());
+//                    System.out.println("Contact: " + order.getUser().getPhone());
+//                    System.out.println("Delivery date: " + order.getDeliveryDateString() + "\n");
+//                    showQueue.enqueue(order);
+//                }
+//            }
+//        } else {
+//            System.out.println(FioreFlowershop.ConsoleColors.RED + "No record found!");
+//        }
     }
 
-    public static void sortRouteDelivery(LinkedList<Order> deliveryOrder, QueueInterface<CustomizedPackage> customizeOrder, String shopAddress) throws ApiException, InterruptedException, IOException {
+    public static void sortRouteDelivery(LinkedList<CatalogOrders> deliveryOrder, LinkedList<CustomizedPackage> customizeOrder, String shopAddress) throws ApiException, InterruptedException, IOException {
         LinkedList<Order> sortedList = new LinkedList<>();
 
-        QueueInterface<CustomizedPackage> customOrder = customizeOrder;
+        LinkedList<CustomizedPackage> customOrder = customizeOrder;
 
-        LinkedList<Order> unOrderList = deliveryOrder;
-
-        int count = customOrder.getBackIndex();
-
-        QueueInterface<CustomizedPackage> searchQueue = new ArrayQueue<>();
+        LinkedList<CatalogOrders> unOrderList = deliveryOrder;
 
         Calendar cal = Calendar.getInstance();
         Calendar listCal = Calendar.getInstance();
@@ -269,24 +274,35 @@ public class Delivery {
             }
         }
 
-        for (int i = -1; i < count; i++) {
+        for (int j = 1; j <= customOrder.getTotalEntries(); j++) {
+            listCal.setTime(customOrder.getItem(j).getOrderDate());
 
-            CustomizedPackage tempCustomOrder = customOrder.dequeue();
-            CuslistCal.setTime(tempCustomOrder.getDeliveryDate());
-
-            day = CuslistCal.get(Calendar.DAY_OF_MONTH);
-            month = CuslistCal.get(Calendar.MONTH) + 1;
-            year = CuslistCal.get(Calendar.YEAR);
+            day = listCal.get(Calendar.DAY_OF_MONTH);
+            month = listCal.get(Calendar.MONTH) + 1;
+            year = listCal.get(Calendar.YEAR);
 
             if (day == userDay && month == userMonth && year == userYear) {
-                searchQueue.enqueue(tempCustomOrder);
+                sortedList.add(customOrder.getItem(j));
             }
         }
 
-        sortRoute(sortedList, searchQueue, shopAddress);
+//        for (int i = -1; i < count; i++) {
+//
+//            CustomizedPackage tempCustomOrder = customOrder.dequeue();
+//            CuslistCal.setTime(tempCustomOrder.getDeliveryDate());
+//
+//            day = CuslistCal.get(Calendar.DAY_OF_MONTH);
+//            month = CuslistCal.get(Calendar.MONTH) + 1;
+//            year = CuslistCal.get(Calendar.YEAR);
+//
+//            if (day == userDay && month == userMonth && year == userYear) {
+//                searchQueue.enqueue(tempCustomOrder);
+//            }
+//        }
+        sortRoute(sortedList, shopAddress);
     }
 
-    public static void sortRoute(LinkedList<Order> sortedList, QueueInterface<CustomizedPackage> searchQueue, String shopAddress) throws ApiException, InterruptedException, IOException {
+    public static void sortRoute(LinkedList<Order> sortedList, String shopAddress) throws ApiException, InterruptedException, IOException {
 
         Date date = new Date();
         TSPSolver solver;
@@ -297,10 +313,9 @@ public class Delivery {
             dest.add(sortedList.getItem(i));
         }
 
-        while (!searchQueue.isEmpty()) {
-            dest.add(dest.getTotalEntries(), searchQueue.dequeue());
-        }
-
+//        while (!searchQueue.isEmpty()) {
+//            dest.add(dest.getTotalEntries(), searchQueue.dequeue());
+//        }
         try {
             solver = DeliveryOptimization.distanceMatrix(shopAddress, dest);
             displaySortRoute(solver, dest, shopAddress);

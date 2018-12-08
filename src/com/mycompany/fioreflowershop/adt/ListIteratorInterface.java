@@ -13,5 +13,5 @@ import java.util.Iterator;
  */
 public interface ListIteratorInterface<T> extends ListInterface<T> {
 
-    public Iterator<T> getIterator();
+   
 }
