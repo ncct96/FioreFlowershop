@@ -28,7 +28,7 @@ public class InvoicePayment {
     private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     private static InvoiceHistory ih;
     private static ListInterface<InvoiceHistory> paymentHistory = new LinkedList<>();
-    private static int invoiceNumber = 1000;
+    private static int invoiceNumber = 100;
     
     public static void invoiceMaintenance(){//Selection of menus
         
@@ -36,7 +36,7 @@ public class InvoicePayment {
         System.out.println("[1] Make Corporate Customer Invoice Payment.");
         System.out.println("[2] Generate Invoice Payment for Corporate Customer.");
         System.out.println("[3] View Paid Invoice History");
-        System.out.println("[3] Back to Main Menu.");
+        System.out.println("[4] Back to Main Menu.");
         
         try{
             int invoiceChoice = s.nextInt(); s.nextLine();
@@ -45,12 +45,39 @@ public class InvoicePayment {
                 case 2:generateInvoiceP1();break; 
                 case 3:viewPaymentHistory1();break;
                 case 4:FioreFlowershop.counterStaff();break;
+                case 5:receipt();break;
             }
         }catch (Exception e){
             System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"An Error had occurred. Please Enter The Numbers Stated"+FioreFlowershop.ConsoleColors.RESET);
             System.out.println(FioreFlowershop.ConsoleColors.BLUE+"\nRedirecting Back to Invoice Maintenance Menu......" + FioreFlowershop.ConsoleColors.RESET);
             invoiceMaintenance();
         }
+    }
+    
+    public static void receipt(){
+        System.out.println("\n\t\t   Fiore Flowershop SDN.NHD ");
+        System.out.println("\t\t    2404 Aaron Smith Drive");
+        System.out.println("\t\t 2404 Pennsylvania, 17404 York");
+        
+        System.out.println("\nID : [SAMPLE ID HERE]");
+        System.out.println("Date : [TODAY DATE]");
+        System.out.println("Cashier : Admin");
+        System.out.println("Time : [TIME FOR PAYMENT]");
+        System.out.println("=================================================================");
+        System.out.println("ITEM \t\t\t QUANTITY \t PRICE \t\t AMOUNT");
+        System.out.println("=================================================================");
+        
+        /*ITEM SOLD LISTING GOES HERE*/
+        
+        System.out.println("\n-----------------------------------------------------------------");
+        System.out.println("\tTOTAL : \t    5 \t\t\t\t 300.00");
+        System.out.println("-----------------------------------------------------------------");
+        System.out.println("CASH : \t\t\t\t\t300.00");
+        System.out.println("CASH TENDERED : \t\t\t500.00");
+        System.out.println("BALANCE : \t\t\t\t200.00");
+        System.out.println("\n=================================================================");
+        System.out.println("Thank You For Choosing Fiore Flowershop, Please Come Again :D");
+        System.out.println("=================================================================");
     }
     
     public static void viewPaymentHistory1(){
@@ -96,19 +123,11 @@ public class InvoicePayment {
             System.out.println(FioreFlowershop.ConsoleColors.RED+"\nSorry, No Records Found !"+FioreFlowershop.ConsoleColors.RESET);
             invoiceMaintenance();
         }
-        
-        
-//        if(usern.equals(FioreFlowershop.getShoppingCart().getItem(i).getUser().getEmail())){
-//                        
-//        }else{//No duplicate user is found
-//            System.out.println(FioreFlowershop.ConsoleColors.BLUE + "[" + i + "] " + FioreFlowershop.ConsoleColors.RESET
-//            + FioreFlowershop.getShoppingCart().getItem(i).getUser().getEmail());
-//            usern = FioreFlowershop.getShoppingCart().getItem(i).getUser().getEmail();
-//        }
     }
     
     public static void viewPaymentHistory2(InvoiceHistory ih, String invoiceID){
-        System.out.println("=================================================================================================");
+        double discountPrice = 0; double totalPrice = 0;
+        System.out.println("\n=================================================================================================");
         System.out.println("\nFiore Flowershop SDN.BHD \t\t\t\t\t\t"+ FioreFlowershop.ConsoleColors.BLACK_BOLD +" INVOICE");
         System.out.println("\nQ-5-1, Desa Permai Indah \t\t\t\t\t\t"+" STATUS : PAID");
         System.out.println("Bandar Gelugor, 11700 Pulau Pinang \t\t\t\t\t" + "INVOICE #["+invoiceID+"]");
@@ -131,8 +150,19 @@ public class InvoicePayment {
                         + paymentHistory.getItem(i).getCatalogOrder().getCatalogPack().getDiscountRate()+ "\t    |\t" 
                         + paymentHistory.getItem(i).getCatalogOrder().getCatalogPack().getPrice() + " \t     |   " 
                         + paymentHistory.getItem(i).getCatalogOrder().getCatalogPack().getPrice()*paymentHistory.getItem(i).getCatalogOrder().getItemQuantity());
+                totalPrice += paymentHistory.getItem(i).getCatalogOrder().getCatalogPack().getPrice()*paymentHistory.getItem(i).getCatalogOrder().getItemQuantity();
+                if(FioreFlowershop.getShoppingCart().getItem(i).getCatalogPack().getDiscountRate() != 0){
+                    discountPrice += (paymentHistory.getItem(i).getCatalogOrder().getCatalogPack().getPrice()*paymentHistory.getItem(i).getCatalogOrder().getItemQuantity()
+                                * paymentHistory.getItem(i).getCatalogOrder().getCatalogPack().getDiscountRate()) / 100;
+                }
             }
         }
+                System.out.println("\n\n\t\t\t\t\t\t\t\t\t Subtotal :\t\t\t " + totalPrice);
+                System.out.println("\t\t\t\t\t\t\t\t\t Discount :\t\t\t  " + discountPrice);
+                System.out.println("\t\t\t\t\t\t\t\t\t =========================================");
+                System.out.println("\t\t\t\t\t\t\t\t\t BALANCE DUE :\t\t\t "+ (totalPrice-discountPrice));
+                System.out.println("\n");
+        invoiceMaintenance();
     }
     
     public static void generateInvoiceP1(){
@@ -225,7 +255,7 @@ public class InvoicePayment {
                     totalPrice += FioreFlowershop.getShoppingCart().getItem(i).getCatalogPack().getPrice()*FioreFlowershop.getShoppingCart().getItem(i).getItemQuantity();
                     if(FioreFlowershop.getShoppingCart().getItem(i).getCatalogPack().getDiscountRate() != 0){
                         discountPrice += (FioreFlowershop.getShoppingCart().getItem(i).getCatalogPack().getPrice()*FioreFlowershop.getShoppingCart().getItem(i).getItemQuantity()
-                                * FioreFlowershop.getShoppingCart().getItem(i).getCatalogPack().getDiscountRate()) / 100; 
+                                * FioreFlowershop.getShoppingCart().getItem(i).getCatalogPack().getDiscountRate()) / 100;
                     }
                 }
             }
@@ -295,35 +325,7 @@ public class InvoicePayment {
                 
         }
     }else {System.out.println(FioreFlowershop.ConsoleColors.BLUE+ "\nWow, Much Empty for This Flower Shop" + FioreFlowershop.ConsoleColors.RESET);}
-        
-        //System.out.println("\nPlease Select The Corporate Customer for to make their payment.");
-//        if(FioreFlowershop.getShoppingCart() != null){
-//            for (int i = 1; i <= FioreFlowershop.getShoppingCart().getTotalEntries() ;i++){
-//                //Loop the corporate customer that had not paid
-//                if(FioreFlowershop.getShoppingCart().getItem(i).getCorporate()!= null && !FioreFlowershop.getShoppingCart().getItem(i).getPaymentStat()){
-//                    //If duplicate user is found, do nothing
-//                    if(usern.equals(FioreFlowershop.getShoppingCart().getItem(i).getCorporate().getEmail())){
-//                        
-//                    }else{//No duplicate user is found
-//                        System.out.println(FioreFlowershop.ConsoleColors.BLUE + "[" + i + "]" + FioreFlowershop.ConsoleColors.RESET
-//                        + FioreFlowershop.getShoppingCart().getItem(i).getCorporate().getEmail());
-//                        usern = FioreFlowershop.getShoppingCart().getItem(i).getCorporate().getEmail();
-//                    }
-//                }else {
-//                    status = false;
-//                }
-//            }
-//            if(!status){//Error message when no records found
-//                System.out.println(FioreFlowershop.ConsoleColors.RED+"Sorry, No Records Found !"+FioreFlowershop.ConsoleColors.RESET);
-//            }else{
-//                System.out.print("\nPlease Enter The Number Listed : "); 
-//                int corporateChoice = s.nextInt();//Get the corporate customer choice of the user
-//                //Get the email of the selected user
-//                String corporateEmail = FioreFlowershop.getShoppingCart().getItem(corporateChoice).getCorporate().getEmail();
-//                invoicePaymentP2(FioreFlowershop.getShoppingCart().getItem(corporateChoice), corporateEmail);
-//            }
-//        } 
-    }
+}
     
     public static void invoicePaymentP2(User user){//Part 2 of invoice payment
         double affordable = 0; double totalPrice = 0; double discountPrice = 0; int credit = 0;

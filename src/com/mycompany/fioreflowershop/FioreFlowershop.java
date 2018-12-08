@@ -345,7 +345,6 @@ public class FioreFlowershop {
         System.out.println("[3] Consumer Payment Management");
         System.out.println("[4] View Sales Order");
         System.out.println("[5] Back");
-        System.out.print("Enter your option: ");
 
         try {
             int counterStaffChoice = s.nextInt(); s.nextLine();
