@@ -5,6 +5,8 @@
  */
 package com.mycompany.fioreflowershop;
 
+import static com.mycompany.fioreflowershop.FioreFlowershop.florist;
+import static com.mycompany.fioreflowershop.FioreFlowershop.inventoryClerk;
 import com.mycompany.fioreflowershop.modal.*;
 import com.mycompany.fioreflowershop.adt.*;
 import java.util.InputMismatchException;
@@ -258,19 +260,25 @@ public class CustomizePackage {
     }
 
     public static void itemsMenu(ItemCatalogue itemCatalogue, QueueInterface<CustomizedPackage> customizedPackages) {
-        System.out.println("What do you wish to do?");
-        System.out.println(ANSI_GREEN + "[1] " + ANSI_RESET + "Update Stock Quantity");
-        System.out.println(ANSI_GREEN + "[2] " + ANSI_RESET + "Add New Items");
-        System.out.println(ANSI_GREEN + "[3] " + ANSI_RESET + "Delete Items");
-        Scanner scan = new Scanner(System.in);
-        int selection = scan.nextInt();
-
-        if (selection == 1) {
-            updateStock(itemCatalogue);
-        } else if (selection == 2) {
-            addItems(itemCatalogue);
-        } else {
-            deleteItems(itemCatalogue);
+        while (true) {
+            System.out.println("What do you wish to do?");
+            System.out.println(ANSI_GREEN + "[1] " + ANSI_RESET + "Update Stock Quantity");
+            System.out.println(ANSI_GREEN + "[2] " + ANSI_RESET + "Add New Items");
+            System.out.println(ANSI_GREEN + "[3] " + ANSI_RESET + "Delete Items");
+            System.out.println(ANSI_GREEN + "[4] " + ANSI_RESET + "Return to previous menu");
+            Scanner scan = new Scanner(System.in);
+            int selection = scan.nextInt();
+            System.out.println();
+            
+            if (selection == 1) {
+                updateStock(itemCatalogue);
+            } else if (selection == 2) {
+                addItems(itemCatalogue);
+            } else if (selection == 3) {
+                deleteItems(itemCatalogue);
+            } else {
+                inventoryClerk();
+            }
         }
     }
 
@@ -284,7 +292,6 @@ public class CustomizePackage {
                     System.out.println("Select the type of customization item");
                     System.out.println(ANSI_GREEN + "[1] " + ANSI_RESET + "Flowers");
                     System.out.println(ANSI_GREEN + "[2] " + ANSI_RESET + "Accessories");
-                    System.out.println("===========================");
                     System.out.println(ANSI_GREEN + "[3] " + ANSI_RESET + "Return to previous menu");
                     selection = scan.nextInt();
                 } while (selection < 1 || selection > 3);
@@ -329,7 +336,7 @@ public class CustomizePackage {
         int selection, position, maxSize = 0;
         Item newItem = new Item();
         String type = "";
-        
+
         System.out.println("Select the type of item you wish to add");
         selection = selectItem();
 
@@ -386,8 +393,7 @@ public class CustomizePackage {
                     scan.next();
                 }
             }
-        }
-        else{
+        } else {
             newItem.setQuantity(0);
         }
 
@@ -411,7 +417,7 @@ public class CustomizePackage {
         }
 
         System.out.println("Item successfully added!");
-        
+
         if (selection == 1) {
             itemCatalogue.getStyles().add(position, newItem);
         } else if (selection == 2) {
@@ -425,25 +431,46 @@ public class CustomizePackage {
 
     public static void deleteItems(ItemCatalogue itemCatalogue) {
         Scanner scan = new Scanner(System.in);
-        int selection;
+        int selection, maxSize = 0, position = 0;
 
         selection = selectItem();
 
-        System.out.println("Select the type of item you wish to delete");
+        if (selection == 1) {
+            maxSize = itemCatalogue.getStyles().getTotalEntries();
+        } else if (selection == 2) {
+            maxSize = itemCatalogue.getSizes().getTotalEntries();
+        } else if (selection == 3) {
+            maxSize = itemCatalogue.getFlowers().getTotalEntries();
+        } else if (selection == 4) {
+            maxSize = itemCatalogue.getAccessories().getTotalEntries();
+        }
+        System.out.println("Select the item to be deleted");
         printItem(itemCatalogue, selection);
-        System.out.println(ANSI_GREEN + "[0]" + ANSI_RESET + " CANCEL");
 
         while (true) {
             try {
                 do {
-                    System.out.print("Item no: ");
-                    selection = scan.nextInt();
-                } while (selection < 0 || selection > itemCatalogue.getAccessories().getTotalEntries());
+                    System.out.println(ANSI_RED + "Please note this action is final and cannot be undone" + ANSI_RESET);
+                    System.out.print("Delete item no: ");
+                    position = scan.nextInt();
+                } while (position < 1 || position > maxSize);
                 break;
             } catch (InputMismatchException e) {
                 System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
                 scan.next();
             }
+        }
+
+        System.out.println("Item Successfully deleted!\n");
+
+        if (selection == 1) {
+            itemCatalogue.getStyles().remove(position);
+        } else if (selection == 2) {
+            itemCatalogue.getSizes().remove(position);
+        } else if (selection == 3) {
+            itemCatalogue.getFlowers().remove(position);
+        } else if (selection == 4) {
+            itemCatalogue.getAccessories().remove(position);
         }
     }
 
@@ -485,7 +512,6 @@ public class CustomizePackage {
                     System.out.println(ANSI_GREEN + "[2] " + ANSI_RESET + "Arrangement Sizes");
                     System.out.println(ANSI_GREEN + "[3] " + ANSI_RESET + "Flowers");
                     System.out.println(ANSI_GREEN + "[4] " + ANSI_RESET + "Accessories");
-                    System.out.println("===========================");
                     System.out.println(ANSI_GREEN + "[5] " + ANSI_RESET + "Return to previous menu");
                     selection = scan.nextInt();
                 } while (selection < 1 || selection > 5);
@@ -495,7 +521,7 @@ public class CustomizePackage {
                 scan.next();
             }
         }
-
+        System.out.println();
         return selection;
     }
 
@@ -531,7 +557,7 @@ public class CustomizePackage {
                         break;
                     }
                 } else {
-                    break;
+                    florist();
                 }
             }
         }
