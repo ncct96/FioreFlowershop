@@ -6,7 +6,6 @@
 package com.mycompany.fioreflowershop;
 
 import com.mycompany.fioreflowershop.modal.CatalogPackage;
-import com.mycompany.fioreflowershop.adt.ArrayList;
 import com.mycompany.fioreflowershop.adt.LinkedList;
 import java.util.Calendar;
 import java.util.Scanner;

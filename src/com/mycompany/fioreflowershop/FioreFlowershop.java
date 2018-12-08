@@ -25,9 +25,9 @@ import java.util.logging.Logger;
 public class FioreFlowershop {
 
     // Lines 95 - 98, 154-158
-    private static ListInterface<Consumer> consumer = new ArrayList<>();
-    private static ListInterface<CorporateCustomer> corporate = new ArrayList<>();
-    private static ListInterface<User> user = new ArrayList<>();
+    private static LinkedList<Consumer> consumer = new LinkedList<>();
+    private static LinkedList<CorporateCustomer> corporate = new LinkedList<>();
+    private static LinkedList<User> user = new LinkedList<>();
     private static LinkedList<Order> pickupOrder = new LinkedList<Order>();
     private static LinkedList<Order> deliveryOrder = new LinkedList<Order>();
     private static LinkedList<Order> paidOrder = new LinkedList<Order>();
@@ -35,13 +35,14 @@ public class FioreFlowershop {
 
     private static ItemCatalogue itemCatalogue = new ItemCatalogue();
     private static QueueInterface<CustomizedPackage> customizedPackages = new ArrayQueue<>();
-    private static ListIteratorInterface<CustomizedPackage> readyOrders = new LinkedList<>();
+    private static LinkedList<CustomizedPackage> readyOrders = new LinkedList<>();
     
     //Catalog Maintenance part
     private static LinkedList<CatalogPackage> normalPackage = new LinkedList<>();
     private static LinkedList<CatalogPackage> discountedPackage = new LinkedList<>();
 
     private static LinkedList<CatalogOrders> shoppingCart = new LinkedList<>();
+    private static LinkedList<CatalogOrders> catalogOrder = new LinkedList<>();
     private static String[] origin = {"Taiping", "Penang", "Cheras", "Johor"};
     private static String[] dest = {"Taiping", "Penang", "Cheras", "Johor"};
     private static final String shopAddress = "Taiping";
@@ -53,7 +54,7 @@ public class FioreFlowershop {
         ++firstrun;
 
         if (firstrun == 1) {
-            CatalogOrder.initializeData(pickupOrder, deliveryOrder);
+            CatalogOrder.initializeData(catalogOrder, readyOrders);
             initializePackages();
         }
         testing();
@@ -94,12 +95,12 @@ public class FioreFlowershop {
         CatalogPackage cp2 = new CatalogPackage("FlowerWeak", "Colourful", "Medium", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10);
         CatalogPackage cp3 = new CatalogPackage("FlowerMedium", "Elegant", "Large", "Sunflower", "Belt", "Product Type", "11", 2018, 15, 40, 5);
         
-        CatalogOrders ct1 = new CatalogOrders("C", cp1, 4, 20, "Delivery", todayDate, cc1, "Order Status", 200, false, todayDate);
-        CatalogOrders ct2 = new CatalogOrders("C",cp2 , 5, 10, "Delivery", todayDate, cc1, "Order Status", 300, false, todayDate);
+        CatalogOrders ct1 = new CatalogOrders("C", cp1, 4, 20, "Delivery", todayDate, cc1, "Order Status", 200, false, todayDate, todayDate);
+        CatalogOrders ct2 = new CatalogOrders("C",cp2 , 5, 10, "Delivery", todayDate, cc1, "Order Status", 300, false, todayDate, todayDate);
         
-        CatalogOrders ct3 = new CatalogOrders("C",cp1 , 4, 20, "Delivery", todayDate, cc2, "Order Status", 200, false, todayDate);
-        CatalogOrders ct4 = new CatalogOrders("C",cp2 , 5, 10, "Delivery", todayDate, cc2, "Order Status", 300, false, todayDate);
-        CatalogOrders ct5 = new CatalogOrders("C",cp3 , 6, 15, "Delivery", todayDate, cc2, "Order Status", 250, false, todayDate);
+        CatalogOrders ct3 = new CatalogOrders("C",cp1 , 4, 20, "Delivery", todayDate, cc2, "Order Status", 200, false, todayDate, todayDate);
+        CatalogOrders ct4 = new CatalogOrders("C",cp2 , 5, 10, "Delivery", todayDate, cc2, "Order Status", 300, false, todayDate, todayDate);
+        CatalogOrders ct5 = new CatalogOrders("C",cp3 , 6, 15, "Delivery", todayDate, cc2, "Order Status", 250, false, todayDate, todayDate);
         shoppingCart.add(ct1);
         shoppingCart.add(ct2);
         
@@ -180,9 +181,9 @@ public class FioreFlowershop {
         //Zion part need change since tutor told me use one array so my multiple array is gone
 
         if (corporateLoggedIn == null) {
-            CatalogOrder.CustomerOrderMain(shoppingCart, customerLoggedIn, normalPackage, discountedPackage);
+            CatalogOrder.CustomerOrderMain(shoppingCart, catalogOrder, customerLoggedIn, normalPackage, discountedPackage);
         } else if (customerLoggedIn == null) {
-            CatalogOrder.CorporateOrderMain(shoppingCart, corporateLoggedIn, normalPackage, discountedPackage);
+            CatalogOrder.CorporateOrderMain(shoppingCart, catalogOrder, corporateLoggedIn, normalPackage, discountedPackage);
         }
 
     }
@@ -409,7 +410,7 @@ public class FioreFlowershop {
             case 1:
             case 2:
             case 3:
-                Delivery.sortRouteDelivery(deliveryOrder, customizedPackages, shopAddress);
+                Delivery.sortRouteDelivery(catalogOrder, readyOrders, shopAddress);
                 try {
                     deliveryStaff();
 
@@ -495,7 +496,7 @@ public class FioreFlowershop {
             int deliveryChoice = s.nextInt(); 
 
             if (deliveryChoice == 1) {
-                Delivery.sortDeliveryOrder(deliveryOrder, customizedPackages);
+                Delivery.sortDeliveryOrder(catalogOrder, readyOrders);
             } else if (deliveryChoice == 2) {
                 try {
                     s.nextLine();
@@ -508,7 +509,7 @@ public class FioreFlowershop {
 
                     Date date = dateformat.parse(dateStr);
 
-                    Delivery.searchDelivery(deliveryOrder, date, customizedPackages);
+                    Delivery.searchDelivery(catalogOrder, date, readyOrders);
 
                 } catch (ParseException ex) {
                     Logger.getLogger(FioreFlowershop.class
@@ -533,7 +534,7 @@ public class FioreFlowershop {
         int deliveryChoice = s.nextInt(); 
 
         if (deliveryChoice == 1) {
-            Delivery.sortDeliveryOrder(deliveryOrder, customizedPackages);
+            Delivery.sortDeliveryOrder(catalogOrder, readyOrders);
             try {
                 deliveryStaff();
 
@@ -561,7 +562,7 @@ public class FioreFlowershop {
 
                 Date date = dateformat.parse(dateStr);
 
-                Delivery.searchDelivery(deliveryOrder, date, customizedPackages);
+                Delivery.searchDelivery(catalogOrder, date, readyOrders);
 
             } catch (ParseException ex) {
                 Logger.getLogger(FioreFlowershop.class
@@ -580,7 +581,7 @@ public class FioreFlowershop {
     }
 
     //GETTER SETTER FOR CORPORATE LIST
-    public static void setCorporate(ListInterface<CorporateCustomer> corporateCust) {
+    public static void setCorporate(LinkedList<CorporateCustomer> corporateCust) {
         corporate = corporateCust;
     }
 
@@ -595,6 +596,10 @@ public class FioreFlowershop {
     public static LinkedList<CatalogOrders> getShoppingCart() {
         return shoppingCart;
 
+    }
+    
+    public static LinkedList<CatalogOrders> getCatalogOrder(){
+        return catalogOrder;
     }
 
     public class ConsoleColors {
