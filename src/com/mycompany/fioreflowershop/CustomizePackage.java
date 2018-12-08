@@ -269,7 +269,7 @@ public class CustomizePackage {
             Scanner scan = new Scanner(System.in);
             int selection = scan.nextInt();
             System.out.println();
-            
+
             if (selection == 1) {
                 updateStock(itemCatalogue);
             } else if (selection == 2) {
@@ -334,98 +334,111 @@ public class CustomizePackage {
     public static void addItems(ItemCatalogue itemCatalogue) {
         Scanner scan = new Scanner(System.in);
         int selection, position, maxSize = 0;
-        Item newItem = new Item();
         String type = "";
 
-        System.out.println("Select the type of item you wish to add");
-        selection = selectItem();
+        while (true) {
+            Item newItem = new Item();
+            System.out.println("Select the type of item you wish to add");
+            selection = selectItem();
 
-        if (selection == 1) {
-            type = "arrangement style: ";
-            maxSize = itemCatalogue.getStyles().getTotalEntries();
-        } else if (selection == 2) {
-            type = "arrangement size: ";
-            maxSize = itemCatalogue.getSizes().getTotalEntries();
-        } else if (selection == 3) {
-            type = "flower: ";
-            maxSize = itemCatalogue.getFlowers().getTotalEntries();
-        } else if (selection == 4) {
-            type = "accessory: ";
-            maxSize = itemCatalogue.getAccessories().getTotalEntries();
-        }
-        System.out.print("Enter the name of the new " + type);
-        newItem.setName(scan.nextLine());
+            if (selection == 1) {
+                type = "arrangement style: ";
+                maxSize = itemCatalogue.getStyles().getTotalEntries();
+            } else if (selection == 2) {
+                type = "arrangement size: ";
+                maxSize = itemCatalogue.getSizes().getTotalEntries();
+            } else if (selection == 3) {
+                type = "flower: ";
+                maxSize = itemCatalogue.getFlowers().getTotalEntries();
+            } else if (selection == 4) {
+                type = "accessory: ";
+                maxSize = itemCatalogue.getAccessories().getTotalEntries();
+            }
+            System.out.print("Enter the name of the new " + type);
+            newItem.setName(scan.nextLine());
 
-        if (selection != 2) {
-            while (true) {
-                try {
-                    System.out.print("Enter the price of the " + type + "RM");
-                    newItem.setPrice(scan.nextDouble());
-                    break;
-                } catch (InputMismatchException e) {
-                    System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
-                    scan.next();
+            if (selection != 2) {
+                while (true) {
+                    try {
+                        System.out.print("Enter the price of the " + type + "RM");
+                        newItem.setPrice(scan.nextDouble());
+                        break;
+                    } catch (InputMismatchException e) {
+                        System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
+                        scan.next();
+                    }
+                }
+            } else {
+                while (true) {
+                    try {
+                        System.out.print("Enter the multiplier of the " + type);
+                        newItem.setPrice(scan.nextDouble());
+                        break;
+                    } catch (InputMismatchException e) {
+                        System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
+                        scan.next();
+                    }
                 }
             }
-        } else {
-            while (true) {
-                try {
-                    System.out.print("Enter the multiplier of the " + type);
-                    newItem.setPrice(scan.nextDouble());
-                    break;
-                } catch (InputMismatchException e) {
-                    System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
-                    scan.next();
-                }
-            }
-        }
 
-        if (selection != 1 && selection != 2) {
+            if (selection != 1 && selection != 2) {
+                while (true) {
+                    try {
+                        do {
+                            System.out.print("Enter the stock quantity: ");
+                            newItem.setQuantity(scan.nextInt());
+                        } while (newItem.getQuantity() < 0);
+                        break;
+                    } catch (InputMismatchException e) {
+                        System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
+                        scan.next();
+                    }
+                }
+            } else {
+                newItem.setQuantity(0);
+            }
+
+            System.out.println("Select the position to display the new item in the catalogue");
+            System.out.println("(If you select a position with an existing item, that item will be moved down one slot together with all proceeding items)");
+            System.out.println("=========================================================================================================================");
+            printItem(itemCatalogue, selection);
+            System.out.println(ANSI_GREEN + "[" + (itemCatalogue.getStyles().getTotalEntries() + 1) + "]" + ANSI_RESET + "[ NEW SLOT ]");
+
             while (true) {
                 try {
                     do {
-                        System.out.print("Enter the stock quantity: ");
-                        newItem.setQuantity(scan.nextInt());
-                    } while (newItem.getQuantity() < 0);
+                        System.out.print("Position: ");
+                        position = scan.nextInt();
+                    } while (position < 1 || position > maxSize + 1);
                     break;
                 } catch (InputMismatchException e) {
                     System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
                     scan.next();
                 }
             }
-        } else {
-            newItem.setQuantity(0);
-        }
 
-        System.out.println("Select the position to display the new item in the catalogue");
-        System.out.println("(If you select a position with an existing item, that item will be moved down one slot together with all proceeding items)");
-        System.out.println("=========================================================================================================================");
-        printItem(itemCatalogue, selection);
-        System.out.println(ANSI_GREEN + "[" + (itemCatalogue.getStyles().getTotalEntries() + 1) + "]" + ANSI_RESET + "[ NEW SLOT ]");
+            System.out.println("Item successfully added!");
 
-        while (true) {
-            try {
-                do {
-                    System.out.print("Position: ");
-                    position = scan.nextInt();
-                } while (position < 1 || position > maxSize + 1);
-                break;
-            } catch (InputMismatchException e) {
-                System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
-                scan.next();
+            if (selection == 1) {
+                itemCatalogue.getStyles().add(position, newItem);
+            } else if (selection == 2) {
+                itemCatalogue.getSizes().add(position, newItem);
+            } else if (selection == 3) {
+                itemCatalogue.getFlowers().add(position, newItem);
+            } else if (selection == 4) {
+                itemCatalogue.getAccessories().add(position, newItem);
             }
-        }
 
-        System.out.println("Item successfully added!");
+            do {
+                System.out.print("Add Another Item?" + ANSI_GREEN + "[Y/N]" + ANSI_RESET + " ");
+                selection = Character.toUpperCase(scan.next().charAt(0));
+                scan.nextLine();
+                System.out.println();
+            } while (selection != 'Y' && selection != 'N');
 
-        if (selection == 1) {
-            itemCatalogue.getStyles().add(position, newItem);
-        } else if (selection == 2) {
-            itemCatalogue.getSizes().add(position, newItem);
-        } else if (selection == 3) {
-            itemCatalogue.getFlowers().add(position, newItem);
-        } else if (selection == 4) {
-            itemCatalogue.getAccessories().add(position, newItem);
+            if (selection == 'N') {
+                florist();
+            }
         }
     }
 
