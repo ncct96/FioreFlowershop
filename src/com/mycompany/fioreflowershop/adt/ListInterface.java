@@ -5,6 +5,8 @@
  */
 package com.mycompany.fioreflowershop.adt;
 
+import java.util.Iterator;
+
 /**
  *
  * @author Nicholas
@@ -28,5 +30,7 @@ public interface ListInterface<T> {
     public boolean isEmpty();
 
     public boolean isFull();
+    
+     public Iterator<T> getIterator();
 
 }
