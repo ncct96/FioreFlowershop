@@ -358,8 +358,7 @@ public class CatalogOrder {
                     System.out.print("Do you wish to checkout? (Y/y = yes OR N/n = no)");
                     String checkout = scan.next();
 
-                    if (checkout.equalsIgnoreCase("Y")) {
-                        shoppingCart.clear();
+                    if (checkout.equalsIgnoreCase("Y")) {                        
                         checkoutStatus = true;
                         //Generate sales order for different customer
                         if (customer != null && corporate == null) {
@@ -398,7 +397,7 @@ public class CatalogOrder {
         for (int i = 1; i < shoppingCart.getTotalEntries() + 1; i++) {
             catalogOrder.add(new CatalogOrders(shoppingCart.getItem(i).getOrderID(), shoppingCart.getItem(i).getCatalogPack(), shoppingCart.getItem(i).getItemQuantity(), shoppingCart.getItem(i).getDiscountRate(), shoppingCart.getItem(i).getOrderType(), shoppingCart.getItem(i).getOrderDate(), shoppingCart.getItem(i).getUser(), shoppingCart.getItem(i).getOrderStatus(), shoppingCart.getItem(i).getOrderAmt(), paymentStatus, shoppingCart.getItem(i).getRetrieveDate(), shoppingCart.getItem(i).getRetrieveTime()));
         }
-        
+        shoppingCart.clear();
         CatalogOrders shopping = catalogOrder.getItem(1);
         
         System.out.printf("%s", catalogOrder.getItem(1).getCatalogPack().getName());
