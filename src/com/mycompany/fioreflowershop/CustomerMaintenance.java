@@ -92,7 +92,7 @@ public class CustomerMaintenance {
                 //When exception is found, print out the exception error message to customer.
                 System.out.println(e.toString());
             }
-        }
+        }//If the corporate credit spent exceeds or equals to the reminder range
         if(corporateLoggedIn instanceof CorporateCustomer && corporateLoggedIn.getCreditSpent() >= reminderRange){
             System.out.println(FioreFlowershop.ConsoleColors.RED_BOLD+"Your Credit Spent For this Month is close to reaching the limit"+FioreFlowershop.ConsoleColors.RESET);
             System.out.println(FioreFlowershop.ConsoleColors.RED_BOLD+"Your Credit Spent : "+String.format("%.0f", corporateLoggedIn.getCreditSpent())+FioreFlowershop.ConsoleColors.RESET);
