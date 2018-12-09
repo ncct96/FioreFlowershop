@@ -335,6 +335,7 @@ public class Pickup {
         LinkedList<Order> matchOrder = new LinkedList<>();
 
         Scanner s = new Scanner(System.in);
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         User user = null;
 
         // Get all CatalogOrder with Pick Up type
@@ -342,18 +343,20 @@ public class Pickup {
 
         while (iterator.hasNext()) {
             CatalogOrders order = iterator.next();
-            
-            if(order.getUser().getUsername().equals(userID)){
+
+            if (order.getUser().getUsername().equals(userID)) {
+                user = order.getUser();
                 matchOrder.add(order);
             }
         }
-        
+
         Iterator<CustomizedPackage> catalogIterator = customOrder.getIterator();
-        
+
         while (catalogIterator.hasNext()) {
             CustomizedPackage order = catalogIterator.next();
-            
-            if(order.getUser().getUsername().equals(userID)){
+
+            if (order.getUser().getUsername().equals(userID)) {
+                user = order.getUser();
                 matchOrder.add(order);
             }
         }
@@ -368,7 +371,7 @@ public class Pickup {
 
             System.out.println("Hi " + user.getUsername() + ",");
             System.out.println("These are your orders with pending payment");
-            System.out.println("|Order ID|\t\t|Order Type|\t\t|Order Date|\t\t|Company Name|\t\t|Payment Amount|\t\t|Payment Status|");
+            System.out.println("|No.|\t|Order ID|\t\t|Order Type|\t\t|Order Date|\t\t|Company Name|\t\t|Payment Amount|\t\t|Payment Status|");
             System.out.println("=======================================================================================");
 
             for (int i = 1; i <= matchOrder.getTotalEntries(); i++) {
@@ -377,89 +380,132 @@ public class Pickup {
                 if (user instanceof Consumer) {
 
                     if (order instanceof CatalogOrders) {
-                        System.out.print("Order ID: " + ((CatalogOrders)order).getOrderID());
-                        System.out.print("Order Type: " + order.getOrderType());
-                        System.out.print("Order Date: " + order.getOrderDate());
+                        System.out.println(i);
+                        System.out.print(((CatalogOrders) order).getOrderID());
+                        System.out.print(order.getOrderType());
+                        System.out.print(df.format(order.getOrderDate()));
                         //System.out.print("Username: " + order.getUser().getUsername());
                         //System.out.print("Contact: " + order.getUser().getPhone());
                         //System.out.print("Order Details: " + ((CatalogOrders) order).getCatalogPack());
-                        System.out.print("Total Amount: " + order.getOrderAmt());
+                        System.out.print(order.getOrderAmt());
                         //System.out.print("Quantity: " + ((CatalogOrders) order).getItemQuantity());
-                        System.out.print("Payment Status: " + order.isPaymentStatus());
+                        System.out.print(order.isPaymentStatus());
                     } else {
-                        System.out.print("Order ID: " + ((CustomizedPackage) order).getOrderID());
-                        System.out.print("Order Type: " + order.getOrderType());
-                        System.out.print("Order Date: " + order.getOrderDate());
-                        System.out.print("Username: " + order.getUser().getUsername());
-                        System.out.print("Contact: " + order.getUser().getPhone());
-                        System.out.print("Order Details: " + ((CustomizedPackage) order).getFlower());
-                        System.out.print("Total Amount: " + order.getOrderAmt());
-                        System.out.print("Quantity: " + ((CatalogOrders) order).getItemQuantity());
-                        System.out.print("Payment Status: " + order.isPaymentStatus());
+                        System.out.print(((CustomizedPackage) order).getOrderID());
+                        System.out.print(order.getOrderType());
+                        System.out.print(df.format(order.getOrderDate()));
+                        System.out.print(order.getUser().getUsername());
+                        System.out.print(order.getUser().getPhone());
+                        System.out.print(((CustomizedPackage) order).getFlower());
+                        System.out.print(order.getOrderAmt());
+                        System.out.print(((CatalogOrders) order).getItemQuantity());
+                        System.out.print(order.isPaymentStatus());
                     }
                 } else {
 
                     if (order instanceof CatalogOrders) {
-                        System.out.print("Order ID: " + ((CatalogOrders) order).getOrderID() + "\t\t");
-                        System.out.print("Order Type: " + order.getOrderType() + "\t\t");
-                        System.out.print("Order Date: " + order.getOrderDate() + "\t\t");
-                        System.out.print("Company Name: " + ((CorporateCustomer) user).getCompany() + "\t\t");
+                        System.out.println(i);
+                        System.out.print(((CatalogOrders) order).getOrderID() + "\t");
+                        System.out.print(order.getOrderType() + "\t");
+                        System.out.print(df.format(order.getOrderDate()) + "\t");
+                        System.out.print(((CorporateCustomer) user).getCompany() + "\t");
                         //System.out.println("Contact: " + matchOrder.getItem(1).getUser().getPhone());
                         //System.out.println("Order Details: " + ((CatalogOrders) order).getCatalogPack().toString());
-                        System.out.print("Total Amount: " + ((CatalogOrders) order).getOrderAmt() + "\t\t");
+                        System.out.print(((CatalogOrders) order).getOrderAmt() + "\t");
                         //System.out.println("Quantity: " + ((CatalogOrders) order).getItemQuantity());
-                        System.out.print("Payment Status: " + ((CatalogOrders) order).isPaymentStatus() + "\t\t");
+                        System.out.print(((CatalogOrders) order).isPaymentStatus() + "\t");
                         //System.out.println("Order Status: " + matchOrder.getItem(1).getOrderStatus());
                     } else {
-                        System.out.print("Order ID: " + ((CustomizedPackage) order).getOrderID() + "\t\t");
-                        System.out.print("Order Type: " + order.getOrderType() + "\t\t");
-                        System.out.print("Order Date: " + order.getOrderDate() + "\t\t");
-                        System.out.print("Company Name: " + ((CorporateCustomer) user).getCompany() + "\t\t");
+                        System.out.print(((CustomizedPackage) order).getOrderID() + "\t");
+                        System.out.print(order.getOrderType() + "\t");
+                        System.out.print(df.format(order.getOrderDate()) + "\t");
+                        System.out.print(((CorporateCustomer) user).getCompany() + "\t");
                         //System.out.println("Contact: " + matchOrder.getItem(1).getUser().getPhone());
                         //System.out.println("Order Details: " + ((CustomizedPackage) order).getFlower());
-                        System.out.print("Total Amount: " + ((CustomizedPackage) order).CalculateOrder() + "\t\t");
-                        System.out.print("Payment Status: " + ((CustomizedPackage) order).isPaymentStatus() + "\t\t");
+                        System.out.print(((CustomizedPackage) order).CalculateOrder() + "\t");
+                        System.out.print(((CustomizedPackage) order).isPaymentStatus() + "\t");
                         //System.out.println("Order Status: " + matchOrder.getItem(1).getOrderStatus());
                     }
                 }
             }
 
-            System.out.println("1. Pick Up & Pay");
+            System.out.println("\n\n1. Pick Up & Pay");
             System.out.println("2. Back");
             System.out.println("\n Your selection: ");
             int payChoice = s.nextInt();
 
-//            if (payChoice == 1) {
-//                System.out.println("Total Amount: " + matchOrder.getItem(1).getItemPrice());
-//                double payAmt, change;
-//
-//                do {
-//                    System.out.println("\n Enter amount to pay: ");
-//                    payAmt = s.nextDouble();
-//
-//                    if (payAmt < matchOrder.getItem(1).getItemPrice()) {
-//                        System.out.println("Insufficient amount, please reenter amount!");
-//
-//                    } else if (payAmt >= matchOrder.getItem(1).getItemPrice()) {
-//
-//                        change = payAmt - matchOrder.getItem(1).getItemPrice();
-//                        matchOrder.getItem(1).setPaymentStat(true);
-//                        matchOrder.getItem(1).setOrderStatus("Picked Up");
-//                        paidOrder.add(matchOrder);
-//
-//                        if (change == 0) {
-//                            System.out.println("Payment Change: No changes");
-//                        } else {
-//                            System.out.println("Payment Change: " + change);
-//                        }
-//                    }
-//                } while (payAmt < matchOrder.getItem(1).getItemPrice());
-//
-//            }
-            FioreFlowershop.counterStaff();
+            if (payChoice == 1) {
+                System.out.println("Select order to pick up & pay");
 
+                int orderChoice = s.nextInt();
+
+                System.out.println("Total Amount: " + matchOrder.getItem(orderChoice).getOrderAmt());
+                double payAmt, change = 0;
+
+                do {
+                    System.out.println("\n Enter amount to pay: ");
+                    payAmt = s.nextDouble();
+
+                    if (payAmt < matchOrder.getItem(orderChoice).getOrderAmt()) {
+                        System.out.println("Insufficient amount, please reenter amount!");
+
+                    } else if (payAmt >= matchOrder.getItem(orderChoice).getOrderAmt()) {
+
+                        change = payAmt - matchOrder.getItem(orderChoice).getOrderAmt();
+                        matchOrder.getItem(orderChoice).setPaymentStatus(true);
+                        matchOrder.getItem(orderChoice).setOrderStatus("Picked Up");
+                        paidOrder.add(matchOrder.getItem(orderChoice));
+
+                        if (change == 0) {
+                            System.out.println("Payment Change: No changes");
+                        } else {
+                            System.out.println("Payment Change: RM " + change);
+                        }
+
+                        matchOrder.getItem(orderChoice).setPaymentTime(new Date());
+
+                        genReceipt(matchOrder.getItem(orderChoice), payAmt, change);
+
+                    }
+                } while (payAmt < matchOrder.getItem(orderChoice).getOrderAmt());
+
+            } else {
+                FioreFlowershop.counterStaff();
+            }
         }
 
+    }
+
+    public static void genReceipt(Order order, double payAmt, double change) {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+        System.out.println("\n\t\t   Fiore Flowershop SDN.NHD ");
+        System.out.println("\t\t    2404 Aaron Smith Drive");
+        System.out.println("\t\t 2404 Pennsylvania, 17404 York");
+
+        System.out.println("\nID : " + order);
+        System.out.println("Payment Date : " + order.isPaymentStatus());
+        System.out.println("Cashier : Admin");
+        System.out.println("Payment Time : " + df.format(order.getPaymentTime()));
+        System.out.println("=================================================================");
+        System.out.println("ITEM \t\t\t QUANTITY \t PRICE \t\t AMOUNT");
+        System.out.println("=================================================================");
+        if (order instanceof CatalogOrders) {
+//            Ca
+//            for (int i = 0; i < ((CatalogOrders) order).getCatalogPack().; i++) {
+//                
+//            }
+        }
+        /*ITEM SOLD LISTING GOES HERE*/
+        System.out.println("\n-----------------------------------------------------------------");
+        System.out.println("\tTOTAL : \t    5 \t\t\t\t 300.00");
+        System.out.println("-----------------------------------------------------------------");
+        System.out.println("CASH : \t\t\t\t\t300.00");
+        System.out.println("CASH TENDERED : \t\t\t" + payAmt);
+        System.out.println("BALANCE : \t\t\t\t" + change);
+        System.out.println("\n=================================================================");
+        System.out.println("Thank You For Choosing Fiore Flowershop, Please Come Again :D");
+        System.out.println("=================================================================");
     }
 }
 

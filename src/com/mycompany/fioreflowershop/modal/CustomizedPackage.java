@@ -25,7 +25,7 @@ public class CustomizedPackage extends Order {
     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
     public CustomizedPackage(Item style, Item size, Item flower, Item accessory, Item priority, Item deliveryType, User user, boolean paymentStatus) {
-        super(paymentStatus,user);
+        super(paymentStatus, user);
         orderID = "CP" + orderNo;
         this.orderID = orderID;
         ++orderNo;
@@ -76,7 +76,7 @@ public class CustomizedPackage extends Order {
     public void setOrderDate(Date orderDate) {
         this.orderDate = df.format(orderDate);
     }
-    
+
     public Date getDeliverDate() {
         Date date = new Date();
         try {
@@ -197,5 +197,15 @@ public class CustomizedPackage extends Order {
         flower.minusQuantity();
         accessory.minusQuantity();
     }
+
+    public boolean isPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(boolean paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+    
+ 
 
 }

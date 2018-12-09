@@ -32,6 +32,8 @@ public class CatalogPackage implements Comparable<CatalogPackage>{
         this.price = price;
         this.discountRate = discountRate;
     }
+    
+    
 
     public String getName() {
         return name;
