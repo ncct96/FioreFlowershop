@@ -185,7 +185,7 @@ public class CustomerMaintenance {
     
     public static void sortEmailOrder(){ //For sorting of email of customer and corporate customer
         User user; 
-        if(FioreFlowershop.getUser() != null){
+        if(FioreFlowershop.getUser() != null){ //If the user list is not null
         for(int i = 1; i <= FioreFlowershop.getUser().getTotalEntries(); i++){
             for(int j = i + 1; j <= FioreFlowershop.getUser().getTotalEntries(); j++){
                 if(FioreFlowershop.getUser().getItem(i).getEmail().charAt(loop) == FioreFlowershop.getUser().getItem(j).getEmail().charAt(loop)){
