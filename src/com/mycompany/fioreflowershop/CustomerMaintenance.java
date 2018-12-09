@@ -29,7 +29,7 @@ public class CustomerMaintenance {
     //ListInterface<Consumer> customer, ListInterface<CorporateCustomer> corporate
     
     public static void customerOptions(){
-        double reminderRange = 0;
+        double reminderRange = 0; //Declared for assigning reminder range
         if(customerLoggedIn == null && corporateLoggedIn == null){//Disallow the user from gaining additional features
             System.out.println("\nPlease Login to Gain Access to More Features.");
             System.out.println("[1] Create New Account");
@@ -47,15 +47,7 @@ public class CustomerMaintenance {
                 customerOptions();
             }
             
-        }//Welcome message for when user logged in as valid user
-//        if(corporateLoggedIn.getCreditSpent()!= 0){
-//            if(corporateLoggedIn.getCreditSpent() >= corporateLoggedIn.getMonthlyLimit()){
-//                System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"Sorry, Your maximum spending limit has reached, please pay before making further orders."+FioreFlowershop.ConsoleColors.RESET);
-//                System.out.println("\n" + FioreFlowershop.ConsoleColors.BLUE + "Thanks For Your Patronage ! :D"+FioreFlowershop.ConsoleColors.RESET);
-//                corporateLoggedIn = null;
-//                FioreFlowershop.userTypeSelection();
-//            }
-//        }
+        }
         if(corporateLoggedIn != null){//If the customer is logged in
             reminderRange = corporateLoggedIn.getMonthlyLimit()*.9; //Get the monthly limit of customer, then multiplies it with 90%
             try{
@@ -92,7 +84,7 @@ public class CustomerMaintenance {
                 //When exception is found, print out the exception error message to customer.
                 System.out.println(e.toString());
             }
-        }
+        }//If the corporate credit spent exceeds or equals to the reminder range
         if(corporateLoggedIn instanceof CorporateCustomer && corporateLoggedIn.getCreditSpent() >= reminderRange){
             System.out.println(FioreFlowershop.ConsoleColors.RED_BOLD+"Your Credit Spent For this Month is close to reaching the limit"+FioreFlowershop.ConsoleColors.RESET);
             System.out.println(FioreFlowershop.ConsoleColors.RED_BOLD+"Your Credit Spent : "+String.format("%.0f", corporateLoggedIn.getCreditSpent())+FioreFlowershop.ConsoleColors.RESET);
@@ -189,6 +181,7 @@ public class CustomerMaintenance {
         for(int i = 1; i <= FioreFlowershop.getUser().getTotalEntries(); i++){
             for(int j = i + 1; j <= FioreFlowershop.getUser().getTotalEntries(); j++){
                 if(FioreFlowershop.getUser().getItem(i).getEmail().charAt(loop) == FioreFlowershop.getUser().getItem(j).getEmail().charAt(loop)){
+                    //If the character is the same value when compared, plus the loop, then call back the method.
                     loop++;
                     sortEmailOrder();
                 }else if(FioreFlowershop.getUser().getItem(i).getEmail().charAt(loop) > FioreFlowershop.getUser().getItem(j).getEmail().charAt(loop)){
@@ -197,6 +190,7 @@ public class CustomerMaintenance {
                     FioreFlowershop.getUser().replace(i, FioreFlowershop.getUser().getItem(j));
                     FioreFlowershop.getUser().replace(j, user);
                 }else if(FioreFlowershop.getUser().getItem(i).getEmail().charAt(loop) < FioreFlowershop.getUser().getItem(j).getEmail().charAt(loop)){
+                    //If the character is smaller than when compared, plus the size of I and J, to prevent infinity loop
                     i++; j++;
                     loop = 0;
                 }
