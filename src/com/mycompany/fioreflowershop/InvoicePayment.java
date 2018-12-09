@@ -89,7 +89,7 @@ public class InvoicePayment {
             for(int i = 1; i <= paymentHistory.getTotalEntries(); i++){//Get all available paid invoices, and display it 
                 if(invoiceID.equals(paymentHistory.getItem(i).getInvoiceNumber())){
                 //If duplicates of invoice ID is found, do nothing
-                }else{
+                }else{//If invoice ID is found, print out the id, then store the ID to another variable for checking for duplicates.
                     invoiceID = paymentHistory.getItem(i).getInvoiceNumber();
                     System.out.println(FioreFlowershop.ConsoleColors.BLUE+"["+count+"] " + FioreFlowershop.ConsoleColors.RESET
                     + invoiceID);
