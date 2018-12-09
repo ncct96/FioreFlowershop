@@ -109,11 +109,11 @@ public class InvoicePayment {
                 }
                 if(stat){//Pass to 2nd part of view paid invoice
                    viewPaymentHistory2(ih,enteredID); 
-                }else{
+                }else{//If invalid invoice number is entered, show error message
                     System.out.println(FioreFlowershop.ConsoleColors.RED+"\nPlease Enter A Valid Invoice Number, Try Again !"+FioreFlowershop.ConsoleColors.RESET);
                     invoiceMaintenance();
                 }
-            }catch(Exception e){
+            }catch(Exception e){//If invalid format for invoice number is entered, show error message
                 System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"An Error had occurred. Please enter the format as stated."+FioreFlowershop.ConsoleColors.RESET);
                 System.out.println(FioreFlowershop.ConsoleColors.BLUE+"\nRedirecting Back to Invoice Maintenance Menu......" + FioreFlowershop.ConsoleColors.RESET);
                 invoiceMaintenance();
