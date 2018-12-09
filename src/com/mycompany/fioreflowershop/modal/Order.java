@@ -40,8 +40,9 @@ public class Order {
         this.user = user;
     }
 
-    public Order(boolean paymentStatus) {
+    public Order(boolean paymentStatus, User user) {
         this.paymentStatus = paymentStatus;
+        this.user = user;
     }
 
     public String getOrderType() {

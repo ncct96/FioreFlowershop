@@ -25,7 +25,7 @@ public class CustomizedPackage extends Order {
     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
     public CustomizedPackage(Item style, Item size, Item flower, Item accessory, Item priority, Item deliveryType, User user, boolean paymentStatus) {
-        super(paymentStatus);
+        super(paymentStatus,user);
         orderID = "CP" + orderNo;
         this.orderID = orderID;
         ++orderNo;
@@ -44,7 +44,6 @@ public class CustomizedPackage extends Order {
         this.accessory = accessory;
         this.priority = priority;
         this.deliveryType = deliveryType;
-        this.user = user;
     }
 
     public CustomizedPackage() {
