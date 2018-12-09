@@ -145,15 +145,15 @@ public class InvoicePayment {
         for(int i = 1; i <= paymentHistory.getTotalEntries(); i++){
             if(paymentHistory.getItem(i).getInvoiceNumber().equals(invoiceID)){
                 System.out.println(sdf.format(paymentHistory.getItem(i).getCatalogOrder().getOrderDate())+"   | "
-                        + paymentHistory.getItem(i).getCatalogOrder().getCatalogPack().getName()+ "\t\t\t  | \t" 
-                        + paymentHistory.getItem(i).getCatalogOrder().getItemQuantity()+ "\t|\t" 
-                        + paymentHistory.getItem(i).getCatalogOrder().getCatalogPack().getDiscountRate()+ "\t    |\t" 
-                        + paymentHistory.getItem(i).getCatalogOrder().getCatalogPack().getPrice() + " \t     |   " 
-                        + paymentHistory.getItem(i).getCatalogOrder().getCatalogPack().getPrice()*paymentHistory.getItem(i).getCatalogOrder().getItemQuantity());
-                totalPrice += paymentHistory.getItem(i).getCatalogOrder().getCatalogPack().getPrice()*paymentHistory.getItem(i).getCatalogOrder().getItemQuantity();
-                if(FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getDiscountRate() != 0){
-                    discountPrice += (paymentHistory.getItem(i).getCatalogOrder().getCatalogPack().getPrice()*paymentHistory.getItem(i).getCatalogOrder().getItemQuantity()
-                                * paymentHistory.getItem(i).getCatalogOrder().getCatalogPack().getDiscountRate()) / 100;
+                        + paymentHistory.getItem(i).getCatalogOrder().getCatalogPack().getItem(i).getName()+ "\t\t\t  | \t" 
+                        + paymentHistory.getItem(i).getCatalogOrder().getCatalogPack().getItem(i).getUserQuantity()+ "\t|\t" 
+                        + paymentHistory.getItem(i).getCatalogOrder().getCatalogPack().getItem(i).getDiscountRate()+ "\t    |\t" 
+                        + paymentHistory.getItem(i).getCatalogOrder().getCatalogPack().getItem(i).getPrice() + " \t     |   " 
+                        + paymentHistory.getItem(i).getCatalogOrder().getCatalogPack().getItem(i).getPrice()*paymentHistory.getItem(i).getCatalogOrder().getCatalogPack().getItem(i).getUserQuantity());
+                totalPrice += paymentHistory.getItem(i).getCatalogOrder().getCatalogPack().getItem(i).getPrice()*paymentHistory.getItem(i).getCatalogOrder().getCatalogPack().getItem(i).getUserQuantity();
+                if(FioreFlowershop.getShoppingCart().getItem(i).getCatalogPack().getItem(i).getDiscountRate() != 0){
+                    discountPrice += (paymentHistory.getItem(i).getCatalogOrder().getCatalogPack().getItem(i).getPrice()*paymentHistory.getItem(i).getCatalogOrder().getCatalogPack().getItem(i).getUserQuantity()
+                                * paymentHistory.getItem(i).getCatalogOrder().getCatalogPack().getItem(i).getDiscountRate()) / 100;
                 }
             }
         }
@@ -247,15 +247,15 @@ public class InvoicePayment {
             System.out.println("===============================================================================================================");
             System.out.println("Date Ordered | Description \t\t\t  | Quantity    |  Discount Rate(%) | Unit Price(RM) |  Total(RM)");
 
-            for(int i = 1; i <= FioreFlowershop.getCatalogOrder().getTotalEntries() ;i++){
-                if(FioreFlowershop.getCatalogOrder().getItem(i).getUser().equals(user) && !FioreFlowershop.getCatalogOrder().getItem(i).isPaymentStatus()){
-                    System.out.println(sdf.format(FioreFlowershop.getCatalogOrder().getItem(i).getOrderDate())+"   | "+FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getName()+ "\t\t\t  | \t" + FioreFlowershop.getCatalogOrder().getItem(i).getItemQuantity()+ "\t|\t" 
-                    +FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getDiscountRate()+ "\t    |\t" + FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getPrice() + " \t     |   " + 
-                            FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getPrice()*FioreFlowershop.getCatalogOrder().getItem(i).getItemQuantity());
-                    totalPrice += FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getPrice()*FioreFlowershop.getCatalogOrder().getItem(i).getItemQuantity();
-                    if(FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getDiscountRate() != 0){
-                        discountPrice += (FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getPrice()*FioreFlowershop.getCatalogOrder().getItem(i).getItemQuantity()
-                                * FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getDiscountRate()) / 100;
+            for(int i = 1; i <= FioreFlowershop.getShoppingCart().getTotalEntries() ;i++){
+                if(FioreFlowershop.getShoppingCart().getItem(i).getUser().equals(user) && !FioreFlowershop.getShoppingCart().getItem(i).isPaymentStatus()){
+                    System.out.println(sdf.format(FioreFlowershop.getShoppingCart().getItem(i).getOrderDate())+"   | "+FioreFlowershop.getShoppingCart().getItem(i).getCatalogPack().getItem(i).getName()+ "\t\t\t  | \t" + FioreFlowershop.getShoppingCart().getItem(i).getCatalogPack().getItem(i).getUserQuantity()+ "\t|\t" 
+                    +FioreFlowershop.getShoppingCart().getItem(i).getCatalogPack().getItem(i).getDiscountRate()+ "\t    |\t" + FioreFlowershop.getShoppingCart().getItem(i).getCatalogPack().getItem(i).getPrice() + " \t     |   " + 
+                            FioreFlowershop.getShoppingCart().getItem(i).getCatalogPack().getItem(i).getPrice()*FioreFlowershop.getShoppingCart().getItem(i).getCatalogPack().getItem(i).getUserQuantity());
+                    totalPrice += FioreFlowershop.getShoppingCart().getItem(i).getCatalogPack().getItem(i).getPrice()*FioreFlowershop.getShoppingCart().getItem(i).getCatalogPack().getItem(i).getUserQuantity();
+                    if(FioreFlowershop.getShoppingCart().getItem(i).getCatalogPack().getItem(i).getDiscountRate() != 0){
+                        discountPrice += (FioreFlowershop.getShoppingCart().getItem(i).getCatalogPack().getItem(i).getPrice()*FioreFlowershop.getShoppingCart().getItem(i).getCatalogPack().getItem(i).getUserQuantity()
+                                * FioreFlowershop.getShoppingCart().getItem(i).getCatalogPack().getItem(i).getDiscountRate()) / 100;
                     }
                 }
             }
@@ -346,18 +346,18 @@ public class InvoicePayment {
             System.out.println("===============================================================================================================");
             System.out.println("Date Ordered | Description \t\t\t  | Quantity    |  Discount Rate(%) | Unit Price(RM) |  Total(RM)");
 
-            for(int i = 1; i <= FioreFlowershop.getCatalogOrder().getTotalEntries() ;i++){
-                if(FioreFlowershop.getCatalogOrder().getItem(i).getUser().equals(user) && !FioreFlowershop.getCatalogOrder().getItem(i).isPaymentStatus()){
-                    System.out.println(sdf.format(FioreFlowershop.getCatalogOrder().getItem(i).getOrderDate())+"   | "
-                            +FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getName()+ "\t\t\t  | \t" 
-                            + FioreFlowershop.getCatalogOrder().getItem(i).getItemQuantity()+ "\t|\t" 
-                    +FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getDiscountRate()+ "\t    |\t" 
-                            + FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getPrice() + " \t     |   " 
-                            +FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getPrice()*FioreFlowershop.getCatalogOrder().getItem(i).getItemQuantity());
-                    totalPrice += FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getPrice()*FioreFlowershop.getCatalogOrder().getItem(i).getItemQuantity();
-                    if(FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getDiscountRate() != 0){
-                        discountPrice += (FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getPrice()*FioreFlowershop.getCatalogOrder().getItem(i).getItemQuantity()
-                                * FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getDiscountRate()) / 100; 
+            for(int i = 1; i <= FioreFlowershop.getShoppingCart().getTotalEntries() ;i++){
+                if(FioreFlowershop.getShoppingCart().getItem(i).getUser().equals(user) && !FioreFlowershop.getShoppingCart().getItem(i).isPaymentStatus()){
+                    System.out.println(sdf.format(FioreFlowershop.getShoppingCart().getItem(i).getOrderDate())+"   | "
+                            +FioreFlowershop.getShoppingCart().getItem(i).getCatalogPack().getItem(i).getName()+ "\t\t\t  | \t" 
+                            + FioreFlowershop.getShoppingCart().getItem(i).getCatalogPack().getItem(i).getUserQuantity()+ "\t|\t" 
+                    +FioreFlowershop.getShoppingCart().getItem(i).getCatalogPack().getItem(i).getDiscountRate()+ "\t    |\t" 
+                            + FioreFlowershop.getShoppingCart().getItem(i).getCatalogPack().getItem(i).getPrice() + " \t     |   " 
+                            +FioreFlowershop.getShoppingCart().getItem(i).getCatalogPack().getItem(i).getPrice()*FioreFlowershop.getShoppingCart().getItem(i).getCatalogPack().getItem(i).getUserQuantity());
+                    totalPrice += FioreFlowershop.getShoppingCart().getItem(i).getCatalogPack().getItem(i).getPrice()*FioreFlowershop.getShoppingCart().getItem(i).getCatalogPack().getItem(i).getUserQuantity();
+                    if(FioreFlowershop.getShoppingCart().getItem(i).getCatalogPack().getItem(i).getDiscountRate() != 0){
+                        discountPrice += (FioreFlowershop.getShoppingCart().getItem(i).getCatalogPack().getItem(i).getPrice()*FioreFlowershop.getShoppingCart().getItem(i).getCatalogPack().getItem(i).getUserQuantity()
+                                * FioreFlowershop.getShoppingCart().getItem(i).getCatalogPack().getItem(i).getDiscountRate()) / 100; 
                     }
                 }
             }
