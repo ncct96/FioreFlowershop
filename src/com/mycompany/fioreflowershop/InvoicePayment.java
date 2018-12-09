@@ -43,7 +43,7 @@ public class InvoicePayment {
             switch(invoiceChoice){
                 case 1:invoicePaymentP1();break;
                 case 2:generateInvoiceP1();break; 
-                case 3:viewPaymentHistory1();break;
+                case 3:viewPaymentHistory1();break; 
                 case 4:FioreFlowershop.counterStaff();break;
                 case 5:receipt();break;
             }
@@ -54,7 +54,7 @@ public class InvoicePayment {
         }
     }
     
-    public static void receipt(){
+    public static void receipt(){//This is for nicholas
         System.out.println("\n\t\t   Fiore Flowershop SDN.NHD ");
         System.out.println("\t\t    2404 Aaron Smith Drive");
         System.out.println("\t\t 2404 Pennsylvania, 17404 York");
