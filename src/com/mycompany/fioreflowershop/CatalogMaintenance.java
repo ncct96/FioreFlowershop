@@ -13,7 +13,7 @@ import java.util.Scanner;
 /**
  *
  * @author Woo
- * comment for recommit since the branches name wrong
+ * comment for the restock branch
  */
 public class CatalogMaintenance {
 
