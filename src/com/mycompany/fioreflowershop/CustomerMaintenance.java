@@ -183,7 +183,7 @@ public class CustomerMaintenance {
         customerOptions();
     }
     
-    public static void sortEmailOrder(){
+    public static void sortEmailOrder(){ //For sorting of email of customer and corporate customer
         User user; 
         if(FioreFlowershop.getUser() != null){
         for(int i = 1; i <= FioreFlowershop.getUser().getTotalEntries(); i++){
