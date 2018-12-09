@@ -13,6 +13,7 @@ import com.mycompany.fioreflowershop.modal.Consumer;
 import com.mycompany.fioreflowershop.modal.CorporateCustomer;
 import com.mycompany.fioreflowershop.modal.Order;
 import com.mycompany.fioreflowershop.modal.CatalogOrders;
+import com.mycompany.fioreflowershop.modal.CustomizedPackage;
 import com.mycompany.fioreflowershop.modal.User;
 import java.util.Scanner;
 import java.util.Calendar;
@@ -358,8 +359,8 @@ public class CatalogOrder {
                     String checkout = scan.next();
 
                     if (checkout.equalsIgnoreCase("Y")) {
-                        shoppingCart.clear(); 
-                        
+                        shoppingCart.clear();
+
                         //Generate sales order for different customer
                         if (customer != null && corporate == null) {
                             salesOrder(catalogOrder.getItem(1), customer);
@@ -830,10 +831,19 @@ public class CatalogOrder {
 
     }
 
-    public static void initializeData(ListInterface pickupOrder, ListInterface deliveryOrder) {
+    public static void initializeData(LinkedList<CatalogOrders> catalogOrders, LinkedList<CustomizedPackage> customOrder) {
 
         Consumer con = new Consumer("Ncct96", "adgfafgjyaf", "ncct@gmail.com", "0128198471", "Ipoh");
         CorporateCustomer corp = new CorporateCustomer("Ah Hock", "sdgsjhd@gmail", "0165939123", "Penang", "211221", "TARUC", 5000, true);
+        Consumer con1 = new Consumer("ChenKang", "adgfafgjyaf", "chenkang@hotmail.com", "0165554313", "No 13");
+        Consumer con2 = new Consumer("Lim Sim", "ncct7777", "ncct7Z@gmail.com", "0185532123", "Cheras");
+        CorporateCustomer corp1 = new CorporateCustomer("David", "sdgsjhd@gmail", "058067843", "Cheras", "211221", "SUNWAY BERHAD", 5000, true);
+        CorporateCustomer corp2 = new CorporateCustomer("Louis Lim", "sdgsjhd@gmail", "058017323", "Pv 13 Condominium", "211221", "AEON BERHAD", 5000, true);
+        CorporateCustomer corp3 = new CorporateCustomer("Nancy Goh", "sdgsjhd@gmail", "058017323", "Pahang", "211221", "JUSCO BERHAD", 5000, true);
+        CorporateCustomer corp4 = new CorporateCustomer("Jacob", "sdgsjhd@gmail", "058017323", "Johor", "211221", "MOMO BERHAD", 5000, true);
+
+        
+        
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR, 2018);
         cal.set(Calendar.DAY_OF_MONTH, 13);
@@ -864,31 +874,6 @@ public class CatalogOrder {
         Calendar cal3 = Calendar.getInstance();
         cal3.setTime(new Date());
 
-        Date a = cal2.getTime();
-        Date b = cal2.getTime();
-        Date c = cal.getTime();
-        Date d = cal.getTime();
-        Date e = cal1.getTime();
-        Date f = cal3.getTime();
-
-//        Order order = new CatalogOrders("C0001", "Pickup", a, con, "Processed", 400.00, false, a);
-//        Order order2 = new CatalogOrders("C0001", "Pickup", b, corp, "Processed", 100.00, false, b);
-//        Order order3 = new CatalogOrders("C0002", "Pickup", c, corp, "Processed", 500.00, false, c);
-//        Order order4 = new CatalogOrders("C0003", "Pickup", d, corp, "Processed", 250.00, false, d);
-//        Order order5 = new CatalogOrders("C0004", "Pickup", e, corp, "Processed", 1450.00, false, e);
-//        Order order6 = new CatalogOrders("C0002", "Pickup", f, con, "Processed", 200.00, false, f);
-//        pickupOrder.add(order);
-//        pickupOrder.add(order2);
-//        pickupOrder.add(order3);
-//        pickupOrder.add(order4);
-//        pickupOrder.add(order5);
-//        pickupOrder.add(order6);
-        Consumer con1 = new Consumer("ChenKang", "adgfafgjyaf", "chenkang@hotmail.com", "0165554313", "No 13");
-        Consumer con2 = new Consumer("Lim Sim", "ncct7777", "ncct7Z@gmail.com", "0185532123", "Cheras");
-        CorporateCustomer corp1 = new CorporateCustomer("David", "sdgsjhd@gmail", "058067843", "Cheras", "211221", "SUNWAY BERHAD", 5000, true);
-        CorporateCustomer corp2 = new CorporateCustomer("Louis Lim", "sdgsjhd@gmail", "058017323", "Pv 13 Condominium", "211221", "AEON BERHAD", 5000, true);
-        CorporateCustomer corp3 = new CorporateCustomer("Nancy Goh", "sdgsjhd@gmail", "058017323", "Pahang", "211221", "JUSCO BERHAD", 5000, true);
-        CorporateCustomer corp4 = new CorporateCustomer("Jacob", "sdgsjhd@gmail", "058017323", "Johor", "211221", "MOMO BERHAD", 5000, true);
         Calendar cal4 = Calendar.getInstance();
         cal4.set(Calendar.YEAR, 2018);
         cal4.set(Calendar.DAY_OF_MONTH, 20);
@@ -919,26 +904,46 @@ public class CatalogOrder {
         Calendar cal7 = Calendar.getInstance();
         cal7.setTime(new Date());
 
-        Date g = cal4.getTime();
+        Calendar cal8 = Calendar.getInstance();
+        cal8.set(Calendar.YEAR, 2018);
+        cal8.set(Calendar.DAY_OF_MONTH, 10);
+        cal8.set(Calendar.MONTH, 11);
+        cal8.set(Calendar.HOUR_OF_DAY, 10);
+        cal8.set(Calendar.MINUTE, 30);
+        cal8.set(Calendar.SECOND, 0);
+        cal8.set(Calendar.MILLISECOND, 0);
+
+        Date a = cal2.getTime();
+        Date b = cal2.getTime();
+        Date c = cal.getTime();
+        Date d = cal.getTime();
+        Date e = cal1.getTime();
+        Date f = cal3.getTime();
+        Date g = cal7.getTime();
         Date h = cal4.getTime();
         Date i = cal6.getTime();
         Date j = cal7.getTime();
         Date k = cal7.getTime();
         Date l = cal5.getTime();
+        Date m = cal8.getTime();
 
-//        Order order7 = new Order("C0001", "Delivery", g, con1, "Processed", 20.00, false, f);
-//        Order order8 = new Order("CP0001", "Delivery", h, corp1, "Processed", 99.00, false, f);
-//        Order order9 = new Order("CP0002", "Delivery", j, corp2, "Processed", 100.00, false, f);
-//        Order order10 = new Order("CP0003", "Delivery", j, corp3, "Processed", 600.00, false, f);
-//        Order order11 = new Order("C0002", "Delivery", k, corp4, "Processed", 200.00, false, f);
-//        Order order12 = new Order("C0003", "Delivery", l, con1, "Processed", 210.00, false, f);
-//        Order order13 = new Order("C0004", "Delivery", j, con2, "Processed", 450.00, false, f);
-//        deliveryOrder.add(order7);
-//        deliveryOrder.add(order8);
-//        deliveryOrder.add(order9);
-//        deliveryOrder.add(order10);
-//        deliveryOrder.add(order11);
-//        deliveryOrder.add(order12);
-//        deliveryOrder.add(order13);
+//        CatalogOrders order1 = new CatalogOrders("C0001", "Pickup", a, con, "Processed", 400.00, false, a);
+//        CatalogOrders order2 = new CatalogOrders("C0001", "Pickup", b, corp, "Processed", 100.00, false, b);
+//        CatalogOrders order3 = new CatalogOrders("C0002", "Pickup", c, corp, "Processed", 500.00, false, c);
+//        CustomizedPackage order4 = new CustomizedPackage("CP0003", "Pickup", d, corp, "Processed", 250.00, false, m);
+//        CustomizedPackage order5 = new CustomizedPackage("C0004", "Pickup", e, corp, "Processed", 1450.00, false, e);
+//        CustomizedPackage order6 = new CustomizedPackage("C0002", "Pickup", f, con, "Processed", 200.00, false, m);
+//
+//
+//        CatalogOrders order7 = new CatalogOrders("C0001", "Delivery", g, con1, "Processed", 20.00, false, f);
+//        CustomizedPackage order8 = new CustomizedPackage("CP0001", "Delivery", h, corp1, "Processed", 99.00, false, f);
+//        CatalogOrders order9 = new CatalogOrders("CP0002", "Delivery", j, corp2, "Processed", 100.00, false, f);
+//        CustomizedPackage order10 = new CustomizedPackage("CP0003", "Delivery", j, corp3, "Processed", 600.00, false, f);
+//        CatalogOrders order11 = new CatalogOrders("C0002", "Delivery", k, corp4, "Processed", 200.00, false, f);
+//        CustomizedPackage order12 = new CustomizedPackage("C0003", "Delivery", l, con1, "Processed", 210.00, false, f);
+//        CustomizedPackage order13 = new CustomizedPackage("C0004", "Delivery", j, con2, "Processed", 450.00, false, f);
+
+        
+        
     }
 }

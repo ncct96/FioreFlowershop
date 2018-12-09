@@ -456,7 +456,7 @@ public class FioreFlowershop {
             int pickupChoice = s.nextInt();
 
             if (pickupChoice == 1) {
-                Pickup.sortPickupOrder(pickupOrder, customizedPackages);
+                Pickup.sortPickupOrder(catalogOrder, readyOrders);
             } else if (pickupChoice == 2) {
 
                 try {
@@ -470,7 +470,7 @@ public class FioreFlowershop {
 
                     Date date = dateformat.parse(dateStr);
 
-                    Pickup.searchPickUp(pickupOrder, date, customizedPackages);
+                    Pickup.searchPickUp(catalogOrder, date, readyOrders);
 
                 } catch (ParseException ex) {
                     Logger.getLogger(FioreFlowershop.class
@@ -483,7 +483,7 @@ public class FioreFlowershop {
 
                 String orderID = s.nextLine();
 
-                Pickup.searchUserPickUp(orderID, shoppingCart, customizedPackages, paidOrder);
+                Pickup.searchUserPickUp(orderID, catalogOrder, readyOrders, paidOrder);
             }
 
         } else if (choice == 2) {
