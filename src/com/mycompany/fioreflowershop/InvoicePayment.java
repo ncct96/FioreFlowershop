@@ -43,7 +43,7 @@ public class InvoicePayment {
             switch(invoiceChoice){
                 case 1:invoicePaymentP1();break;
                 case 2:generateInvoiceP1();break; 
-                case 3:viewPaymentHistory1();break;
+                case 3:viewPaymentHistory1();break; 
                 case 4:FioreFlowershop.counterStaff();break;
                 case 5:receipt();break;
             }
@@ -54,7 +54,7 @@ public class InvoicePayment {
         }
     }
     
-    public static void receipt(){
+    public static void receipt(){//This is for nicholas
         System.out.println("\n\t\t   Fiore Flowershop SDN.NHD ");
         System.out.println("\t\t    2404 Aaron Smith Drive");
         System.out.println("\t\t 2404 Pennsylvania, 17404 York");
@@ -80,22 +80,22 @@ public class InvoicePayment {
         System.out.println("=================================================================");
     }
     
-    public static void viewPaymentHistory1(){
+    public static void viewPaymentHistory1(){//For viewing payment history, retrieve available paid invoices first
         String invoiceID = ""; int count = 1; boolean stat = true;
         System.out.println("\n====================================================");
         System.out.println("\tAvailable Paid Invoice(s)");
         System.out.println("====================================================");
         if(paymentHistory != null){
-            for(int i = 1; i <= paymentHistory.getTotalEntries(); i++){
+            for(int i = 1; i <= paymentHistory.getTotalEntries(); i++){//Get all available paid invoices, and display it 
                 if(invoiceID.equals(paymentHistory.getItem(i).getInvoiceNumber())){
-                
-                }else{
+                //If duplicates of invoice ID is found, do nothing
+                }else{//If invoice ID is found, print out the id, then store the ID to another variable for checking for duplicates.
                     invoiceID = paymentHistory.getItem(i).getInvoiceNumber();
                     System.out.println(FioreFlowershop.ConsoleColors.BLUE+"["+count+"] " + FioreFlowershop.ConsoleColors.RESET
                     + invoiceID);
                 }
             }
-            try{
+            try{//For user to enter their desired invoice number
                 System.out.print("\n" + "Please Enter The Invoice Number ID : ");
                 String enteredID = s.nextLine();
                 for(int a = 1; a <= paymentHistory.getTotalEntries(); a++){
@@ -107,13 +107,13 @@ public class InvoicePayment {
                         stat = false;
                     }
                 }
-                if(stat){
+                if(stat){//Pass to 2nd part of view paid invoice
                    viewPaymentHistory2(ih,enteredID); 
-                }else{
+                }else{//If invalid invoice number is entered, show error message
                     System.out.println(FioreFlowershop.ConsoleColors.RED+"\nPlease Enter A Valid Invoice Number, Try Again !"+FioreFlowershop.ConsoleColors.RESET);
                     invoiceMaintenance();
                 }
-            }catch(Exception e){
+            }catch(Exception e){//If invalid format for invoice number is entered, show error message
                 System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"An Error had occurred. Please enter the format as stated."+FioreFlowershop.ConsoleColors.RESET);
                 System.out.println(FioreFlowershop.ConsoleColors.BLUE+"\nRedirecting Back to Invoice Maintenance Menu......" + FioreFlowershop.ConsoleColors.RESET);
                 invoiceMaintenance();
