@@ -57,7 +57,7 @@ public class CustomerMaintenance {
 //                FioreFlowershop.userTypeSelection();
 //            }
 //        }
-        if(corporateLoggedIn != null){
+        if(corporateLoggedIn != null){//If the customer is logged in
             reminderRange = corporateLoggedIn.getMonthlyLimit()*.9;
             try{
                 //Set Preset Date
