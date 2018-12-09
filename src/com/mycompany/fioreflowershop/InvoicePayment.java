@@ -80,7 +80,7 @@ public class InvoicePayment {
         System.out.println("=================================================================");
     }
     
-    public static void viewPaymentHistory1(){
+    public static void viewPaymentHistory1(){//For viewing payment history, retrieve available paid invoices first
         String invoiceID = ""; int count = 1; boolean stat = true;
         System.out.println("\n====================================================");
         System.out.println("\tAvailable Paid Invoice(s)");
