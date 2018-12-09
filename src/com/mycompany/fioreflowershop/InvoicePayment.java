@@ -180,24 +180,24 @@ public class InvoicePayment {
             System.out.println(FioreFlowershop.ConsoleColors.BLUE+"\nRedirecting Back to Invoice Maintenance Menu......" + FioreFlowershop.ConsoleColors.RESET);
             invoiceMaintenance();
         }
-        if(FioreFlowershop.getShoppingCart() != null){
+        if(FioreFlowershop.getCatalogOrder() != null){
         System.out.println("\n====================================================");
         System.out.println("\tAvailable Customer For Invoice Generation");
         System.out.println("====================================================");
-        for(int i = 1; i <= FioreFlowershop.getShoppingCart().getTotalEntries(); i++){
+        for(int i = 1; i <= FioreFlowershop.getCatalogOrder().getTotalEntries(); i++){
             //If the shopping cart is not null and status is false
-            if(FioreFlowershop.getShoppingCart().getItem(i).getUser()!= null && 
-                    !FioreFlowershop.getShoppingCart().getItem(i).isPaymentStatus()){
+            if(FioreFlowershop.getCatalogOrder().getItem(i).getUser()!= null && 
+                    !FioreFlowershop.getCatalogOrder().getItem(i).isPaymentStatus()){
                 //If the entered month and the order month is the same
-                if((FioreFlowershop.getShoppingCart().getItem(i).getOrderDate().getMonth()+1) == monthEntered &&
-                        (FioreFlowershop.getShoppingCart().getItem(i).getOrderDate().getYear()+1900) == yearEntered){
+                if((FioreFlowershop.getCatalogOrder().getItem(i).getOrderDate().getMonth()+1) == monthEntered &&
+                        (FioreFlowershop.getCatalogOrder().getItem(i).getOrderDate().getYear()+1900) == yearEntered){
                     //If duplicate user is found, do nothing
-                    if(usern.equals(FioreFlowershop.getShoppingCart().getItem(i).getUser().getEmail())){
+                    if(usern.equals(FioreFlowershop.getCatalogOrder().getItem(i).getUser().getEmail())){
                         
                     }else{//No duplicate user is found
                         System.out.println(FioreFlowershop.ConsoleColors.BLUE + "[" + i + "] " + FioreFlowershop.ConsoleColors.RESET
-                        + FioreFlowershop.getShoppingCart().getItem(i).getUser().getEmail());
-                        usern = FioreFlowershop.getShoppingCart().getItem(i).getUser().getEmail();
+                        + FioreFlowershop.getCatalogOrder().getItem(i).getUser().getEmail());
+                        usern = FioreFlowershop.getCatalogOrder().getItem(i).getUser().getEmail();
                         count++;
                     }
                 }
@@ -281,24 +281,24 @@ public class InvoicePayment {
             System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"\nAn Error had occurred. Please enter the format as stated."+FioreFlowershop.ConsoleColors.RESET);
             invoiceMaintenance();
         }
-        if(FioreFlowershop.getShoppingCart() != null){
+        if(FioreFlowershop.getCatalogOrder() != null){
             System.out.println("\n====================================================");
             System.out.println("\tAvailable Customer For Invoice Payment");
             System.out.println("====================================================");
-            for(int i = 1; i <= FioreFlowershop.getShoppingCart().getTotalEntries(); i++){
+            for(int i = 1; i <= FioreFlowershop.getCatalogOrder().getTotalEntries(); i++){
             //If the shopping cart is not null and status is false
-            if(FioreFlowershop.getShoppingCart().getItem(i).getUser()!= null && 
-                    !FioreFlowershop.getShoppingCart().getItem(i).isPaymentStatus()){
+            if(FioreFlowershop.getCatalogOrder().getItem(i).getUser()!= null && 
+                    !FioreFlowershop.getCatalogOrder().getItem(i).isPaymentStatus()){
                 //If the entered month and the order month is the same
-                if((FioreFlowershop.getShoppingCart().getItem(i).getOrderDate().getMonth()+1) == monthEntered && 
-                        (FioreFlowershop.getShoppingCart().getItem(i).getOrderDate().getYear()+1900) == yearEntered){
+                if((FioreFlowershop.getCatalogOrder().getItem(i).getOrderDate().getMonth()+1) == monthEntered && 
+                        (FioreFlowershop.getCatalogOrder().getItem(i).getOrderDate().getYear()+1900) == yearEntered){
                     //If duplicate user is found, do nothing
-                       if(usern.equals(FioreFlowershop.getShoppingCart().getItem(i).getUser().getEmail())){
+                       if(usern.equals(FioreFlowershop.getCatalogOrder().getItem(i).getUser().getEmail())){
                         
                         }else{//No duplicate user is found
                             System.out.println(FioreFlowershop.ConsoleColors.BLUE + "[" + i + "] " + FioreFlowershop.ConsoleColors.RESET
-                            + FioreFlowershop.getShoppingCart().getItem(i).getUser().getEmail());
-                            usern = FioreFlowershop.getShoppingCart().getItem(i).getUser().getEmail();
+                            + FioreFlowershop.getCatalogOrder().getItem(i).getUser().getEmail());
+                            usern = FioreFlowershop.getCatalogOrder().getItem(i).getUser().getEmail();
                             count++;
                         } 
                 }
@@ -401,15 +401,15 @@ public class InvoicePayment {
                         }
                     }
                         //Set shopping cart payment status to true
-                    for(int k = 1; k <= FioreFlowershop.getShoppingCart().getTotalEntries(); k++){
-                        if(FioreFlowershop.getShoppingCart().getItem(k).getUser().equals(user)){
-                            FioreFlowershop.getShoppingCart().getItem(k).setPaymentStatus(true);
+                    for(int k = 1; k <= FioreFlowershop.getCatalogOrder().getTotalEntries(); k++){
+                        if(FioreFlowershop.getCatalogOrder().getItem(k).getUser().equals(user)){
+                            FioreFlowershop.getCatalogOrder().getItem(k).setPaymentStatus(true);
                         }
                     }
                     //Store paid invoice into an invoice link list
-                    for(int l = 1;l <= FioreFlowershop.getShoppingCart().getTotalEntries(); l++){
-                        if(FioreFlowershop.getShoppingCart().getItem(l).getUser().equals(user)){
-                            paymentHistory.add(new InvoiceHistory(invoiceNumber,FioreFlowershop.getShoppingCart().getItem(l), cc, today));
+                    for(int l = 1;l <= FioreFlowershop.getCatalogOrder().getTotalEntries(); l++){
+                        if(FioreFlowershop.getCatalogOrder().getItem(l).getUser().equals(user)){
+                            paymentHistory.add(new InvoiceHistory(invoiceNumber,FioreFlowershop.getCatalogOrder().getItem(l), cc, today));
                         }
                     }
                         ++invoiceNumber; 
