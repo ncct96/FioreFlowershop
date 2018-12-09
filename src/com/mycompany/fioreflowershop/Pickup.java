@@ -398,7 +398,7 @@ public class Pickup {
                         System.out.print(order.getUser().getPhone());
                         System.out.print(((CustomizedPackage) order).getFlower());
                         System.out.print(order.getOrderAmt());
-                        System.out.print(((CatalogOrders) order).getItemQuantity());
+                        System.out.print(((CatalogOrders) order).getCatalogPack().getItem(i).getUserQuantity());
                         System.out.print(order.isPaymentStatus());
                     }
                 } else {

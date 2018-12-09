@@ -49,7 +49,7 @@ public class LinkedList<T> implements ListIteratorInterface<T> {
             if (isEmpty() || (newPosition == 1)) {     // case 1: add to beginning of list
                 newNode.setNext(firstNode);
                 firstNode = newNode;
-            } else {								                      // case 2: list is not empty and newPosition > 1
+            } else {			// case 2: list is not empty and newPosition > 1
                 Node nodeBefore = getNodeAt(newPosition - 1);
                 Node nodeAfter = nodeBefore.getNext();
                 newNode.setNext(nodeAfter);
