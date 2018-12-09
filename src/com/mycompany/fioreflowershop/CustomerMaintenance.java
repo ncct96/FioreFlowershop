@@ -90,6 +90,7 @@ public class CustomerMaintenance {
                       dateStack = currentDate;
                 }  
             }catch(Exception e){
+                //When exception is found, print out the exception error message to customer.
                 System.out.println(e.toString());
             }
         }
