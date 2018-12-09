@@ -95,7 +95,7 @@ public class InvoicePayment {
                     + invoiceID);
                 }
             }
-            try{
+            try{//For user to enter their desired invoice number
                 System.out.print("\n" + "Please Enter The Invoice Number ID : ");
                 String enteredID = s.nextLine();
                 for(int a = 1; a <= paymentHistory.getTotalEntries(); a++){
@@ -107,7 +107,7 @@ public class InvoicePayment {
                         stat = false;
                     }
                 }
-                if(stat){
+                if(stat){//Pass to 2nd part of view paid invoice
                    viewPaymentHistory2(ih,enteredID); 
                 }else{
                     System.out.println(FioreFlowershop.ConsoleColors.RED+"\nPlease Enter A Valid Invoice Number, Try Again !"+FioreFlowershop.ConsoleColors.RESET);
