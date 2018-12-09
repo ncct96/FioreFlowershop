@@ -57,8 +57,8 @@ public class CustomerMaintenance {
 //                FioreFlowershop.userTypeSelection();
 //            }
 //        }
-        if(corporateLoggedIn != null){
-            reminderRange = corporateLoggedIn.getMonthlyLimit()*.9;
+        if(corporateLoggedIn != null){//If the customer is logged in
+            reminderRange = corporateLoggedIn.getMonthlyLimit()*.9; //Get the monthly limit of customer, then multiplies it with 90%
             try{
                 //Set Preset Date
                 presetDate = Calendar.getInstance();
