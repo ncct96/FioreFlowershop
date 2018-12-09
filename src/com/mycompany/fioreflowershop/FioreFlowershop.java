@@ -28,6 +28,7 @@ public class FioreFlowershop {
     private static LinkedList<Consumer> consumer = new LinkedList<>();
     private static LinkedList<CorporateCustomer> corporate = new LinkedList<>();
     private static LinkedList<User> user = new LinkedList<>();
+    private static ListInterface<User> sortedUser = new LinkedList<>();
     private static LinkedList<Order> pickupOrder = new LinkedList<Order>();
     private static LinkedList<Order> deliveryOrder = new LinkedList<Order>();
     private static LinkedList<Order> paidOrder = new LinkedList<Order>();
@@ -50,7 +51,7 @@ public class FioreFlowershop {
     private static int firstrun = 0;
 
     public static void main(String[] args) {
-
+        String test =""; test.compareTo("");
         ++firstrun;
 
         if (firstrun == 1) {
@@ -76,7 +77,7 @@ public class FioreFlowershop {
         CorporateCustomer cc1 = new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000, true);
         CorporateCustomer cc2 = new CorporateCustomer("NotNoice", "notnoice@example.com", "0123456781", "PV13", "abc123", "Some Merchant", 5000, true);
         Consumer c1 = new Consumer("ceekay", "abcdef123", "ceekay@example.com", "0125566922", "No Address Available");
-        Consumer c2 = new Consumer("testing", "testing", "testing", "0125566922", "No Address Available");
+        Consumer c2 = new Consumer("testing", "testing", "testing@example.com", "0125566922", "No Address Available");
         consumer.add(c1);
         consumer.add(c2);
         corporate.add(cc1);
@@ -85,10 +86,12 @@ public class FioreFlowershop {
         corporate.getItem(2).setCreditSpent(1500);
 
         //Initialize users
-        user.add(c1);
         user.add(c2);
         user.add(cc1);
         user.add(cc2);
+        user.add(c1);
+        
+        CustomerMaintenance.sortEmailOrder();
 
         //Initialize shopping cart
         CatalogPackage cp1 = new CatalogPackage("FlowerStrong", "Stylish", "Small", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20);
@@ -591,6 +594,10 @@ public class FioreFlowershop {
 
     public static ListInterface<User> getUser() {
         return user;
+    }
+    
+    public static ListInterface<User> getSortedUser(){
+        return sortedUser;
     }
 
     public static LinkedList<CatalogOrders> getShoppingCart() {

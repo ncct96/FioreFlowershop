@@ -21,12 +21,11 @@ public class CustomerMaintenance {
     static Scanner s = new Scanner (System.in);
     private static Consumer customerLoggedIn; 
     private static CorporateCustomer corporateLoggedIn;
-    private static ListInterface<User> userSize = new LinkedList<>();
-//    private static StackInterface<Calendar> dateStack = new LinkedStack<>(); //Need to change
     private static Calendar dateStack = Calendar.getInstance();
     private static Calendar currentDate; private static Calendar presetDate;
     private static CorporateCustomer corpEdit; 
     private static Consumer custEdit;
+    private static int loop = 0;
     //ListInterface<Consumer> customer, ListInterface<CorporateCustomer> corporate
     
     public static void customerOptions(){
@@ -90,6 +89,7 @@ public class CustomerMaintenance {
                       dateStack = currentDate;
                 }  
             }catch(Exception e){
+                //When exception is found, print out the exception error message to customer.
                 System.out.println(e.toString());
             }
         }
@@ -164,11 +164,9 @@ public class CustomerMaintenance {
             }
         }while(passwCheck == false);
         
-        Consumer c = new Consumer(usern,passw,email,number,address);
-
-    if(userSize != null){
-        for(int i = 1; i <= userSize.getTotalEntries(); i++){
-            if(userSize.getItem(i).getEmail().equals(email) && userSize.getItem(i).getUsername().equals(usern)){
+    if(FioreFlowershop.getUser() != null){
+        for(int i = 1; i <= FioreFlowershop.getUser().getTotalEntries(); i++){
+            if(FioreFlowershop.getUser().getItem(i).getEmail().equals(email) && FioreFlowershop.getUser().getItem(i).getUsername().equals(usern)){
                 System.out.println("\n" + FioreFlowershop.ConsoleColors.RED + "Sorry, Exisiting Account Found, Please Try Again." + FioreFlowershop.ConsoleColors.RESET);
                 exist = true;
                 break;
@@ -176,12 +174,36 @@ public class CustomerMaintenance {
         }
     }
         if(!exist){
+            Consumer c = new Consumer(usern,passw,email,number,address);
             FioreFlowershop.getCustomer().add(c);
-            userSize.add(c);
+            FioreFlowershop.getUser().add(c);
+            sortEmailOrder();
             System.out.println("\n" + FioreFlowershop.ConsoleColors.GREEN + "New Account Successfully Created ! " + FioreFlowershop.ConsoleColors.RESET); 
         }
         customerOptions();
     }
+    
+    public static void sortEmailOrder(){ //For sorting of email of customer and corporate customer
+        User user; 
+        if(FioreFlowershop.getUser() != null){ //If the user list is not null
+        for(int i = 1; i <= FioreFlowershop.getUser().getTotalEntries(); i++){
+            for(int j = i + 1; j <= FioreFlowershop.getUser().getTotalEntries(); j++){
+                if(FioreFlowershop.getUser().getItem(i).getEmail().charAt(loop) == FioreFlowershop.getUser().getItem(j).getEmail().charAt(loop)){
+                    loop++;
+                    sortEmailOrder();
+                }else if(FioreFlowershop.getUser().getItem(i).getEmail().charAt(loop) > FioreFlowershop.getUser().getItem(j).getEmail().charAt(loop)){
+                    loop = 0;
+                    user = FioreFlowershop.getUser().getItem(i);
+                    FioreFlowershop.getUser().replace(i, FioreFlowershop.getUser().getItem(j));
+                    FioreFlowershop.getUser().replace(j, user);
+                }else if(FioreFlowershop.getUser().getItem(i).getEmail().charAt(loop) < FioreFlowershop.getUser().getItem(j).getEmail().charAt(loop)){
+                    i++; j++;
+                    loop = 0;
+                }
+            }
+        }
+    }
+}
     
     public static void CustLogIn(){//Customer Logging In, not
         boolean customerHit = false; boolean corporateHit = false;
@@ -521,6 +543,7 @@ public class CustomerMaintenance {
         if(!exist){
             FioreFlowershop.getCorporate().add(Corporate);
             FioreFlowershop.getUser().add(Corporate);
+            sortEmailOrder();
             System.out.println("\n" + FioreFlowershop.ConsoleColors.GREEN + "New Account Successfully Created ! " + FioreFlowershop.ConsoleColors.RESET);
         }
         FioreFlowershop.manager();
