@@ -86,7 +86,7 @@ public class InvoicePayment {
         System.out.println("\tAvailable Paid Invoice(s)");
         System.out.println("====================================================");
         if(paymentHistory != null){
-            for(int i = 1; i <= paymentHistory.getTotalEntries(); i++){
+            for(int i = 1; i <= paymentHistory.getTotalEntries(); i++){//Get all available paid invoices 
                 if(invoiceID.equals(paymentHistory.getItem(i).getInvoiceNumber())){
                 
                 }else{
