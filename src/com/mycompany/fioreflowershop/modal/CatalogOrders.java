@@ -5,6 +5,7 @@
  */
 package com.mycompany.fioreflowershop.modal;
 
+import com.mycompany.fioreflowershop.adt.LinkedList;
 import java.util.Date;
 
 /**
@@ -12,26 +13,19 @@ import java.util.Date;
  * @author Zion Tseu
  */
 public class CatalogOrders extends Order {
-//    private CatalogPackage item;
-
     private String orderID;
-//    private static int orderNo = 1000;
-    private CatalogPackage catalogPack = new CatalogPackage();
-    private int itemQuantity;
-    private int discountRate;
+    private LinkedList<CatalogPackage> catalogPack = new LinkedList<>();
     private Date retrieveTime;
 
     public CatalogOrders() {
     }
 
-    public CatalogOrders(String orderID, CatalogPackage catalogPack, int itemQuantity, int discountRate,
+    public CatalogOrders(String orderID, LinkedList<CatalogPackage> catalogPack,
             String orderType, Date orderDate, User user, String orderStatus, double orderAmt,
             boolean paymentStatus, Date retrieveDate, Date retrieveTime) {
         super(orderType, orderDate, user, orderStatus, orderAmt, paymentStatus, retrieveDate);
         this.orderID = orderID;
-        this.catalogPack = catalogPack;
-        this.itemQuantity = itemQuantity;
-        this.discountRate = discountRate;
+        this.catalogPack = catalogPack;     
         this.retrieveTime = retrieveTime;
     }
 
@@ -43,29 +37,13 @@ public class CatalogOrders extends Order {
         this.orderID = orderID;
     }
 
-    public void setCatalogPack(CatalogPackage catalog) {
-        this.catalogPack = catalog;
-    }
-
-    public CatalogPackage getCatalogPack() {
+    public LinkedList<CatalogPackage> getCatalogPack() {
         return catalogPack;
     }
 
-    public int getItemQuantity() {
-        return itemQuantity;
-    }
-
-    public void setItemQuantity(int itemQuantity) {
-        this.itemQuantity = itemQuantity;
-    }
-
-    public int getDiscountRate() {
-        return discountRate;
-    }
-
-    public void setDiscountRate(int discountRate) {
-        this.discountRate = discountRate;
-    }
+    public void setCatalogPack(LinkedList<CatalogPackage> catalogPack) {
+        this.catalogPack = catalogPack;
+    }   
 
     public Date getRetrieveTime() {
         return retrieveTime;
@@ -74,10 +52,10 @@ public class CatalogOrders extends Order {
     public void setRetrieveTime(Date retrieveTime) {
         this.retrieveTime = retrieveTime;
     }
-
+    
     @Override
     public String toString() {
-        return "CatalogOrder1{" + "itemName=" + catalogPack.getName() + ", itemStyle=" + catalogPack.getStyle() + ", itemSize=" + catalogPack.getSize() + ", itemFlower=" + catalogPack.getFlower() + ", itemAccesscory=" + catalogPack.getAccessory() + ", itemQuantity=" + catalogPack.getQuantity() + ", itemPrice=" + catalogPack.getPrice() + ", corporate=" + super.getUser() + ", customer=" + super.getUser() + ", orderDate=" + super.getOrderDate() + '}';
-    }
+        return "CatalogOrders{" + "orderID=" + orderID + ", catalogPack=" + catalogPack + ", retrieveTime=" + retrieveTime + '}';
+    }   
 
 }

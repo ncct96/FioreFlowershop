@@ -15,6 +15,7 @@ public class CatalogPackage implements Comparable<CatalogPackage>{
     private int promoYear, quantity;
     private double price;
     private int discountRate;
+    private int userQuantity;
 
     public CatalogPackage() {
     }
@@ -32,9 +33,22 @@ public class CatalogPackage implements Comparable<CatalogPackage>{
         this.price = price;
         this.discountRate = discountRate;
     }
-    
-    
 
+    public CatalogPackage(String name, String style, String size, String flower, String accessory, String productType, String promoMonth, int promoYear, int quantity, double price, int discountRate, int userQuantity) {
+        this.name = name;
+        this.style = style;
+        this.size = size;
+        this.flower = flower;
+        this.accessory = accessory;
+        this.productType = productType;
+        this.promoMonth = promoMonth;
+        this.promoYear = promoYear;
+        this.quantity = quantity;
+        this.price = price;
+        this.discountRate = discountRate;
+        this.userQuantity = userQuantity;
+    }
+     
     public String getName() {
         return name;
     }
@@ -121,6 +135,14 @@ public class CatalogPackage implements Comparable<CatalogPackage>{
 
     public void setDiscountRate(int discountRate) {
         this.discountRate = discountRate;
+    }
+
+    public int getUserQuantity() {
+        return userQuantity;
+    }
+
+    public void setUserQuantity(int userQuantity) {
+        this.userQuantity = userQuantity;
     }
 
     @Override
