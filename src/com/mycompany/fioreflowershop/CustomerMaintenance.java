@@ -29,7 +29,7 @@ public class CustomerMaintenance {
     //ListInterface<Consumer> customer, ListInterface<CorporateCustomer> corporate
     
     public static void customerOptions(){
-        double reminderRange = 0;
+        double reminderRange = 0; //Declared for assigning reminder range
         if(customerLoggedIn == null && corporateLoggedIn == null){//Disallow the user from gaining additional features
             System.out.println("\nPlease Login to Gain Access to More Features.");
             System.out.println("[1] Create New Account");
