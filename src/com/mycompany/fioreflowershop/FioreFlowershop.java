@@ -74,27 +74,39 @@ public class FioreFlowershop {
         Date todayDate = new Date();
         //consumer initialize
         CorporateCustomer cc1 = new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000, true);
+        CorporateCustomer cc2 = new CorporateCustomer("NotNoice", "notnoice@example.com", "0123456781", "PV13", "abc123", "Some Merchant", 5000, true);
         Consumer c1 = new Consumer("ceekay", "abcdef123", "ceekay@example.com", "0125566922", "No Address Available");
         Consumer c2 = new Consumer("testing", "testing", "testing", "0125566922", "No Address Available");
         consumer.add(c1);
         consumer.add(c2);
         corporate.add(cc1);
-        corporate.getItem(1).setCreditSpent(1000);
+        corporate.add(cc2);
+        corporate.getItem(1).setCreditSpent(2000);
+        corporate.getItem(2).setCreditSpent(1500);
 
         //Initialize users
         user.add(c1);
         user.add(c2);
         user.add(cc1);
+        user.add(cc2);
 
         //Initialize shopping cart
         CatalogPackage cp1 = new CatalogPackage("FlowerStrong", "Stylish", "Small", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20);
         CatalogPackage cp2 = new CatalogPackage("FlowerWeak", "Colourful", "Medium", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10);
-
-        CatalogOrders ct1 = new CatalogOrders("1001", cp1, 4, 20, "Delivery", todayDate, cc1, "Order Status", 200, false, todayDate, todayDate);
-        CatalogOrders ct2 = new CatalogOrders("1002",cp2 , 5, 10, "Delivery", todayDate, cc1, "Order Status", 300, false, todayDate, todayDate);
-
-//        shoppingCart.add(ct1);
-//        shoppingCart.add(ct2);        
+        CatalogPackage cp3 = new CatalogPackage("FlowerMedium", "Elegant", "Large", "Sunflower", "Belt", "Product Type", "11", 2018, 15, 40, 5);
+        
+        CatalogOrders ct1 = new CatalogOrders("C", cp1, 4, 20, "Delivery", todayDate, cc1, "Order Status", 200, false, todayDate, todayDate);
+        CatalogOrders ct2 = new CatalogOrders("C",cp2 , 5, 10, "Delivery", todayDate, cc1, "Order Status", 300, false, todayDate, todayDate);
+        
+        CatalogOrders ct3 = new CatalogOrders("C",cp1 , 4, 20, "Delivery", todayDate, cc2, "Order Status", 200, false, todayDate, todayDate);
+        CatalogOrders ct4 = new CatalogOrders("C",cp2 , 5, 10, "Delivery", todayDate, cc2, "Order Status", 300, false, todayDate, todayDate);
+        CatalogOrders ct5 = new CatalogOrders("C",cp3 , 6, 15, "Delivery", todayDate, cc2, "Order Status", 250, false, todayDate, todayDate);
+        shoppingCart.add(ct1);
+        shoppingCart.add(ct2);
+        
+        shoppingCart.add(ct3);
+        shoppingCart.add(ct4);
+        shoppingCart.add(ct5);
 
         ListIteratorInterface<Item> styles = new LinkedList<>();
         ListIteratorInterface<Item> sizes = new LinkedList<>();
@@ -334,7 +346,6 @@ public class FioreFlowershop {
         System.out.println("[3] Consumer Payment Management");
         System.out.println("[4] View Sales Order");
         System.out.println("[5] Back");
-        System.out.print("Enter your option: ");
 
         try {
             int counterStaffChoice = s.nextInt(); s.nextLine();
