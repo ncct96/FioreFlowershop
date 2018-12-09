@@ -16,6 +16,7 @@ public class Order {
     private String orderType;
     private Date orderDate;
     private Date retrieveDate; // For pickup/delivery date
+    private Date paymentTime; // For pickup/delivery date
     private User user;
     private String orderStatus;
     private boolean paymentStatus = false;
@@ -97,6 +98,15 @@ public class Order {
         return retrieveDate;
     }
 
+    public Date getPaymentTime() {
+        return paymentTime;
+    }
+
+    public void setPaymentTime(Date paymentTime) {
+        this.paymentTime = paymentTime;
+    }
+
+    
     public void setRetrieveDate(Date retrieveDate) {
         this.retrieveDate = retrieveDate;
     }
