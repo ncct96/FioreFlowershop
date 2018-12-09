@@ -180,16 +180,19 @@ public class CustomerMaintenance {
         if(FioreFlowershop.getUser() != null){ //If the user list is not null
         for(int i = 1; i <= FioreFlowershop.getUser().getTotalEntries(); i++){
             for(int j = i + 1; j <= FioreFlowershop.getUser().getTotalEntries(); j++){
-                if(FioreFlowershop.getUser().getItem(i).getEmail().charAt(loop) == FioreFlowershop.getUser().getItem(j).getEmail().charAt(loop)){
+                if(FioreFlowershop.getUser().getItem(i).getEmail().charAt(loop) 
+                        == FioreFlowershop.getUser().getItem(j).getEmail().charAt(loop)){
                     //If the character is the same value when compared, plus the loop, then call back the method.
                     loop++;
                     sortEmailOrder();
-                }else if(FioreFlowershop.getUser().getItem(i).getEmail().charAt(loop) > FioreFlowershop.getUser().getItem(j).getEmail().charAt(loop)){
+                }else if(FioreFlowershop.getUser().getItem(i).getEmail().charAt(loop) 
+                        > FioreFlowershop.getUser().getItem(j).getEmail().charAt(loop)){
                     loop = 0;
                     user = FioreFlowershop.getUser().getItem(i);
                     FioreFlowershop.getUser().replace(i, FioreFlowershop.getUser().getItem(j));
                     FioreFlowershop.getUser().replace(j, user);
-                }else if(FioreFlowershop.getUser().getItem(i).getEmail().charAt(loop) < FioreFlowershop.getUser().getItem(j).getEmail().charAt(loop)){
+                }else if(FioreFlowershop.getUser().getItem(i).getEmail().charAt(loop) 
+                        < FioreFlowershop.getUser().getItem(j).getEmail().charAt(loop)){
                     //If the character is smaller than when compared, plus the size of I and J, to prevent infinity loop
                     i++; j++;
                     loop = 0;
