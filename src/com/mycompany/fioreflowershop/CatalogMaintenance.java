@@ -13,7 +13,7 @@ import java.util.Scanner;
 /**
  *
  * @author Woo
- * 
+ * Commit for create a monthly promotion catalog nothing changes with the code commit of stock notification
  */
 public class CatalogMaintenance {
 
