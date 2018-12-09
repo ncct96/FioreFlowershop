@@ -13,7 +13,7 @@ import java.util.Scanner;
 /**
  *
  * @author Woo
- * comment for the restock branch
+ * 
  */
 public class CatalogMaintenance {
 
@@ -1332,6 +1332,39 @@ public class CatalogMaintenance {
             System.out.println(FioreFlowershop.ConsoleColors.RED + "There are no record found\n");
             System.out.printf(FioreFlowershop.ConsoleColors.BLACK);
             FioreFlowershop.manager();
+        }
+    }
+    
+    //Stock Availability Checking for the notification
+    public static void stockNotification(LinkedList<CatalogPackage> normalPackage, LinkedList<CatalogPackage> discountedPackage) {
+        int normalInsufficient = 0, discountInsufficient = 0;
+        CatalogPackage catalogPackage = new CatalogPackage();
+        if (normalPackage.getTotalEntries() != 0) {
+            for (int i = 1; i < normalPackage.getTotalEntries() + 1; i++) {
+                catalogPackage = normalPackage.getItem(i);
+                if (catalogPackage.getQuantity() < 10) {
+                    normalInsufficient++;
+                }
+            }
+        }
+        if (discountedPackage.getTotalEntries() != 0) {
+            for (int i = 1; i < discountedPackage.getTotalEntries() + 1; i++) {
+                catalogPackage = discountedPackage.getItem(i);
+                if (catalogPackage.getQuantity() < 10) {
+                    discountInsufficient++;
+                }
+            }
+        }
+
+        if (normalInsufficient > 0 && discountInsufficient == 0) {
+            System.out.println(FioreFlowershop.ConsoleColors.RED + "The NORMAL catalog product quantity insufficient.");
+            System.out.printf(FioreFlowershop.ConsoleColors.BLACK);
+        } else if (discountInsufficient > 0 && normalInsufficient == 0) {
+            System.out.println(FioreFlowershop.ConsoleColors.RED + "The MONTHLY promotion catalog product quantity insufficient.");
+            System.out.printf(FioreFlowershop.ConsoleColors.BLACK);
+        } else if (normalInsufficient > 0 && discountInsufficient > 0) {
+            System.out.println(FioreFlowershop.ConsoleColors.RED + "The NORMAL catalog & MONTHLY promotion catalog product quantity insufficient.");
+            System.out.printf(FioreFlowershop.ConsoleColors.BLACK);
         }
     }
 }

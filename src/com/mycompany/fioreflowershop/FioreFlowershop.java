@@ -279,6 +279,7 @@ public class FioreFlowershop {
 
     public static void manager() {
         System.out.println("\nPlease Select The Options Below.");
+        CatalogMaintenance.stockNotification(normalPackage, discountedPackage);
         System.out.println("[1] Customer Maintenance");
         System.out.println("[2] Create Corporate Customer Account");
         System.out.println("[3] Add a product to catalog");
