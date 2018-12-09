@@ -47,15 +47,7 @@ public class CustomerMaintenance {
                 customerOptions();
             }
             
-        }//Welcome message for when user logged in as valid user
-//        if(corporateLoggedIn.getCreditSpent()!= 0){
-//            if(corporateLoggedIn.getCreditSpent() >= corporateLoggedIn.getMonthlyLimit()){
-//                System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"Sorry, Your maximum spending limit has reached, please pay before making further orders."+FioreFlowershop.ConsoleColors.RESET);
-//                System.out.println("\n" + FioreFlowershop.ConsoleColors.BLUE + "Thanks For Your Patronage ! :D"+FioreFlowershop.ConsoleColors.RESET);
-//                corporateLoggedIn = null;
-//                FioreFlowershop.userTypeSelection();
-//            }
-//        }
+        }
         if(corporateLoggedIn != null){//If the customer is logged in
             reminderRange = corporateLoggedIn.getMonthlyLimit()*.9; //Get the monthly limit of customer, then multiplies it with 90%
             try{
