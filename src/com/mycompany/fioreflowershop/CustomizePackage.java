@@ -282,7 +282,7 @@ public class CustomizePackage {
                 customizedPackages.enqueue(sortingQueue.dequeue());
             }
         }
-
+        CustomerMaintenance.customerOptions();
     }
 
     public static void displayItemizedBill(CustomizedPackage order) {

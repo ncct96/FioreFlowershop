@@ -392,13 +392,13 @@ public class Pickup {
                         System.out.print(order.isPaymentStatus() + "\n");
                     } else {
                         System.out.print(i + "\t");
-                        System.out.print(((CustomizedPackage) order).getOrderID() + "\t");
-                        System.out.print(((CustomizedPackage)order).getDeliveryType().getName() + "\t");
-                        System.out.print(df.format(order.getOrderDate()) + "\t");
+                        System.out.print(((CustomizedPackage) order).getOrderID() + "\t\t");
+                        System.out.print(((CustomizedPackage)order).getDeliveryType().getName() + "\t\t");
+                        System.out.print(df.format(order.getOrderDate()) + "\t\t");
                         //System.out.print(order.getUser().getUsername() + "\t");
                         //System.out.print(order.getUser().getPhone() + "\t");
                        // System.out.print(((CustomizedPackage) order).getFlower() + "\t");
-                        System.out.print(((CustomizedPackage) order).CalculateOrder() + "\t");
+                        System.out.print(((CustomizedPackage) order).CalculateOrder() + "\t\t\t");
                         //System.out.print(((CatalogOrders) order).getCatalogPack().getItem(i).getUserQuantity() + "\t");
                         System.out.print(order.isPaymentStatus() + "\n");
                     }
@@ -511,8 +511,9 @@ public class Pickup {
             System.out.println("Thank You For Choosing Fiore Flowershop, Please Come Again :D");
             System.out.println("=================================================================");
         }
+        FioreFlowershop.counterStaff();
     }
-}
+} 
 
 //    for(int i = 0; i < customPack ; i++ ){
 //    
