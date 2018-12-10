@@ -625,6 +625,12 @@ public class CustomizePackage {
                 if (selection == 'Y') {
                     System.out.println("Order marked as ready to deliver!");
                     readyOrders.add(customizedPackages.dequeue());
+                    
+                    if(customizedPackages.isEmpty()){
+                        System.out.println("No more orders is queue!\n");
+                        florist();
+                    }
+                    
                     do {
                         System.out.print("Continue to next order?" + ANSI_GREEN + "[Y/N]" + ANSI_RESET + " ");
                         selection = Character.toUpperCase(scan.next().charAt(0));
