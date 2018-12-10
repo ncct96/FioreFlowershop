@@ -29,6 +29,11 @@ public class CustomizePackage {
     private static final String ANSI_WHITE = "\u001B[37m";
 
     public static void customizePackageControl(ItemCatalogue itemCatalogue, Consumer customer, QueueInterface<CustomizedPackage> customizedPackages) {
+        if (customer == null) {
+            System.out.println(ANSI_RED + "You are not allowed to access this part of the system.\n" + ANSI_RESET);
+            return;
+        }
+
         int style = 0, size = 0, flower = 0, accessory = 0, priority = 0, deliveryType = 0;
         Scanner scan = new Scanner(System.in);
         boolean cancel = false;
@@ -277,6 +282,7 @@ public class CustomizePackage {
                 customizedPackages.enqueue(sortingQueue.dequeue());
             }
         }
+
     }
 
     public static void displayItemizedBill(CustomizedPackage order) {
@@ -300,27 +306,31 @@ public class CustomizePackage {
     }
 
     public static void displayOrderHistory(Consumer customer, QueueInterface<CustomizedPackage> customizedPackages) {
-        QueueInterface<CustomizedPackage> displayQueue = customizedPackages;
-        Boolean found = false;
-        System.out.println("Your Order History:");
-        System.out.println("================================================");
-        while (!displayQueue.isEmpty()) {
-            CustomizedPackage order = displayQueue.dequeue();
-            if (order.getUser().getUsername() == customer.getUsername() && order.getUser().getPassword() == customer.getPassword()) {
-                System.out.println(order.getOrderDateString() + " " + order.getOrderID());
-                for (int i = 1; i <= order.getFlowerList().getTotalEntries(); i++) {
-                    System.out.println("Flower" + "[" + i + "]: " + order.getFlowerList().getItem(i).getName() + " - RM " + order.getFlowerList().getItem(i).getPrice());
+        if (customer == null) {
+            System.out.println(ANSI_RED + "You are not allowed to access this part of the system.\n" + ANSI_RESET);
+        } else {
+            QueueInterface<CustomizedPackage> displayQueue = customizedPackages;
+            Boolean found = false;
+            System.out.println("Your Order History:");
+            System.out.println("================================================");
+            while (!displayQueue.isEmpty()) {
+                CustomizedPackage order = displayQueue.dequeue();
+                if (order.getUser().getUsername() == customer.getUsername() && order.getUser().getPassword() == customer.getPassword()) {
+                    System.out.println(order.getOrderDateString() + " " + order.getOrderID());
+                    for (int i = 1; i <= order.getFlowerList().getTotalEntries(); i++) {
+                        System.out.println("Flower" + "[" + i + "]: " + order.getFlowerList().getItem(i).getName() + " - RM " + order.getFlowerList().getItem(i).getPrice());
+                    }
+                    System.out.println("Arrangement: " + order.getSize().getName() + " " + order.getStyle().getName());
+                    System.out.println("Price: RM" + order.CalculateOrder() + "\n");
+                    found = true;
                 }
-                System.out.println("Arrangement: " + order.getSize().getName() + " " + order.getStyle().getName());
-                System.out.println("Price: RM" + order.CalculateOrder() + "\n");
-                found = true;
             }
-        }
-        if (!found) {
-            System.out.println("No order history found");
-        }
+            if (!found) {
+                System.out.println("No order history found");
+            }
 
-        System.out.println("================================================");
+            System.out.println("================================================");
+        }
     }
 
     public static void itemsMenu(ItemCatalogue itemCatalogue, QueueInterface<CustomizedPackage> customizedPackages) {
@@ -625,12 +635,12 @@ public class CustomizePackage {
                 if (selection == 'Y') {
                     System.out.println("Order marked as ready to deliver!");
                     readyOrders.add(customizedPackages.dequeue());
-                    
-                    if(customizedPackages.isEmpty()){
+
+                    if (customizedPackages.isEmpty()) {
                         System.out.println("No more orders is queue!\n");
                         florist();
                     }
-                    
+
                     do {
                         System.out.print("Continue to next order?" + ANSI_GREEN + "[Y/N]" + ANSI_RESET + " ");
                         selection = Character.toUpperCase(scan.next().charAt(0));

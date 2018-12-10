@@ -5,6 +5,8 @@
  */
 package com.mycompany.fioreflowershop.modal;
 
+import com.mycompany.fioreflowershop.adt.LinkedList;
+import com.mycompany.fioreflowershop.adt.ListIteratorInterface;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,12 +34,16 @@ public class CustomizedPackageTest {
     public Item priority = new Item("Flexi", 1, 6);
     public Item deliveryType = new Item("Pick up", 0);
     public String deliveryDate, orderDate;
+    ListIteratorInterface<Item> testFlowers = new LinkedList<>();
     Date todayDate, addDate;
     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
     Consumer customer = new Consumer("Johan", "abcdef", "ncct66@gmail.com", "0165919413", "Gelanggang Squash IAB Genting Highlands, Genting Highlands, 69000 Genting Highlands, Pahang");
     public CustomizedPackage testPackage = new CustomizedPackage(style, size, accessory, priority, deliveryType, customer, false);
 
     public CustomizedPackageTest() {
+        testFlowers.add(new Item("Sunflowers", 250, 10));
+        testFlowers.add(new Item("White Roses", 250, 10));
+        testFlowers.add(new Item("Tulips", 450, 50));
         todayDate = Calendar.getInstance().getTime();
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, priority.getQuantity());
@@ -45,6 +51,7 @@ public class CustomizedPackageTest {
 
         deliveryDate = df.format(addDate);
         orderDate = df.format(todayDate);
+        testPackage.setFlowerList(testFlowers);
     }
 
     @BeforeClass
@@ -129,7 +136,7 @@ public class CustomizedPackageTest {
     @Test
     public void testGetOrderID() {
         System.out.println("getOrderID");
-        String expResult = "CP3";
+        String expResult = "CP4";
         String result = testPackage.getOrderID();
         assertEquals(expResult, result);
     }
@@ -173,14 +180,12 @@ public class CustomizedPackageTest {
     }
 
     /**
-     * Test of getFlower method, of class CustomizedPackage.
+     * Test of getFlowerList method, of class CustomizedPackage.
      */
-    /*@Test
-    public void testGetFlower() {
-        System.out.println("getFlower");
-        Item expResult = flower;
-        Item result = testPackage.getFlower();
-        assertEquals(expResult, result);
+    @Test
+    public void testGetFlowerList() {
+        System.out.println("getFlowerList");;
+        assertEquals(testFlowers, testPackage.getFlowerList());
     }
 
     /**
@@ -211,7 +216,7 @@ public class CustomizedPackageTest {
     @Test
     public void testCalculateOrder() {
         System.out.println("CalculateOrder");
-        double expResult = 260.0;
+        double expResult = 510.0;
         double result = testPackage.CalculateOrder();
         assertEquals(expResult, result, 0.0);
     }
