@@ -35,7 +35,7 @@ public class CustomizedPackageTest {
     Date todayDate, addDate;
     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
     Consumer customer = new Consumer("Johan", "abcdef", "ncct66@gmail.com", "0165919413", "Gelanggang Squash IAB Genting Highlands, Genting Highlands, 69000 Genting Highlands, Pahang");
-    public CustomizedPackage testPackage = new CustomizedPackage(style, size, flower, accessory, priority, deliveryType, customer, false);
+    public CustomizedPackage testPackage = new CustomizedPackage(style, size, accessory, priority, deliveryType, customer, false);
 
     public CustomizedPackageTest() {
         todayDate = Calendar.getInstance().getTime();
@@ -175,7 +175,7 @@ public class CustomizedPackageTest {
     /**
      * Test of getFlower method, of class CustomizedPackage.
      */
-    @Test
+    /*@Test
     public void testGetFlower() {
         System.out.println("getFlower");
         Item expResult = flower;
