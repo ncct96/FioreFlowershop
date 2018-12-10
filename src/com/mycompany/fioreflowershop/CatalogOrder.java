@@ -34,6 +34,7 @@ public class CatalogOrder {
     static LinkedList<CatalogOrders> shoppingCart = FioreFlowershop.getShoppingCart();
     static LinkedList<CatalogOrders> catalogOrder = FioreFlowershop.getCatalogOrder();
     static LinkedList<CatalogPackage> catalogPack = new LinkedList<>();
+    static LinkedList<CatalogPackage> custItem = new LinkedList<>();
 
     static LinkedList<Order> conOrder = new LinkedList<>();
     static LinkedList<Order> corpOrder = new LinkedList<>();
@@ -393,18 +394,24 @@ public class CatalogOrder {
         order++;
         orderID = "CO" + String.valueOf(order);
 
+        for(int i = 1; i<catalogPack.getTotalEntries()+1;i++){
+            custItem.add(new CatalogPackage(catalogPack.getItem(i).getName(),catalogPack.getItem(i).getStyle(),catalogPack.getItem(i).getSize(),
+                    catalogPack.getItem(i).getFlower(),catalogPack.getItem(i).getAccessory(),catalogPack.getItem(i).getProductType(),
+                    catalogPack.getItem(i).getPromoMonth(),catalogPack.getItem(i).getPromoYear(),catalogPack.getItem(i).getQuantity(),
+                    catalogPack.getItem(i).getPrice(),catalogPack.getItem(i).getDiscountRate(),catalogPack.getItem(i).getUserQuantity()));          
+        }
+        
         Date retrieveDate2;
         try {
             retrieveDate2 = dateFormat.parse(retrieveDate);
 
             if (customer != null && corporate == null) {
-                shoppingCart.add(new CatalogOrders(orderID, catalogPack, orderType, currentDate, customer, orderStatus, orderAmt, paymentStatus, retrieveDate2, retrieveDate2));
+                shoppingCart.add(new CatalogOrders(orderID, custItem, orderType, currentDate, customer, orderStatus, orderAmt, paymentStatus, retrieveDate2, retrieveDate2));
             } else if (customer == null && corporate != null) {
-                shoppingCart.add(new CatalogOrders(orderID, catalogPack, orderType, currentDate, corporate, orderStatus, orderAmt, paymentStatus, retrieveDate2, retrieveDate2));
+                shoppingCart.add(new CatalogOrders(orderID, custItem, orderType, currentDate, corporate, orderStatus, orderAmt, paymentStatus, retrieveDate2, retrieveDate2));
             }
 
-            catalogOrder.add(new CatalogOrders(orderID, catalogPack, orderType, currentDate, shoppingCart.getItem(1).getUser(), orderStatus, orderAmt, paymentStatus, retrieveDate2, retrieveDate2));
-            System.out.println(catalogOrder.getItem(1).getCatalogPack().getTotalEntries());
+            catalogOrder.add(new CatalogOrders(orderID, custItem, orderType, currentDate, shoppingCart.getItem(1).getUser(), orderStatus, orderAmt, paymentStatus, retrieveDate2, retrieveDate2));
         } catch (ParseException ex) {
             Logger.getLogger(CatalogOrder.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -436,11 +443,11 @@ public class CatalogOrder {
             double total = (double) ((100 - catalogOrder.getItem(c).getCatalogPack().getItem(i).getDiscountRate()) * catalogOrder.getItem(c).getCatalogPack().getItem(i).getPrice() / 100) * catalogOrder.getItem(c).getCatalogPack().getItem(i).getUserQuantity();
             System.out.printf("%s  \t\t\t  | \t  %d  |\t         %d\t|\t   %7.2f |   %7.2f\n", catalogOrder.getItem(c).getCatalogPack().getItem(i).getName(), catalogOrder.getItem(c).getCatalogPack().getItem(i).getUserQuantity(), catalogOrder.getItem(c).getCatalogPack().getItem(i).getDiscountRate(), catalogOrder.getItem(c).getCatalogPack().getItem(i).getPrice(), total);
             totalPrice = catalogOrder.getItem(c).getOrderAmt();
-        }
+        }    
         System.out.println("\n\n\t\t\t\t\t\t\t Subtotal :\t\t\t " + "RM" + totalPrice);
         System.out.println("\n\n\t\t\t\t\t\t\tOrder Type :\t\t\t " + shopping.getOrderType());
         System.out.println("\n\n\t\t\t\t\t\t Delivery/Pickup Date :\t\t\t " + dateFormat.format(shopping.getRetrieveDate()));
-        catalogPack.clear();
+        catalogPack.clear();        
     }
 
     public static void typeSelection(LinkedList<CatalogPackage> normalPackage, LinkedList<CatalogPackage> discountedPackage) {
