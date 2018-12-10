@@ -73,10 +73,6 @@ public class CatalogOrder {
 //        testing();      
         customer = customerLoggedIn;
 
-        //create order id
-        order++;
-        orderID = "CO" + String.valueOf(order);
-
         //initialize items into catalog
         CatalogPackage catalogPackage = new CatalogPackage();
         freshFlower.clear();
@@ -119,10 +115,6 @@ public class CatalogOrder {
     public static void CorporateOrderMain(LinkedList<CatalogOrders> cart, LinkedList<CatalogOrders> catalogOrder, CorporateCustomer customerLoggedIn, LinkedList<CatalogPackage> normalPackage, LinkedList<CatalogPackage> discountedPackage) {
         //ListInterface<CatalogOrder1> sCart = cart;
         corporate = customerLoggedIn;
-
-        //create order id
-        order++;
-        orderID = "CO" + String.valueOf(order);
 
         //initialize items into catalog
         CatalogPackage catalogPackage = new CatalogPackage();
@@ -190,11 +182,11 @@ public class CatalogOrder {
                 System.out.println("Product Name  \t\t\t\tUnit Price\t\tQuantity\t\tTotal Price");
                 double payAmount2 = 0;
                 if (!catalogPack.isEmpty()) {
-                    for (int i = 1; i < catalogPack.getTotalEntries() + 1; i++) {
-                        payAmount2 += (catalogPack.getItem(i).getPrice() * catalogPack.getItem(i).getUserQuantity());
+                    for (int i = 1; i < catalogPack.getTotalEntries() + 1; i++) {         
                         System.out.printf("%d. %s\n", i, catalogPack.getItem(i).getName());
                         double discountedPrice = (double) ((100 - catalogPack.getItem(i).getDiscountRate()) * catalogPack.getItem(i).getPrice() / 100);
-                        System.out.printf("%s,%s,%s,%s \tRM%7.2f\t\t   %d\t\t\t RM%7.2f\n\n", catalogPack.getItem(i).getStyle(), catalogPack.getItem(i).getSize(), catalogPack.getItem(i).getFlower(), catalogPack.getItem(i).getAccessory(), discountedPrice, catalogPack.getItem(i).getUserQuantity(), catalogPack.getItem(i).getPrice() * catalogPack.getItem(i).getUserQuantity());
+                        payAmount2 += (discountedPrice * catalogPack.getItem(i).getUserQuantity());
+                        System.out.printf("%s,%s,%s,%s \tRM%7.2f\t\t   %d\t\t\t RM%7.2f\n\n", catalogPack.getItem(i).getStyle(), catalogPack.getItem(i).getSize(), catalogPack.getItem(i).getFlower(), catalogPack.getItem(i).getAccessory(), discountedPrice, catalogPack.getItem(i).getUserQuantity(), discountedPrice * catalogPack.getItem(i).getUserQuantity());
                     }
                 }
                 System.out.printf(FioreFlowershop.ConsoleColors.RED + "Amount: \t\t\t\t\t\t\t\t\t         RM%7.2f\n", payAmount2);
@@ -378,7 +370,7 @@ public class CatalogOrder {
                     System.out.println(FioreFlowershop.ConsoleColors.GREEN + "Back to Catalog Order Menu....");
                     displayCatalog(normalPackage, discountedPackage);
                 }
-            } else if (shoppingCart.isEmpty()) {
+            } else if (catalogPack.isEmpty()) {
                 System.out.println(FioreFlowershop.ConsoleColors.RED + "Your shopping cart is empty. You have not add in any item yet.");
                 displayCatalog(normalPackage, discountedPackage);
             }
@@ -396,6 +388,10 @@ public class CatalogOrder {
     }
 
     public static void salesOrder(User user) {
+        //create order id
+        order++;
+        orderID = "CO" + String.valueOf(order);
+        
         Date retrieveDate2;
         try {
             retrieveDate2 = dateFormat.parse(retrieveDate);
@@ -406,16 +402,15 @@ public class CatalogOrder {
                 shoppingCart.add(new CatalogOrders(orderID, catalogPack, orderType, currentDate, corporate, orderStatus, orderAmt, paymentStatus, retrieveDate2, retrieveDate2));
             }
 
-           
             catalogOrder.add(new CatalogOrders(orderID, catalogPack, orderType, currentDate, shoppingCart.getItem(1).getUser(), orderStatus, orderAmt, paymentStatus, retrieveDate2, retrieveDate2));
-           
+            System.out.println(catalogOrder.getItem(1).getCatalogPack().getTotalEntries());
         } catch (ParseException ex) {
             Logger.getLogger(CatalogOrder.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        shoppingCart.clear();
 
-        CatalogOrders shopping = catalogOrder.getItem(1);
+        shoppingCart.clear();
+        int c = catalogOrder.getTotalEntries();
+        CatalogOrders shopping = catalogOrder.getItem(c);
 
         double totalPrice = 0;
         System.out.println("\n=================================================================================================");
@@ -436,8 +431,10 @@ public class CatalogOrder {
         System.out.println("Description \t\t\t  | Quantity  |  Discount Rate(%) | Unit Price(RM) |  Total(RM)");
 
         for (int i = 1; i < catalogPack.getTotalEntries() + 1; i++) {
-            System.out.printf("%s  \t\t\t  | \t  %d  |\t         %d\t|\t   %7.2f |   %7.2f\n", catalogPack.getItem(i).getName(), catalogPack.getItem(i).getUserQuantity(), catalogPack.getItem(i).getDiscountRate(), catalogPack.getItem(i).getPrice(), catalogPack.getItem(i).getPrice() * catalogPack.getItem(i).getUserQuantity());
-            totalPrice = catalogOrder.getItem(1).getOrderAmt();
+            
+            double total = (double) ((100 - catalogOrder.getItem(c).getCatalogPack().getItem(i).getDiscountRate()) * catalogOrder.getItem(c).getCatalogPack().getItem(i).getPrice() / 100) * catalogOrder.getItem(c).getCatalogPack().getItem(i).getUserQuantity();
+            System.out.printf("%s  \t\t\t  | \t  %d  |\t         %d\t|\t   %7.2f |   %7.2f\n", catalogOrder.getItem(c).getCatalogPack().getItem(i).getName(), catalogOrder.getItem(c).getCatalogPack().getItem(i).getUserQuantity(), catalogOrder.getItem(c).getCatalogPack().getItem(i).getDiscountRate(), catalogOrder.getItem(c).getCatalogPack().getItem(i).getPrice(), total);
+            totalPrice = catalogOrder.getItem(c).getOrderAmt();
         }
         System.out.println("\n\n\t\t\t\t\t\t\t Subtotal :\t\t\t " + "RM" + totalPrice);
         System.out.println("\n\n\t\t\t\t\t\t\tOrder Type :\t\t\t " + shopping.getOrderType());
@@ -606,7 +603,12 @@ public class CatalogOrder {
 
                 for (int i = 1; i < catalogPack.getTotalEntries() + 1; i++) {
                     System.out.printf("%s\n", catalogPack.getItem(i).getName());
-                    System.out.printf("%s,%s,%s,%s \tRM%7.2f\t   %d\n\n", catalogPack.getItem(i).getStyle(), catalogPack.getItem(i).getSize(), catalogPack.getItem(i).getFlower(), catalogPack.getItem(i).getAccessory(), catalogPack.getItem(i).getPrice() * catalogPack.getItem(i).getUserQuantity(), catalogPack.getItem(i).getUserQuantity());
+                    if (catalogPack.getItem(i).getDiscountRate() == 0) {
+                        System.out.printf("%s,%s,%s,%s \tRM%7.2f\t   %d\n\n", catalogPack.getItem(i).getStyle(), catalogPack.getItem(i).getSize(), catalogPack.getItem(i).getFlower(), catalogPack.getItem(i).getAccessory(), catalogPack.getItem(i).getPrice() * catalogPack.getItem(i).getUserQuantity(), catalogPack.getItem(i).getUserQuantity());
+                    } else if (catalogPack.getItem(i).getDiscountRate() != 0) {
+                        double itemPrice = (double) ((100 - catalogPack.getItem(i).getDiscountRate()) * catalogPack.getItem(i).getPrice() / 100) * catalogPack.getItem(i).getUserQuantity();
+                        System.out.printf("%s,%s,%s,%s \tRM%7.2f\t   %d\n\n", catalogPack.getItem(i).getStyle(), catalogPack.getItem(i).getSize(), catalogPack.getItem(i).getFlower(), catalogPack.getItem(i).getAccessory(), itemPrice, catalogPack.getItem(i).getUserQuantity());
+                    }
                 }
             }
             System.out.print("Do you wish to browse through fresh flower? (Y/y = Yes, other keys = No)");
@@ -633,7 +635,7 @@ public class CatalogOrder {
                 if (bouquets.getItem(i).getDiscountRate() == 0) {
                     System.out.printf("%s,%s,%s,%s \t           %d\t\tRM%7.2f\t\t        - \n\n", bouquets.getItem(i).getStyle(), bouquets.getItem(i).getSize(), bouquets.getItem(i).getFlower(), bouquets.getItem(i).getAccessory(), bouquets.getItem(i).getQuantity(), bouquets.getItem(i).getPrice());
                 } else if (bouquets.getItem(i).getDiscountRate() != 0) {
-                    double discountedPrice = (double) ((100 - bouquets.getItem(itemSelection).getDiscountRate()) * bouquets.getItem(itemSelection).getPrice() / 100);
+                    double discountedPrice = (double) ((100 - bouquets.getItem(i).getDiscountRate()) * bouquets.getItem(i).getPrice() / 100);
                     System.out.printf("%s,%s,%s,%s \t           %d\t\tRM%7.2f\t\t    RM%7.2f \n\n", bouquets.getItem(i).getStyle(), bouquets.getItem(i).getSize(), bouquets.getItem(i).getFlower(), bouquets.getItem(i).getAccessory(), bouquets.getItem(i).getQuantity(), bouquets.getItem(i).getPrice(), discountedPrice);
                 }
             }
@@ -691,12 +693,12 @@ public class CatalogOrder {
         }
 
         //calculate credit spent by corporate customer
-        if (shoppingCart.isEmpty()) {
+        if (catalogPack.isEmpty()) {
             creditSpent += itemPrice;
-        } else if (!shoppingCart.isEmpty()) {
+        } else if (!catalogPack.isEmpty()) {
             creditSpent = 0;
-            for (int i = 1; i < shoppingCart.getTotalEntries() + 1; i++) {
-                creditSpent += shoppingCart.getItem(i).getOrderAmt();
+            for (int i = 1; i < catalogPack.getTotalEntries() + 1; i++) {
+                creditSpent += (catalogPack.getItem(i).getPrice() * catalogPack.getItem(i).getUserQuantity());
             }
             creditSpent += itemPrice;
         }
@@ -715,9 +717,9 @@ public class CatalogOrder {
             //CK MADE SOME CHANGES HERE
             if ((corporate.getMonthlyLimit() - corporate.getCreditSpent()) < 0) {
                 System.out.println(FioreFlowershop.ConsoleColors.RED + "Sorry, it seems that you will exceed the credit limit after this purchase." + FioreFlowershop.ConsoleColors.RESET);
-                if (shoppingCart.isEmpty()) {
+                if (catalogPack.isEmpty()) {
                     creditSpent = 0;
-                } else if (!shoppingCart.isEmpty()) {
+                } else if (!catalogPack.isEmpty()) {
                     creditSpent -= itemPrice;
                 }
             } else {
@@ -736,7 +738,12 @@ public class CatalogOrder {
 
             for (int i = 1; i < catalogPack.getTotalEntries() + 1; i++) {
                 System.out.printf("%s\n", catalogPack.getItem(i).getName());
-                System.out.printf("%s,%s,%s,%s \tRM%7.2f\t   %d\n\n", catalogPack.getItem(i).getStyle(), catalogPack.getItem(i).getSize(), catalogPack.getItem(i).getFlower(), catalogPack.getItem(i).getAccessory(), catalogPack.getItem(i).getPrice() * catalogPack.getItem(i).getUserQuantity(), catalogPack.getItem(i).getUserQuantity());
+                if (catalogPack.getItem(i).getDiscountRate() == 0) {
+                    System.out.printf("%s,%s,%s,%s \tRM%7.2f\t   %d\n\n", catalogPack.getItem(i).getStyle(), catalogPack.getItem(i).getSize(), catalogPack.getItem(i).getFlower(), catalogPack.getItem(i).getAccessory(), catalogPack.getItem(i).getPrice() * catalogPack.getItem(i).getUserQuantity(), catalogPack.getItem(i).getUserQuantity());
+                } else if (catalogPack.getItem(i).getDiscountRate() != 0) {
+                    double itemPrice = (double) ((100 - catalogPack.getItem(i).getDiscountRate()) * catalogPack.getItem(i).getPrice() / 100) * catalogPack.getItem(i).getUserQuantity();
+                    System.out.printf("%s,%s,%s,%s \tRM%7.2f\t   %d\n\n", catalogPack.getItem(i).getStyle(), catalogPack.getItem(i).getSize(), catalogPack.getItem(i).getFlower(), catalogPack.getItem(i).getAccessory(), itemPrice, catalogPack.getItem(i).getUserQuantity());
+                }
             }
 
         }
@@ -765,7 +772,7 @@ public class CatalogOrder {
             if (flowerArrangement.getItem(i).getDiscountRate() == 0) {
                 System.out.printf("%s,%s,%s,%s \t   %d\t\tRM%7.2f\t\t        -\n\n", flowerArrangement.getItem(i).getStyle(), flowerArrangement.getItem(i).getSize(), flowerArrangement.getItem(i).getFlower(), flowerArrangement.getItem(i).getAccessory(), flowerArrangement.getItem(i).getQuantity(), flowerArrangement.getItem(i).getPrice());
             } else if (flowerArrangement.getItem(i).getDiscountRate() != 0) {
-                double discountedPrice = (double) ((100 - flowerArrangement.getItem(itemSelection).getDiscountRate()) * flowerArrangement.getItem(itemSelection).getPrice() / 100);
+                double discountedPrice = (double) ((100 - flowerArrangement.getItem(i).getDiscountRate()) * flowerArrangement.getItem(i).getPrice() / 100);
                 System.out.printf("%s,%s,%s,%s \t   %d\t\tRM%7.2f\t\t    RM%7.2f \n\n", flowerArrangement.getItem(i).getStyle(), flowerArrangement.getItem(i).getSize(), flowerArrangement.getItem(i).getFlower(), flowerArrangement.getItem(i).getAccessory(), flowerArrangement.getItem(i).getQuantity(), flowerArrangement.getItem(i).getPrice(), discountedPrice);
             }
         }
@@ -794,7 +801,7 @@ public class CatalogOrder {
 
         System.out.printf("%s\n", flowerArrangement.getItem(itemSelection).getName());
         if (flowerArrangement.getItem(itemSelection).getDiscountRate() == 0) {
-            System.out.printf("%s,%s,%s,%s  \t   %d  \t\tRM%7.2f\t\t        -\n\n", flowerArrangement.getItem(itemSelection).getStyle(), flowerArrangement.getItem(itemSelection).getSize(), flowerArrangement.getItem(itemSelection).getFlower(), flowerArrangement.getItem(itemSelection).getAccessory(), flowerArrangement.getItem(itemSelection).getQuantity(),flowerArrangement.getItem(itemSelection).getPrice());
+            System.out.printf("%s,%s,%s,%s  \t   %d  \t\tRM%7.2f\t\t        -\n\n", flowerArrangement.getItem(itemSelection).getStyle(), flowerArrangement.getItem(itemSelection).getSize(), flowerArrangement.getItem(itemSelection).getFlower(), flowerArrangement.getItem(itemSelection).getAccessory(), flowerArrangement.getItem(itemSelection).getQuantity(), flowerArrangement.getItem(itemSelection).getPrice());
         } else if (flowerArrangement.getItem(itemSelection).getDiscountRate() != 0) {
             double discountedPrice = (double) ((100 - flowerArrangement.getItem(itemSelection).getDiscountRate()) * flowerArrangement.getItem(itemSelection).getPrice() / 100);
             System.out.printf("%s,%s,%s,%s  \t   %d  \t\tRM%7.2f\t\t    RM%7.2f\n\n", flowerArrangement.getItem(itemSelection).getStyle(), flowerArrangement.getItem(itemSelection).getSize(), flowerArrangement.getItem(itemSelection).getFlower(), flowerArrangement.getItem(itemSelection).getAccessory(), flowerArrangement.getItem(itemSelection).getQuantity(), flowerArrangement.getItem(itemSelection).getPrice(), discountedPrice);
@@ -824,12 +831,12 @@ public class CatalogOrder {
         }
 
         //calculate credit spent by corporate customer
-        if (shoppingCart.isEmpty()) {
+        if (catalogPack.isEmpty()) {
             creditSpent += itemPrice;
-        } else if (!shoppingCart.isEmpty()) {
+        } else if (!catalogPack.isEmpty()) {
             creditSpent = 0;
-            for (int i = 1; i < shoppingCart.getTotalEntries() + 1; i++) {
-                creditSpent += shoppingCart.getItem(i).getOrderAmt();
+            for (int i = 1; i < catalogPack.getTotalEntries() + 1; i++) {
+                creditSpent += (catalogPack.getItem(i).getPrice() * catalogPack.getItem(i).getUserQuantity());
             }
             creditSpent += itemPrice;
         }
@@ -848,9 +855,9 @@ public class CatalogOrder {
             //CK MADE SOME CHANGES HERE
             if ((corporate.getMonthlyLimit() - corporate.getCreditSpent()) < 0) {
                 System.out.println(FioreFlowershop.ConsoleColors.RED + "Sorry, it seems that you will exceed the credit limit after this purchase." + FioreFlowershop.ConsoleColors.RESET);
-                if (shoppingCart.isEmpty()) {
+                if (catalogPack.isEmpty()) {
                     creditSpent = 0;
-                } else if (!shoppingCart.isEmpty()) {
+                } else if (!catalogPack.isEmpty()) {
                     creditSpent -= itemPrice;
                 }
             } else {
@@ -869,7 +876,12 @@ public class CatalogOrder {
 
             for (int i = 1; i < catalogPack.getTotalEntries() + 1; i++) {
                 System.out.printf("%s\n", catalogPack.getItem(i).getName());
-                System.out.printf("%s,%s,%s,%s \tRM%7.2f\t   %d\n\n", catalogPack.getItem(i).getStyle(), catalogPack.getItem(i).getSize(), catalogPack.getItem(i).getFlower(), catalogPack.getItem(i).getAccessory(), catalogPack.getItem(i).getPrice() * catalogPack.getItem(i).getUserQuantity(), catalogPack.getItem(i).getUserQuantity());
+                if (catalogPack.getItem(i).getDiscountRate() == 0) {
+                    System.out.printf("%s,%s,%s,%s \tRM%7.2f\t   %d\n\n", catalogPack.getItem(i).getStyle(), catalogPack.getItem(i).getSize(), catalogPack.getItem(i).getFlower(), catalogPack.getItem(i).getAccessory(), catalogPack.getItem(i).getPrice() * catalogPack.getItem(i).getUserQuantity(), catalogPack.getItem(i).getUserQuantity());
+                } else if (catalogPack.getItem(i).getDiscountRate() != 0) {
+                    double itemPrice = (double) ((100 - catalogPack.getItem(i).getDiscountRate()) * catalogPack.getItem(i).getPrice() / 100) * catalogPack.getItem(i).getUserQuantity();
+                    System.out.printf("%s,%s,%s,%s \tRM%7.2f\t   %d\n\n", catalogPack.getItem(i).getStyle(), catalogPack.getItem(i).getSize(), catalogPack.getItem(i).getFlower(), catalogPack.getItem(i).getAccessory(), itemPrice, catalogPack.getItem(i).getUserQuantity());
+                }
             }
 
         }
