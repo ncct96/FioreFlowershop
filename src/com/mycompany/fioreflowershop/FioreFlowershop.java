@@ -44,6 +44,10 @@ public class FioreFlowershop {
 
     private static LinkedList<CatalogOrders> shoppingCart = new LinkedList<>();
     private static LinkedList<CatalogOrders> catalogOrder = new LinkedList<>();
+    
+    private static LinkedList<CatalogPackage> catalogPack1 = new LinkedList<>();
+    private static LinkedList<CatalogPackage> catalogPack2 = new LinkedList<>();
+    
     private static String[] origin = {"Taiping", "Penang", "Cheras", "Johor"};
     private static String[] dest = {"Taiping", "Penang", "Cheras", "Johor"};
     private static final String shopAddress = "Taiping";
@@ -95,20 +99,21 @@ public class FioreFlowershop {
         CustomerMaintenance.sortEmailOrder();
 
         //Initialize shopping cart
-        CatalogPackage cp1 = new CatalogPackage("FlowerStrong", "Stylish", "Small", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20);
-        CatalogPackage cp2 = new CatalogPackage("FlowerWeak", "Colourful", "Medium", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10);
-        CatalogPackage cp3 = new CatalogPackage("FlowerMedium", "Elegant", "Large", "Sunflower", "Belt", "Product Type", "11", 2018, 15, 40, 5);
+        CatalogPackage cp1 = new CatalogPackage("FlowerStrong", "Stylish", "Small", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20, 5);
+        CatalogPackage cp2 = new CatalogPackage("FlowerWeak", "Colourful", "Medium", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10, 4);
+        CatalogPackage cp3 = new CatalogPackage("FlowerMedium", "Elegant", "Large", "Sunflower", "Belt", "Product Type", "11", 2018, 15, 40, 5, 6);
 
-//        CatalogOrders ct1 = new CatalogOrders("C", cp1, 4, 20, "Delivery", todayDate, cc1, "Order Status", 200, false, todayDate, todayDate);
-//        CatalogOrders ct2 = new CatalogOrders("C",cp2 , 5, 10, "Delivery", todayDate, cc1, "Order Status", 300, false, todayDate, todayDate);
-//        CatalogOrders ct3 = new CatalogOrders("C",cp1 , 4, 20, "Delivery", todayDate, cc2, "Order Status", 200, false, todayDate, todayDate);
-//        CatalogOrders ct4 = new CatalogOrders("C",cp2 , 5, 10, "Delivery", todayDate, cc2, "Order Status", 300, false, todayDate, todayDate);
-//        CatalogOrders ct5 = new CatalogOrders("C",cp3 , 6, 15, "Delivery", todayDate, cc2, "Order Status", 250, false, todayDate, todayDate);
-//        catalogOrder.add(ct1);
-//        catalogOrder.add(ct2);
-//        catalogOrder.add(ct3);
-//        catalogOrder.add(ct4);
-//        catalogOrder.add(ct5);
+        catalogPack1.add(cp1); catalogPack1.add(cp2);
+        catalogPack2.add(cp1); catalogPack2.add(cp2); catalogPack2.add(cp3);
+        
+        CatalogOrders ct1 = new CatalogOrders("C", catalogPack1, "Delivery", todayDate, cc1, "Order Status", 200, false, todayDate, todayDate);
+        CatalogOrders ct2 = new CatalogOrders("C", catalogPack2, "Delivery", todayDate, cc2, "Order Status", 200, false, todayDate, todayDate);
+        CatalogOrders ct3 = new CatalogOrders("C", catalogPack1, "Delivery", todayDate, cc1, "Order Status", 300, false, todayDate, todayDate);
+        
+        catalogOrder.add(ct1);
+        catalogOrder.add(ct2);
+        catalogOrder.add(ct3);
+
         ListIteratorInterface<Item> styles = new LinkedList<>();
         ListIteratorInterface<Item> sizes = new LinkedList<>();
         ListIteratorInterface<Item> flowers = new LinkedList<>();
