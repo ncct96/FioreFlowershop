@@ -5,6 +5,7 @@
  */
 package com.mycompany.fioreflowershop.modal;
 
+import java.util.Calendar;
 import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +17,21 @@ import static org.junit.Assert.*;
  */
 public class OrderTest {
     
+    public String orderType = "Delivery";
+    public String orderStatus = "Processing";
+    public User user = new User("ncct96", "ncct96@gmail.com", "01659191413", "PV13", "9608");
+    public boolean isPaymentStatus = true;
+    public Calendar validRetrieveDate = Calendar.getInstance();
+    public Date orderDate, retrieveDate;
+    public Order order;
+    
     public OrderTest() {
+        validRetrieveDate.setTime(new Date()); // Now use today date.
+        validRetrieveDate.add(Calendar.DATE, 2); // Adding 5 days
+        retrieveDate = validRetrieveDate.getTime();
+        orderDate = validRetrieveDate.getTime();
+        
+        order = new Order(orderType, orderDate, user, orderStatus, 5, isPaymentStatus, retrieveDate);
     }
     
     @Before
@@ -29,12 +44,10 @@ public class OrderTest {
     @Test
     public void testGetOrderType() {
         System.out.println("getOrderType");
-        Order instance = new Order();
-        String expResult = "";
-        String result = instance.getOrderType();
+        String expResult = "Delivery";
+        String result = order.getOrderType();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -43,12 +56,10 @@ public class OrderTest {
     @Test
     public void testGetUser() {
         System.out.println("getUser");
-        Order instance = new Order();
-        User expResult = null;
-        User result = instance.getUser();
+        User expResult = user;
+        User result = order.getUser();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -57,11 +68,9 @@ public class OrderTest {
     @Test
     public void testSetUser() {
         System.out.println("setUser");
-        User user = null;
-        Order instance = new Order();
-        instance.setUser(user);
+        User user = new User("ncct", "ncct96@gmail.com", "01659191413", "PV13", "9608");
+        order.setUser(user);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -70,11 +79,9 @@ public class OrderTest {
     @Test
     public void testSetOrderType() {
         System.out.println("setOrderType");
-        String orderType = "";
-        Order instance = new Order();
-        instance.setOrderType(orderType);
+        String orderType = "Pick Up";
+        order.setOrderType(orderType);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -83,12 +90,10 @@ public class OrderTest {
     @Test
     public void testGetOrderDate() {
         System.out.println("getOrderDate");
-        Order instance = new Order();
-        Date expResult = null;
-        Date result = instance.getOrderDate();
+        Date expResult = orderDate;
+        Date result = order.getOrderDate();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -97,11 +102,12 @@ public class OrderTest {
     @Test
     public void testSetOrderDate() {
         System.out.println("setOrderDate");
-        Date date = null;
-        Order instance = new Order();
-        instance.setOrderDate(date);
+        Calendar validRetrieveDate = Calendar.getInstance();
+        validRetrieveDate.setTime(new Date()); // Now use today date.
+        validRetrieveDate.add(Calendar.DATE, 2); // Adding 5 days
+        Date retrieveTime = validRetrieveDate.getTime();
+        order.setOrderDate(retrieveTime);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -110,12 +116,10 @@ public class OrderTest {
     @Test
     public void testGetOrderStatus() {
         System.out.println("getOrderStatus");
-        Order instance = new Order();
-        String expResult = "";
-        String result = instance.getOrderStatus();
+        String expResult = "Processing";
+        String result = order.getOrderStatus();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -124,11 +128,9 @@ public class OrderTest {
     @Test
     public void testSetOrderStatus() {
         System.out.println("setOrderStatus");
-        String orderStatus = "";
-        Order instance = new Order();
-        instance.setOrderStatus(orderStatus);
+        String orderStatus = "Done";
+        order.setOrderStatus(orderStatus);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -137,12 +139,10 @@ public class OrderTest {
     @Test
     public void testGetOrderAmt() {
         System.out.println("getOrderAmt");
-        Order instance = new Order();
-        double expResult = 0.0;
-        double result = instance.getOrderAmt();
+        double expResult = 5.0;
+        double result = order.getOrderAmt();
         assertEquals(expResult, result, 0.0);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -151,11 +151,9 @@ public class OrderTest {
     @Test
     public void testSetOrderAmt() {
         System.out.println("setOrderAmt");
-        double orderAmt = 0.0;
-        Order instance = new Order();
-        instance.setOrderAmt(orderAmt);
+        double orderAmt = 10.0;
+        order.setOrderAmt(orderAmt);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -164,12 +162,10 @@ public class OrderTest {
     @Test
     public void testIsPaymentStatus() {
         System.out.println("isPaymentStatus");
-        Order instance = new Order();
-        boolean expResult = false;
-        boolean result = instance.isPaymentStatus();
+        boolean expResult = true;
+        boolean result = order.isPaymentStatus();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -179,10 +175,8 @@ public class OrderTest {
     public void testSetPaymentStatus() {
         System.out.println("setPaymentStatus");
         boolean paymentStatus = false;
-        Order instance = new Order();
-        instance.setPaymentStatus(paymentStatus);
+        order.setPaymentStatus(paymentStatus);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -191,39 +185,9 @@ public class OrderTest {
     @Test
     public void testGetRetrieveDate() {
         System.out.println("getRetrieveDate");
-        Order instance = new Order();
-        Date expResult = null;
-        Date result = instance.getRetrieveDate();
+        Date expResult = retrieveDate;
+        Date result = order.getRetrieveDate();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getPaymentTime method, of class Order.
-     */
-    @Test
-    public void testGetPaymentTime() {
-        System.out.println("getPaymentTime");
-        Order instance = new Order();
-        Date expResult = null;
-        Date result = instance.getPaymentTime();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setPaymentTime method, of class Order.
-     */
-    @Test
-    public void testSetPaymentTime() {
-        System.out.println("setPaymentTime");
-        Date paymentTime = null;
-        Order instance = new Order();
-        instance.setPaymentTime(paymentTime);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -232,11 +196,12 @@ public class OrderTest {
     @Test
     public void testSetRetrieveDate() {
         System.out.println("setRetrieveDate");
-        Date retrieveDate = null;
-        Order instance = new Order();
-        instance.setRetrieveDate(retrieveDate);
+        Calendar validRetrieveDate = Calendar.getInstance();
+        validRetrieveDate.setTime(new Date()); // Now use today date.
+        validRetrieveDate.add(Calendar.DATE, 2); // Adding 5 days
+        Date retrieveDate = validRetrieveDate.getTime();
+        order.setRetrieveDate(retrieveDate);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }
