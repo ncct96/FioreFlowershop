@@ -12,8 +12,8 @@ import java.util.Scanner;
 
 /**
  *
- * @author Woo
- * Commit for add various type of product nothing changes with the code commit of stock notification
+ * @author Woo Commit for add various type of product nothing changes with the
+ * code commit of stock notification
  */
 public class CatalogMaintenance {
 
@@ -249,7 +249,7 @@ public class CatalogMaintenance {
     }
 
     //Display the catalog or monthly promotion catalog
-    public static void displayCatalogType(String navigationTitle, LinkedList<CatalogPackage> normalPackage, LinkedList<CatalogPackage> discountedPackage) {
+    public static void displayCatalogType(String navigationTitle, LinkedList<CatalogPackage> normalPackage, LinkedList<CatalogPackage> discountedPackage, String staffType) {
         int userMenuOption = 1;
         do {
             System.out.println("\n" + navigationTitle);
@@ -271,9 +271,11 @@ public class CatalogMaintenance {
             }
         } while (!(isInteger) || userMenuOption < 1 || userMenuOption > 3);
 
-        if (userMenuOption == 3) { // Back to Manager menu
+        if (userMenuOption == 3 && staffType.equals("Manager")) { // Back to Manager menu
             FioreFlowershop.manager();
-        } else if (userMenuOption == 1 && navigationTitle.equals("Display catalog")) { //Display the normal catalog            
+        } else if(userMenuOption == 3 && staffType.equals("Inverntory clerk")){
+            FioreFlowershop.inventoryClerk();
+        }else if (userMenuOption == 1 && navigationTitle.equals("Display catalog")) { //Display the normal catalog            
             displayNormalCatalog(navigationTitle, normalPackage, discountedPackage);
             System.out.println("\n====================================================");
             char userOption;
@@ -313,8 +315,11 @@ public class CatalogMaintenance {
         } else if (userMenuOption == 2 && navigationTitle.equals("Delete catalog")) {
             displayPromotionCatalog(navigationTitle, normalPackage, discountedPackage);
             deleteCatalogItem(navigationTitle, normalPackage, discountedPackage, 2);
-        }else if (navigationTitle.equals("Stock Maintenance")) {
+        } else if (navigationTitle.equals("Current stock")) {
             displayStockAvailability(navigationTitle, normalPackage, discountedPackage, userMenuOption);
+        } else if (navigationTitle.equals("Restock quantity")) {
+            displayStockAvailability(navigationTitle, normalPackage, discountedPackage, userMenuOption);
+            restockQuantity(normalPackage, discountedPackage, userMenuOption);
         }
     }
 
@@ -1213,7 +1218,7 @@ public class CatalogMaintenance {
             FioreFlowershop.manager();
         }
     }
-    
+
     //Display stock
     public static void displayStockAvailability(String navigationTitle, LinkedList<CatalogPackage> normalPackage, LinkedList<CatalogPackage> discountedPackage, int arrayType) {
         LinkedList<CatalogPackage> temporalyPackage = new LinkedList<>();
@@ -1226,7 +1231,7 @@ public class CatalogMaintenance {
             catalogType = "Monthly promotion catalog";
         }
 
-        int freshFlowerCounter = 0, bouquetsCounter = 0, flowerArrangementCounter = 0, packageNumber = 0, packageQuantity = 0;
+        int freshFlowerCounter = 0, bouquetsCounter = 0, flowerArrangementCounter = 0;
         CatalogPackage catalogPackage = new CatalogPackage();
         System.out.println("\n" + navigationTitle + " - " + catalogType);
         System.out.println("========================================");
@@ -1286,13 +1291,59 @@ public class CatalogMaintenance {
                     System.out.println("There are no record found\n");
                 }
             }
+            
+            if(navigationTitle.equals("Current stock")){
+                System.out.println("\n====================================================");
+                char userOption;
+                do {
+                    System.out.print("Please enter 'Y/y' to Inventory clerk menu: ");
+                    userOption = scan.next().charAt(0);
+                    System.out.println(userOption);
 
-            //Ask user to restock the package quantity ?
+                } while (userOption != 'y' && userOption != 'Y');
+
+                if (userOption == 'y' || userOption == 'Y') {
+                    FioreFlowershop.inventoryClerk();
+                }
+            }            
+        } else {
+            System.out.println(FioreFlowershop.ConsoleColors.RED + "There are no record found\n");
+            System.out.printf(FioreFlowershop.ConsoleColors.BLACK);
+            FioreFlowershop.inventoryClerk();
+        }
+    }
+
+    //
+    public static void restockQuantity(LinkedList<CatalogPackage> normalPackage, LinkedList<CatalogPackage> discountedPackage, int arrayType) {
+        LinkedList<CatalogPackage> temporalyPackage = new LinkedList<>();
+        String catalogType = "";
+        if (arrayType == 1) {
+            temporalyPackage = normalPackage;
+        } else if (arrayType == 2) {
+            temporalyPackage = discountedPackage;
+        }        
+        int packageNumber = 0, packageQuantity = 0;
+        CatalogPackage catalogPackage = new CatalogPackage();
+        //Ask user to restock the package quantity ?
+        do {
+            System.out.println("\nPlease enter the number of package to update the stock amount.");
+            System.out.print("Enter 0 to cancel: ");
+            if (scan.hasNextInt()) {
+                packageNumber = scan.nextInt();
+                isInteger = true;
+            } else {
+                isInteger = false;
+                System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter the number only.");
+                scan.next();
+            }
+            System.out.printf(FioreFlowershop.ConsoleColors.BLACK);
+        } while (!(isInteger) || packageNumber < 0 || packageNumber > temporalyPackage.getTotalEntries());
+
+        if (packageNumber > 0) {
             do {
-                System.out.println("\nPlease enter the number of package to update the stock amount.");
-                System.out.print("Enter 0 to cancel: ");
+                System.out.print("Enter the quantity for the package that you wish to add: ");
                 if (scan.hasNextInt()) {
-                    packageNumber = scan.nextInt();
+                    packageQuantity = scan.nextInt();
                     isInteger = true;
                 } else {
                     isInteger = false;
@@ -1300,41 +1351,22 @@ public class CatalogMaintenance {
                     scan.next();
                 }
                 System.out.printf(FioreFlowershop.ConsoleColors.BLACK);
-            } while (!(isInteger) || packageNumber < 0 || packageNumber > temporalyPackage.getTotalEntries());
+            } while (!(isInteger));
 
-            if (packageNumber > 0) {
-                do {
-                    System.out.print("Enter the quantity for the package that you wish to add: ");
-                    if (scan.hasNextInt()) {
-                        packageQuantity = scan.nextInt();
-                        isInteger = true;
-                    } else {
-                        isInteger = false;
-                        System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter the number only.");
-                        scan.next();
-                    }
-                    System.out.printf(FioreFlowershop.ConsoleColors.BLACK);
-                } while (!(isInteger));
-
-                if (arrayType == 1) {
-                    catalogPackage = normalPackage.getItem(packageNumber);
-                    catalogPackage.setQuantity(catalogPackage.getQuantity() + packageQuantity);
-                    FioreFlowershop.manager();
-                } else if (arrayType == 2) {
-                    catalogPackage = discountedPackage.getItem(packageNumber);
-                    catalogPackage.setQuantity(catalogPackage.getQuantity() + packageQuantity);
-                    FioreFlowershop.manager();
-                }
-            } else {
-                FioreFlowershop.manager();
+            if (arrayType == 1) {
+                catalogPackage = normalPackage.getItem(packageNumber);
+                catalogPackage.setQuantity(catalogPackage.getQuantity() + packageQuantity);
+                FioreFlowershop.inventoryClerk();
+            } else if (arrayType == 2) {
+                catalogPackage = discountedPackage.getItem(packageNumber);
+                catalogPackage.setQuantity(catalogPackage.getQuantity() + packageQuantity);
+                FioreFlowershop.inventoryClerk();
             }
         } else {
-            System.out.println(FioreFlowershop.ConsoleColors.RED + "There are no record found\n");
-            System.out.printf(FioreFlowershop.ConsoleColors.BLACK);
-            FioreFlowershop.manager();
+            FioreFlowershop.inventoryClerk();
         }
     }
-    
+
     //Stock Availability Checking for the notification
     public static void stockNotification(LinkedList<CatalogPackage> normalPackage, LinkedList<CatalogPackage> discountedPackage) {
         int normalInsufficient = 0, discountInsufficient = 0;

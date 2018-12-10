@@ -326,15 +326,13 @@ public class FioreFlowershop {
 
     public static void manager() {
         System.out.println("\nPlease Select The Options Below.");
-        CatalogMaintenance.stockNotification(normalPackage, discountedPackage);
         System.out.println("[1] Customer Maintenance");
         System.out.println("[2] Create Corporate Customer Account");
         System.out.println("[3] Add a product to catalog");
         System.out.println("[4] Remove a product from catalog");
         System.out.println("[5] Edit the details of product in catalog");
         System.out.println("[6] Display created catalog");
-        System.out.println("[7] Stock Maintenance");
-        System.out.println("[8] Back");
+        System.out.println("[7] Back");
         try {
             int managerChoice = s.nextInt();
             s.nextLine();
@@ -352,21 +350,17 @@ public class FioreFlowershop {
                     break;//Add product
                 case 4:
                     navigationMsg = "Delete catalog";
-                    CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage);
+                    CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage, "Manager");
                     break;//Delete product
                 case 5:
                     navigationMsg = "Edit catalog";
-                    CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage);
+                    CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage, "Manager");
                     break;//Edit Product
                 case 6:
                     navigationMsg = "Display catalog";
-                    CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage);
-                    break;//Display product
+                    CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage, "Manager");
+                    break;//Display product                
                 case 7:
-                    navigationMsg = "Stock Maintenance";
-                    CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage);
-                    break;//Display Current Stock for normal or monthly promotion catalog
-                case 8:
                     staffTypeSelection();
                     break;//Back to staff selection
             }
@@ -377,7 +371,9 @@ public class FioreFlowershop {
     }
 
     public static void inventoryClerk() {
+        String navigationMsg;
         System.out.println("\nPlease Select The Options Below.");
+        CatalogMaintenance.stockNotification(normalPackage, discountedPackage);
         System.out.println("[1] Check stock quantity.");
         System.out.println("[2] Restock product quantity.");
         System.out.println("[3] Edit customize floral arrangement customization options");
@@ -386,8 +382,14 @@ public class FioreFlowershop {
             int inventoryClerkChoice = s.nextInt();
             s.nextLine();
             switch (inventoryClerkChoice) {
-                case 1: //Check stock quantity
+                case 1: 
+                    navigationMsg = "Current stock";
+                    CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage, "Inverntory clerk");
+                    break;//Display Current Stock for normal or monthly promotion catalog
                 case 2: //Restock product
+                    navigationMsg = "Restock quantity";
+                    CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage, "Inverntory clerk");
+                    break;
                 case 3:
                     CustomizePackage.itemsMenu(itemCatalogue, customizedPackages);
                     break;
