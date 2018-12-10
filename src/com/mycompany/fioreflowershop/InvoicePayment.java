@@ -28,6 +28,7 @@ public class InvoicePayment {
     private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     private static InvoiceHistory ih;
     private static LinkedList<InvoiceHistory> paymentHistory = new LinkedList<>();
+    private static LinkedList<CatalogOrders> tempCatalog = new LinkedList<>();
     private static ListInterface<String> userEmail = new LinkedList<>();
     private static int invoiceNumber = 100;
     
@@ -46,39 +47,12 @@ public class InvoicePayment {
                 case 2:generateInvoiceP1();break; 
                 case 3:viewPaymentHistory1();break; 
                 case 4:FioreFlowershop.counterStaff();break;
-                case 5:receipt();break;
             }
         }catch (Exception e){
             System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"An Error had occurred. Please Enter The Numbers Stated"+FioreFlowershop.ConsoleColors.RESET);
             System.out.println(FioreFlowershop.ConsoleColors.BLUE+"\nRedirecting Back to Invoice Maintenance Menu......" + FioreFlowershop.ConsoleColors.RESET);
             invoiceMaintenance();
         }
-    }
-    
-    public static void receipt(){//This is for nicholas
-        System.out.println("\n\t\t   Fiore Flowershop SDN.NHD ");
-        System.out.println("\t\t    2404 Aaron Smith Drive");
-        System.out.println("\t\t 2404 Pennsylvania, 17404 York");
-        
-        System.out.println("\nID : [SAMPLE ID HERE]");
-        System.out.println("Date : [TODAY DATE]");
-        System.out.println("Cashier : Admin");
-        System.out.println("Time : [TIME FOR PAYMENT]");
-        System.out.println("=================================================================");
-        System.out.println("ITEM \t\t\t QUANTITY \t PRICE \t\t AMOUNT");
-        System.out.println("=================================================================");
-        
-        /*ITEM SOLD LISTING GOES HERE*/
-        
-        System.out.println("\n-----------------------------------------------------------------");
-        System.out.println("\tTOTAL : \t    5 \t\t\t\t 300.00");
-        System.out.println("-----------------------------------------------------------------");
-        System.out.println("CASH : \t\t\t\t\t300.00");
-        System.out.println("CASH TENDERED : \t\t\t500.00");
-        System.out.println("BALANCE : \t\t\t\t200.00");
-        System.out.println("\n=================================================================");
-        System.out.println("Thank You For Choosing Fiore Flowershop, Please Come Again :D");
-        System.out.println("=================================================================");
     }
     
     public static void viewPaymentHistory1(){//For viewing payment history, retrieve available paid invoices first
@@ -145,17 +119,24 @@ public class InvoicePayment {
         System.out.println("==================================================================================================================");
         for(int i = 1; i <= paymentHistory.getTotalEntries(); i++){
             if(paymentHistory.getItem(i).getInvoiceNumber().equals(invoiceID)){
-                System.out.println(sdf.format(paymentHistory.getItem(i).getCatalogOrder().getItem(i).getOrderDate())+"   | "
-                        + paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(i).getName()+ "\t\t\t  | \t" 
-                        + paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(i).getUserQuantity()+ "\t|\t" 
-                        + paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(i).getDiscountRate()+ "\t    |\t" 
-                        + paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(i).getPrice() + " \t     |   " 
-                        + paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(i).getPrice()*paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(i).getUserQuantity());
-                totalPrice += paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(i).getPrice()*paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(i).getUserQuantity();
-                if(FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getItem(i).getDiscountRate() != 0){
-                    discountPrice += (paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(i).getPrice()*paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(i).getUserQuantity()
-                                * paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(i).getDiscountRate()) / 100;
-                }
+                //for(int k = 1; k <= paymentHistory.getItem(i).getCatalogOrder().getTotalEntries(); k++){
+                    for(int p = 1; p <= paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getTotalEntries(); p++){
+                        System.out.println(sdf.format(paymentHistory.getItem(i).getCatalogOrder().getItem(i).getOrderDate())+"   | "
+                        + paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getName()+ "\t\t\t  | \t" 
+                        + paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getUserQuantity()+ "\t|\t" 
+                        + paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getDiscountRate()+ "\t    |\t" 
+                        + paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getPrice() + " \t     |   " 
+                        + paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getPrice()
+                                *paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getUserQuantity());
+                        totalPrice += paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getPrice()
+                            *paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getUserQuantity();
+                        if(paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getDiscountRate() != 0){
+                            discountPrice += (paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getPrice()
+                            *paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getUserQuantity()
+                            *paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getDiscountRate()) / 100;
+                        }
+                    }
+                //}
             }
         }
                 System.out.println("\n\n\t\t\t\t\t\t\t\t\t Subtotal :\t\t\t " + totalPrice);
@@ -265,18 +246,23 @@ public class InvoicePayment {
 
             for(int i = 1; i <= FioreFlowershop.getCatalogOrder().getTotalEntries() ;i++){
                 if(FioreFlowershop.getCatalogOrder().getItem(i).getUser().equals(user) && !FioreFlowershop.getCatalogOrder().getItem(i).isPaymentStatus()){
-                    for(int k = 1; k <= FioreFlowershop.getCatalogOrder().getItem(k).getCatalogPack().getTotalEntries(); k++){
+                    for(int k = 1; k <= FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getTotalEntries(); k++){
                         if(FioreFlowershop.getCatalogOrder().getItem(k).getCatalogPack() != null){
-                            System.out.println(sdf.format(FioreFlowershop.getCatalogOrder().getItem(k).getOrderDate())+"   | "+FioreFlowershop.getCatalogOrder().getItem(k).getCatalogPack().getItem(k).getName()+ "\t\t\t  | \t" + FioreFlowershop.getCatalogOrder().getItem(k).getCatalogPack().getItem(k).getUserQuantity()+ "\t|\t" 
-                            +FioreFlowershop.getCatalogOrder().getItem(k).getCatalogPack().getItem(k).getDiscountRate()+ "\t    |\t" + FioreFlowershop.getCatalogOrder().getItem(k).getCatalogPack().getItem(k).getPrice() + " \t     |   " + 
-                                FioreFlowershop.getCatalogOrder().getItem(k).getCatalogPack().getItem(k).getPrice()*FioreFlowershop.getCatalogOrder().getItem(k).getCatalogPack().getItem(k).getUserQuantity());
-                            totalPrice += FioreFlowershop.getCatalogOrder().getItem(k).getCatalogPack().getItem(k).getPrice()*FioreFlowershop.getCatalogOrder().getItem(k).getCatalogPack().getItem(k).getUserQuantity();
-                            if(FioreFlowershop.getCatalogOrder().getItem(k).getCatalogPack().getItem(k).getDiscountRate() != 0){
-                                discountPrice += (FioreFlowershop.getCatalogOrder().getItem(k).getCatalogPack().getItem(k).getPrice()*FioreFlowershop.getCatalogOrder().getItem(k).getCatalogPack().getItem(k).getUserQuantity()
-                                * FioreFlowershop.getCatalogOrder().getItem(k).getCatalogPack().getItem(k).getDiscountRate()) / 100;
+                            System.out.println(sdf.format(FioreFlowershop.getCatalogOrder().getItem(k).getOrderDate())+"   | "
+                            +FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getItem(k).getName()+ "\t\t\t  | \t" 
+                            +FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getItem(k).getUserQuantity()+ "\t|\t" 
+                            +FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getItem(k).getDiscountRate()+ "\t    |\t" 
+                            +FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getItem(k).getPrice() + " \t     |   " 
+                            +FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getItem(k).getPrice()
+                            *FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getItem(k).getUserQuantity());
+                            totalPrice += FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getItem(k).getPrice()
+                                    *FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getItem(k).getUserQuantity();
+                            if(FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getItem(k).getDiscountRate() != 0){
+                                discountPrice += (FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getItem(k).getPrice()
+                                *FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getItem(k).getUserQuantity()
+                                * FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getItem(k).getDiscountRate()) / 100;
                             }  
                         }
-
                     }
                 }
             }
@@ -383,23 +369,26 @@ public class InvoicePayment {
             System.out.println("===============================================================================================================");
             System.out.println("Date Ordered | Description \t\t\t  | Quantity    |  Discount Rate(%) | Unit Price(RM) |  Total(RM)");
             
-            for(int i = 1; i <= FioreFlowershop.getCatalogOrder().getTotalEntries() ;i++){
+            for(int i = 1; i <= FioreFlowershop.getCatalogOrder().getTotalEntries(); i++){
                 if(FioreFlowershop.getCatalogOrder().getItem(i)!= null){
                     if(FioreFlowershop.getCatalogOrder().getItem(i).getUser().equals(user) && !FioreFlowershop.getCatalogOrder().getItem(i).isPaymentStatus()){
-                        for(int k = 1; k <= FioreFlowershop.getCatalogOrder().getItem(k).getCatalogPack().getTotalEntries(); k++){
-                            if(FioreFlowershop.getCatalogOrder().getItem(k).getCatalogPack() != null){
-                                System.out.println(sdf.format(FioreFlowershop.getCatalogOrder().getItem(k).getOrderDate())+"   | "
-                                +FioreFlowershop.getCatalogOrder().getItem(k).getCatalogPack().getItem(k).getName()+ "\t\t\t  | \t" 
-                                +FioreFlowershop.getCatalogOrder().getItem(k).getCatalogPack().getItem(k).getUserQuantity()+ "\t|\t" 
-                                +FioreFlowershop.getCatalogOrder().getItem(k).getCatalogPack().getItem(k).getDiscountRate()+ "\t    |\t" 
-                                +FioreFlowershop.getCatalogOrder().getItem(k).getCatalogPack().getItem(k).getPrice() + " \t     |   " 
-                                +FioreFlowershop.getCatalogOrder().getItem(k).getCatalogPack().getItem(k).getPrice()
-                                *FioreFlowershop.getCatalogOrder().getItem(k).getCatalogPack().getItem(k).getUserQuantity());
-                                totalPrice += FioreFlowershop.getCatalogOrder().getItem(k).getCatalogPack().getItem(k).getPrice()*FioreFlowershop.getCatalogOrder().getItem(k).getCatalogPack().getItem(k).getUserQuantity();
-                                    if(FioreFlowershop.getCatalogOrder().getItem(k).getCatalogPack().getItem(k).getDiscountRate() != 0){
-                                        discountPrice += (FioreFlowershop.getCatalogOrder().getItem(k).getCatalogPack().getItem(k).getPrice()*FioreFlowershop.getCatalogOrder().getItem(k).getCatalogPack().getItem(k).getUserQuantity()
-                                        * FioreFlowershop.getCatalogOrder().getItem(k).getCatalogPack().getItem(k).getDiscountRate()) / 100; 
-                                    }   
+                        if(FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack() != null){
+                            for(int k = 1; k <= FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getTotalEntries(); k++){
+                            System.out.println(sdf.format(FioreFlowershop.getCatalogOrder().getItem(i).getOrderDate())+"   | "
+                            +FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getItem(k).getName()+ "\t\t\t  | \t" 
+                            +FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getItem(k).getUserQuantity()+ "\t|\t" 
+                            +FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getItem(k).getDiscountRate()+ "\t    |\t" 
+                            +FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getItem(k).getPrice() + " \t     |   " 
+                            +FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getItem(k).getPrice()
+                            *FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getItem(k).getUserQuantity());
+                            totalPrice += FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getItem(k).getPrice()
+                                    *FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getItem(k).getUserQuantity();
+                                if(FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getItem(k).getDiscountRate() != 0){
+                                    discountPrice += (FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getItem(k).getPrice()
+                                            *FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getItem(k).getUserQuantity()
+                                    * FioreFlowershop.getCatalogOrder().getItem(i).getCatalogPack().getItem(k).getDiscountRate()) / 100; 
+                                }
+                                tempCatalog.add(FioreFlowershop.getCatalogOrder().getItem(i));
                             }
                         }
                     }
@@ -453,7 +442,12 @@ public class InvoicePayment {
                     //Store paid invoice into an invoice link list
                     for(int l = 1;l <= FioreFlowershop.getCatalogOrder().getTotalEntries(); l++){
                         if(FioreFlowershop.getCatalogOrder().getItem(l).getUser().equals(user)){
-                            paymentHistory.add(new InvoiceHistory(invoiceNumber,FioreFlowershop.getCatalogOrder(), cc, today));
+                            for(int m = 1; m <= userEmail.getTotalEntries(); m++){
+                                if(userEmail.getItem(m).equals(FioreFlowershop.getCatalogOrder().getItem(l).getUser().getEmail())){
+                                    userEmail.remove(m);
+                                }
+                            }
+                            paymentHistory.add(new InvoiceHistory(invoiceNumber,tempCatalog, cc, today));
                         }
                     }
                         ++invoiceNumber; 

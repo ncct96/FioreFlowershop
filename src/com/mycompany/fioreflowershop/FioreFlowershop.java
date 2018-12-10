@@ -109,12 +109,10 @@ public class FioreFlowershop {
         CatalogOrders ct1 = new CatalogOrders("C", catalogPack1, "Delivery", todayDate, cc1, "Order Status", 200, false, todayDate, todayDate);
         CatalogOrders ct2 = new CatalogOrders("C", catalogPack2, "Delivery", todayDate, cc2, "Order Status", 200, false, todayDate, todayDate);
         CatalogOrders ct3 = new CatalogOrders("C", catalogPack1, "Delivery", todayDate, cc1, "Order Status", 300, false, todayDate, todayDate);
-        CatalogOrders ct4 = new CatalogOrders("C", catalogPack1, "Delivery", todayDate, cc1, "Order Status", 300, false, todayDate, todayDate);
         
         catalogOrder.add(ct1);
         catalogOrder.add(ct2);
         catalogOrder.add(ct3);
-        catalogOrder.add(ct4);
 
         ListIteratorInterface<Item> styles = new LinkedList<>();
         ListIteratorInterface<Item> sizes = new LinkedList<>();
