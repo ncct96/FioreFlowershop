@@ -86,7 +86,7 @@ public class InvoiceHistoryTest {
     @Test
     public void testGetCatalogOrder() {
         System.out.println("getCatalogOrder");
-        LinkedList<CatalogOrders> expResult = null;
+        LinkedList<CatalogOrders> expResult = new LinkedList<>();
         LinkedList<CatalogOrders> result = instance.getCatalogOrder();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
@@ -98,7 +98,7 @@ public class InvoiceHistoryTest {
     @Test
     public void testSetCatalogOrder() {
         System.out.println("setCatalogOrder");
-//        LinkedList<CatalogOrders> catalogOrder = null;
+        LinkedList<CatalogOrders> catalogOrder = null;
         instance.setCatalogOrder(catalogOrd);
         // TODO review the generated test code and remove the default call to fail.
     }
@@ -109,7 +109,7 @@ public class InvoiceHistoryTest {
     @Test
     public void testGetCorp() {
         System.out.println("getCorp");
-        CorporateCustomer expResult = null;
+        CorporateCustomer expResult = new CorporateCustomer();
         CorporateCustomer result = instance.getCorp();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
@@ -121,7 +121,7 @@ public class InvoiceHistoryTest {
     @Test
     public void testSetCorp() {
         System.out.println("setCorp");
-//        CorporateCustomer corp = null;
+        CorporateCustomer corp = null;
         instance.setCorp(corpCust);
         // TODO review the generated test code and remove the default call to fail.
     }
