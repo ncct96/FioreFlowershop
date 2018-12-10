@@ -109,7 +109,7 @@ public class FioreFlowershop {
         catalogPack2.add(cp2);
         catalogPack2.add(cp3);
 
-        CatalogOrders ct1 = new CatalogOrders("C1", catalogPack1, "Pick Up", todayDate, c1, "Order Status", 200, false, todayDate, todayDate);
+        CatalogOrders ct1 = new CatalogOrders("C1", catalogPack1, "Pick Up", todayDate, c1, "Order Status", 308, false, todayDate, todayDate);
         CatalogOrders ct2 = new CatalogOrders("C2", catalogPack2, "Pick Up", todayDate, c2, "Order Status", 200, false, todayDate, todayDate);
         CatalogOrders ct3 = new CatalogOrders("C3", catalogPack1, "Delivery", todayDate, c1, "Order Status", 300, false, todayDate, todayDate);
 
@@ -163,7 +163,7 @@ public class FioreFlowershop {
         CustomizedPackage package4 = new CustomizedPackage(styles.getItem(4), sizes.getItem(2), accessories.getItem(1), priorities.getItem(1), deliveryTypes.getItem(1), c2, false);
         CustomizedPackage package5 = new CustomizedPackage(styles.getItem(1), sizes.getItem(1), accessories.getItem(2), priorities.getItem(2), deliveryTypes.getItem(1), c2, false);
         CustomizedPackage package6 = new CustomizedPackage(styles.getItem(2), sizes.getItem(3), accessories.getItem(2), priorities.getItem(1), deliveryTypes.getItem(2), c2, false);
-        for(int i = 1; i <= testFlowers.getTotalEntries(); i++){
+        for (int i = 1; i <= testFlowers.getTotalEntries(); i++) {
             package1.getFlowerList().add(testFlowers.getItem(i));
             package2.getFlowerList().add(testFlowers.getItem(i));
             package3.getFlowerList().add(testFlowers.getItem(i));
@@ -178,10 +178,10 @@ public class FioreFlowershop {
         customizedPackages.enqueue(package4);
         customizedPackages.enqueue(package5);
         customizedPackages.enqueue(package6);
-        
+
         readyOrders.add(customizedPackages.dequeue());
         readyOrders.add(customizedPackages.dequeue());
-        
+
 //        CustomizedPackage specialPackage = new CustomizedPackage(styles.getItem(1), sizes.getItem(2), flowers.getItem(5), accessories.getItem(2), priorities.getItem(1), deliveryTypes.getItem(2), customer);
 //        specialPackage.setDeliveryDate(Calendar.getInstance().getTime());
 //        Calendar cal = Calendar.getInstance();
@@ -382,7 +382,7 @@ public class FioreFlowershop {
             int inventoryClerkChoice = s.nextInt();
             s.nextLine();
             switch (inventoryClerkChoice) {
-                case 1: 
+                case 1:
                     navigationMsg = "Current stock";
                     CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage, "Inverntory clerk");
                     break;//Display Current Stock for normal or monthly promotion catalog
@@ -472,12 +472,8 @@ public class FioreFlowershop {
         s.nextLine();
         switch (deliveryStaffChoice) {
             case 1:
-            case 2:
-            case 3:
-                Delivery.sortRouteDelivery(catalogOrder, readyOrders, shopAddress);
                 try {
-                    deliveryStaff();
-
+                    Delivery.sortRouteDelivery(catalogOrder, readyOrders, shopAddress);
                 } catch (ApiException ex) {
                     Logger.getLogger(FioreFlowershop.class
                             .getName()).log(Level.SEVERE, null, ex);
@@ -491,6 +487,8 @@ public class FioreFlowershop {
                             .getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
+            case 2:
+            case 3:
             case 4:
                 //DeliveryOptimization.distanceMatrix(origin, dest);
                 break;
@@ -544,7 +542,7 @@ public class FioreFlowershop {
 
             } else if (pickupChoice == 3) {
                 s.nextLine();
-                
+
                 System.out.print("Please enter User ID to pay: ");
 
                 String userID = s.nextLine();

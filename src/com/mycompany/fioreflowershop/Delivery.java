@@ -340,15 +340,19 @@ public class Delivery {
 
         // Get all delivery order for Catalog Order
         while (catalogIterator.hasNext()) {
-            if (catalogIterator.next().getOrderType().equals("Delivery")) {
-                unOrderList.add(catalogIterator.next());
+            CatalogOrders order = catalogIterator.next();
+
+            if (order.getOrderType().equals("Delivery")) {
+                unOrderList.add(order);
             }
         }
 
         // Get all delivery order for Customize Package
         while (CustomIterator.hasNext()) {
-            if (CustomIterator.next().getOrderType().equals("Delivery")) {
-                customOrder.add(CustomIterator.next());
+            CustomizedPackage order = CustomIterator.next();
+
+            if (order.getDeliveryType().getName().equals("Delivery")) {
+                customOrder.add(order);
             }
         }
 
@@ -488,8 +492,8 @@ public class Delivery {
         System.out.println("Origin: " + shopAddress);
         System.out.println("Total Payment Amount: RM" + totalPayment);
     }
-    
-       public static void searchUserPickUp(String userID, LinkedList<CatalogOrders> catalogOrder, LinkedList<CustomizedPackage> customOrder, LinkedList<Order> paidOrder) {
+
+    public static void searchUserPickUp(String userID, LinkedList<CatalogOrders> catalogOrder, LinkedList<CustomizedPackage> customOrder, LinkedList<Order> paidOrder) {
 
         LinkedList<CatalogOrders> pickuporder = catalogOrder;
         LinkedList<Order> matchOrder = new LinkedList<>();
@@ -684,8 +688,6 @@ public class Delivery {
             System.out.println("=================================================================");
             System.out.println("ITEM \t\t\t QUANTITY \t PRICE \t\t AMOUNT");
             System.out.println("=================================================================");
-            
-            
 
             System.out.println("\n-----------------------------------------------------------------");
             System.out.println("\tTOTAL : \t    5 \t\t\t\t 300.00");
