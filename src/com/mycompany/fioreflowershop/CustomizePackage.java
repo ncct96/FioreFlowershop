@@ -32,6 +32,8 @@ public class CustomizePackage {
         int style = 0, size = 0, flower = 0, accessory = 0, priority = 0, deliveryType = 0;
         Scanner scan = new Scanner(System.in);
         boolean cancel = false;
+        ListIteratorInterface<Item> displayFlowers = new LinkedList<Item>();
+        ListIteratorInterface<Item> selectedFlowers = new LinkedList<Item>();
 
         System.out.println("Customizing flower package");
         System.out.println("Enter [-1] at any step to cancel and return to main menu\n");
@@ -89,7 +91,7 @@ public class CustomizePackage {
             }
         }
         if (!cancel) {
-            while (true) {
+            /*while (true) {
                 try {
                     do {
                         System.out.println("\nSelect the flowers for the arrangement");
@@ -112,8 +114,55 @@ public class CustomizePackage {
                     System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
                     scan.next();
                 }
+            }*/
+
+            for (int i = 1; i <= itemCatalogue.getFlowers().getTotalEntries(); i++) {
+                displayFlowers.add(itemCatalogue.getFlowers().getItem(i));
+            }
+            boolean flowerSelected = false;
+            //Test for multiple flowers
+            while (true) {
+                try {
+                    do {
+                        System.out.println("\nSelect the flowers for the arrangement");
+                        for (int i = 1; i <= displayFlowers.getTotalEntries(); i++) {
+                            System.out.print(ANSI_GREEN + "[" + i + "]" + ANSI_RESET);
+                            System.out.printf(" %s: RM%.2f\n", displayFlowers.getItem(i).getName(), displayFlowers.getItem(i).getPrice());
+                        }
+                        flower = scan.nextInt();
+
+                        if (flower == -1) {
+                            cancel = true;
+                            break;
+                        }
+                        if (flower < 1 || flower > displayFlowers.getTotalEntries()) {
+                            System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
+                        }
+                    } while (flower < 1 || flower > displayFlowers.getTotalEntries());
+                    
+                    selectedFlowers.add(displayFlowers.getItem(flower));
+                    displayFlowers.remove(flower);
+                    
+                    if(displayFlowers.isEmpty())
+                        break;
+                    
+                    char selection;
+                    do {
+                        System.out.print("Add Another Flower?" + ANSI_GREEN + "[Y/N]" + ANSI_RESET + " ");
+                        selection = Character.toUpperCase(scan.next().charAt(0));
+                        scan.nextLine();
+                        System.out.println();
+                    } while (selection != 'Y' && selection != 'N');
+                    
+                    if(selection == 'N')
+                        break;
+                } catch (InputMismatchException e) {
+                    System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
+                    scan.next();
+                }
             }
         }
+        
         if (!cancel) {
             while (true) {
                 try {
@@ -194,7 +243,13 @@ public class CustomizePackage {
             }
         }
         if (!cancel) {
-            CustomizedPackage order = new CustomizedPackage(itemCatalogue.getStyles().getItem(style), itemCatalogue.getSizes().getItem(size), itemCatalogue.getFlowers().getItem(flower), itemCatalogue.getAccessories().getItem(accessory), itemCatalogue.getPriorities().getItem(priority), itemCatalogue.getDeliveryTypes().getItem(deliveryType), customer, false);
+            CustomizedPackage order = new CustomizedPackage(itemCatalogue.getStyles().getItem(style), itemCatalogue.getSizes().getItem(size), itemCatalogue.getAccessories().getItem(accessory), itemCatalogue.getPriorities().getItem(priority), itemCatalogue.getDeliveryTypes().getItem(deliveryType), customer, false);
+            
+            while(!selectedFlowers.isEmpty()){
+                order.getFlowerList().add(selectedFlowers.getItem(1));
+                selectedFlowers.remove(1);
+            }
+            
             customizedPackages.enqueue(order);
             order.minusQuantity();
 
@@ -227,7 +282,9 @@ public class CustomizePackage {
         System.out.println("Fiore Flowershop");
         System.out.println("=====================================================");
         System.out.println("Item Type: Customized Package\n");
-        System.out.println("Flower: " + order.getFlower().getName() + " - RM " + order.getFlower().getPrice());
+        for(int i = 1; i <= order.getFlowerList().getTotalEntries(); i++){
+            System.out.println("Flower" + "[" + i + "]: " + order.getFlowerList().getItem(i).getName() + " - RM " + order.getFlowerList().getItem(i).getPrice());
+        }
         System.out.println("Size: " + order.getSize().getName() + " - Flower x " + order.getSize().getPrice());
         System.out.println("Arrangement Style: " + order.getStyle().getName() + " - RM " + order.getStyle().getPrice());
         System.out.println("Accesscories: " + order.getAccessory().getName() + " - RM " + order.getAccessory().getPrice());
