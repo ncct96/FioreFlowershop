@@ -5,6 +5,7 @@
  */
 package com.mycompany.fioreflowershop.modal;
 
+import com.mycompany.fioreflowershop.FioreFlowershop;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -15,7 +16,15 @@ import static org.junit.Assert.*;
  */
 public class UserTest {
     
+    public User instance;
+    
     public UserTest() {
+        String username = "Username";
+        String email = "ceekay@gmail.com";
+        String phone = "0123456789";
+        String address = "Address";
+        String password = "abcdef123";
+        instance = new User(username, email, phone, address, password); 
     }
     
     @Before
@@ -28,12 +37,10 @@ public class UserTest {
     @Test
     public void testGetUsername() {
         System.out.println("getUsername");
-        User instance = new User();
-        String expResult = "";
+        String expResult = "Username"; //Username
         String result = instance.getUsername();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -42,11 +49,9 @@ public class UserTest {
     @Test
     public void testSetUsername() {
         System.out.println("setUsername");
-        String username = "";
-        User instance = new User();
+        String username = "Username";
         instance.setUsername(username);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -55,12 +60,10 @@ public class UserTest {
     @Test
     public void testGetEmail() {
         System.out.println("getEmail");
-        User instance = new User();
-        String expResult = "";
+        String expResult = "ceekay@gmail.com";
         String result = instance.getEmail();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -69,25 +72,20 @@ public class UserTest {
     @Test
     public void testSetEmail() {
         System.out.println("setEmail");
-        String email = "";
-        User instance = new User();
+        String email = "ceekay@gmail.com";
         instance.setEmail(email);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
-
     /**
      * Test of getPassword method, of class User.
      */
     @Test
     public void testGetPassword() {
         System.out.println("getPassword");
-        User instance = new User();
-        String expResult = "";
+        String expResult = "abcdef123";
         String result = instance.getPassword();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -96,11 +94,9 @@ public class UserTest {
     @Test
     public void testSetPassword() {
         System.out.println("setPassword");
-        String password = "";
-        User instance = new User();
+        String password = "abcdef123";
         instance.setPassword(password);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -109,12 +105,10 @@ public class UserTest {
     @Test
     public void testGetAddress() {
         System.out.println("getAddress");
-        User instance = new User();
-        String expResult = "";
+        String expResult = "Address";
         String result = instance.getAddress();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -123,11 +117,9 @@ public class UserTest {
     @Test
     public void testSetAddress() {
         System.out.println("setAddress");
-        String address = "";
-        User instance = new User();
+        String address = "Address";
         instance.setAddress(address);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -136,12 +128,10 @@ public class UserTest {
     @Test
     public void testGetPhone() {
         System.out.println("getPhone");
-        User instance = new User();
-        String expResult = "";
+        String expResult = "0123456789";
         String result = instance.getPhone();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -150,11 +140,9 @@ public class UserTest {
     @Test
     public void testSetPhone() {
         System.out.println("setPhone");
-        String phone = "";
-        User instance = new User();
+        String phone = "0123456789";
         instance.setPhone(phone);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -163,12 +151,15 @@ public class UserTest {
     @Test
     public void testToString() {
         System.out.println("toString");
-        User instance = new User();
-        String expResult = "";
+        String expResult = "\n"+FioreFlowershop.ConsoleColors.BLUE+"Username : Username"+FioreFlowershop.ConsoleColors.RESET+"\n"
+                +FioreFlowershop.ConsoleColors.BLUE+"Email : ceekay@gmail.com"+FioreFlowershop.ConsoleColors.RESET+"\n"
+                +FioreFlowershop.ConsoleColors.BLUE+"Contact Number : 0123456789"+FioreFlowershop.ConsoleColors.RESET+"\n"
+                +FioreFlowershop.ConsoleColors.BLUE+"Address : Address"+FioreFlowershop.ConsoleColors.RESET+"\n"
+                +FioreFlowershop.ConsoleColors.BLUE+"Password : abcdef123"+FioreFlowershop.ConsoleColors.RESET;
         String result = instance.toString();
+        System.out.println(result);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }
