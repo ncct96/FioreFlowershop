@@ -19,7 +19,6 @@ public class User{
     private String phone;
     
     public User(){
-        
     }
     
     public User(String username, String email, String phone, String address){
