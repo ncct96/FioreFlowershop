@@ -5,6 +5,8 @@
  */
 package com.mycompany.fioreflowershop.modal;
 
+import com.mycompany.fioreflowershop.CatalogOrder;
+import com.mycompany.fioreflowershop.adt.LinkedList;
 import java.util.Date;
 
 /**
@@ -13,7 +15,7 @@ import java.util.Date;
  */
 public class InvoiceHistory {
     private String invoiceNumber;
-    private CatalogOrders catalogOrder;
+    private LinkedList<CatalogOrders> catalogOrder = new LinkedList<>();
     private CorporateCustomer corp;
     private Date datepay;
     
@@ -21,7 +23,7 @@ public class InvoiceHistory {
         
     }
     
-    public InvoiceHistory(int invoiceNum ,CatalogOrders cart, CorporateCustomer corp, Date paid){
+    public InvoiceHistory(int invoiceNum , LinkedList<CatalogOrders> cart, CorporateCustomer corp, Date paid){
         invoiceNumber = "IH"+invoiceNum;
         this.catalogOrder = cart;
         this.corp = corp;
@@ -44,11 +46,11 @@ public class InvoiceHistory {
         this.invoiceNumber = invoiceNumber;
     }
 
-    public CatalogOrders getCatalogOrder() {
+    public LinkedList<CatalogOrders> getCatalogOrder() {
         return catalogOrder;
     }
 
-    public void setCatalogOrder(CatalogOrders catalogOrder) {
+    public void setCatalogOrder(LinkedList<CatalogOrders> catalogOrder) {
         this.catalogOrder = catalogOrder;
     }
 
