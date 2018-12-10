@@ -407,7 +407,7 @@ public class CatalogOrder {
             }
 
            
-            catalogOrder.add(new CatalogOrders(orderID, catalogPack, orderType, currentDate, shoppingCart.getItem(1).getUser(), orderStatus, orderAmt, paymentStatus, retrieveDate2, retrieveDate2));
+             catalogOrder.add(new CatalogOrders(orderID, catalogPack, orderType, currentDate, shoppingCart.getItem(1).getUser(), orderStatus, orderAmt, paymentStatus, retrieveDate2, retrieveDate2));
            
         } catch (ParseException ex) {
             Logger.getLogger(CatalogOrder.class.getName()).log(Level.SEVERE, null, ex);
@@ -442,7 +442,7 @@ public class CatalogOrder {
         System.out.println("\n\n\t\t\t\t\t\t\t Subtotal :\t\t\t " + "RM" + totalPrice);
         System.out.println("\n\n\t\t\t\t\t\t\tOrder Type :\t\t\t " + shopping.getOrderType());
         System.out.println("\n\n\t\t\t\t\t\t Delivery/Pickup Date :\t\t\t " + dateFormat.format(shopping.getRetrieveDate()));
-        catalogPack.clear();
+        //catalogPack.clear();
     }
 
     public static void typeSelection(LinkedList<CatalogPackage> normalPackage, LinkedList<CatalogPackage> discountedPackage) {

@@ -12,6 +12,7 @@ import com.mycompany.fioreflowershop.adt.LinkedList;
 import com.mycompany.fioreflowershop.adt.ListInterface;
 import com.mycompany.fioreflowershop.adt.QueueInterface;
 import com.mycompany.fioreflowershop.modal.CatalogOrders;
+import com.mycompany.fioreflowershop.modal.CatalogPackage;
 import com.mycompany.fioreflowershop.modal.Consumer;
 import com.mycompany.fioreflowershop.modal.CorporateCustomer;
 import com.mycompany.fioreflowershop.modal.CustomizedPackage;
@@ -36,7 +37,7 @@ public class Pickup {
 
     static Scanner sc = new Scanner(System.in);
 
-    ListInterface<CustomizedPackage> customPackageList = new LinkedList<>();
+    LinkedList<CustomizedPackage> customPackageList = new LinkedList<>();
 
     public static void searchPickUp(LinkedList<CatalogOrders> catalogOrder, Date date, LinkedList<CustomizedPackage> customizeOrder) {
         LinkedList<CatalogOrders> unOrderList = new LinkedList<CatalogOrders>();
@@ -479,22 +480,26 @@ public class Pickup {
     public static void genReceipt(Order order, double payAmt, double change) {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-        System.out.println("\n\t\t   Fiore Flowershop SDN.NHD ");
-        System.out.println("\t\t    2404 Aaron Smith Drive");
-        System.out.println("\t\t 2404 Pennsylvania, 17404 York");
-
-        System.out.println("\nID : " + order);
-        System.out.println("Payment Date : " + order.isPaymentStatus());
-        System.out.println("Cashier : Admin");
-        System.out.println("Payment Time : " + df.format(order.getPaymentTime()));
-        System.out.println("=================================================================");
-        System.out.println("ITEM \t\t\t QUANTITY \t PRICE \t\t AMOUNT");
-        System.out.println("=================================================================");
         if (order instanceof CatalogOrders) {
-//            Ca
-//            for (int i = 0; i < ((CatalogOrders) order).getCatalogPack().; i++) {
-//                
-//            }
+            System.out.println("\n\t\t   Fiore Flowershop SDN.NHD ");
+            System.out.println("\t\t    2404 Aaron Smith Drive");
+            System.out.println("\t\t 2404 Pennsylvania, 17404 York");
+
+            System.out.println("\nID : " + ((CatalogOrders) order).getOrderID());
+            System.out.println("Payment Date : " + order.isPaymentStatus());
+            System.out.println("Cashier : Admin");
+            System.out.println("Payment Time : " + df.format(order.getPaymentTime()));
+            System.out.println("=================================================================");
+            System.out.println("ITEM \t\t\t QUANTITY \t PRICE \t\t AMOUNT");
+            System.out.println("=================================================================");
+            LinkedList<CatalogPackage> cat = ((CatalogOrders) order).getCatalogPack();
+            CatalogPackage item;
+            Iterator<CatalogPackage> catIterator = cat.getIterator();
+
+            while (catIterator.hasNext()) {
+                item = catIterator.next();
+                System.out.println(item.getName() + item.getFlower() + "\t\t\t" + item.getUserQuantity() + "\t\t" + item.getPrice() + "\t\t");
+            }
         }
         /*ITEM SOLD LISTING GOES HERE*/
         System.out.println("\n-----------------------------------------------------------------");
