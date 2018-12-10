@@ -23,7 +23,7 @@ public class CustomizedPackage extends Order {
     private String orderDate, deliveryDate;
     private Item style, size, flower, accessory, priority, deliveryType;
     private User user;
-    private boolean paymentStatus;
+    private boolean paymentStatus = false;
     private ListIteratorInterface<Item> flowerList = new LinkedList<Item>();
     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
