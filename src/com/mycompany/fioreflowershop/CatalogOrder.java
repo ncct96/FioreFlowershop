@@ -56,6 +56,7 @@ public class CatalogOrder {
     private static double creditSpent;
     private static int quantity;
     private static boolean isInteger;
+    private static boolean quantityCheck;
     private static int order = 1000;
     private static String orderID;
     private static String orderType;
@@ -182,7 +183,7 @@ public class CatalogOrder {
                 System.out.println("Product Name  \t\t\t\tUnit Price\t\tQuantity\t\tTotal Price");
                 double payAmount2 = 0;
                 if (!catalogPack.isEmpty()) {
-                    for (int i = 1; i < catalogPack.getTotalEntries() + 1; i++) {         
+                    for (int i = 1; i < catalogPack.getTotalEntries() + 1; i++) {
                         System.out.printf("%d. %s\n", i, catalogPack.getItem(i).getName());
                         double discountedPrice = (double) ((100 - catalogPack.getItem(i).getDiscountRate()) * catalogPack.getItem(i).getPrice() / 100);
                         payAmount2 += (discountedPrice * catalogPack.getItem(i).getUserQuantity());
@@ -391,7 +392,7 @@ public class CatalogOrder {
         //create order id
         order++;
         orderID = "CO" + String.valueOf(order);
-        
+
         Date retrieveDate2;
         try {
             retrieveDate2 = dateFormat.parse(retrieveDate);
@@ -431,7 +432,7 @@ public class CatalogOrder {
         System.out.println("Description \t\t\t  | Quantity  |  Discount Rate(%) | Unit Price(RM) |  Total(RM)");
 
         for (int i = 1; i < catalogPack.getTotalEntries() + 1; i++) {
-            
+
             double total = (double) ((100 - catalogOrder.getItem(c).getCatalogPack().getItem(i).getDiscountRate()) * catalogOrder.getItem(c).getCatalogPack().getItem(i).getPrice() / 100) * catalogOrder.getItem(c).getCatalogPack().getItem(i).getUserQuantity();
             System.out.printf("%s  \t\t\t  | \t  %d  |\t         %d\t|\t   %7.2f |   %7.2f\n", catalogOrder.getItem(c).getCatalogPack().getItem(i).getName(), catalogOrder.getItem(c).getCatalogPack().getItem(i).getUserQuantity(), catalogOrder.getItem(c).getCatalogPack().getItem(i).getDiscountRate(), catalogOrder.getItem(c).getCatalogPack().getItem(i).getPrice(), total);
             totalPrice = catalogOrder.getItem(c).getOrderAmt();
@@ -534,17 +535,19 @@ public class CatalogOrder {
                 }
             } while (!(isInteger));
 
-            if (quantity <= freshFlower.getItem(itemSelection).getQuantity()) {
+            if (quantity <= freshFlower.getItem(itemSelection).getQuantity() && quantity != 0) {
+                quantityCheck = true;
                 //edit quantity of selected item
                 int itemLeft = freshFlower.getItem(itemSelection).getQuantity() - quantity;
                 freshFlower.getItem(itemSelection).setQuantity(itemLeft);
             } else if (quantity > freshFlower.getItem(itemSelection).getQuantity() || quantity == 0) {
+                quantityCheck = false;
                 System.out.println("");
                 System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter a quantity that is not more that the current item's quantity" + FioreFlowershop.ConsoleColors.RESET);
                 System.out.println("");
             }
 
-        } while (quantity > freshFlower.getItem(itemSelection).getQuantity() || quantity == 0);
+        } while (quantityCheck == false);
 
         //Calculate total price of the selected item
         if (freshFlower.getItem(itemSelection).getDiscountRate() == 0) {
@@ -671,17 +674,31 @@ public class CatalogOrder {
         }
 
         do {
-            System.out.print("Please enter quantity of this item you want to order:");
+            do {
+                System.out.print("Please enter quantity of this item you want to order:");
 
-            if (scan.hasNextInt()) {
-                quantity = scan.nextInt();
-                isInteger = true;
-            } else {
-                isInteger = false;
-                System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter the quantity in number only." + FioreFlowershop.ConsoleColors.BLACK);
-                scan.next();
+                if (scan.hasNextInt()) {
+                    quantity = scan.nextInt();
+                    isInteger = true;
+                } else {
+                    isInteger = false;
+                    System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter the quantity in number only." + FioreFlowershop.ConsoleColors.BLACK);
+                    scan.next();
+                }
+            } while (!(isInteger));
+
+            if (quantity <= bouquets.getItem(itemSelection).getQuantity() && quantity != 0) {
+                quantityCheck = true;
+                //edit quantity of selected item
+                int itemLeft = bouquets.getItem(itemSelection).getQuantity() - quantity;
+                bouquets.getItem(itemSelection).setQuantity(itemLeft);
+            } else if (quantity > bouquets.getItem(itemSelection).getQuantity() || quantity == 0) {
+                quantityCheck = false;
+                System.out.println("");
+                System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter a quantity that is not more that the current item's quantity" + FioreFlowershop.ConsoleColors.RESET);
+                System.out.println("");
             }
-        } while (!(isInteger));
+        } while (!(quantityCheck));
 
         //Calculate total price of the selected item
         if (bouquets.getItem(itemSelection).getDiscountRate() == 0) {
@@ -808,18 +825,32 @@ public class CatalogOrder {
         }
 
         do {
-            System.out.print("Please enter quantity of this item you want to order:");
-//            quantity = scan.nextInt();
-            if (scan.hasNextInt()) {
-                quantity = scan.nextInt();
-                isInteger = true;
-            } else {
-                isInteger = false;
-                System.err.println("Please enter the quantity in number only.");
-                scan.next();
-            }
+            do {
+                System.out.print("Please enter quantity of this item you want to order:");
 
-        } while (!(isInteger));
+                if (scan.hasNextInt()) {
+                    quantity = scan.nextInt();
+                    isInteger = true;
+                } else {
+                    isInteger = false;
+                    System.err.println("Please enter the quantity in number only.");
+                    scan.next();
+                }
+
+            } while (!(isInteger));
+            
+            if (quantity <= flowerArrangement.getItem(itemSelection).getQuantity() && quantity != 0) {
+                quantityCheck = true;
+                //edit quantity of selected item
+                int itemLeft = flowerArrangement.getItem(itemSelection).getQuantity() - quantity;
+                flowerArrangement.getItem(itemSelection).setQuantity(itemLeft);
+            } else if (quantity > flowerArrangement.getItem(itemSelection).getQuantity() || quantity == 0) {
+                quantityCheck = false;
+                System.out.println("");
+                System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter a quantity that is not more that the current item's quantity" + FioreFlowershop.ConsoleColors.RESET);
+                System.out.println("");
+            }
+        } while (!(quantityCheck));
 
         //Calculate total price of the selected item
         if (flowerArrangement.getItem(itemSelection).getDiscountRate() == 0) {
