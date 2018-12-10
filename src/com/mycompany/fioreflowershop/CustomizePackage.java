@@ -139,13 +139,14 @@ public class CustomizePackage {
                             System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
                         }
                     } while (flower < 1 || flower > displayFlowers.getTotalEntries());
-                    
+
                     selectedFlowers.add(displayFlowers.getItem(flower));
                     displayFlowers.remove(flower);
-                    
-                    if(displayFlowers.isEmpty())
+
+                    if (displayFlowers.isEmpty()) {
                         break;
-                    
+                    }
+
                     char selection;
                     do {
                         System.out.print("Add Another Flower?" + ANSI_GREEN + "[Y/N]" + ANSI_RESET + " ");
@@ -153,16 +154,17 @@ public class CustomizePackage {
                         scan.nextLine();
                         System.out.println();
                     } while (selection != 'Y' && selection != 'N');
-                    
-                    if(selection == 'N')
+
+                    if (selection == 'N') {
                         break;
+                    }
                 } catch (InputMismatchException e) {
                     System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
                     scan.next();
                 }
             }
         }
-        
+
         if (!cancel) {
             while (true) {
                 try {
@@ -244,12 +246,12 @@ public class CustomizePackage {
         }
         if (!cancel) {
             CustomizedPackage order = new CustomizedPackage(itemCatalogue.getStyles().getItem(style), itemCatalogue.getSizes().getItem(size), itemCatalogue.getAccessories().getItem(accessory), itemCatalogue.getPriorities().getItem(priority), itemCatalogue.getDeliveryTypes().getItem(deliveryType), customer, false);
-            
-            while(!selectedFlowers.isEmpty()){
+
+            while (!selectedFlowers.isEmpty()) {
                 order.getFlowerList().add(selectedFlowers.getItem(1));
                 selectedFlowers.remove(1);
             }
-            
+
             customizedPackages.enqueue(order);
             order.minusQuantity();
 
@@ -282,7 +284,7 @@ public class CustomizePackage {
         System.out.println("Fiore Flowershop");
         System.out.println("=====================================================");
         System.out.println("Item Type: Customized Package\n");
-        for(int i = 1; i <= order.getFlowerList().getTotalEntries(); i++){
+        for (int i = 1; i <= order.getFlowerList().getTotalEntries(); i++) {
             System.out.println("Flower" + "[" + i + "]: " + order.getFlowerList().getItem(i).getName() + " - RM " + order.getFlowerList().getItem(i).getPrice());
         }
         System.out.println("Size: " + order.getSize().getName() + " - Flower x " + order.getSize().getPrice());
@@ -305,7 +307,12 @@ public class CustomizePackage {
         while (!displayQueue.isEmpty()) {
             CustomizedPackage order = displayQueue.dequeue();
             if (order.getUser().getUsername() == customer.getUsername() && order.getUser().getPassword() == customer.getPassword()) {
-                System.out.println(order.getOrderDateString() + " " + order.getOrderID() + " | " + order.getFlower().getName() + " " + order.getSize().getName() + " | RM" + order.CalculateOrder());
+                System.out.println(order.getOrderDateString() + " " + order.getOrderID());
+                for (int i = 1; i <= order.getFlowerList().getTotalEntries(); i++) {
+                    System.out.println("Flower" + "[" + i + "]: " + order.getFlowerList().getItem(i).getName() + " - RM " + order.getFlowerList().getItem(i).getPrice());
+                }
+                System.out.println("Arrangement: " + order.getSize().getName() + " " + order.getStyle().getName());
+                System.out.println("Price: RM" + order.CalculateOrder() + "\n");
                 found = true;
             }
         }
