@@ -104,13 +104,11 @@ public class FioreFlowershop {
 //        CatalogOrders ct3 = new CatalogOrders("C",cp1 , 4, 20, "Delivery", todayDate, cc2, "Order Status", 200, false, todayDate, todayDate);
 //        CatalogOrders ct4 = new CatalogOrders("C",cp2 , 5, 10, "Delivery", todayDate, cc2, "Order Status", 300, false, todayDate, todayDate);
 //        CatalogOrders ct5 = new CatalogOrders("C",cp3 , 6, 15, "Delivery", todayDate, cc2, "Order Status", 250, false, todayDate, todayDate);
-        
 //        catalogOrder.add(ct1);
 //        catalogOrder.add(ct2);
 //        catalogOrder.add(ct3);
 //        catalogOrder.add(ct4);
 //        catalogOrder.add(ct5);
-
         ListIteratorInterface<Item> styles = new LinkedList<>();
         ListIteratorInterface<Item> sizes = new LinkedList<>();
         ListIteratorInterface<Item> flowers = new LinkedList<>();
@@ -165,6 +163,26 @@ public class FioreFlowershop {
         itemCatalogue.setAccessories(accessories);
         itemCatalogue.setPriorities(priorities);
         itemCatalogue.setDeliveryTypes(deliveryTypes);
+
+        Calendar retrieveDate = Calendar.getInstance();
+        retrieveDate.setTime(new Date()); // Now use today date.
+        retrieveDate.add(Calendar.DATE, 2); // Adding 2 days
+
+        corporate.getItem(1).setCreditSpent(2000);
+        corporate.getItem(2).setCreditSpent(1500);
+
+        CustomerMaintenance.sortEmailOrder();
+
+        //Initialize shopping cart
+        LinkedList<CatalogPackage> catalogPack = new LinkedList<>();
+        catalogPack.add(new CatalogPackage("FlowerStrong", "Stylish", "Small", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20, 5));
+        catalogPack.add(new CatalogPackage("FlowerWeak", "Colourful", "Medium", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10, 5));
+        catalogPack.add(new CatalogPackage("FlowerMedium", "Elegant", "Large", "Sunflower", "Belt", "Product Type", "11", 2018, 15, 40, 5, 2));
+
+        CatalogOrders ct1 = new CatalogOrders("CO1001", catalogPack, "Delivery", todayDate, cc1, "Order Status", 411, false, retrieveDate.getTime(), retrieveDate.getTime());
+        CatalogOrders ct2 = new CatalogOrders("CO1002", catalogPack, "Delivery", todayDate, cc1, "Order Status", 411, false, retrieveDate.getTime(), retrieveDate.getTime());
+        CatalogOrders ct3 = new CatalogOrders("CO1003", catalogPack, "Delivery", todayDate, cc2, "Order Status", 411, false, retrieveDate.getTime(), retrieveDate.getTime());
+
     }
 
     public static void gotoCustomizePackage(Consumer customerLoggedIn, int selection) {
