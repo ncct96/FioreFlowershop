@@ -340,7 +340,7 @@ public class Pickup {
         User user = null;
 
         // Get all CatalogOrder with Pick Up type
-         Iterator<CatalogOrders> iterator = pickuporder.getIterator();
+        Iterator<CatalogOrders> iterator = pickuporder.getIterator();
 
         while (iterator.hasNext()) {
             CatalogOrders order = iterator.next();
@@ -467,7 +467,7 @@ public class Pickup {
                             }
 
                             matchOrder.getItem(orderChoice).setPaymentTime(new Date());
-
+                            matchOrder.getItem(orderChoice).setDateOfReceive(new Date());
                             genReceipt(matchOrder.getItem(orderChoice), payAmt, change);
 
                         }
@@ -485,8 +485,8 @@ public class Pickup {
 
         if (order instanceof CatalogOrders) {
             System.out.println("\n\t\t   Fiore Flowershop SDN.NHD ");
-            System.out.println("\t\t    2404 Aaron Smith Drive");
-            System.out.println("\t\t 2404 Pennsylvania, 17404 York");
+            System.out.println("\t\t    178, Jalan Sehala, ");
+            System.out.println("\t\t 2404 No U Turn, 53300 Kuala Lumpur");
 
             System.out.println("\nID : " + ((CatalogOrders) order).getOrderID());
             System.out.println("Payment Date : " + order.isPaymentStatus());
@@ -503,17 +503,41 @@ public class Pickup {
                 item = catIterator.next();
                 System.out.println(item.getName() + item.getFlower() + "\t\t\t" + item.getUserQuantity() + "\t\t" + item.getPrice() + "\t\t");
             }
+
+            System.out.println("\n-----------------------------------------------------------------");
+            System.out.println("\tTOTAL : \t    5 \t\t\t\t 300.00");
+            System.out.println("-----------------------------------------------------------------");
+            System.out.println("CASH : \t\t\t\t\t300.00");
+            System.out.println("CASH TENDERED : \t\t\t" + payAmt);
+            System.out.println("BALANCE : \t\t\t\t" + change);
+            System.out.println("\n=================================================================");
+            System.out.println("Thank You For Choosing Fiore Flowershop, Please Come Again :D");
+            System.out.println("=================================================================");
+        } else {
+            System.out.println("\n\t\t   Fiore Flowershop SDN.NHD ");
+            System.out.println("\t\t    178, Jalan Sehala, ");
+            System.out.println("\t\t 2404 No U Turn, 53300 Kuala Lumpur");
+
+            System.out.println("\nID : " + ((CustomizedPackage) order).getOrderID());
+            System.out.println("Payment Date : " + order.isPaymentStatus());
+            System.out.println("Cashier : Admin");
+            System.out.println("Payment Time : " + df.format(order.getPaymentTime()));
+            System.out.println("=================================================================");
+            System.out.println("ITEM \t\t\t QUANTITY \t PRICE \t\t AMOUNT");
+            System.out.println("=================================================================");
+            
+            
+
+            System.out.println("\n-----------------------------------------------------------------");
+            System.out.println("\tTOTAL : \t    5 \t\t\t\t 300.00");
+            System.out.println("-----------------------------------------------------------------");
+            System.out.println("CASH : \t\t\t\t\t300.00");
+            System.out.println("CASH TENDERED : \t\t\t" + payAmt);
+            System.out.println("BALANCE : \t\t\t\t" + change);
+            System.out.println("\n=================================================================");
+            System.out.println("Thank You For Choosing Fiore Flowershop, Please Come Again :D");
+            System.out.println("=================================================================");
         }
-        /*ITEM SOLD LISTING GOES HERE*/
-        System.out.println("\n-----------------------------------------------------------------");
-        System.out.println("\tTOTAL : \t    5 \t\t\t\t 300.00");
-        System.out.println("-----------------------------------------------------------------");
-        System.out.println("CASH : \t\t\t\t\t300.00");
-        System.out.println("CASH TENDERED : \t\t\t" + payAmt);
-        System.out.println("BALANCE : \t\t\t\t" + change);
-        System.out.println("\n=================================================================");
-        System.out.println("Thank You For Choosing Fiore Flowershop, Please Come Again :D");
-        System.out.println("=================================================================");
     }
 }
 
