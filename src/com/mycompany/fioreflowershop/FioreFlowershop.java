@@ -99,17 +99,17 @@ public class FioreFlowershop {
         CatalogPackage cp2 = new CatalogPackage("FlowerWeak", "Colourful", "Medium", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10);
         CatalogPackage cp3 = new CatalogPackage("FlowerMedium", "Elegant", "Large", "Sunflower", "Belt", "Product Type", "11", 2018, 15, 40, 5);
 
-        CatalogOrders ct1 = new CatalogOrders("C", cp1, 4, 20, "Delivery", todayDate, cc1, "Order Status", 200, false, todayDate, todayDate);
-        CatalogOrders ct2 = new CatalogOrders("C",cp2 , 5, 10, "Delivery", todayDate, cc1, "Order Status", 300, false, todayDate, todayDate);
-        CatalogOrders ct3 = new CatalogOrders("C",cp1 , 4, 20, "Delivery", todayDate, cc2, "Order Status", 200, false, todayDate, todayDate);
-        CatalogOrders ct4 = new CatalogOrders("C",cp2 , 5, 10, "Delivery", todayDate, cc2, "Order Status", 300, false, todayDate, todayDate);
-        CatalogOrders ct5 = new CatalogOrders("C",cp3 , 6, 15, "Delivery", todayDate, cc2, "Order Status", 250, false, todayDate, todayDate);
+//        CatalogOrders ct1 = new CatalogOrders("C", cp1, 4, 20, "Delivery", todayDate, cc1, "Order Status", 200, false, todayDate, todayDate);
+//        CatalogOrders ct2 = new CatalogOrders("C",cp2 , 5, 10, "Delivery", todayDate, cc1, "Order Status", 300, false, todayDate, todayDate);
+//        CatalogOrders ct3 = new CatalogOrders("C",cp1 , 4, 20, "Delivery", todayDate, cc2, "Order Status", 200, false, todayDate, todayDate);
+//        CatalogOrders ct4 = new CatalogOrders("C",cp2 , 5, 10, "Delivery", todayDate, cc2, "Order Status", 300, false, todayDate, todayDate);
+//        CatalogOrders ct5 = new CatalogOrders("C",cp3 , 6, 15, "Delivery", todayDate, cc2, "Order Status", 250, false, todayDate, todayDate);
         
-        catalogOrder.add(ct1);
-        catalogOrder.add(ct2);
-        catalogOrder.add(ct3);
-        catalogOrder.add(ct4);
-        catalogOrder.add(ct5);
+//        catalogOrder.add(ct1);
+//        catalogOrder.add(ct2);
+//        catalogOrder.add(ct3);
+//        catalogOrder.add(ct4);
+//        catalogOrder.add(ct5);
 
         ListIteratorInterface<Item> styles = new LinkedList<>();
         ListIteratorInterface<Item> sizes = new LinkedList<>();
