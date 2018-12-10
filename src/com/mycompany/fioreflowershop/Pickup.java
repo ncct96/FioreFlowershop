@@ -334,18 +334,18 @@ public class Pickup {
 
         LinkedList<CatalogOrders> pickuporder = catalogOrder;
         LinkedList<Order> matchOrder = new LinkedList<>();
+        User user = null;
 
         Scanner s = new Scanner(System.in);
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        User user = null;
 
         // Get all CatalogOrder with Pick Up type
-        Iterator<CatalogOrders> iterator = pickuporder.getIterator();
+        Iterator<CatalogOrders> iterator = catalogOrder.getIterator();
 
         while (iterator.hasNext()) {
             CatalogOrders order = iterator.next();
 
-            if (order.getUser().getUsername().equals(userID)) {
+            if (order.getUser().getUsername().equals(userID) && order.getOrderType().equals("Pick Up") && (order.getUser() instanceof Consumer)) {
                 user = order.getUser();
                 matchOrder.add(order);
             }
@@ -356,7 +356,7 @@ public class Pickup {
         while (customIterator.hasNext()) {
             CustomizedPackage order = customIterator.next();
 
-            if (order.getUser().getUsername().equals(userID)) {
+            if (order.getUser().getUsername().equals(userID) && order.getDeliveryType().getName().equals("Pick Up") && (order.getUser() instanceof Consumer)) {
                 user = order.getUser();
                 matchOrder.add(order);
             }
@@ -372,60 +372,35 @@ public class Pickup {
 
             System.out.println("Hi " + user.getUsername() + ",");
             System.out.println("These are your orders with pending payment");
-            System.out.println("|No.|\t|Order ID|\t\t|Order Type|\t\t|Order Date|\t\t|Company Name|\t\t|Payment Amount|\t\t|Payment Status|");
-            System.out.println("=======================================================================================");
+            System.out.println("|No.|\t|Order ID|\t|Order Type|\t|Order Date|\t\t|Payment Amount|\t|Payment Status|");
+            System.out.println("=============================================================================================================================================================");
 
             for (int i = 1; i <= matchOrder.getTotalEntries(); i++) {
                 Order order = matchOrder.getItem(i);
 
                 if (user instanceof Consumer) {
-
                     if (order instanceof CatalogOrders) {
                         System.out.print(i + "\t");
-                        System.out.print(((CatalogOrders) order).getOrderID() + "\t");
-                        System.out.print(order.getOrderType() + "\t");
-                        System.out.print(df.format(order.getOrderDate()) + "\t");
+                        System.out.print(((CatalogOrders) order).getOrderID() + "\t\t");
+                        System.out.print(order.getOrderType() + "\t\t");
+                        System.out.print(df.format(order.getOrderDate()) + "\t\t");
                         //System.out.print("Username: " + order.getUser().getUsername());
                         //System.out.print("Contact: " + order.getUser().getPhone());
                         //System.out.print("Order Details: " + ((CatalogOrders) order).getCatalogPack());
-                        System.out.print(order.getOrderAmt() + "\t");
+                        System.out.print(order.getOrderAmt() + "\t\t\t");
                         //System.out.print("Quantity: " + ((CatalogOrders) order).getItemQuantity());
                         System.out.print(order.isPaymentStatus() + "\n");
                     } else {
-                        System.out.print(((CustomizedPackage) order).getOrderID());
-                        System.out.print(order.getOrderType());
-                        System.out.print(df.format(order.getOrderDate()));
-                        System.out.print(order.getUser().getUsername());
-                        System.out.print(order.getUser().getPhone());
-                        System.out.print(((CustomizedPackage) order).getFlower());
-                        System.out.print(order.getOrderAmt());
-                        System.out.print(((CatalogOrders) order).getCatalogPack().getItem(i).getUserQuantity());
-                        System.out.print(order.isPaymentStatus());
-                    }
-                } else {
-
-                    if (order instanceof CatalogOrders) {
                         System.out.print(i + "\t");
-                        System.out.print(((CatalogOrders) order).getOrderID() + "\t");
-                        System.out.print(order.getOrderType() + "\t");
-                        System.out.print(df.format(order.getOrderDate()) + "\t");
-                        System.out.print(((CorporateCustomer) user).getCompany() + "\t");
-                        //System.out.println("Contact: " + matchOrder.getItem(1).getUser().getPhone());
-                        //System.out.println("Order Details: " + ((CatalogOrders) order).getCatalogPack().toString());
-                        System.out.print(((CatalogOrders) order).getOrderAmt() + "\t");
-                        //System.out.println("Quantity: " + ((CatalogOrders) order).getItemQuantity());
-                        System.out.print(((CatalogOrders) order).isPaymentStatus() + "\t");
-                        //System.out.println("Order Status: " + matchOrder.getItem(1).getOrderStatus());
-                    } else {
                         System.out.print(((CustomizedPackage) order).getOrderID() + "\t");
-                        System.out.print(order.getOrderType() + "\t");
+                        System.out.print(((CustomizedPackage)order).getDeliveryType().getName() + "\t");
                         System.out.print(df.format(order.getOrderDate()) + "\t");
-                        System.out.print(((CorporateCustomer) user).getCompany() + "\t");
-                        //System.out.println("Contact: " + matchOrder.getItem(1).getUser().getPhone());
-                        //System.out.println("Order Details: " + ((CustomizedPackage) order).getFlower());
+                        //System.out.print(order.getUser().getUsername() + "\t");
+                        //System.out.print(order.getUser().getPhone() + "\t");
+                       // System.out.print(((CustomizedPackage) order).getFlower() + "\t");
                         System.out.print(((CustomizedPackage) order).CalculateOrder() + "\t");
-                        System.out.print(((CustomizedPackage) order).isPaymentStatus() + "\n");
-                        //System.out.println("Order Status: " + matchOrder.getItem(1).getOrderStatus());
+                        //System.out.print(((CatalogOrders) order).getCatalogPack().getItem(i).getUserQuantity() + "\t");
+                        System.out.print(order.isPaymentStatus() + "\n");
                     }
                 }
             }
@@ -525,8 +500,6 @@ public class Pickup {
             System.out.println("=================================================================");
             System.out.println("ITEM \t\t\t QUANTITY \t PRICE \t\t AMOUNT");
             System.out.println("=================================================================");
-            
-            
 
             System.out.println("\n-----------------------------------------------------------------");
             System.out.println("\tTOTAL : \t    5 \t\t\t\t 300.00");

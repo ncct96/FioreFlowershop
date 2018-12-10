@@ -196,7 +196,7 @@ public class LinkedList<T> implements ListIteratorInterface<T> {
         @Override
         public T next() {
             if (hasNext()) {
-                T returnData = (T) firstNode.getData();
+                T returnData = (T) currentNode.getData();
                 currentNode = currentNode.getNext();
                 return returnData;
             } else {
