@@ -6,6 +6,7 @@
 package com.mycompany.fioreflowershop.modal;
 
 import com.mycompany.fioreflowershop.adt.LinkedList;
+import java.util.Calendar;
 import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,8 +17,18 @@ import static org.junit.Assert.*;
  * @author Admin
  */
 public class InvoiceHistoryTest {
-    
+    public InvoiceHistory instance; public Date datepay;
+    public LinkedList<CatalogOrders> catalogOrd;
+    public CorporateCustomer corpCust;
     public InvoiceHistoryTest() {
+        datepay = Calendar.getInstance().getTime();
+        catalogOrd = new LinkedList<>();
+        instance = new InvoiceHistory();
+        corpCust = new CorporateCustomer();
+        instance.setDatepay(datepay);
+        instance.setInvoiceNumber("IH100");
+        instance.setCatalogOrder(catalogOrd);
+        instance.setCorp(corpCust);
     }
     
     @Before
@@ -30,12 +41,10 @@ public class InvoiceHistoryTest {
     @Test
     public void testGetDatepay() {
         System.out.println("getDatepay");
-        InvoiceHistory instance = new InvoiceHistory();
-        Date expResult = null;
+        Date expResult = Calendar.getInstance().getTime();
         Date result = instance.getDatepay();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -44,11 +53,8 @@ public class InvoiceHistoryTest {
     @Test
     public void testSetDatepay() {
         System.out.println("setDatepay");
-        Date datepay = null;
-        InvoiceHistory instance = new InvoiceHistory();
         instance.setDatepay(datepay);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -57,12 +63,10 @@ public class InvoiceHistoryTest {
     @Test
     public void testGetInvoiceNumber() {
         System.out.println("getInvoiceNumber");
-        InvoiceHistory instance = new InvoiceHistory();
-        String expResult = "";
+        String expResult = "IH100";
         String result = instance.getInvoiceNumber();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -71,11 +75,9 @@ public class InvoiceHistoryTest {
     @Test
     public void testSetInvoiceNumber() {
         System.out.println("setInvoiceNumber");
-        String invoiceNumber = "";
-        InvoiceHistory instance = new InvoiceHistory();
+        String invoiceNumber = "IH100";
         instance.setInvoiceNumber(invoiceNumber);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -84,12 +86,10 @@ public class InvoiceHistoryTest {
     @Test
     public void testGetCatalogOrder() {
         System.out.println("getCatalogOrder");
-        InvoiceHistory instance = new InvoiceHistory();
         LinkedList<CatalogOrders> expResult = null;
         LinkedList<CatalogOrders> result = instance.getCatalogOrder();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -98,11 +98,9 @@ public class InvoiceHistoryTest {
     @Test
     public void testSetCatalogOrder() {
         System.out.println("setCatalogOrder");
-        LinkedList<CatalogOrders> catalogOrder = null;
-        InvoiceHistory instance = new InvoiceHistory();
-        instance.setCatalogOrder(catalogOrder);
+//        LinkedList<CatalogOrders> catalogOrder = null;
+        instance.setCatalogOrder(catalogOrd);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -111,12 +109,10 @@ public class InvoiceHistoryTest {
     @Test
     public void testGetCorp() {
         System.out.println("getCorp");
-        InvoiceHistory instance = new InvoiceHistory();
         CorporateCustomer expResult = null;
         CorporateCustomer result = instance.getCorp();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -125,11 +121,9 @@ public class InvoiceHistoryTest {
     @Test
     public void testSetCorp() {
         System.out.println("setCorp");
-        CorporateCustomer corp = null;
-        InvoiceHistory instance = new InvoiceHistory();
-        instance.setCorp(corp);
+//        CorporateCustomer corp = null;
+        instance.setCorp(corpCust);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }

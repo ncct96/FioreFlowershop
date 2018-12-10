@@ -5,6 +5,7 @@
  */
 package com.mycompany.fioreflowershop.modal;
 
+import com.mycompany.fioreflowershop.FioreFlowershop;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -14,8 +15,13 @@ import static org.junit.Assert.*;
  * @author Admin
  */
 public class CorporateCustomerTest {
-    
+    CorporateCustomer instance;
     public CorporateCustomerTest() {
+        instance = new CorporateCustomer();
+        instance.setCompany("Company");
+        instance.setCreditSpent(1000);
+        instance.setMonthlyLimit(2000);
+        instance.setPaymentStatus(true);
     }
     
     @Before
@@ -28,11 +34,9 @@ public class CorporateCustomerTest {
     @Test
     public void testSetPaymentStatus() {
         System.out.println("setPaymentStatus");
-        boolean paymentStat = false;
-        CorporateCustomer instance = new CorporateCustomer();
+        boolean paymentStat = true;
         instance.setPaymentStatus(paymentStat);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -41,12 +45,10 @@ public class CorporateCustomerTest {
     @Test
     public void testGetPaymentStatus() {
         System.out.println("getPaymentStatus");
-        CorporateCustomer instance = new CorporateCustomer();
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.getPaymentStatus();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -55,12 +57,10 @@ public class CorporateCustomerTest {
     @Test
     public void testGetCreditSpent() {
         System.out.println("getCreditSpent");
-        CorporateCustomer instance = new CorporateCustomer();
-        double expResult = 0.0;
+        double expResult = 1000.0;
         double result = instance.getCreditSpent();
         assertEquals(expResult, result, 0.0);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -69,11 +69,9 @@ public class CorporateCustomerTest {
     @Test
     public void testSetCreditSpent() {
         System.out.println("setCreditSpent");
-        double creditSpent = 0.0;
-        CorporateCustomer instance = new CorporateCustomer();
+        double creditSpent = 1000.0;
         instance.setCreditSpent(creditSpent);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -82,12 +80,10 @@ public class CorporateCustomerTest {
     @Test
     public void testGetCompany() {
         System.out.println("getCompany");
-        CorporateCustomer instance = new CorporateCustomer();
-        String expResult = "";
+        String expResult = "Company";
         String result = instance.getCompany();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -96,11 +92,9 @@ public class CorporateCustomerTest {
     @Test
     public void testSetCompany() {
         System.out.println("setCompany");
-        String company = "";
-        CorporateCustomer instance = new CorporateCustomer();
+        String company = "Company";
         instance.setCompany(company);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -109,12 +103,10 @@ public class CorporateCustomerTest {
     @Test
     public void testGetMonthlyLimit() {
         System.out.println("getMonthlyLimit");
-        CorporateCustomer instance = new CorporateCustomer();
-        int expResult = 0;
+        int expResult = 2000;
         int result = instance.getMonthlyLimit();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -123,11 +115,9 @@ public class CorporateCustomerTest {
     @Test
     public void testSetMonthlyLimit() {
         System.out.println("setMonthlyLimit");
-        int monthlyLimit = 0;
-        CorporateCustomer instance = new CorporateCustomer();
+        int monthlyLimit = 2000;
         instance.setMonthlyLimit(monthlyLimit);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -136,12 +126,17 @@ public class CorporateCustomerTest {
     @Test
     public void testToString() {
         System.out.println("toString");
-        CorporateCustomer instance = new CorporateCustomer();
-        String expResult = "";
+        String expResult = "\n"+FioreFlowershop.ConsoleColors.BLUE+"Username : "+null+FioreFlowershop.ConsoleColors.RESET
+                +"\n"+FioreFlowershop.ConsoleColors.BLUE+"Email : "+null+FioreFlowershop.ConsoleColors.RESET
+                +"\n"+FioreFlowershop.ConsoleColors.BLUE+"Contact Number : "+null+FioreFlowershop.ConsoleColors.RESET
+                +"\n"+FioreFlowershop.ConsoleColors.BLUE+"Address : "+null+FioreFlowershop.ConsoleColors.RESET
+                +"\n"+FioreFlowershop.ConsoleColors.BLUE+"Password : "+null+FioreFlowershop.ConsoleColors.RESET
+                +"\n"+FioreFlowershop.ConsoleColors.BLUE+"Company Name : Company"+FioreFlowershop.ConsoleColors.RESET
+                +"\n"+FioreFlowershop.ConsoleColors.BLUE+"Credit Spent : 1000.0"+FioreFlowershop.ConsoleColors.RESET
+                +"\n"+FioreFlowershop.ConsoleColors.BLUE+"Preset Credit Limit : 2000"+FioreFlowershop.ConsoleColors.RESET;
         String result = instance.toString();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }
