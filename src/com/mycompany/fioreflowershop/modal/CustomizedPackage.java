@@ -5,6 +5,8 @@
  */
 package com.mycompany.fioreflowershop.modal;
 
+import com.mycompany.fioreflowershop.adt.LinkedList;
+import com.mycompany.fioreflowershop.adt.ListIteratorInterface;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -22,10 +24,12 @@ public class CustomizedPackage extends Order {
     private Item style, size, flower, accessory, priority, deliveryType;
     private User user;
     private boolean paymentStatus;
+    private ListIteratorInterface<Item> flowerList = new LinkedList<Item>();
     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-    public CustomizedPackage(Item style, Item size, Item flower, Item accessory, Item priority, Item deliveryType, User user, boolean paymentStatus) {
+    public CustomizedPackage(Item style, Item size, Item accessory, Item priority, Item deliveryType, User user, boolean paymentStatus) {
         super(paymentStatus, user);
+        this.user = user;
         orderID = "CP" + orderNo;
         this.orderID = orderID;
         ++orderNo;
@@ -40,12 +44,11 @@ public class CustomizedPackage extends Order {
 
         this.style = style;
         this.size = size;
-        this.flower = flower;
         this.accessory = accessory;
         this.priority = priority;
         this.deliveryType = deliveryType;
     }
-
+    
     public CustomizedPackage() {
         orderID = "CP" + orderNo;
         ++orderNo;
@@ -190,12 +193,26 @@ public class CustomizedPackage extends Order {
     }
 
     public double CalculateOrder() {
-        return (style.getPrice() + (flower.getPrice() * size.getPrice()) + accessory.getPrice()) * priority.getPrice() + deliveryType.getPrice();
+        double flowerPrice = 0;
+        for(int i = 1; i < flowerList.getTotalEntries(); i++){
+            flowerPrice += flowerList.getItem(i).getPrice();
+        }
+        return (style.getPrice() + (flowerPrice * size.getPrice()) + accessory.getPrice()) * priority.getPrice() + deliveryType.getPrice();
     }
 
     public void minusQuantity() {
-        flower.minusQuantity();
+        for(int i = 1; i <= flowerList.getTotalEntries(); i++){
+            flowerList.getItem(i).minusQuantity();
+        }
         accessory.minusQuantity();
+    }
+
+    public ListIteratorInterface<Item> getFlowerList() {
+        return flowerList;
+    }
+
+    public void setFlowerList(ListIteratorInterface<Item> flowerList) {
+        this.flowerList = flowerList;
     }
 
     public boolean isPaymentStatus() {
@@ -205,7 +222,4 @@ public class CustomizedPackage extends Order {
     public void setPaymentStatus(boolean paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
-    
- 
-
 }
