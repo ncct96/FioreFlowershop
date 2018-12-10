@@ -149,12 +149,30 @@ public class FioreFlowershop {
         deliveryTypes.add(new Item("Pick up", 0));
         deliveryTypes.add(new Item("Delivery", 10));
 
+        ListIteratorInterface<Item> testFlowers = new LinkedList<>();
+        testFlowers.add(flowers.getItem(1));
+        testFlowers.add(flowers.getItem(3));
+        testFlowers.add(flowers.getItem(5));
+        
+        CustomizedPackage package1 = new CustomizedPackage(styles.getItem(2), sizes.getItem(3), accessories.getItem(4), priorities.getItem(3), deliveryTypes.getItem(1), c1, false);
+        CustomizedPackage package2 = new CustomizedPackage(styles.getItem(1), sizes.getItem(2), accessories.getItem(3), priorities.getItem(2), deliveryTypes.getItem(2), c2, false);
+        CustomizedPackage package3 = new CustomizedPackage(styles.getItem(3), sizes.getItem(1), accessories.getItem(1), priorities.getItem(2), deliveryTypes.getItem(2), c1, false);
+        CustomizedPackage package4 = new CustomizedPackage(styles.getItem(4), sizes.getItem(2), accessories.getItem(1), priorities.getItem(1), deliveryTypes.getItem(1), c2, false);
+        for(int i = 1; i <= testFlowers.getTotalEntries(); i++){
+            package1.getFlowerList().add(testFlowers.getItem(i));
+            package2.getFlowerList().add(testFlowers.getItem(i));
+            package3.getFlowerList().add(testFlowers.getItem(i));
+            package4.getFlowerList().add(testFlowers.getItem(i));
+        }
+        
         Consumer customer = new Consumer("Johan", "abcdef", "ncct66@gmail.com", "0165919413", "Gelanggang Squash IAB Genting Highlands, Genting Highlands, 69000 Genting Highlands, Pahang");
         Consumer customer1 = new Consumer("Baba", "abcdef", "ncct66@gmail.com", "0165919413", "7, Jalan Legoland, Medini, 79250 Nusajaya, Johor");
-        customizedPackages.enqueue(new CustomizedPackage(styles.getItem(2), sizes.getItem(3), flowers.getItem(1), accessories.getItem(4), priorities.getItem(3), deliveryTypes.getItem(1), customer, false));
-        customizedPackages.enqueue(new CustomizedPackage(styles.getItem(1), sizes.getItem(2), flowers.getItem(3), accessories.getItem(3), priorities.getItem(2), deliveryTypes.getItem(2), customer1, false));
-        customizedPackages.enqueue(new CustomizedPackage(styles.getItem(3), sizes.getItem(1), flowers.getItem(2), accessories.getItem(1), priorities.getItem(2), deliveryTypes.getItem(2), customer, false));
-        customizedPackages.enqueue(new CustomizedPackage(styles.getItem(4), sizes.getItem(2), flowers.getItem(4), accessories.getItem(1), priorities.getItem(1), deliveryTypes.getItem(1), customer1, false));
+        customizedPackages.enqueue(package1);
+        customizedPackages.enqueue(package2);
+        customizedPackages.enqueue(package3);
+        customizedPackages.enqueue(package4);
+        
+        
 //        CustomizedPackage specialPackage = new CustomizedPackage(styles.getItem(1), sizes.getItem(2), flowers.getItem(5), accessories.getItem(2), priorities.getItem(1), deliveryTypes.getItem(2), customer);
 //        specialPackage.setDeliveryDate(Calendar.getInstance().getTime());
 //        Calendar cal = Calendar.getInstance();
