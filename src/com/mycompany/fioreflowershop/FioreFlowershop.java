@@ -113,9 +113,9 @@ public class FioreFlowershop {
         CatalogOrders ct2 = new CatalogOrders("C2", catalogPack2, "Pick Up", todayDate, cc2, "Order Status", 200, false, todayDate, todayDate);
         CatalogOrders ct3 = new CatalogOrders("C3", catalogPack1, "Delivery", todayDate, cc1, "Order Status", 300, false, todayDate, todayDate);
 
-        catalogOrder.add(ct1);
-        catalogOrder.add(ct2);
-        catalogOrder.add(ct3);
+//        catalogOrder.add(ct1);
+//        catalogOrder.add(ct2);
+//        catalogOrder.add(ct3);
 
         ListIteratorInterface<Item> styles = new LinkedList<>();
         ListIteratorInterface<Item> sizes = new LinkedList<>();
