@@ -20,10 +20,10 @@ public class CustomizedPackage extends Order {
 
     private String orderID;
     private static int orderNo = 1;
-    private String orderDate, deliveryDate, deliverDate;
+    private String orderDate, deliveryDate;
     private Item style, size, flower, accessory, priority, deliveryType;
     private User user;
-    private boolean paymentStatus;
+    private boolean paymentStatus = false;
     private ListIteratorInterface<Item> flowerList = new LinkedList<Item>();
     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -78,28 +78,6 @@ public class CustomizedPackage extends Order {
 
     public void setOrderDate(Date orderDate) {
         this.orderDate = df.format(orderDate);
-    }
-
-    public Date getDeliverDate() {
-        Date date = new Date();
-        try {
-            date = df.parse(deliverDate);
-        } catch (Exception e) {
-
-        }
-        return date;
-    }
-
-    public String getDeliverDateString() {
-        return deliverDate;
-    }
-
-    public void setDeliverDateString(String deliverDate) {
-        this.deliverDate = deliverDate;
-    }
-
-    public void setDeliverDate(Date deliverDate) {
-        this.deliverDate = df.format(deliverDate);
     }
 
     public User getUser() {
