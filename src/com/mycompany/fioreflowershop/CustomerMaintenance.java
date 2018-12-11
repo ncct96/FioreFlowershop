@@ -226,7 +226,7 @@ public class CustomerMaintenance {
             if(FioreFlowershop.getCorporate().getItem(i).getEmail().equals(email) && FioreFlowershop.getCorporate().getItem(i).getPassword().equals(passw)){
                 System.out.println(FioreFlowershop.ConsoleColors.GREEN + "\nWelcome Back " + FioreFlowershop.getCorporate().getItem(i).getUsername() + " !" + FioreFlowershop.ConsoleColors.RESET);
                 corporateLoggedIn = new CorporateCustomer(FioreFlowershop.getCorporate().getItem(i).getUsername(),
-                FioreFlowershop.getCorporate().getItem(i).getCompany(), 
+                FioreFlowershop.getCorporate().getItem(i).getEmail(), 
                 FioreFlowershop.getCorporate().getItem(i).getPhone(),
                 FioreFlowershop.getCorporate().getItem(i).getAddress(),
                 FioreFlowershop.getCorporate().getItem(i).getMonthlyLimit(), 

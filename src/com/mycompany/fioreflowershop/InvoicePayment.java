@@ -252,7 +252,7 @@ public class InvoicePayment {
             System.out.println("Date Ordered | Description \t\t\t  | Quantity    |  Discount Rate(%) | Unit Price(RM) |  Total(RM)");
 
             for(int i = 1; i <= order.getTotalEntries() ;i++){
-                if(order.getItem(i).getUser().equals(user) && !order.getItem(i).isPaymentStatus()){
+                if(order.getItem(i).getUser().getEmail().equals(user.getEmail()) && !order.getItem(i).isPaymentStatus()){
                     for(int k = 1; k <= order.getItem(i).getCatalogPack().getTotalEntries(); k++){
                         if(order.getItem(k).getCatalogPack() != null){
                             System.out.println(sdf.format(order.getItem(k).getOrderDate())+"   | "
@@ -301,10 +301,8 @@ public class InvoicePayment {
             System.out.println("====================================================");
             boolean status = true;
             for(int i = 1; i <= order.getTotalEntries(); i++){
-                if(order.getItem(i).getUser()!= null && 
-                    !order.getItem(i).isPaymentStatus()){
-                    if((order.getItem(i).getOrderDate().getMonth()+1) == monthEntered && 
-                        (order.getItem(i).getOrderDate().getYear()+1900) == yearEntered){
+                if(order.getItem(i).getUser()!= null && !order.getItem(i).isPaymentStatus()){
+                    if((order.getItem(i).getOrderDate().getMonth()+1) == monthEntered &&(order.getItem(i).getOrderDate().getYear()+1900) == yearEntered){
                         if(userEmail.getTotalEntries() != 0){
                             for(int k = 1; k <= userEmail.getTotalEntries(); k++){
                                 if(userEmail.getItem(k).equals(order.getItem(i).getUser().getEmail())){
@@ -378,7 +376,7 @@ public class InvoicePayment {
             
             for(int i = 1; i <= order.getTotalEntries(); i++){
                 if(order.getItem(i)!= null){
-                    if(order.getItem(i).getUser().equals(user) && !order.getItem(i).isPaymentStatus()){
+                    if(order.getItem(i).getUser().getEmail().equals(user.getEmail()) && !order.getItem(i).isPaymentStatus()){
                         if(order.getItem(i).getCatalogPack() != null){
                             for(int k = 1; k <= order.getItem(i).getCatalogPack().getTotalEntries(); k++){
                             System.out.println(sdf.format(order.getItem(i).getOrderDate())+"   | "
