@@ -53,7 +53,8 @@ public class InvoiceHistoryTest {
     @Test
     public void testSetDatepay() {
         System.out.println("setDatepay");
-        instance.setDatepay(datepay);
+        Date date = Calendar.getInstance().getTime();
+        instance.setDatepay(date);
         // TODO review the generated test code and remove the default call to fail.
     }
 
@@ -86,7 +87,7 @@ public class InvoiceHistoryTest {
     @Test
     public void testGetCatalogOrder() {
         System.out.println("getCatalogOrder");
-        LinkedList<CatalogOrders> expResult = new LinkedList<>();
+        LinkedList<CatalogOrders> expResult = catalogOrd;
         LinkedList<CatalogOrders> result = instance.getCatalogOrder();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
@@ -98,8 +99,8 @@ public class InvoiceHistoryTest {
     @Test
     public void testSetCatalogOrder() {
         System.out.println("setCatalogOrder");
-        LinkedList<CatalogOrders> catalogOrder = null;
-        instance.setCatalogOrder(catalogOrd);
+        LinkedList<CatalogOrders> catalogOrder = new LinkedList<>();
+        instance.setCatalogOrder(catalogOrder);
         // TODO review the generated test code and remove the default call to fail.
     }
 
@@ -109,7 +110,7 @@ public class InvoiceHistoryTest {
     @Test
     public void testGetCorp() {
         System.out.println("getCorp");
-        CorporateCustomer expResult = new CorporateCustomer();
+        CorporateCustomer expResult = corpCust;
         CorporateCustomer result = instance.getCorp();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
@@ -121,7 +122,7 @@ public class InvoiceHistoryTest {
     @Test
     public void testSetCorp() {
         System.out.println("setCorp");
-        CorporateCustomer corp = null;
+        CorporateCustomer corp = new CorporateCustomer();
         instance.setCorp(corpCust);
         // TODO review the generated test code and remove the default call to fail.
     }

@@ -10,6 +10,7 @@ package com.mycompany.fioreflowershop.modal;
  * @author Admin
  */
 public class Consumer extends User{
+    
     public Consumer(){
         
     }
