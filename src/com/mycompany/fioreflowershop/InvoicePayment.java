@@ -58,6 +58,16 @@ public class InvoicePayment {
         }
     }
     
+    public static double totalPrice(double price, double quantity){
+        double total = 0;
+        return total = price*quantity;
+    }
+    
+    public static double discountPrice(double price, double quantity, double discountRate){
+        double discount = 0;
+        return discount = (price * quantity) * (discountRate/100);
+    }
+    
     public static void viewPaymentHistory1(){//For viewing payment history, retrieve available paid invoices first
         String invoiceID = ""; int count = 1; boolean stat = true;
         System.out.println("\n====================================================");
@@ -130,13 +140,13 @@ public class InvoicePayment {
                         + paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getDiscountRate()+ "\t    |\t" 
                         + paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getPrice() + " \t     |   " 
                         + paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getPrice()
-                                *paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getUserQuantity());
-                        totalPrice += paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getPrice()
-                            *paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getUserQuantity();
+                        *paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getUserQuantity());
+                        totalPrice = totalPrice(paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getPrice()
+                                , paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getUserQuantity());
                         if(paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getDiscountRate() != 0){
-                            discountPrice += (paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getPrice()
-                            *paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getUserQuantity()
-                            *paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getDiscountRate()) / 100;
+                            discountPrice = discountPrice(paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getPrice(),
+                                    paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getUserQuantity(),
+                                    paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getDiscountRate());
                         }
                     }
                 //}
@@ -262,12 +272,12 @@ public class InvoicePayment {
                             +order.getItem(i).getCatalogPack().getItem(k).getPrice() + " \t     |   " 
                             +order.getItem(i).getCatalogPack().getItem(k).getPrice()
                             *order.getItem(i).getCatalogPack().getItem(k).getUserQuantity());
-                            totalPrice += order.getItem(i).getCatalogPack().getItem(k).getPrice()
-                                    *order.getItem(i).getCatalogPack().getItem(k).getUserQuantity();
+                            totalPrice = totalPrice(order.getItem(i).getCatalogPack().getItem(k).getPrice(), 
+                                    order.getItem(i).getCatalogPack().getItem(k).getUserQuantity());
                             if(order.getItem(i).getCatalogPack().getItem(k).getDiscountRate() != 0){
-                                discountPrice += (order.getItem(i).getCatalogPack().getItem(k).getPrice()
-                                *order.getItem(i).getCatalogPack().getItem(k).getUserQuantity()
-                                * order.getItem(i).getCatalogPack().getItem(k).getDiscountRate()) / 100;
+                                discountPrice = discountPrice(order.getItem(i).getCatalogPack().getItem(k).getPrice(),
+                                        order.getItem(i).getCatalogPack().getItem(k).getUserQuantity(),
+                                        order.getItem(i).getCatalogPack().getItem(k).getDiscountRate());
                             }  
                         }
                     }
@@ -386,12 +396,12 @@ public class InvoicePayment {
                             +order.getItem(i).getCatalogPack().getItem(k).getPrice() + " \t     |   " 
                             +order.getItem(i).getCatalogPack().getItem(k).getPrice()
                             *order.getItem(i).getCatalogPack().getItem(k).getUserQuantity());
-                            totalPrice += order.getItem(i).getCatalogPack().getItem(k).getPrice()
-                                    *order.getItem(i).getCatalogPack().getItem(k).getUserQuantity();
+                            totalPrice = totalPrice(order.getItem(i).getCatalogPack().getItem(k).getPrice(),
+                                    order.getItem(i).getCatalogPack().getItem(k).getUserQuantity());
                                 if(order.getItem(i).getCatalogPack().getItem(k).getDiscountRate() != 0){
-                                    discountPrice += (order.getItem(i).getCatalogPack().getItem(k).getPrice()
-                                            *order.getItem(i).getCatalogPack().getItem(k).getUserQuantity()
-                                    * order.getItem(i).getCatalogPack().getItem(k).getDiscountRate()) / 100; 
+                                    discountPrice = discountPrice(order.getItem(i).getCatalogPack().getItem(k).getPrice(),
+                                            order.getItem(i).getCatalogPack().getItem(k).getUserQuantity(),
+                                            order.getItem(i).getCatalogPack().getItem(k).getDiscountRate());
                                 }
                                 tempCatalog.add(order.getItem(i));
                             }
