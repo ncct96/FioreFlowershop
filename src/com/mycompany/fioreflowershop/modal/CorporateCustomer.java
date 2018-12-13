@@ -20,7 +20,7 @@ public class CorporateCustomer extends User{
     private boolean paymentStatus;
     
     public CorporateCustomer(){
-        
+        super();
     }
     
     public CorporateCustomer(String username, String email, String phone, String address, int monthLimit, double creditSpent, boolean paymentStat){
@@ -71,9 +71,9 @@ public class CorporateCustomer extends User{
 
     @Override
     public String toString() {
-        return super.toString()+"\n"+FioreFlowershop.ConsoleColors.BLUE+"Company Name : " + company +FioreFlowershop.ConsoleColors.RESET
-                +"\n"+FioreFlowershop.ConsoleColors.BLUE + "Credit Spent : " + creditSpent +FioreFlowershop.ConsoleColors.RESET
-                +"\n"+FioreFlowershop.ConsoleColors.BLUE + "Preset Credit Limit : " + monthlyLimit +FioreFlowershop.ConsoleColors.RESET;
+        return super.toString()+"\n"+FioreFlowershop.ConsoleColors.BLUE+"Company Name : " + getCompany() +FioreFlowershop.ConsoleColors.RESET
+                +"\n"+FioreFlowershop.ConsoleColors.BLUE + "Credit Spent : " + getCreditSpent() +FioreFlowershop.ConsoleColors.RESET
+                +"\n"+FioreFlowershop.ConsoleColors.BLUE + "Preset Credit Limit : " + getMonthlyLimit() +FioreFlowershop.ConsoleColors.RESET;
     }
     
 }

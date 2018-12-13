@@ -91,7 +91,7 @@ public class FioreFlowershop {
         consumer.add(c4);
         corporate.add(cc1);
         corporate.add(cc2);
-        corporate.getItem(1).setCreditSpent(2000);
+        corporate.getItem(1).setCreditSpent(4500);
         corporate.getItem(2).setCreditSpent(1500);
 
         //Initialize users
@@ -211,9 +211,6 @@ public class FioreFlowershop {
         Calendar retrieveDate = Calendar.getInstance();
         retrieveDate.setTime(new Date()); // Now use today date.
         retrieveDate.add(Calendar.DATE, 2); // Adding 2 days
-
-        corporate.getItem(1).setCreditSpent(2000);
-        corporate.getItem(2).setCreditSpent(1500);
 
         CustomerMaintenance.sortEmailOrder();
 
@@ -668,7 +665,7 @@ public class FioreFlowershop {
         consumer = consumer;
     }
 
-    public static ListInterface<Consumer> getCustomer() {
+    public static LinkedList<Consumer> getCustomer() {
         return consumer;
     }
 
@@ -677,11 +674,11 @@ public class FioreFlowershop {
         corporate = corporateCust;
     }
 
-    public static ListInterface<CorporateCustomer> getCorporate() {
+    public static LinkedList<CorporateCustomer> getCorporate() {
         return corporate;
     }
 
-    public static ListInterface<User> getUser() {
+    public static LinkedList<User> getUser() {
         return user;
     }
 
