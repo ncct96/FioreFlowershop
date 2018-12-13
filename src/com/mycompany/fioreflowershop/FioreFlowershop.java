@@ -164,6 +164,13 @@ public class FioreFlowershop {
         deliveryTypes.add(new Item("Pick Up", 0));
         deliveryTypes.add(new Item("Delivery", 10));
 
+        itemCatalogue.setStyles(styles);
+        itemCatalogue.setSizes(sizes);
+        itemCatalogue.setFlowers(flowers);
+        itemCatalogue.setAccessories(accessories);
+        itemCatalogue.setPriorities(priorities);
+        itemCatalogue.setDeliveryTypes(deliveryTypes);
+
         ListIteratorInterface<Item> testFlowers = new LinkedList<>();
         testFlowers.add(flowers.getItem(1));
         testFlowers.add(flowers.getItem(3));
@@ -200,13 +207,7 @@ public class FioreFlowershop {
 //        cal.add(Calendar.DAY_OF_MONTH, -2);
 //        specialPackage.setOrderDate(cal.getTime());
         //customizedPackages.enqueue(specialPackage);
-        itemCatalogue.setStyles(styles);
-        itemCatalogue.setSizes(sizes);
-        itemCatalogue.setFlowers(flowers);
-        itemCatalogue.setAccessories(accessories);
-        itemCatalogue.setPriorities(priorities);
-        itemCatalogue.setDeliveryTypes(deliveryTypes);
-
+        
         Calendar retrieveDate = Calendar.getInstance();
         retrieveDate.setTime(new Date()); // Now use today date.
         retrieveDate.add(Calendar.DATE, 2); // Adding 2 days
