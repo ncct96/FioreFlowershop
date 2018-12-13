@@ -333,7 +333,7 @@ public class Delivery {
         LinkedList<Order> sortedList = new LinkedList<>();
 
         LinkedList<CatalogOrders> unOrderList = new LinkedList<CatalogOrders>();
-        LinkedList<CustomizedPackage> customOrder = customizeOrder;
+        LinkedList<CustomizedPackage> customOrder = new LinkedList<CustomizedPackage>();
 
         //int count = customOrder.getBackIndex();
         Iterator<CatalogOrders> catalogIterator = catalogOrder.getIterator();
@@ -444,6 +444,7 @@ public class Delivery {
         double totalPayment = 0, payAmt;
         Order matchOrder = new Order();
         LinkedList<Order> paidOrder = FioreFlowershop.getPaidOrder();
+        int payChoice;
 
         System.out.println("Date: " + dateFormat.format(date));
         System.out.println("===========================");
@@ -526,7 +527,7 @@ public class Delivery {
 
                 if (order.getOrderID().equals(orderID) && order.isPaymentStatus() == false) {
                     System.out.print(((CatalogOrders) order).getOrderID() + "\t\t");
-                    System.out.print(order.getOrderType() + "\t\t");
+                    System.out.print(order.getOrderType() + "\t");
                     System.out.print(df.format(order.getOrderDate()) + "\t\t");
                     //System.out.print("Username: " + order.getUser().getUsername());
                     //System.out.print("Contact: " + order.getUser().getPhone());
@@ -552,7 +553,7 @@ public class Delivery {
                     if (order.getUser() instanceof Consumer) {
                         if (order instanceof CustomizedPackage) {
                             System.out.print(((CustomizedPackage) order).getOrderID() + "\t\t");
-                            System.out.print(((CustomizedPackage) order).getDeliveryType().getName() + "\t\t");
+                            System.out.print(((CustomizedPackage) order).getDeliveryType().getName() + "\t");
                             System.out.print(df.format(order.getOrderDate()) + "\t\t");
                             //System.out.print(order.getUser().getUsername() + "\t");
                             //System.out.print(order.getUser().getPhone() + "\t");
@@ -571,48 +572,54 @@ public class Delivery {
                 }
             }
 
-            System.out.println("1. Pay");
-            System.out.println("2. Back");
-            System.out.println("Please enter your choice: ");
-            int payChoice = s.nextInt();
+            do {
 
-            if (payChoice == 1) {
-                do {
-                    System.out.println("Enter amount to pay: ");
-                    payAmt = s.nextDouble();
+                System.out.println("1. Pay");
+                System.out.println("2. Back");
+                System.out.println("Please enter your choice: ");
+                 payChoice = s.nextInt();
 
-                    if (payAmt < matchOrder.getOrderAmt()) {
-                        System.out.println("Insufficient amount, please reenter amount!");
+                if (payChoice == 1) {
+                    do {
+                        System.out.println("Enter amount to pay: ");
+                        payAmt = s.nextDouble();
 
-                    } else if (payAmt >= matchOrder.getOrderAmt()) {
+                        if (payAmt < matchOrder.getOrderAmt()) {
+                            System.out.println("Insufficient amount, please reenter amount!");
 
-                        double change = payAmt - matchOrder.getOrderAmt();
-                        matchOrder.setPaymentStatus(true);
-                        matchOrder.setOrderStatus("Picked Up");
-                        paidOrder.add(matchOrder);
+                        } else if (payAmt >= matchOrder.getOrderAmt()) {
 
-                        if (change == 0) {
-                            System.out.println("Payment Change: No changes");
-                        } else {
-                            System.out.println("Payment Change: RM " + change);
+                            double change = payAmt - matchOrder.getOrderAmt();
+                            matchOrder.setPaymentStatus(true);
+                            matchOrder.setOrderStatus("Picked Up");
+                            paidOrder.add(matchOrder);
+
+                            if (change == 0) {
+                                System.out.println("Payment Change: No changes");
+                            } else {
+                                System.out.println("Payment Change: RM " + change);
+                            }
+
+                            matchOrder.setPaymentTime(new Date());
+                            matchOrder.setDateOfReceive(new Date());
+                            genReceipt(matchOrder, payAmt, change);
                         }
-
-                        matchOrder.setPaymentTime(new Date());
-                        matchOrder.setDateOfReceive(new Date());
-                        genReceipt(matchOrder, payAmt, change);
+                    } while (payAmt < matchOrder.getOrderAmt());
+                } else if (payChoice == 2) {
+                    try {
+                        FioreFlowershop.deliveryStaff();
+                    } catch (ApiException ex) {
+                        Logger.getLogger(Delivery.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Delivery.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(Delivery.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                } while (payAmt < matchOrder.getOrderAmt());
-            } else if (payChoice == 2) {
-                try {
-                    FioreFlowershop.deliveryStaff();
-                } catch (ApiException ex) {
-                    Logger.getLogger(Delivery.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Delivery.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IOException ex) {
-                    Logger.getLogger(Delivery.class.getName()).log(Level.SEVERE, null, ex);
+                } else {
+                    System.out.println("Invalid input, please try again!");
                 }
-            }
+
+            } while (payChoice != 1 || payChoice != 2);
         }
     }
 
