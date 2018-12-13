@@ -115,11 +115,11 @@ public class FioreFlowershop {
 
         CatalogOrders ct1 = new CatalogOrders("C1", catalogPack1, "Pick Up", todayDate, cc1, "Order Status", 308, false, todayDate, todayDate);
         CatalogOrders ct2 = new CatalogOrders("C2", catalogPack2, "Pick Up", todayDate, cc2, "Order Status", 200, false, todayDate, todayDate);
-        CatalogOrders ct3 = new CatalogOrders("C3", catalogPack1, "Delivery", todayDate, c3, "Order Status", 300, false, todayDate, todayDate);
-        CatalogOrders ct4 = new CatalogOrders("C4", catalogPack1, "Delivery", todayDate, c4, "Order Status", 300, false, todayDate, todayDate);
-        CatalogOrders ct5 = new CatalogOrders("C5", catalogPack1, "Delivery", todayDate, c3, "Order Status", 300, false, todayDate, todayDate);
-        CatalogOrders ct6 = new CatalogOrders("C6", catalogPack1, "Delivery", todayDate, c2, "Order Status", 300, false, todayDate, todayDate);
-        CatalogOrders ct7 = new CatalogOrders("C7", catalogPack1, "Delivery", todayDate, c1, "Order Status", 300, false, todayDate, todayDate);
+        CatalogOrders ct3 = new CatalogOrders("C3", catalogPack1, "Delivery", todayDate, c3, "Order Status", 308, false, todayDate, todayDate);
+        CatalogOrders ct4 = new CatalogOrders("C4", catalogPack1, "Delivery", todayDate, c4, "Order Status", 308, false, todayDate, todayDate);
+        CatalogOrders ct5 = new CatalogOrders("C5", catalogPack1, "Delivery", todayDate, c3, "Order Status", 308, false, todayDate, todayDate);
+        CatalogOrders ct6 = new CatalogOrders("C6", catalogPack1, "Delivery", todayDate, c2, "Order Status", 308, false, todayDate, todayDate);
+        CatalogOrders ct7 = new CatalogOrders("C7", catalogPack1, "Delivery", todayDate, c1, "Order Status", 308, false, todayDate, todayDate);
 
         catalogOrder.add(ct1);
         catalogOrder.add(ct2);
@@ -515,7 +515,7 @@ public class FioreFlowershop {
                 break;
             case 3:
             case 4:
-                //DeliveryOptimization.distanceMatrix(origin, dest);
+                Delivery.searchUserDelivery(shopAddress, catalogOrder, readyOrders, paidOrder);
                 break;
             case 5:
             case 6:
@@ -697,6 +697,10 @@ public class FioreFlowershop {
 
     public static LinkedList<CustomizedPackage> getReadyOrder() {
         return readyOrders;
+    }
+
+    public static LinkedList<Order> getPaidOrder() {
+        return paidOrder;
     }
 
     public class ConsoleColors {
