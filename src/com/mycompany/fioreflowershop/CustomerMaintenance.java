@@ -26,6 +26,9 @@ public class CustomerMaintenance {
     private static CorporateCustomer corpEdit; 
     private static Consumer custEdit;
     private static int loop = 0;
+    private static LinkedList<User> user = FioreFlowershop.getUser();
+    private static LinkedList<CorporateCustomer> corpC = FioreFlowershop.getCorporate();
+    private static LinkedList<Consumer> cust = FioreFlowershop.getCustomer();
     //ListInterface<Consumer> customer, ListInterface<CorporateCustomer> corporate
     
     public static void customerOptions(){
@@ -36,7 +39,7 @@ public class CustomerMaintenance {
             System.out.println("[2] Login To Existing Account");
             System.out.println("[3] Back to Main Menu");
             try{
-                int logOrCreate = s.nextInt();
+                int logOrCreate = s.nextInt(); s.nextLine();
                 switch(logOrCreate){
                     case 1: CreateAccount(); break;
                     case 2: CustLogIn(); break;
@@ -85,7 +88,7 @@ public class CustomerMaintenance {
                 System.out.println(e.toString());
             }
         }//If the corporate credit spent exceeds or equals to the reminder range
-        if(corporateLoggedIn instanceof CorporateCustomer && corporateLoggedIn.getCreditSpent() >= reminderRange){
+        if(corporateLoggedIn.getCreditSpent() >= reminderRange){
             System.out.println(FioreFlowershop.ConsoleColors.RED_BOLD+"Your Credit Spent For this Month is close to reaching the limit"+FioreFlowershop.ConsoleColors.RESET);
             System.out.println(FioreFlowershop.ConsoleColors.RED_BOLD+"Your Credit Spent : "+String.format("%.0f", corporateLoggedIn.getCreditSpent())+FioreFlowershop.ConsoleColors.RESET);
             System.out.println(FioreFlowershop.ConsoleColors.RED_BOLD+"Your Maximum Limit : "+corporateLoggedIn.getMonthlyLimit()+FioreFlowershop.ConsoleColors.RESET);
@@ -97,12 +100,12 @@ public class CustomerMaintenance {
         System.out.println("[3] Edit Flower Order");
         System.out.println("[4] Log Out From This Account");
         try{
-            int customerOptionsChoice = s.nextInt();
+            int customerOptionsChoice = s.nextInt(); s.nextLine();
             if(customerOptionsChoice == 1){ //Make Flower Order
                     System.out.println("\nPlease Select The Options Below.");
                     System.out.println("[1] Make Catalog Flower Orders");
                     System.out.println("[2] Make Customizable Flower Orders");
-                    int orderChoice = s.nextInt();
+                    int orderChoice = s.nextInt(); s.nextLine();
                     switch(orderChoice){
                         case 1: FioreFlowershop.gotoCatalogOrders(customerLoggedIn,corporateLoggedIn); break; //catalog flower order
                         case 2: FioreFlowershop.gotoCustomizePackage(customerLoggedIn, 1);break;//customizable flower order
@@ -127,7 +130,6 @@ public class CustomerMaintenance {
              System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"An Error Occurred. Please Only Enter Number Only."+FioreFlowershop.ConsoleColors.RESET);
              customerOptions();
         }
-        
 }
     
     public static void CreateAccount(){
@@ -156,9 +158,9 @@ public class CustomerMaintenance {
             }
         }while(passwCheck == false);
         
-    if(FioreFlowershop.getUser() != null){
-        for(int i = 1; i <= FioreFlowershop.getUser().getTotalEntries(); i++){
-            if(FioreFlowershop.getUser().getItem(i).getEmail().equals(email) && FioreFlowershop.getUser().getItem(i).getUsername().equals(usern)){
+    if(user != null){
+        for(int i = 1; i <= user.getTotalEntries(); i++){
+            if(user.getItem(i).getEmail().equals(email) && user.getItem(i).getUsername().equals(usern)){
                 System.out.println("\n" + FioreFlowershop.ConsoleColors.RED + "Sorry, Exisiting Account Found, Please Try Again." + FioreFlowershop.ConsoleColors.RESET);
                 exist = true;
                 break;
@@ -167,8 +169,8 @@ public class CustomerMaintenance {
     }
         if(!exist){
             Consumer c = new Consumer(usern,passw,email,number,address);
-            FioreFlowershop.getCustomer().add(c);
-            FioreFlowershop.getUser().add(c);
+            cust.add(c);
+            user.add(c);
             sortEmailOrder();
             System.out.println("\n" + FioreFlowershop.ConsoleColors.GREEN + "New Account Successfully Created ! " + FioreFlowershop.ConsoleColors.RESET); 
         }
@@ -176,23 +178,23 @@ public class CustomerMaintenance {
     }
     
     public static void sortEmailOrder(){ //For sorting of email of customer and corporate customer
-        User user; 
-        if(FioreFlowershop.getUser() != null){ //If the user list is not null
-        for(int i = 1; i <= FioreFlowershop.getUser().getTotalEntries(); i++){
-            for(int j = i + 1; j <= FioreFlowershop.getUser().getTotalEntries(); j++){
-                if(FioreFlowershop.getUser().getItem(i).getEmail().charAt(loop) 
-                        == FioreFlowershop.getUser().getItem(j).getEmail().charAt(loop)){
+        User userUser; 
+        if(user != null){ //If the user list is not null
+        for(int i = 1; i <= user.getTotalEntries(); i++){
+            for(int j = i + 1; j <= user.getTotalEntries(); j++){
+                if(user.getItem(i).getEmail().charAt(loop) 
+                        == user.getItem(j).getEmail().charAt(loop)){
                     //If the character is the same value when compared, plus the loop, then call back the method.
                     loop++;
                     sortEmailOrder();
-                }else if(FioreFlowershop.getUser().getItem(i).getEmail().charAt(loop) 
-                        > FioreFlowershop.getUser().getItem(j).getEmail().charAt(loop)){
+                }else if(user.getItem(i).getEmail().charAt(loop) 
+                        > user.getItem(j).getEmail().charAt(loop)){
                     loop = 0;
-                    user = FioreFlowershop.getUser().getItem(i);
-                    FioreFlowershop.getUser().replace(i, FioreFlowershop.getUser().getItem(j));
-                    FioreFlowershop.getUser().replace(j, user);
-                }else if(FioreFlowershop.getUser().getItem(i).getEmail().charAt(loop) 
-                        < FioreFlowershop.getUser().getItem(j).getEmail().charAt(loop)){
+                    userUser = user.getItem(i);
+                    user.replace(i, user.getItem(j));
+                    user.replace(j, userUser);
+                }else if(user.getItem(i).getEmail().charAt(loop) 
+                        < user.getItem(j).getEmail().charAt(loop)){
                     //If the character is smaller than when compared, plus the size of I and J, to prevent infinity loop
                     i++; j++;
                     loop = 0;
@@ -206,32 +208,31 @@ public class CustomerMaintenance {
         boolean customerHit = false; boolean corporateHit = false;
         if(customerLoggedIn == null && corporateLoggedIn == null){
         System.out.println("\nPlease Fill In The Confidentials As Prompted");
-        s.nextLine();
         System.out.print("Please Enter Your Email : ");
         String email = s.nextLine();
         System.out.print("Please Enter Your Password : ");
         String passw = s.nextLine();
         
-        for(int i = 1; i <= FioreFlowershop.getCustomer().getTotalEntries(); i++){
-            if(FioreFlowershop.getCustomer().getItem(i).getEmail().equals(email) && FioreFlowershop.getCustomer().getItem(i).getPassword().equals(passw)){
-                customerLoggedIn = new Consumer(FioreFlowershop.getCustomer().getItem(i).getUsername(),FioreFlowershop.getCustomer().getItem(i).getPassword(),FioreFlowershop.getCustomer().getItem(i).getEmail(),
-                FioreFlowershop.getCustomer().getItem(i).getPhone(), FioreFlowershop.getCustomer().getItem(i).getAddress());
+        for(int i = 1; i <= cust.getTotalEntries(); i++){
+            if(cust.getItem(i).getEmail().equals(email) && cust.getItem(i).getPassword().equals(passw)){
+                customerLoggedIn = new Consumer(cust.getItem(i).getUsername(),cust.getItem(i).getPassword(),cust.getItem(i).getEmail(),
+                cust.getItem(i).getPhone(), cust.getItem(i).getAddress());
                 System.out.println(FioreFlowershop.ConsoleColors.GREEN + "\nWelcome Back " + customerLoggedIn.getUsername() + " !" + FioreFlowershop.ConsoleColors.RESET);
                 customerHit = true; break;
             } else {
                 customerHit = false;
             }
         }
-        for(int i = 1; i <= FioreFlowershop.getCorporate().getTotalEntries(); i++){//Check for corporate customer
-            if(FioreFlowershop.getCorporate().getItem(i).getEmail().equals(email) && FioreFlowershop.getCorporate().getItem(i).getPassword().equals(passw)){
-                System.out.println(FioreFlowershop.ConsoleColors.GREEN + "\nWelcome Back " + FioreFlowershop.getCorporate().getItem(i).getUsername() + " !" + FioreFlowershop.ConsoleColors.RESET);
-                corporateLoggedIn = new CorporateCustomer(FioreFlowershop.getCorporate().getItem(i).getUsername(),
-                FioreFlowershop.getCorporate().getItem(i).getEmail(), 
-                FioreFlowershop.getCorporate().getItem(i).getPhone(),
-                FioreFlowershop.getCorporate().getItem(i).getAddress(),
-                FioreFlowershop.getCorporate().getItem(i).getMonthlyLimit(), 
-                FioreFlowershop.getCorporate().getItem(i).getCreditSpent(),
-                FioreFlowershop.getCorporate().getItem(i).getPaymentStatus());
+        for(int i = 1; i <= corpC.getTotalEntries(); i++){//Check for corporate customer
+            if(corpC.getItem(i).getEmail().equals(email) && corpC.getItem(i).getPassword().equals(passw)){
+                System.out.println(FioreFlowershop.ConsoleColors.GREEN + "\nWelcome Back " + corpC.getItem(i).getUsername() + " !" + FioreFlowershop.ConsoleColors.RESET);
+                corporateLoggedIn = new CorporateCustomer(corpC.getItem(i).getUsername(),
+                corpC.getItem(i).getEmail(), 
+                corpC.getItem(i).getPhone(),
+                corpC.getItem(i).getAddress(),
+                corpC.getItem(i).getMonthlyLimit(), 
+                corpC.getItem(i).getCreditSpent(),
+                corpC.getItem(i).getPaymentStatus());
                 corporateHit = true; break;
             } else {
                 corporateHit = false;
@@ -243,14 +244,14 @@ public class CustomerMaintenance {
                 System.out.println("[1] Login Again");
                 System.out.println("[2] Create An Account");
                 try{
-                   int choice = s.nextInt();
+                   int choice = s.nextInt(); s.nextLine();
                     switch(choice){
                         case 1: CustLogIn(); break;
                         case 2: CreateAccount(); break;
                     } 
                 }catch(Exception e){
                     System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"An Error Occurred. Please Only Enter Number Only."+FioreFlowershop.ConsoleColors.RESET);
-                    s.nextLine();customerOptions();
+                    customerOptions();
                 }
                 
         }else{
@@ -267,21 +268,21 @@ public class CustomerMaintenance {
         System.out.println("======================================================");
         System.out.println("\t Customers List.");
         System.out.println("======================================================");
-        if(FioreFlowershop.getUser() != null){
-            for(int i = 1; i <= FioreFlowershop.getUser().getTotalEntries(); i++){
-                System.out.println(FioreFlowershop.ConsoleColors.BLUE + "["+ i + "] "+ FioreFlowershop.ConsoleColors.RESET +FioreFlowershop.getUser().getItem(i).getEmail());
+        if(user != null){
+            for(int i = 1; i <= user.getTotalEntries(); i++){
+                System.out.println(FioreFlowershop.ConsoleColors.BLUE + "["+ i + "] "+ FioreFlowershop.ConsoleColors.RESET +user.getItem(i).getEmail());
             }
             String email = ""; int custEditChoice = 0; int corpEditChoice = 0;
             System.out.print("\nPlease Enter The Customer's Email For Editing : ");
             email = s.nextLine();
-            for(int i = 1; i <= FioreFlowershop.getUser().getTotalEntries(); i++){
-                if(email.equals(FioreFlowershop.getUser().getItem(i).getEmail())){
-                    System.out.println(FioreFlowershop.getUser().getItem(i).toString());
-                    if(FioreFlowershop.getUser().getItem(i) instanceof Consumer){
-                        custEdit = (Consumer) FioreFlowershop.getUser().getItem(i);
+            for(int i = 1; i <= user.getTotalEntries(); i++){
+                if(email.equals(user.getItem(i).getEmail())){
+                    System.out.println(user.getItem(i).toString());
+                    if(user.getItem(i) instanceof Consumer){
+                        custEdit = (Consumer) user.getItem(i);
                         custEditChoice = i;
-                    }else if(FioreFlowershop.getUser().getItem(i) instanceof CorporateCustomer){
-                        corpEdit = (CorporateCustomer) FioreFlowershop.getUser().getItem(i);
+                    }else if(user.getItem(i) instanceof CorporateCustomer){
+                        corpEdit = (CorporateCustomer) user.getItem(i);
                         corpEditChoice = i;
                     }
                 }
@@ -296,18 +297,18 @@ public class CustomerMaintenance {
                 System.out.println("[5] Password");
                 int custOptionChoice = s.nextInt(); s.nextLine();
                 if(custOptionChoice == 1){ //
-                    System.out.println("Old Username : " + FioreFlowershop.getCustomer().getItem(custEditChoice).getUsername());
+                    System.out.println("Old Username : " + cust.getItem(custEditChoice).getUsername());
                     System.out.print("Please Enter The New Username : ");
                     try{
                         edit = s.nextLine();
-                        FioreFlowershop.getCustomer().getItem(custEditChoice).setUsername(edit);
+                        cust.getItem(custEditChoice).setUsername(edit);
                         System.out.println("\n"+FioreFlowershop.ConsoleColors.GREEN+"Successfully Modified ! "+FioreFlowershop.ConsoleColors.RESET);
                     }catch(Exception e){
                         System.out.println("\n" + FioreFlowershop.ConsoleColors.RED + "An Error Occurred, Please Try Again." + FioreFlowershop.ConsoleColors.RESET);
                         staffEditType();
                     }
                 } else if(custOptionChoice == 2){
-                    System.out.println("Old Email : " + FioreFlowershop.getCustomer().getItem(custEditChoice).getEmail());
+                    System.out.println("Old Email : " + cust.getItem(custEditChoice).getEmail());
                     System.out.print("Please Enter The New Email : ");
                     try{
                         edit = s.nextLine();
@@ -315,14 +316,14 @@ public class CustomerMaintenance {
                             System.out.println("\n" + FioreFlowershop.ConsoleColors.RED + "Invalid Email Entered. Please Retry." + FioreFlowershop.ConsoleColors.RESET);
                             staffEditType();
                         }
-                        FioreFlowershop.getCustomer().getItem(custEditChoice).setEmail(edit);
+                        cust.getItem(custEditChoice).setEmail(edit);
                         System.out.println("\n"+FioreFlowershop.ConsoleColors.GREEN+"Successfully Modified ! "+FioreFlowershop.ConsoleColors.RESET);
                     }catch(Exception e){
                         System.out.println("\n" + FioreFlowershop.ConsoleColors.RED + "An Error Occurred, Please Try Again." + FioreFlowershop.ConsoleColors.RESET);
                         staffEditType();
                     }
                 } else if(custOptionChoice == 3){
-                    System.out.println("Old Contact Number : " + FioreFlowershop.getCustomer().getItem(custEditChoice).getPhone());
+                    System.out.println("Old Contact Number : " + cust.getItem(custEditChoice).getPhone());
                     System.out.print("Please Enter The New Contact Number : ");
                     try{
                         edit = s.nextLine();
@@ -330,18 +331,18 @@ public class CustomerMaintenance {
                            System.out.println("\n" + FioreFlowershop.ConsoleColors.RED + "Invalid Contact Number Entered. Please Retry." + FioreFlowershop.ConsoleColors.RESET);
                             staffEditType();
                         }
-                        FioreFlowershop.getCustomer().getItem(custEditChoice).setPhone(edit);
+                        cust.getItem(custEditChoice).setPhone(edit);
                         System.out.println("\n"+FioreFlowershop.ConsoleColors.GREEN+"Successfully Modified ! "+FioreFlowershop.ConsoleColors.RESET); 
                     }catch(Exception e){
                         System.out.println("\n" + FioreFlowershop.ConsoleColors.RED + "An Error Occurred, Please Try Again." + FioreFlowershop.ConsoleColors.RESET);
                         staffEditType();
                     }
                 } else if(custOptionChoice == 4){
-                    System.out.println("Old Address : " + FioreFlowershop.getCustomer().getItem(custEditChoice).getAddress());
+                    System.out.println("Old Address : " + cust.getItem(custEditChoice).getAddress());
                     System.out.print("Please Enter The New Address : ");
                     try{
                         edit = s.nextLine();
-                        FioreFlowershop.getCustomer().getItem(custEditChoice).setAddress(edit);
+                        cust.getItem(custEditChoice).setAddress(edit);
                         System.out.println("\n"+FioreFlowershop.ConsoleColors.GREEN+"Successfully Modified ! "+FioreFlowershop.ConsoleColors.RESET);
                     }catch(Exception e){
                         System.out.println("\n" + FioreFlowershop.ConsoleColors.RED + "An Error Occurred, Please Try Again." + FioreFlowershop.ConsoleColors.RESET);
@@ -349,15 +350,15 @@ public class CustomerMaintenance {
                     }
 
                 } else if(custOptionChoice == 5){
-                    System.out.println("Old Password : " + FioreFlowershop.getCustomer().getItem(custEditChoice).getPassword());
+                    System.out.println("Old Password : " + cust.getItem(custEditChoice).getPassword());
                     System.out.print("Please Enter The New Password : ");
                     try{
                        edit = s.nextLine();
-                       if(FioreFlowershop.getCustomer().getItem(custEditChoice).getPassword().equals(edit)){
+                       if(cust.getItem(custEditChoice).getPassword().equals(edit)){
                            System.out.println("\n" + FioreFlowershop.ConsoleColors.RED + "Password cannot be same with old password. Please Try Again." + FioreFlowershop.ConsoleColors.RESET);
                            staffEditType();
                        }
-                        FioreFlowershop.getCustomer().getItem(custEditChoice).setPassword(edit);
+                        cust.getItem(custEditChoice).setPassword(edit);
                         System.out.println("\n"+FioreFlowershop.ConsoleColors.GREEN+"Successfully Modified ! "+FioreFlowershop.ConsoleColors.RESET); 
                     }catch(Exception e){
                         System.out.println("\n" + FioreFlowershop.ConsoleColors.RED + "An Error Occurred, Please Try Again." + FioreFlowershop.ConsoleColors.RESET);
@@ -381,7 +382,13 @@ public class CustomerMaintenance {
     }
     
     public static void managerEditCorporate(int corpEditChoice){
-        String edit; int editLimit;
+        for(int i = 1; i <= corpC.getTotalEntries(); i++){
+                if(corpC.getItem(i).getEmail().equals(user.getItem(corpEditChoice).getEmail())){
+                    corpEditChoice = i;
+                    break;
+                }
+        }
+            String edit; int editLimit;
             System.out.println("\nPlease enter which field to edit");
             System.out.println("[1] Username");
             System.out.println("[2] Email");
@@ -392,11 +399,11 @@ public class CustomerMaintenance {
             System.out.println("[7] Credit Limit");
         int corpOptionChoice = s.nextInt(); s.nextLine();
         if(corpOptionChoice == 1){
-            System.out.println("Old Username : " + FioreFlowershop.getCorporate().getItem(corpEditChoice).getUsername());
+            System.out.println("Old Username : " + corpC.getItem(corpEditChoice).getUsername());
             System.out.print("Please Enter The New Username : ");
             try{
                 edit = s.nextLine();
-                FioreFlowershop.getCorporate().getItem(corpEditChoice).setUsername(edit);
+                corpC.getItem(corpEditChoice).setUsername(edit);
                 System.out.println("\n"+FioreFlowershop.ConsoleColors.GREEN+"Successfully Modified ! "+FioreFlowershop.ConsoleColors.RESET); 
                 staffNextOption();
             }catch(Exception e){
@@ -404,7 +411,7 @@ public class CustomerMaintenance {
                 staffEditType();
             }
         } else if(corpOptionChoice == 2){
-            System.out.println("Old Email : " + FioreFlowershop.getCorporate().getItem(corpEditChoice).getEmail());
+            System.out.println("Old Email : " + corpC.getItem(corpEditChoice).getEmail());
             System.out.print("Please Enter The New Email : ");
             try{
                edit = s.nextLine();
@@ -412,7 +419,7 @@ public class CustomerMaintenance {
                         System.out.println("\n" + FioreFlowershop.ConsoleColors.RED + "Invalid Email Entered. Please Retry." + FioreFlowershop.ConsoleColors.RESET);
                         staffEditType();
                }
-                FioreFlowershop.getCorporate().getItem(corpEditChoice).setEmail(edit);
+                corpC.getItem(corpEditChoice).setEmail(edit);
                 System.out.println("\n"+FioreFlowershop.ConsoleColors.GREEN+"Successfully Modified ! "+FioreFlowershop.ConsoleColors.RESET); 
                 staffNextOption();
             }catch(Exception e){
@@ -421,7 +428,7 @@ public class CustomerMaintenance {
             }
             
         } else if(corpOptionChoice == 3){
-            System.out.println("Old Contact Number : " + FioreFlowershop.getCorporate().getItem(corpEditChoice).getPhone());
+            System.out.println("Old Contact Number : " + corpC.getItem(corpEditChoice).getPhone());
             System.out.print("Please Enter The New Phone : ");
             try{
                 edit = s.nextLine();
@@ -429,7 +436,7 @@ public class CustomerMaintenance {
                        System.out.println("\n" + FioreFlowershop.ConsoleColors.RED + "Invalid Contact Number Entered. Please Retry." + FioreFlowershop.ConsoleColors.RESET);
                         staffEditType();
                     }
-                FioreFlowershop.getCorporate().getItem(corpEditChoice).setPhone(edit);
+                corpC.getItem(corpEditChoice).setPhone(edit);
                 System.out.println("\n"+FioreFlowershop.ConsoleColors.GREEN+"Successfully Modified ! "+FioreFlowershop.ConsoleColors.RESET);
                 staffNextOption();
             }catch(Exception e){
@@ -438,11 +445,11 @@ public class CustomerMaintenance {
             }
             
         } else if(corpOptionChoice == 4){
-            System.out.println("Old Address : " + FioreFlowershop.getCorporate().getItem(corpEditChoice).getAddress());
+            System.out.println("Old Address : " + corpC.getItem(corpEditChoice).getAddress());
             System.out.print("Please Enter The New Address : ");
             try{
                edit = s.nextLine();
-                FioreFlowershop.getCorporate().getItem(corpEditChoice).setAddress(edit);
+                corpC.getItem(corpEditChoice).setAddress(edit);
                 System.out.println("\n"+FioreFlowershop.ConsoleColors.GREEN+"Successfully Modified ! "+FioreFlowershop.ConsoleColors.RESET); 
                 staffNextOption();
             }catch(Exception e){
@@ -451,15 +458,15 @@ public class CustomerMaintenance {
             }
             
         } else if(corpOptionChoice == 5){
-            System.out.println("Old Password : " + FioreFlowershop.getCorporate().getItem(corpEditChoice).getPassword());
+            System.out.println("Old Password : " + corpC.getItem(corpEditChoice).getPassword());
             System.out.print("Please Enter The New Password : ");
             try{
                edit = s.nextLine();
-               if(FioreFlowershop.getCorporate().getItem(corpEditChoice).getPassword().equals(edit)){
+               if(corpC.getItem(corpEditChoice).getPassword().equals(edit)){
                        System.out.println("\n" + FioreFlowershop.ConsoleColors.RED + "Password cannot be same with old password. Please Try Again." + FioreFlowershop.ConsoleColors.RESET);
                        staffEditType();
                    }
-                FioreFlowershop.getCorporate().getItem(corpEditChoice).setPassword(edit);
+                corpC.getItem(corpEditChoice).setPassword(edit);
                 System.out.println("\n"+FioreFlowershop.ConsoleColors.GREEN+"Successfully Modified ! "+FioreFlowershop.ConsoleColors.RESET); 
                 staffNextOption();
             }catch(Exception e){
@@ -468,15 +475,15 @@ public class CustomerMaintenance {
             }
             
         } else if(corpOptionChoice == 6){
-            System.out.println("Old Company : " + FioreFlowershop.getCorporate().getItem(corpEditChoice).getCompany());
+            System.out.println("Old Company : " + corpC.getItem(corpEditChoice).getCompany());
             System.out.print("Please Enter The New Company : ");
             try{
                 edit = s.nextLine();
-                if(FioreFlowershop.getCorporate().getItem(corpEditChoice).getCompany().equals(edit)){
+                if(corpC.getItem(corpEditChoice).getCompany().equals(edit)){
                     System.out.println("\n" + FioreFlowershop.ConsoleColors.RED + "Company Name cannot be same as Old Company Name, Please Try Again." + FioreFlowershop.ConsoleColors.RESET);
                     staffEditType();
                 }
-                FioreFlowershop.getCorporate().getItem(corpEditChoice).setCompany(edit);
+                corpC.getItem(corpEditChoice).setCompany(edit);
                 System.out.println("\n"+FioreFlowershop.ConsoleColors.GREEN+"Successfully Modified ! "+FioreFlowershop.ConsoleColors.RESET);
                 staffNextOption();
             }catch(Exception e){
@@ -484,11 +491,11 @@ public class CustomerMaintenance {
                 staffEditType();
             }
         } else if(corpOptionChoice == 7){
-            System.out.println("Old Credit Limit : " + FioreFlowershop.getCorporate().getItem(corpEditChoice).getMonthlyLimit());
+            System.out.println("Old Credit Limit : " + corpC.getItem(corpEditChoice).getMonthlyLimit());
             System.out.print("Please Enter The New Credit Limit : ");
             try{
-                editLimit = s.nextInt();
-                FioreFlowershop.getCorporate().getItem(corpEditChoice).setMonthlyLimit(editLimit);
+                editLimit = s.nextInt(); s.nextLine();
+                corpC.getItem(corpEditChoice).setMonthlyLimit(editLimit);
                 System.out.println("\n"+FioreFlowershop.ConsoleColors.GREEN+"Successfully Modified ! "+FioreFlowershop.ConsoleColors.RESET);  
                 staffNextOption();
             }catch(Exception e){
@@ -528,9 +535,9 @@ public class CustomerMaintenance {
         }while(passwCheck == false);
         CorporateCustomer Corporate = new CorporateCustomer(usern, email, number, address, passw, company,creditLimit,true);
 
-        if(FioreFlowershop.getUser() != null){
-            for(int i = 1; i <= FioreFlowershop.getUser().getTotalEntries(); i++){
-                if(FioreFlowershop.getUser().getItem(i).getEmail().equals(email) && FioreFlowershop.getUser().getItem(i).getUsername().equals(usern)){
+        if(user != null){
+            for(int i = 1; i <= user.getTotalEntries(); i++){
+                if(user.getItem(i).getEmail().equals(email) && user.getItem(i).getUsername().equals(usern)){
                     System.out.println("\n" + FioreFlowershop.ConsoleColors.RED + "Sorry, Exisiting Account Found, Please Try Again." + FioreFlowershop.ConsoleColors.RESET);
                     exist = true;
                     break;
@@ -538,8 +545,8 @@ public class CustomerMaintenance {
             }
         }
         if(!exist){
-            FioreFlowershop.getCorporate().add(Corporate);
-            FioreFlowershop.getUser().add(Corporate);
+            corpC.add(Corporate);
+            user.add(Corporate);
             sortEmailOrder();
             System.out.println("\n" + FioreFlowershop.ConsoleColors.GREEN + "New Account Successfully Created ! " + FioreFlowershop.ConsoleColors.RESET);
         }
@@ -558,7 +565,7 @@ public class CustomerMaintenance {
             } 
         }catch(Exception e){
             System.out.println("\n" + FioreFlowershop.ConsoleColors.RED + "Please only Enter Number Listed. Please Try Again." + FioreFlowershop.ConsoleColors.RESET);
-            s.nextLine();staffNextOption();
+            staffNextOption();
         } 
     }
 }
