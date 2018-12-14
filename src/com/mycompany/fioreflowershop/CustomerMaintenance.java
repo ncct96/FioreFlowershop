@@ -93,13 +93,12 @@ public class CustomerMaintenance {
                     //When exception is found, print out the exception error message to customer.
                     System.out.println(e.toString());
                 }
+                if (corporateLoggedIn.getCreditSpent() >= reminderRange) {
+                    System.out.println(FioreFlowershop.ConsoleColors.RED_BOLD + "Your Credit Spent For this Month is close to reaching the limit" + FioreFlowershop.ConsoleColors.RESET);
+                    System.out.println(FioreFlowershop.ConsoleColors.RED_BOLD + "Your Credit Spent : " + String.format("%.0f", corporateLoggedIn.getCreditSpent()) + FioreFlowershop.ConsoleColors.RESET);
+                    System.out.println(FioreFlowershop.ConsoleColors.RED_BOLD + "Your Maximum Limit : " + corporateLoggedIn.getMonthlyLimit() + FioreFlowershop.ConsoleColors.RESET);
+                }
             }//If the corporate credit spent exceeds or equals to the reminder range
-            if (corporateLoggedIn.getCreditSpent() >= reminderRange) {
-                System.out.println(FioreFlowershop.ConsoleColors.RED_BOLD + "Your Credit Spent For this Month is close to reaching the limit" + FioreFlowershop.ConsoleColors.RESET);
-                System.out.println(FioreFlowershop.ConsoleColors.RED_BOLD + "Your Credit Spent : " + String.format("%.0f", corporateLoggedIn.getCreditSpent()) + FioreFlowershop.ConsoleColors.RESET);
-                System.out.println(FioreFlowershop.ConsoleColors.RED_BOLD + "Your Maximum Limit : " + corporateLoggedIn.getMonthlyLimit() + FioreFlowershop.ConsoleColors.RESET);
-            }
-
             customerMenu();
         }
     }
@@ -124,7 +123,6 @@ public class CustomerMaintenance {
                     int orderChoice = s.nextInt();
                     s.nextLine();
                     if (orderChoice == 1) {
-
                         FioreFlowershop.gotoCatalogOrders(customerLoggedIn, corporateLoggedIn);
                     } else if (orderChoice == 2) {
                         FioreFlowershop.gotoCustomizePackage(customerLoggedIn, 1);
