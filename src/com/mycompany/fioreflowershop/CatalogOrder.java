@@ -65,7 +65,7 @@ public class CatalogOrder {
     private static boolean paymentStatus = false;
     private static boolean checkoutStatus = false;
     private static Date todayDate = new Date();
-    private static Date currentDate;
+    private static Date currentDate = new Date();
     private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private static DateFormat timeFormat = new SimpleDateFormat("HH:mm");
     private static String pickupTime, retrieveDate = "";
@@ -452,7 +452,7 @@ public class CatalogOrder {
             totalPrice += (double) ((100 - catalogPack.getItem(i).getDiscountRate()) * catalogPack.getItem(i).getPrice() / 100) * catalogPack.getItem(i).getUserQuantity();
         }
 
-        System.out.println(FioreFlowershop.ConsoleColors.BLACK + "\n\n\t\t\t\t\t\t\t Subtotal :\t\t\t " + FioreFlowershop.ConsoleColors.GREEN + "RM" + totalPrice + FioreFlowershop.ConsoleColors.BLACK);
+        System.out.println(FioreFlowershop.ConsoleColors.BLACK + "\n\n\t\t\t\t\t\t\t Subtotal :\t\t\t " + FioreFlowershop.ConsoleColors.GREEN + "RM " + totalPrice + FioreFlowershop.ConsoleColors.BLACK);
         System.out.println("\n\n\t\t\t\t\t\t\tOrder Type :\t\t\t " + shopping.getOrderType());
         System.out.println("\n\n\t\t\t\t\t\t Delivery/Pickup Date :\t\t\t " + dateFormat.format(shopping.getRetrieveDate()));
         catalogPack.clear();
