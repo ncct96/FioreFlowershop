@@ -515,8 +515,7 @@ public class FioreFlowershop {
                 break;
             case 3:
             case 4:
-                Delivery.searchUserDelivery(shopAddress, catalogOrder, readyOrders, paidOrder);
-                break;
+                Delivery.searchPaidDelivery(paidOrder);
             case 5:
             case 6:
                 userTypeSelection();
