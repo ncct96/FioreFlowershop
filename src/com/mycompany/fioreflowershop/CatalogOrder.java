@@ -351,31 +351,17 @@ public class CatalogOrder {
             }
         } while (!(isInteger) || choice < 1 || choice > catalogPack.getTotalEntries());
 
-        if (isInteger) {
-            if (!catalogPack.isEmpty()) {
-                System.out.println("\nDisplay Shopping Cart");
-                System.out.println("====================================================================================================");
-                System.out.println("Product Name  \t\t\t\tUnit Price\t\tQuantity\t\tTotal Price");
-                double payAmount2 = 0;
-                if (!catalogPack.isEmpty()) {
-                    System.out.printf("%s\n", catalogPack.getItem(choice).getName());
-                    double discountedPrice = (double) ((100 - catalogPack.getItem(choice).getDiscountRate()) * catalogPack.getItem(choice).getPrice() / 100);
-                    System.out.printf("%s,%s,%s,%s \tRM%7.2f\t\t   %d\t\t\t RM%7.2f\n\n", catalogPack.getItem(choice).getStyle(), catalogPack.getItem(choice).getSize(), catalogPack.getItem(choice).getFlower(), catalogPack.getItem(choice).getAccessory(), discountedPrice, catalogPack.getItem(choice).getUserQuantity(), discountedPrice * catalogPack.getItem(choice).getUserQuantity());
+        catalogPack.remove(choice);
+        showShoppingCart();
 
-                }
-            }
-
-            catalogPack.remove(choice);
-            showShoppingCart();
-
-            System.out.print("Back to Catalog Menu? (Y/y = Yes , N/n = No)");
-            String con = scan.next();
-            if (con.equalsIgnoreCase("Y")) {
-                displayCatalog(normalPackage, discountedPackage);
-            } else if (con.equalsIgnoreCase("N")) {
-                removeCartItem(normalPackage, discountedPackage);
-            }
+        System.out.print("Back to Catalog Menu? (Y/y = Yes , N/n = No)");
+        String con = scan.next();
+        if (con.equalsIgnoreCase("Y")) {
+            displayCatalog(normalPackage, discountedPackage);
+        } else if (con.equalsIgnoreCase("N")) {
+            removeCartItem(normalPackage, discountedPackage);
         }
+
     }
 
     public static void salesOrder() {
