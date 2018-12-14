@@ -96,36 +96,11 @@ public class CustomizePackage {
             }
         }
         if (!cancel) {
-            /*while (true) {
-                try {
-                    do {
-                        System.out.println("\nSelect the flowers for the arrangement");
-                        for (int i = 1; i <= itemCatalogue.getFlowers().getTotalEntries(); i++) {
-                            System.out.print(ANSI_GREEN + "[" + i + "]" + ANSI_RESET);
-                            System.out.printf(" %s: RM%.2f\n", itemCatalogue.getFlowers().getItem(i).getName(), itemCatalogue.getFlowers().getItem(i).getPrice());
-                        }
-                        flower = scan.nextInt();
-
-                        if (flower == -1) {
-                            cancel = true;
-                            break;
-                        }
-                        if (flower < 1 || flower > itemCatalogue.getFlowers().getTotalEntries()) {
-                            System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
-                        }
-                    } while (flower < 1 || flower > itemCatalogue.getFlowers().getTotalEntries());
-                    break;
-                } catch (InputMismatchException e) {
-                    System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
-                    scan.next();
-                }
-            }*/
-
             for (int i = 1; i <= itemCatalogue.getFlowers().getTotalEntries(); i++) {
                 displayFlowers.add(itemCatalogue.getFlowers().getItem(i));
             }
             boolean flowerSelected = false;
-            //Test for multiple flowers
+
             while (true) {
                 try {
                     do {
@@ -328,7 +303,6 @@ public class CustomizePackage {
             if (!found) {
                 System.out.println("No order history found");
             }
-
             System.out.println("================================================");
         }
     }
@@ -340,6 +314,7 @@ public class CustomizePackage {
             System.out.println(ANSI_GREEN + "[2] " + ANSI_RESET + "Add New Items");
             System.out.println(ANSI_GREEN + "[3] " + ANSI_RESET + "Delete Items");
             System.out.println(ANSI_GREEN + "[4] " + ANSI_RESET + "Return to previous menu");
+            System.out.print("Selection: ");
             Scanner scan = new Scanner(System.in);
             int selection = scan.nextInt();
             System.out.println();
@@ -351,7 +326,7 @@ public class CustomizePackage {
             } else if (selection == 3) {
                 deleteItems(itemCatalogue);
             } else {
-                inventoryClerk();
+                break;
             }
         }
     }
@@ -399,7 +374,6 @@ public class CustomizePackage {
                     scan.next();
                 }
             }
-
             System.out.println("Stock quantity successfully updated!");
             itemCatalogue.getFlowers().getItem(selection).setQuantity(newQuantity);
         }
@@ -511,7 +485,7 @@ public class CustomizePackage {
             } while (selection != 'Y' && selection != 'N');
 
             if (selection == 'N') {
-                florist();
+                break;
             }
         }
     }
@@ -583,8 +557,6 @@ public class CustomizePackage {
                 System.out.print(ANSI_GREEN + "[" + i + "]" + ANSI_RESET);
                 System.out.printf(" %s: RM%.2f\n", itemCatalogue.getAccessories().getItem(i).getName(), itemCatalogue.getAccessories().getItem(i).getPrice());
             }
-        } else if (type == 5) {
-
         }
     }
 
@@ -600,6 +572,7 @@ public class CustomizePackage {
                     System.out.println(ANSI_GREEN + "[3] " + ANSI_RESET + "Flowers");
                     System.out.println(ANSI_GREEN + "[4] " + ANSI_RESET + "Accessories");
                     System.out.println(ANSI_GREEN + "[5] " + ANSI_RESET + "Return to previous menu");
+                    System.out.print("Selection: ");
                     selection = scan.nextInt();
                 } while (selection < 1 || selection > 5);
                 break;
@@ -638,7 +611,7 @@ public class CustomizePackage {
 
                     if (customizedPackages.isEmpty()) {
                         System.out.println("No more orders is queue!\n");
-                        florist();
+                        break;
                     }
 
                     do {
@@ -650,7 +623,7 @@ public class CustomizePackage {
                         break;
                     }
                 } else {
-                    florist();
+                    break;
                 }
             }
         }

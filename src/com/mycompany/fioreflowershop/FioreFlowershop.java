@@ -24,6 +24,9 @@ import java.util.logging.Logger;
  */
 public class FioreFlowershop {
 
+    public static final String RESET = "\033[0m";
+    public static final String GREEN = "\033[0;32m";
+
     // Lines 95 - 98, 154-158
     private static LinkedList<Consumer> consumer = new LinkedList<>();
     private static LinkedList<CorporateCustomer> corporate = new LinkedList<>();
@@ -207,7 +210,6 @@ public class FioreFlowershop {
 //        cal.add(Calendar.DAY_OF_MONTH, -2);
 //        specialPackage.setOrderDate(cal.getTime());
         //customizedPackages.enqueue(specialPackage);
-        
         Calendar retrieveDate = Calendar.getInstance();
         retrieveDate.setTime(new Date()); // Now use today date.
         retrieveDate.add(Calendar.DATE, 2); // Adding 2 days
@@ -266,222 +268,176 @@ public class FioreFlowershop {
     }
 
     public static void userTypeSelection() {
-        System.out.println("\nWELCOME TO FIORE FLOWERSHOP SDN BHD !");
-        System.out.println("\nPlease SELECT The Type Of User.");
-        System.out.println("[1] Customer ");
-        System.out.println("[2] Staff ");
-        try {
+        while (true) {
+            System.out.println("\nWELCOME TO FIORE FLOWERSHOP SDN BHD !");
+            System.out.println("\nPlease SELECT The Type Of User.");
+            System.out.println(GREEN + "[1] " + RESET + "Customer");
+            System.out.println(GREEN + "[2] " + RESET + "Staff");
+            System.out.println(GREEN + "[3] " + RESET + "Exit System");
+            System.out.print("Selection: ");
             int userTypeChoice = s.nextInt();
             s.nextLine();
-            switch (userTypeChoice) {
-                case 1:
-                    CustomerMaintenance.customerOptions();
-                    break;
-                case 2:
-                    staffTypeSelection();
-                    break;
+            if (userTypeChoice == 1) {
+                CustomerMaintenance.customerOptions();
+            } else if (userTypeChoice == 2) {
+                staffTypeSelection();
+            } else {
+                System.exit(0);
             }
-        } catch (Exception e) {
-            System.out.println("\n" + ConsoleColors.RED + " An Error Occured. Please Only Enter Number Only." + ConsoleColors.RESET);
-            userTypeSelection();
         }
     }
 
     public static void staffTypeSelection() {
-        System.out.println("\nPlease Select The Type of Staff.");
-        System.out.println("[1] Manager");
-        System.out.println("[2] Inventory Clerk");
-        System.out.println("[3] Counter Staff");
-        System.out.println("[4] Florist");
-        System.out.println("[5] Delivery Staff");
-        System.out.println("[6] Back");
-
-        try {
+        while (true) {
+            System.out.println("\nPlease Select The Type of Staff.");
+            System.out.println(GREEN + "[1] " + RESET + "Manager");
+            System.out.println(GREEN + "[2] " + RESET + "Inventory Clerk");
+            System.out.println(GREEN + "[3] " + RESET + "Counter Staff");
+            System.out.println(GREEN + "[4] " + RESET + "Florist");
+            System.out.println(GREEN + "[5] " + RESET + "Delivery Staff");
+            System.out.println(GREEN + "[6] " + RESET + "Log Out");
+            System.out.print("Selection: ");
             int staffTypeChoice = s.nextInt();
             s.nextLine();
-            switch (staffTypeChoice) {
-                case 1:
-                    manager();
-                    break;
-                case 2:
-                    inventoryClerk();
-                    break;
-                case 3:
-                    counterStaff();
-                    break;
-                case 4:
-                    florist();
-                    break;
-                case 5: {
-                    try {
-                        deliveryStaff();
-                    } catch (ApiException ex) {
-                        Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (IOException ex) {
-                        Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-                break;
-                case 6:
-                    userTypeSelection();
-                    break;
+            if (staffTypeChoice == 1) {
+                manager();
             }
-        } catch (Exception e) {
-            System.out.println("\n" + ConsoleColors.RED + " An Error Occured. Please Only Enter Number Only." + ConsoleColors.RESET);
-            staffTypeSelection();
+            if (staffTypeChoice == 2) {
+                inventoryClerk();
+            }
+            if (staffTypeChoice == 3) {
+                counterStaff();
+            }
+            if (staffTypeChoice == 4) {
+                florist();
+            }
+            if (staffTypeChoice == 5) {
+                try {
+                    deliveryStaff();
+                } catch (ApiException | InterruptedException | IOException ex) {
+                    Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                break;
+            }
         }
     }
 
     public static void manager() {
-        System.out.println("\nPlease Select The Options Below.");
-        System.out.println("[1] Customer Maintenance");
-        System.out.println("[2] Create Corporate Customer Account");
-        System.out.println("[3] Add a product to catalog");
-        System.out.println("[4] Remove a product from catalog");
-        System.out.println("[5] Edit the details of product in catalog");
-        System.out.println("[6] Display created catalog");
-        System.out.println("[7] Back");
-        try {
+        while (true) {
+            System.out.println("\nPlease Select The Options Below.");
+            System.out.println(GREEN + "[1] " + RESET + "Customer Maintenance");
+            System.out.println(GREEN + "[2] " + RESET + "Create Corporate Customer Account");
+            System.out.println(GREEN + "[3] " + RESET + "Modify the product catalogue");
+            //System.out.println(GREEN + "[3] " + RESET + "Add a product to catalog");
+            //System.out.println(GREEN + "[4] " + RESET + "Remove a product from catalog");
+            //System.out.println(GREEN + "[5] " + RESET + "Edit the details of product in catalog");
+            //System.out.println(GREEN + "[6] " + RESET + "Display created catalog");
+            System.out.println(GREEN + "[4] " + RESET + "Back");
+            System.out.print("Selection: ");
             int managerChoice = s.nextInt();
             s.nextLine();
-            String navigationMsg;
-            switch (managerChoice) {
-                case 1:
-                    CustomerMaintenance.staffEditType();
-                    break;
-                case 2:
-                    CustomerMaintenance.staffCreateCorporate();
-                    break;
-                case 3:
-                    navigationMsg = "Create catalog";
-                    CatalogMaintenance.productType(navigationMsg, normalPackage, discountedPackage);
-                    break;//Add product
-                case 4:
-                    navigationMsg = "Delete catalog";
-                    CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage, "Manager");
-                    break;//Delete product
-                case 5:
-                    navigationMsg = "Edit catalog";
-                    CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage, "Manager");
-                    break;//Edit Product
-                case 6:
-                    navigationMsg = "Display catalog";
-                    CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage, "Manager");
-                    break;//Display product                
-                case 7:
-                    staffTypeSelection();
-                    break;//Back to staff selection
+
+            if (managerChoice == 1) {
+                CustomerMaintenance.staffEditType();
+            } else if (managerChoice == 2) {
+                CustomerMaintenance.staffCreateCorporate();
+            } else if (managerChoice == 3) {
+                String navigationMsg = "";
+                CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage, "Manager");
+            } else {
+                break;
             }
-        } catch (Exception e) {
-            System.out.println("\n" + ConsoleColors.RED + " An Error Occured. Please Only Enter Number Only." + ConsoleColors.RESET);
-            manager();
         }
     }
 
     public static void inventoryClerk() {
-        String navigationMsg;
-        System.out.println("\nPlease Select The Options Below.");
-        CatalogMaintenance.stockNotification(normalPackage, discountedPackage);
-        System.out.println("[1] Check stock quantity.");
-        System.out.println("[2] Restock product quantity.");
-        System.out.println("[3] Edit customize floral arrangement customization options");
-        System.out.println("[4] Back");
-        try {
+        while (true) {
+            String navigationMsg;
+            System.out.println("\nPlease Select One Of The Options Below.");
+            CatalogMaintenance.stockNotification(normalPackage, discountedPackage);
+            System.out.println(GREEN + "[1] " + RESET + "Check stock quantity.");
+            System.out.println(GREEN + "[2] " + RESET + "Restock product quantity.");
+            System.out.println(GREEN + "[3] " + RESET + "Edit customize floral arrangement customization options");
+            System.out.println(GREEN + "[4] " + RESET + "Back");
+            System.out.print("Selection: ");
             int inventoryClerkChoice = s.nextInt();
             s.nextLine();
-            switch (inventoryClerkChoice) {
-                case 1:
-                    navigationMsg = "Current stock";
-                    CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage, "Inverntory clerk");
-                    break;//Display Current Stock for normal or monthly promotion catalog
-                case 2: //Restock product
-                    navigationMsg = "Restock quantity";
-                    CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage, "Inverntory clerk");
-                    break;
-                case 3:
-                    CustomizePackage.itemsMenu(itemCatalogue, customizedPackages);
-                    break;
-                case 4:
-                    userTypeSelection();
-                    break;
+            if (inventoryClerkChoice == 1) {
+                navigationMsg = "Current stock";
+                CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage, "Inverntory clerk");
+            } else if (inventoryClerkChoice == 2) {
+                navigationMsg = "Restock quantity";
+                CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage, "Inverntory clerk");
+            } else if (inventoryClerkChoice == 3) {
+                CustomizePackage.itemsMenu(itemCatalogue, customizedPackages);
+            } else {
+                break;
             }
-        } catch (Exception e) {
-            System.out.println("\n" + ConsoleColors.RED + " An Error Occured. Please Only Enter Number Only." + ConsoleColors.RESET);
-            inventoryClerk();
+
         }
     }
 
     public static void counterStaff() {
-        System.out.println("\nPlease Select The Options Below.");
-        System.out.println("[1] Corporate Customer Invoice Maintenance");
-        System.out.println("[2] Order Pickup/Delivery");
-        System.out.println("[3] Consumer Payment Management");
-        System.out.println("[4] View Sales Order");
-        System.out.println("[5] Back");
-
-        try {
+        while (true) {
+            System.out.println("\nPlease Select One Of The Options Below.");
+            System.out.println(GREEN + "[1] " + RESET + "Corporate Customer Invoice Maintenance");
+            System.out.println(GREEN + "[2] " + RESET + "Order Pickup/Delivery");
+            System.out.println(GREEN + "[3] " + RESET + "Consumer Payment Management");
+            System.out.println(GREEN + "[4] " + RESET + "View Sales Order");
+            System.out.println(GREEN + "[5] " + RESET + "Back");
+            System.out.print("Selection: ");
             int counterStaffChoice = s.nextInt();
             s.nextLine();
-            switch (counterStaffChoice) {
-                case 1:
-                    InvoicePayment.invoiceMaintenance();
-                    break;
-                case 2:
-                    orderMenu();
-                    break;//order pickup/delivery 
-                case 3: //consumer payment management
-                case 4: //view sales order
-                case 5:
-                    staffTypeSelection();
-                    break;
+            if (counterStaffChoice == 1) {
+                InvoicePayment.invoiceMaintenance();
+            } else if (counterStaffChoice == 2) {
+                orderMenu();
+            } else if (counterStaffChoice == 3) {
+                //MISSING FUNCTION
+            } else if (counterStaffChoice == 4) {
+                //MISSING FUNCTION
+            } else {
+                break;
             }
-        } catch (Exception e) {
-            System.out.println("\n" + ConsoleColors.RED + " An Error Occured. Please Only Enter Number Only." + ConsoleColors.RESET);
-            counterStaff();
         }
     }
 
     public static void florist() {
-        System.out.println("\nPlease Select The Options Below.");
-        System.out.println("[1] View Order List");
-        System.out.println("[2] Generate Itemized Bill");
-        System.out.println("[3] View Customized Floral Arrangement Jobs");
-        System.out.println("[4] Back");
-        try {
+        while (true) {
+            System.out.println("\nPlease Select One Of The Options Below.");
+            System.out.println(GREEN + "[1] " + RESET + "View Order List");
+            System.out.println(GREEN + "[2] " + RESET + "Generate Itemized Bill");
+            System.out.println(GREEN + "[3] " + RESET + "View Customized Floral Arrangement Jobs");
+            System.out.println(GREEN + "[4] " + RESET + "Back");
+            System.out.print("Selection: ");
             int floristChoice = s.nextInt();
             s.nextLine();
-            switch (floristChoice) {
-                case 1:
-                    orderMenu();
-                    break;
-                case 2:
-                case 3:
-                    CustomizePackage.updateOrders(customizedPackages, readyOrders);
-                    break;
-                case 4:
-                    staffTypeSelection();
-                    break;
+            if (floristChoice == 1) {
+                orderMenu();
+            } else if (floristChoice == 2) {
+                //MISSING FUNCTION
+            } else if (floristChoice == 3) {
+                CustomizePackage.updateOrders(customizedPackages, readyOrders);
+            } else {
+                break;
             }
-        } catch (Exception e) {
-            System.out.println("\n" + ConsoleColors.RED + " An Error Occured. Please Only Enter Number Only." + ConsoleColors.RESET);
-            florist();
         }
     }
 
     public static void deliveryStaff() throws ApiException, InterruptedException, IOException {
-        System.out.println("\nPlease Select The Options Below.");
-        System.out.println("[1] View Ongoing Delivery List");
-        System.out.println("[2] Payment for Delivery Order");
-        System.out.println("[3] View Delivered Order");
-        System.out.println("[4] View Delivery Payments");
-        System.out.println("[5] Generate Payment Receipt");
-        System.out.println("[6] Back");
-        int deliveryStaffChoice = s.nextInt();
-        s.nextLine();
-        switch (deliveryStaffChoice) {
-            case 1:
+        while (true) {
+            System.out.println("\nPlease Select One Of The Options Below.");
+            System.out.println(GREEN + "[1] " + RESET + "View Ongoing Delivery List");
+            System.out.println(GREEN + "[2] " + RESET + "Payment for Delivery Order");
+            System.out.println(GREEN + "[3] " + RESET + "View Delivered Order");
+            System.out.println(GREEN + "[4] " + RESET + "View Delivery Payments");
+            System.out.println(GREEN + "[5] " + RESET + "Generate Payment Receipt");
+            System.out.println(GREEN + "[6] " + RESET + "Back");
+            System.out.print("Selection: ");
+            int deliveryStaffChoice = s.nextInt();
+            s.nextLine();
+            if (deliveryStaffChoice == 1) {
                 try {
                     Delivery.sortRouteDelivery(catalogOrder, readyOrders, shopAddress);
                 } catch (ApiException ex) {
@@ -496,8 +452,7 @@ public class FioreFlowershop {
                     Logger.getLogger(FioreFlowershop.class
                             .getName()).log(Level.SEVERE, null, ex);
                 }
-                break;
-            case 2:
+            } else if (deliveryStaffChoice == 2) {
                 try {
                     Delivery.sortRouteDelivery(catalogOrder, readyOrders, shopAddress);
                 } catch (ApiException ex) {
@@ -512,79 +467,127 @@ public class FioreFlowershop {
                     Logger.getLogger(FioreFlowershop.class
                             .getName()).log(Level.SEVERE, null, ex);
                 }
+            } else if (deliveryStaffChoice == 3) {
+                //MISSING FUNCTION
+            } else if (deliveryStaffChoice == 4) {
+                Delivery.searchUserDelivery(shopAddress, catalogOrder, readyOrders, paidOrder);
+            } else if (deliveryStaffChoice == 5) {
+                //MISSING FUNCTION
+            } else {
                 break;
-            case 3:
-            case 4:
-                Delivery.searchPaidDelivery(paidOrder);
-            case 5:
-            case 6:
-                userTypeSelection();
-                break;
+            }
         }
     }
 
     public static void orderMenu() {
-        System.out.println("\nPlease Select The Options Below.");
-        System.out.println("[1] Pick Up Order");
-        System.out.println("[2] Delivery Order");
-        System.out.println("[3] Back");
-        System.out.println("Enter your option: ");
-
-        int choice = s.nextInt();
-        s.nextLine();
-
-        if (choice == 1) {
+        while (true) {
             System.out.println("\nPlease Select The Options Below.");
-            System.out.println("1. Today's Pick Up Order List");
-            System.out.println("2. Search Pick Up Order List by Date");
-            System.out.println("3. Search Pick Up Order by User ID to Pay");
-            System.out.println("Enter your option: ");
+            System.out.println(GREEN + "[1] " + RESET + "Pick Up Order");
+            System.out.println(GREEN + "[2] " + RESET + "Delivery Order");
+            System.out.println(GREEN + "[3] " + RESET + "Back");
+            System.out.print("Selection: ");
 
-            int pickupChoice = s.nextInt();
+            int choice = s.nextInt();
+            s.nextLine();
 
-            if (pickupChoice == 1) {
-                Pickup.sortPickupOrder(catalogOrder, readyOrders);
-            } else if (pickupChoice == 2) {
+            if (choice == 1) {
+                System.out.println("\nPlease Select One Of The Options Below.");
+                System.out.println("1. Today's Pick Up Order List");
+                System.out.println("2. Search Pick Up Order List by Date");
+                System.out.println("3. Search Pick Up Order by User ID to Pay");
+                System.out.println("Enter your option: ");
 
-                try {
+                int pickupChoice = s.nextInt();
+
+                if (pickupChoice == 1) {
+                    Pickup.sortPickupOrder(catalogOrder, readyOrders);
+                } else if (pickupChoice == 2) {
+
+                    try {
+                        s.nextLine();
+
+                        System.out.print("Please enter date to search (yyyy-MM-dd): ");
+
+                        String dateStr = s.nextLine();
+
+                        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+
+                        Date date = dateformat.parse(dateStr);
+
+                        Pickup.searchPickUp(catalogOrder, date, readyOrders);
+
+                    } catch (ParseException ex) {
+                        Logger.getLogger(FioreFlowershop.class
+                                .getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                } else if (pickupChoice == 3) {
                     s.nextLine();
 
-                    System.out.print("Please enter date to search (yyyy-MM-dd): ");
+                    System.out.print("Please enter User ID to pay: ");
 
-                    String dateStr = s.nextLine();
+                    String userID = s.nextLine();
 
-                    SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
-
-                    Date date = dateformat.parse(dateStr);
-
-                    Pickup.searchPickUp(catalogOrder, date, readyOrders);
-
-                } catch (ParseException ex) {
-                    Logger.getLogger(FioreFlowershop.class
-                            .getName()).log(Level.SEVERE, null, ex);
+                    Pickup.searchUserPickUp(userID, catalogOrder, readyOrders, paidOrder);
                 }
+            } else if (choice == 2) {
+                while (true) {
+                    System.out.println("\nPlease Select The Options Below.");
+                    System.out.println("[1] Today's Delivery Order List");
+                    System.out.println("[2] Search Delivery Order List by Date");
+                    System.out.println("[3] Back");
+                    System.out.println("Enter your option: ");
 
-            } else if (pickupChoice == 3) {
-                s.nextLine();
+                    int deliveryChoice = s.nextInt();
 
-                System.out.print("Please enter User ID to pay: ");
+                    if (deliveryChoice == 1) {
+                        Delivery.sortDeliveryOrder(catalogOrder, readyOrders);
+                    } else if (deliveryChoice == 2) {
+                        try {
+                            s.nextLine();
 
-                String userID = s.nextLine();
+                            System.out.print("Please enter date to search (yyyy-MM-dd): ");
 
-                Pickup.searchUserPickUp(userID, catalogOrder, readyOrders, paidOrder);
+                            String dateStr = s.nextLine();
+
+                            SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+
+                            Date date = dateformat.parse(dateStr);
+
+                            Delivery.searchDelivery(catalogOrder, date, readyOrders);
+
+                        } catch (ParseException ex) {
+                            Logger.getLogger(FioreFlowershop.class
+                                    .getName()).log(Level.SEVERE, null, ex);
+                        }
+                    } else {
+                        break;
+                    }
+                }
+            } else {
+                break;
             }
+        }
+    }
 
-        } else if (choice == 2) {
-            System.out.println("\nPlease Select The Options Below.");
-            System.out.println("[1] Today's Delivery Order List");
-            System.out.println("[2] Search Delivery Order List by Date");
-            System.out.println("[3] Back");
-            System.out.println("Enter your option: ");
+    public static void sortDeliveryRoute() {
+        while (true) {
+            System.out.println("\nPlease Select One Of The Options Below.");
+            System.out.println(GREEN + "[1] " + RESET + "Today's Delivery Order List");
+            System.out.println(GREEN + "[2] " + RESET + "Search Delivery Order List by Date");
+            System.out.println(GREEN + "[3] " + RESET + "Back");
+            System.out.print("Selection: ");
 
             int deliveryChoice = s.nextInt();
 
             if (deliveryChoice == 1) {
                 Delivery.sortDeliveryOrder(catalogOrder, readyOrders);
+                try {
+                    deliveryStaff();
+
+                } catch (ApiException | InterruptedException | IOException ex) {
+                    Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+                }
             } else if (deliveryChoice == 2) {
                 try {
                     s.nextLine();
@@ -600,61 +603,10 @@ public class FioreFlowershop {
                     Delivery.searchDelivery(catalogOrder, date, readyOrders);
 
                 } catch (ParseException ex) {
-                    Logger.getLogger(FioreFlowershop.class
-                            .getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
-
-            }
-
-        } else if (choice == 3) {
-            florist();
-        }
-    }
-
-    public static void sortDeliveryRoute() {
-        System.out.println("\nPlease Select The Options Below.");
-        System.out.println("[1] Today's Delivery Order List");
-        System.out.println("[2] Search Delivery Order List by Date");
-        System.out.println("[3] Back");
-        System.out.println("Enter your option: ");
-
-        int deliveryChoice = s.nextInt();
-
-        if (deliveryChoice == 1) {
-            Delivery.sortDeliveryOrder(catalogOrder, readyOrders);
-            try {
-                deliveryStaff();
-
-            } catch (ApiException ex) {
-                Logger.getLogger(FioreFlowershop.class
-                        .getName()).log(Level.SEVERE, null, ex);
-
-            } catch (InterruptedException ex) {
-                Logger.getLogger(FioreFlowershop.class
-                        .getName()).log(Level.SEVERE, null, ex);
-
-            } catch (IOException ex) {
-                Logger.getLogger(FioreFlowershop.class
-                        .getName()).log(Level.SEVERE, null, ex);
-            }
-        } else if (deliveryChoice == 2) {
-            try {
-                s.nextLine();
-
-                System.out.print("Please enter date to search (yyyy-MM-dd): ");
-
-                String dateStr = s.nextLine();
-
-                SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
-
-                Date date = dateformat.parse(dateStr);
-
-                Delivery.searchDelivery(catalogOrder, date, readyOrders);
-
-            } catch (ParseException ex) {
-                Logger.getLogger(FioreFlowershop.class
-                        .getName()).log(Level.SEVERE, null, ex);
+                break;
             }
         }
     }
