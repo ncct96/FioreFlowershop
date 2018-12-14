@@ -81,10 +81,14 @@ public class FioreFlowershop {
         //consumer initialize
         CorporateCustomer cc1 = new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000, true);
         CorporateCustomer cc2 = new CorporateCustomer("NotNoice", "notnoice@example.com", "0123456781", "PV13", "abc123", "Some Merchant", 5000, true);
-        Consumer c1 = new Consumer("ceekay", "abcdef123", "ceekay@example.com", "0125566922", "No Address Available");
-        Consumer c2 = new Consumer("testing", "testing", "testing@example.com", "0125566922", "No Address Available");
+        Consumer c1 = new Consumer("ceekay", "abcdef123", "ceekay@example.com", "0125566922", "Johor");
+        Consumer c2 = new Consumer("testing", "testing", "testing@example.com", "0125566922", "Penang");
+        Consumer c3 = new Consumer("testing1", "testing", "testing@example.com", "0125566922", "Cheras");
+        Consumer c4 = new Consumer("testing2", "testing", "testing@example.com", "0125566922", "Pahang");
         consumer.add(c1);
         consumer.add(c2);
+        consumer.add(c3);
+        consumer.add(c4);
         corporate.add(cc1);
         corporate.add(cc2);
         corporate.getItem(1).setCreditSpent(4500);
@@ -111,11 +115,19 @@ public class FioreFlowershop {
 
         CatalogOrders ct1 = new CatalogOrders("C1", catalogPack1, "Pick Up", todayDate, cc1, "Order Status", 308, false, todayDate, todayDate);
         CatalogOrders ct2 = new CatalogOrders("C2", catalogPack2, "Pick Up", todayDate, cc2, "Order Status", 200, false, todayDate, todayDate);
-        CatalogOrders ct3 = new CatalogOrders("C3", catalogPack1, "Delivery", todayDate, cc1, "Order Status", 300, false, todayDate, todayDate);
+        CatalogOrders ct3 = new CatalogOrders("C3", catalogPack1, "Delivery", todayDate, c3, "Order Status", 300, false, todayDate, todayDate);
+        CatalogOrders ct4 = new CatalogOrders("C4", catalogPack1, "Delivery", todayDate, c4, "Order Status", 300, false, todayDate, todayDate);
+        CatalogOrders ct5 = new CatalogOrders("C5", catalogPack1, "Delivery", todayDate, c3, "Order Status", 300, false, todayDate, todayDate);
+        CatalogOrders ct6 = new CatalogOrders("C6", catalogPack1, "Delivery", todayDate, c2, "Order Status", 300, false, todayDate, todayDate);
+        CatalogOrders ct7 = new CatalogOrders("C7", catalogPack1, "Delivery", todayDate, c1, "Order Status", 300, false, todayDate, todayDate);
 
         catalogOrder.add(ct1);
         catalogOrder.add(ct2);
         catalogOrder.add(ct3);
+        catalogOrder.add(ct4);
+        catalogOrder.add(ct5);
+        catalogOrder.add(ct6);
+        catalogOrder.add(ct7);
 
         ListIteratorInterface<Item> styles = new LinkedList<>();
         ListIteratorInterface<Item> sizes = new LinkedList<>();
@@ -151,6 +163,13 @@ public class FioreFlowershop {
 
         deliveryTypes.add(new Item("Pick Up", 0));
         deliveryTypes.add(new Item("Delivery", 10));
+
+        itemCatalogue.setStyles(styles);
+        itemCatalogue.setSizes(sizes);
+        itemCatalogue.setFlowers(flowers);
+        itemCatalogue.setAccessories(accessories);
+        itemCatalogue.setPriorities(priorities);
+        itemCatalogue.setDeliveryTypes(deliveryTypes);
 
         ListIteratorInterface<Item> testFlowers = new LinkedList<>();
         testFlowers.add(flowers.getItem(1));
@@ -188,13 +207,7 @@ public class FioreFlowershop {
 //        cal.add(Calendar.DAY_OF_MONTH, -2);
 //        specialPackage.setOrderDate(cal.getTime());
         //customizedPackages.enqueue(specialPackage);
-        itemCatalogue.setStyles(styles);
-        itemCatalogue.setSizes(sizes);
-        itemCatalogue.setFlowers(flowers);
-        itemCatalogue.setAccessories(accessories);
-        itemCatalogue.setPriorities(priorities);
-        itemCatalogue.setDeliveryTypes(deliveryTypes);
-
+        
         Calendar retrieveDate = Calendar.getInstance();
         retrieveDate.setTime(new Date()); // Now use today date.
         retrieveDate.add(Calendar.DATE, 2); // Adding 2 days
@@ -460,7 +473,7 @@ public class FioreFlowershop {
     public static void deliveryStaff() throws ApiException, InterruptedException, IOException {
         System.out.println("\nPlease Select The Options Below.");
         System.out.println("[1] View Ongoing Delivery List");
-        System.out.println("[2] Update Status for Delivery Order");
+        System.out.println("[2] Payment for Delivery Order");
         System.out.println("[3] View Delivered Order");
         System.out.println("[4] View Delivery Payments");
         System.out.println("[5] Generate Payment Receipt");
@@ -485,6 +498,21 @@ public class FioreFlowershop {
                 }
                 break;
             case 2:
+                try {
+                    Delivery.sortRouteDelivery(catalogOrder, readyOrders, shopAddress);
+                } catch (ApiException ex) {
+                    Logger.getLogger(FioreFlowershop.class
+                            .getName()).log(Level.SEVERE, null, ex);
+
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(FioreFlowershop.class
+                            .getName()).log(Level.SEVERE, null, ex);
+
+                } catch (IOException ex) {
+                    Logger.getLogger(FioreFlowershop.class
+                            .getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
             case 3:
             case 4:
                 //DeliveryOptimization.distanceMatrix(origin, dest);
@@ -665,6 +693,10 @@ public class FioreFlowershop {
 
     public static LinkedList<CatalogOrders> getCatalogOrder() {
         return catalogOrder;
+    }
+
+    public static LinkedList<CustomizedPackage> getReadyOrder() {
+        return readyOrders;
     }
 
     public class ConsoleColors {
