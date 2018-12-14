@@ -47,15 +47,21 @@ public class Delivery {
 
         // Get all delivery order for Catalog Order
         while (catalogIterator.hasNext()) {
-            if (catalogIterator.next().getOrderType().equals("Delivery")) {
-                unOrderList.add(catalogIterator.next());
+
+            CatalogOrders order = catalogIterator.next();
+
+            if (order.getOrderType().equals("Delivery")) {
+                unOrderList.add(order);
             }
         }
 
         // Get all delivery order for Customize Package
         while (CustomIterator.hasNext()) {
-            if (CustomIterator.next().getOrderType().equals("Delivery")) {
-                customOrder.add(CustomIterator.next());
+
+            CustomizedPackage order = CustomIterator.next();
+
+            if (order.getDeliveryType().getName().equals("Delivery")) {
+                customOrder.add(order);
             }
         }
 
@@ -477,7 +483,7 @@ public class Delivery {
                     System.out.println("Contact: " + dest.getItem(tourCount).getUser().getPhone());
                     System.out.println("Delivery Date: " + dateFormat.format(dest.getItem(tourCount).getOrderDate()));
                     System.out.println("Order type: " + dest.getItem(tourCount).getOrderType());
-                    System.out.println("Payment: RM" + dest.getItem(tourCount).getOrderAmt() + "\n");
+                    System.out.println("Payment: RM" + String.format("%.2f", dest.getItem(tourCount).getOrderAmt()) + "\n");
                 } else {
                     System.out.println("Delivery Order " + (i));
                     System.out.println("================");
@@ -492,14 +498,14 @@ public class Delivery {
                     System.out.println("Contact: " + dest.getItem(tourCount).getUser().getPhone());
                     System.out.println("Delivery Date: " + dateFormat.format(dest.getItem(tourCount).getOrderDate()));
                     System.out.println("Order type: " + dest.getItem(tourCount).getOrderType());
-                    System.out.println("Payment: RM" + dest.getItem(tourCount).getOrderAmt() + "\n");
+                    System.out.println("Payment: RM" + String.format("%.2f", dest.getItem(tourCount).getOrderAmt()) + "\n");
                 }
                 totalPayment += dest.getItem(tourCount).getOrderAmt();
             }
         }
 
         System.out.println("Origin: " + shopAddress);
-        System.out.println("Total Payment Amount: RM" + totalPayment + "\n");
+        System.out.println("Total Payment Amount: RM" + String.format("%.2f", totalPayment) + "\n");
 
         System.out.println("1. Record Payment");
         System.out.println("2. Back");
@@ -517,7 +523,7 @@ public class Delivery {
             Iterator<CatalogOrders> catIterator = catalogOrder.getIterator();
             Iterator<CustomizedPackage> cusIterator = customOrder.getIterator();
 
-            System.out.println("These are your orders with pending payment");
+            System.out.println("These are your orders with pending payment\n");
             System.out.println("|Order ID|\t|Order Type|\t|Order Date|\t\t|Payment Amount (RM)|\t|Payment Status|\t|Pickup Date|");
             System.out.println("=============================================================================================================================================================");
 
@@ -532,9 +538,13 @@ public class Delivery {
                     //System.out.print("Username: " + order.getUser().getUsername());
                     //System.out.print("Contact: " + order.getUser().getPhone());
                     //System.out.print("Order Details: " + ((CatalogOrders) order).getCatalogPack());
-                    System.out.print(order.getOrderAmt() + "\t\t\t");
+                    System.out.print(String.format("%.2f", order.getOrderAmt()) + "\t\t\t");
                     //System.out.print("Quantity: " + ((CatalogOrders) order).getItemQuantity());
-                    System.out.print(order.isPaymentStatus() + "\t\t\t");
+                    if (order.isPaymentStatus()) {
+                        System.out.print("Paid \t\t");
+                    } else {
+                        System.out.print("Pending \t\t");
+                    }
                     if (order.getDateOfReceive() == null) {
                         System.out.print("Pending \n");
                     } else {
@@ -560,7 +570,11 @@ public class Delivery {
                             // System.out.print(((CustomizedPackage) order).getFlower() + "\t");
                             System.out.print(((CustomizedPackage) order).CalculateOrder() + "\t\t\t");
                             //System.out.print(((CatalogOrders) order).getCatalogPack().getItem(i).getUserQuantity() + "\t");
-                            System.out.print(order.isPaymentStatus() + "\t\t\t");
+                            if (order.isPaymentStatus()) {
+                                System.out.print("Paid \t\t");
+                            } else {
+                                System.out.print("Pending \t\t");
+                            }
                             if (order.getDateOfReceive() == null) {
                                 System.out.print("Pending \n");
                             } else {
@@ -577,7 +591,7 @@ public class Delivery {
                 System.out.println("1. Pay");
                 System.out.println("2. Back");
                 System.out.println("Please enter your choice: ");
-                 payChoice = s.nextInt();
+                payChoice = s.nextInt();
 
                 if (payChoice == 1) {
                     do {
@@ -597,7 +611,7 @@ public class Delivery {
                             if (change == 0) {
                                 System.out.println("Payment Change: No changes");
                             } else {
-                                System.out.println("Payment Change: RM " + change);
+                                System.out.println("Payment Change: RM " + String.format("%.2f", change));
                             }
 
                             matchOrder.setPaymentTime(new Date());
@@ -683,9 +697,13 @@ public class Delivery {
                         //System.out.print("Username: " + order.getUser().getUsername());
                         //System.out.print("Contact: " + order.getUser().getPhone());
                         //System.out.print("Order Details: " + ((CatalogOrders) order).getCatalogPack());
-                        System.out.print(order.getOrderAmt() + "\t\t\t");
+                        System.out.print(String.format("%.2f", order.getOrderAmt()) + "\t\t\t");
                         //System.out.print("Quantity: " + ((CatalogOrders) order).getItemQuantity());
-                        System.out.print(order.isPaymentStatus() + "\t\t\t");
+                        if (order.isPaymentStatus()) {
+                            System.out.print("Paid \t\t\t");
+                        } else {
+                            System.out.print("Pending \t\t\t");
+                        }
                         if (order.getDateOfReceive() == null) {
                             System.out.print("Pending \n");
                         } else {
@@ -699,9 +717,13 @@ public class Delivery {
                         //System.out.print(order.getUser().getUsername() + "\t");
                         //System.out.print(order.getUser().getPhone() + "\t");
                         // System.out.print(((CustomizedPackage) order).getFlower() + "\t");
-                        System.out.print(((CustomizedPackage) order).CalculateOrder() + "\t\t\t");
+                        System.out.print(String.format("%.2f", ((CustomizedPackage) order).CalculateOrder()) + "\t\t\t");
                         //System.out.print(((CatalogOrders) order).getCatalogPack().getItem(i).getUserQuantity() + "\t");
-                        System.out.print(order.isPaymentStatus() + "\t\t\t");
+                        if (order.isPaymentStatus()) {
+                            System.out.print("Paid \t\t\t");
+                        } else {
+                            System.out.print("Pending \t\t\t");
+                        }
                         if (order.getDateOfReceive() == null) {
                             System.out.print("Pending \n");
                         } else {
@@ -725,7 +747,7 @@ public class Delivery {
                     System.out.println("The selected order already paid!");
                     FioreFlowershop.orderMenu();
                 } else {
-                    System.out.println("Total Amount: " + matchOrder.getItem(orderChoice).getOrderAmt());
+                    System.out.println("Total Amount: " + String.format("%.2f", matchOrder.getItem(orderChoice).getOrderAmt()));
                     double payAmt, change = 0;
 
                     do {
@@ -745,7 +767,7 @@ public class Delivery {
                             if (change == 0) {
                                 System.out.println("Payment Change: No changes");
                             } else {
-                                System.out.println("Payment Change: RM " + change);
+                                System.out.println("Payment Change: RM " + String.format("%.2f", change));
                             }
 
                             matchOrder.getItem(orderChoice).setPaymentTime(new Date());
@@ -832,6 +854,10 @@ public class Delivery {
             System.out.println("====================================================================================================");
         }
         FioreFlowershop.counterStaff();
+    }
+    
+    public static void searchPaidDelivery(LinkedList paidOrder){
+        System.out.println("Enter ");
     }
 
 }
