@@ -110,8 +110,7 @@ public class CustomerMaintenance {
             System.out.println("Please Select One Of The Options Below:");
             System.out.println(GREEN + "[1] " + RESET + "Make Flower Order");
             System.out.println(GREEN + "[2] " + RESET + "View Ordered Items");
-            System.out.println(GREEN + "[3] " + RESET + "Edit Flower Order");
-            System.out.println(GREEN + "[4] " + RESET + "Log Out");
+            System.out.println(GREEN + "[3] " + RESET + "Log Out");
             System.out.print("Selection: ");
             int customerOptionsChoice = s.nextInt();
             s.nextLine();
@@ -135,18 +134,11 @@ public class CustomerMaintenance {
                 }
             } else if (customerOptionsChoice == 2) { //View Ordered Items
                 FioreFlowershop.gotoCustomizePackage(customerLoggedIn, 2);
-            } else if (customerOptionsChoice == 3) { //Edit Flower Order
-
-            } else if (customerOptionsChoice == 4) {
-                if (customerLoggedIn != null) {
-                    customerLoggedIn = null;
-                    System.out.println("\n" + FioreFlowershop.ConsoleColors.GREEN + "Successfully Logged Out From Customer Account ! " + FioreFlowershop.ConsoleColors.RESET);
-                    FioreFlowershop.userTypeSelection();
-                } else if (corporateLoggedIn != null) {
-                    corporateLoggedIn = null;
-                    System.out.println("\n" + FioreFlowershop.ConsoleColors.GREEN + "Successfully Logged Out From Corporate Customer Account ! " + FioreFlowershop.ConsoleColors.RESET);
-                    FioreFlowershop.userTypeSelection();
-                }
+            } else {
+                customerLoggedIn = null;
+                corporateLoggedIn = null;
+                System.out.println("\n" + FioreFlowershop.ConsoleColors.GREEN + "Successfully Logged Out From Account! " + FioreFlowershop.ConsoleColors.RESET);
+                break;
             }
         }
     }
