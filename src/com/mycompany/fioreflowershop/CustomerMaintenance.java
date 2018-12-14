@@ -243,11 +243,13 @@ public class CustomerMaintenance {
                 System.out.println("Would you like to try again or create an account?");
                 System.out.println("[1] Login Again");
                 System.out.println("[2] Create An Account");
+                System.out.println("[3] Back");
                 try{
                    int choice = s.nextInt(); s.nextLine();
                     switch(choice){
                         case 1: CustLogIn(); break;
                         case 2: CreateAccount(); break;
+                        case 3: customerOptions(); break;
                     } 
                 }catch(Exception e){
                     System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"An Error Occurred. Please Only Enter Number Only."+FioreFlowershop.ConsoleColors.RESET);
