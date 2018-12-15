@@ -142,11 +142,10 @@ public class CustomerMaintenance {
     }
 
     public static void createAccount() {
-        boolean passwCheck;
+        boolean passwCheck; int consumerType = 0;
         String passw = "";
         passwCheck = false;
         System.out.println("\nPlease Fill In The Fields As Prompted.");
-        s.nextLine();
         System.out.print("Username : ");
         String usern = s.nextLine();
         System.out.print("Email : ");
@@ -167,11 +166,11 @@ public class CustomerMaintenance {
             }
         } while (passwCheck == false);
         //Check for duplicate account created, disallow duplicate entries
-        checkDuplicate(usern, passw, email, number, address);
+        checkDuplicate(usern, passw, email, number, address, "", 0, "Customer");
 //        customerOptions();
     }
     
-    public static void checkDuplicate(String usern, String passw, String email, String number, String address){
+    public static void checkDuplicate(String usern, String passw, String email, String number, String address, String company, int creditLimit, String consumerType){
         boolean exist = false;
         if (user != null) {
             for (int i = 1; i <= user.getTotalEntries(); i++) {
@@ -182,10 +181,16 @@ public class CustomerMaintenance {
                 }
             }
         }
-        if (!exist) {
+        if (!exist && consumerType.equals("Customer")) {
             Consumer c = new Consumer(usern, passw, email, number, address);
             cust.add(c);
             user.add(c);
+            sortEmailOrder();
+            System.out.println("\n" + FioreFlowershop.ConsoleColors.GREEN + "New Account Successfully Created ! " + FioreFlowershop.ConsoleColors.RESET);
+        }else if(!exist && consumerType.equals("Corporate")){
+            CorporateCustomer Corporate = new CorporateCustomer(usern, email, number, address, passw, company, creditLimit, true);
+            corpC.add(Corporate);
+            user.add(Corporate);
             sortEmailOrder();
             System.out.println("\n" + FioreFlowershop.ConsoleColors.GREEN + "New Account Successfully Created ! " + FioreFlowershop.ConsoleColors.RESET);
         }
@@ -230,7 +235,6 @@ public class CustomerMaintenance {
             custLogInVerify(email, passw);
         } else {
             System.out.println(FioreFlowershop.ConsoleColors.RED_BOLD + "\nYou Are Already Logged In ! " + FioreFlowershop.ConsoleColors.RESET);
-            //Redirect to other page
         }
     }
     
@@ -266,8 +270,8 @@ public class CustomerMaintenance {
             }
             if (!customerHit && !corporateHit) {//If corporate customer is not found 
                 custTryAgain();
-            } else {
-//                customerOptions();
+            }else {
+                customerMenu();
             }
     }
     
@@ -417,8 +421,7 @@ public class CustomerMaintenance {
                 break;
             }
         }
-        String edit;
-        int editLimit;
+        String edit; int editLimit;
         System.out.println("\nPlease enter which field to edit");
         System.out.println("[1] Username");
         System.out.println("[2] Email");
@@ -427,8 +430,7 @@ public class CustomerMaintenance {
         System.out.println("[5] Password");
         System.out.println("[6] Company");
         System.out.println("[7] Credit Limit");
-        int corpOptionChoice = s.nextInt();
-        s.nextLine();
+        int corpOptionChoice = s.nextInt(); s.nextLine();
         if (corpOptionChoice == 1) {
             System.out.println("Old Username : " + corpC.getItem(corpEditChoice).getUsername());
             System.out.print("Please Enter The New Username : ");
@@ -566,24 +568,7 @@ public class CustomerMaintenance {
                 System.out.println("\n" + FioreFlowershop.ConsoleColors.RED_BOLD + "Password Mismatched, Please Try Again.\n" + FioreFlowershop.ConsoleColors.RESET);
             }
         } while (passwCheck == false);
-        CorporateCustomer Corporate = new CorporateCustomer(usern, email, number, address, passw, company, creditLimit, true);
-
-        if (user != null) {
-            for (int i = 1; i <= user.getTotalEntries(); i++) {
-                if (user.getItem(i).getEmail().equals(email) && user.getItem(i).getUsername().equals(usern)) {
-                    System.out.println("\n" + FioreFlowershop.ConsoleColors.RED + "Sorry, Exisiting Account Found, Please Try Again." + FioreFlowershop.ConsoleColors.RESET);
-                    exist = true;
-                    break;
-                }
-            }
-        }
-        if (!exist) {
-            corpC.add(Corporate);
-            user.add(Corporate);
-            sortEmailOrder();
-            System.out.println("\n" + FioreFlowershop.ConsoleColors.GREEN + "New Account Successfully Created ! " + FioreFlowershop.ConsoleColors.RESET);
-        }
-        FioreFlowershop.manager();
+        checkDuplicate(usern, passw, email, number, address, company, creditLimit, "Corporate");
     }
 
     public static void staffNextOption() {
