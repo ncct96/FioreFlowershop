@@ -5,6 +5,8 @@
  */
 package com.mycompany.fioreflowershop;
 
+import com.mycompany.fioreflowershop.adt.LinkedList;
+import com.mycompany.fioreflowershop.modal.User;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -23,42 +25,12 @@ public class CustomerMaintenanceTest {
     }
 
     /**
-     * Test of customerOptions method, of class CustomerMaintenance.
-     */
-    @Test
-    public void testCustomerOptions() {
-        System.out.println("customerOptions");
-        CustomerMaintenance.customerOptions();
-        // TODO review the generated test code and remove the default call to fail.
-    }
-
-    /**
-     * Test of CreateAccount method, of class CustomerMaintenance.
-     */
-    @Test
-    public void testCreateAccount() {
-        System.out.println("CreateAccount");
-        CustomerMaintenance.CreateAccount();
-        // TODO review the generated test code and remove the default call to fail.
-    }
-
-    /**
      * Test of sortEmailOrder method, of class CustomerMaintenance.
      */
     @Test
     public void testSortEmailOrder() {
         System.out.println("sortEmailOrder");
         CustomerMaintenance.sortEmailOrder();
-        // TODO review the generated test code and remove the default call to fail.
-    }
-
-    /**
-     * Test of CustLogIn method, of class CustomerMaintenance.
-     */
-    @Test
-    public void testCustLogIn() {
-        System.out.println("CustLogIn");
-        CustomerMaintenance.CustLogIn();
         // TODO review the generated test code and remove the default call to fail.
     }
 
@@ -92,15 +64,34 @@ public class CustomerMaintenanceTest {
         CustomerMaintenance.staffCreateCorporate();
         // TODO review the generated test code and remove the default call to fail.
     }
-
+    
     /**
-     * Test of staffNextOption method, of class CustomerMaintenance.
+     * Test of checkDuplicate method, of class CustomerMaintenance.
      */
     @Test
-    public void testStaffNextOption() {
-        System.out.println("staffNextOption");
-        CustomerMaintenance.staffNextOption();
+    public void testCheckDuplicate() {
+        System.out.println("checkDuplicate");
+        LinkedList<User> user = FioreFlowershop.getUser();
+        System.out.println("Pre Add Results : " + user);
+        String usern = "junitTest";
+        String passw = "abcdef";
+        String email = "junittest@example.com";
+        String number = "0123456789";
+        String address = "junit test address";
+        CustomerMaintenance.checkDuplicate(usern, passw, email, number, address);
+        System.out.println("Post Add results : "+user.toString());
         // TODO review the generated test code and remove the default call to fail.
     }
-    
+
+    /**
+     * Test of custLogInVerify method, of class CustomerMaintenance.
+     */
+    @Test
+    public void testCustLogInVerify() {
+        System.out.println("custLogInVerify");
+        String email = "notValidAccount@example.com";
+        String passw = "abcdef";
+        CustomerMaintenance.custLogInVerify(email, passw);
+        // TODO review the generated test code and remove the default call to fail.
+    }
 }
