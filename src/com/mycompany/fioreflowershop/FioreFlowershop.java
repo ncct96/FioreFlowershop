@@ -370,7 +370,7 @@ public class FioreFlowershop {
                 navigationMsg = "Restock quantity";
                 CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage, "Inverntory clerk");
             } else if (inventoryClerkChoice == 3) {
-                CustomizePackage.itemsMenu(itemCatalogue, customizedPackages);
+                CustomizePackageMaintenance.itemsMenu(itemCatalogue, customizedPackages);
             } else {
                 break;
             }
@@ -418,7 +418,7 @@ public class FioreFlowershop {
             } else if (floristChoice == 2) {
                 //MISSING FUNCTION
             } else if (floristChoice == 3) {
-                CustomizePackage.updateOrders(customizedPackages, readyOrders);
+                CustomizePackageMaintenance.updateOrders(customizedPackages, readyOrders);
             } else {
                 break;
             }
