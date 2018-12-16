@@ -35,27 +35,33 @@ public class InvoicePayment {
     private static Iterator<CatalogOrders> catIterator = order.getIterator();
     private static int invoiceNumber = 100;
     
+    public static LinkedList<InvoiceHistory> getPaymentHistory(){
+        return paymentHistory;
+    }
+    
     public static void invoiceMaintenance(){//Selection of menus
-        
-        System.out.println("\nPlease Select The Options Below.");
-        System.out.println("[1] Make Corporate Customer Invoice Payment.");
-        System.out.println("[2] Generate Invoice Payment for Corporate Customer.");
-        System.out.println("[3] View Paid Invoice History");
-        System.out.println("[4] Back to Main Menu.");
-        
-        try{
-            int invoiceChoice = s.nextInt(); s.nextLine();
-            switch(invoiceChoice){
-                case 1:invoicePaymentP1();break;
-                case 2:generateInvoiceP1();break; 
-                case 3:viewPaymentHistory1();break; 
-                case 4:FioreFlowershop.counterStaff();break;
+        while(true){
+            System.out.println("\nPlease Select The Options Below.");
+            System.out.println("[1] Make Corporate Customer Invoice Payment.");
+            System.out.println("[2] Generate Invoice Payment for Corporate Customer.");
+            System.out.println("[3] View Paid Invoice History");
+            System.out.println("[4] Back to Main Menu.");
+            try{
+                int invoiceChoice = s.nextInt(); s.nextLine(); 
+                switch(invoiceChoice){
+                    case 1:invoicePaymentP1();break;
+                    case 2:generateInvoiceP1();break; 
+                    case 3:viewPaymentHistory1();break; 
+                    case 4:FioreFlowershop.counterStaff();break;
+                }
+            }catch (Exception e){
+                System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"An Error had occurred. Please Enter The Numbers Stated"+FioreFlowershop.ConsoleColors.RESET);
+                System.out.println(FioreFlowershop.ConsoleColors.BLUE+"\nRedirecting Back to Invoice Maintenance Menu......" + FioreFlowershop.ConsoleColors.RESET);
+                break;
             }
-        }catch (Exception e){
-            System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"An Error had occurred. Please Enter The Numbers Stated"+FioreFlowershop.ConsoleColors.RESET);
-            System.out.println(FioreFlowershop.ConsoleColors.BLUE+"\nRedirecting Back to Invoice Maintenance Menu......" + FioreFlowershop.ConsoleColors.RESET);
-            invoiceMaintenance();
+            
         }
+        
     }
     
     public static double totalPrice(double price, double quantity){
@@ -70,46 +76,50 @@ public class InvoicePayment {
     
     public static void viewPaymentHistory1(){//For viewing payment history, retrieve available paid invoices first
         String invoiceID = ""; int count = 1; boolean stat = true;
-        System.out.println("\n====================================================");
-        System.out.println("\tAvailable Paid Invoice(s)");
-        System.out.println("====================================================");
-        if(paymentHistory != null){
-            for(int i = 1; i <= paymentHistory.getTotalEntries(); i++){//Get all available paid invoices, and display it 
-                if(invoiceID.equals(paymentHistory.getItem(i).getInvoiceNumber())){
-                //If duplicates of invoice ID is found, do nothing
-                }else{//If invoice ID is found, print out the id, then store the ID to another variable for checking for duplicates.
-                    invoiceID = paymentHistory.getItem(i).getInvoiceNumber();
-                    System.out.println(FioreFlowershop.ConsoleColors.BLUE+"["+count+"] " + FioreFlowershop.ConsoleColors.RESET
-                    + invoiceID);
-                }
-            }
-            try{//For user to enter their desired invoice number
-                System.out.print("\n" + "Please Enter The Invoice Number ID : ");
-                String enteredID = s.nextLine();
-                for(int a = 1; a <= paymentHistory.getTotalEntries(); a++){
-                    if(paymentHistory.getItem(a).getInvoiceNumber().equals(enteredID)){
-                        ih =  paymentHistory.getItem(a);
-                        stat = true;
-                        break;
-                    }else{
-                        stat = false;
+        while(true){
+            System.out.println("\n====================================================");
+            System.out.println("\tAvailable Paid Invoice(s)");
+            System.out.println("====================================================");
+            if(paymentHistory != null){
+                for(int i = 1; i <= paymentHistory.getTotalEntries(); i++){//Get all available paid invoices, and display it 
+                    if(invoiceID.equals(paymentHistory.getItem(i).getInvoiceNumber())){
+                    //If duplicates of invoice ID is found, do nothing
+                    }else{//If invoice ID is found, print out the id, then store the ID to another variable for checking for duplicates.
+                        invoiceID = paymentHistory.getItem(i).getInvoiceNumber();
+                        System.out.println(FioreFlowershop.ConsoleColors.BLUE+"["+count+"] " + FioreFlowershop.ConsoleColors.RESET
+                        + invoiceID);
                     }
                 }
-                if(stat){//Pass to 2nd part of view paid invoice
-                   viewPaymentHistory2(ih,enteredID); 
-                }else{//If invalid invoice number is entered, show error message
-                    System.out.println(FioreFlowershop.ConsoleColors.RED+"\nPlease Enter A Valid Invoice Number, Try Again !"+FioreFlowershop.ConsoleColors.RESET);
-                    invoiceMaintenance();
+                try{//For user to enter their desired invoice number
+                    System.out.print("\n" + "Please Enter The Invoice Number ID : ");
+                    String enteredID = s.nextLine();
+                    for(int a = 1; a <= paymentHistory.getTotalEntries(); a++){
+                        if(paymentHistory.getItem(a).getInvoiceNumber().equals(enteredID)){
+                            ih =  paymentHistory.getItem(a);
+                            stat = true;
+                            break;
+                        }else{
+                            stat = false;
+                        }
+                    }
+                    if(stat){//Pass to 2nd part of view paid invoice
+                       viewPaymentHistory2(ih,enteredID); 
+                    }else{//If invalid invoice number is entered, show error message
+                        System.out.println(FioreFlowershop.ConsoleColors.RED+"\nPlease Enter A Valid Invoice Number, Try Again !"+FioreFlowershop.ConsoleColors.RESET);
+    //                    invoiceMaintenance();
+                    }
+                }catch(Exception e){//If invalid format for invoice number is entered, show error message
+                    System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"An Error had occurred. Please enter the format as stated."+FioreFlowershop.ConsoleColors.RESET);
+                    System.out.println(FioreFlowershop.ConsoleColors.BLUE+"\nRedirecting Back to Invoice Maintenance Menu......" + FioreFlowershop.ConsoleColors.RESET);
+    //                invoiceMaintenance();
+                    break;
                 }
-            }catch(Exception e){//If invalid format for invoice number is entered, show error message
-                System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"An Error had occurred. Please enter the format as stated."+FioreFlowershop.ConsoleColors.RESET);
-                System.out.println(FioreFlowershop.ConsoleColors.BLUE+"\nRedirecting Back to Invoice Maintenance Menu......" + FioreFlowershop.ConsoleColors.RESET);
-                invoiceMaintenance();
+
+            }else {
+                System.out.println(FioreFlowershop.ConsoleColors.RED+"\nSorry, No Records Found !"+FioreFlowershop.ConsoleColors.RESET);
+    //            invoiceMaintenance();
+                break;
             }
-            
-        }else {
-            System.out.println(FioreFlowershop.ConsoleColors.RED+"\nSorry, No Records Found !"+FioreFlowershop.ConsoleColors.RESET);
-            invoiceMaintenance();
         }
     }
     
@@ -159,83 +169,86 @@ public class InvoicePayment {
     
     public static void generateInvoiceP1(){
         String usern = ""; boolean stat = true;int yearEntered = 0;int monthEntered = 0;int count = 0;boolean status = true;
-        System.out.println("\n====================================================");
-        System.out.println("\t Invoice Generation");
-        System.out.println("======================================================");
-        try{
-            System.out.print("\nPlease Enter the Month and Year for Invoice (Eg. 2018-11) : ");
-            String dateEntered = s.nextLine();
-            yearEntered = Integer.parseInt(dateEntered.substring(0,4));
-            monthEntered = Integer.parseInt(dateEntered.substring(5,7));
-        }catch(Exception e){
-            System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"An Error had occurred. Please enter the format as stated."+FioreFlowershop.ConsoleColors.RESET);
-            System.out.println(FioreFlowershop.ConsoleColors.BLUE+"\nRedirecting Back to Invoice Maintenance Menu......" + FioreFlowershop.ConsoleColors.RESET);
-            invoiceMaintenance();
-        }
-        if(order != null){
-        System.out.println("\n====================================================");
-        System.out.println("\tAvailable Customer For Invoice Generation");
-        System.out.println("====================================================");
-//            
-//            while(catIterator.hasNext()){
-//                
-//            }
-        for(int i = 1; i <= order.getTotalEntries(); i++){
-            //If the shopping cart is not null and status is false
-            if(order.getItem(i).getUser()!= null && 
-                    !order.getItem(i).isPaymentStatus()){
-                //If the entered month and the order month is the same
-                if((order.getItem(i).getOrderDate().getMonth()+1) == monthEntered &&
-                        (order.getItem(i).getOrderDate().getYear()+1900) == yearEntered){
-                    if(userEmail.getTotalEntries() != 0){
-                            for(int k = 1; k <= userEmail.getTotalEntries(); k++){
-                                if(userEmail.getItem(k).equals(order.getItem(i).getUser().getEmail())){
-                                    
-                                }else{
-                                    for(int l = 1; l <= userEmail.getTotalEntries(); l++){
-                                        if(userEmail.getItem(l).equals(order.getItem(i).getUser().getEmail())){
-                                            status = false;
-                                            break;
+        while (true){  
+            System.out.println("\n====================================================");
+            System.out.println("\t Invoice Generation");
+            System.out.println("======================================================");
+            try{
+                System.out.print("\nPlease Enter the Month and Year for Invoice (Eg. 2018-11) : ");
+                String dateEntered = s.nextLine();
+                yearEntered = Integer.parseInt(dateEntered.substring(0,4));
+                monthEntered = Integer.parseInt(dateEntered.substring(5,7));
+            }catch(Exception e){
+                System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"An Error had occurred. Please enter the format as stated."+FioreFlowershop.ConsoleColors.RESET);
+                System.out.println(FioreFlowershop.ConsoleColors.BLUE+"\nRedirecting Back to Invoice Maintenance Menu......" + FioreFlowershop.ConsoleColors.RESET);
+                break;
+            }
+            if(order != null){
+            System.out.println("\n====================================================");
+            System.out.println("\tAvailable Customer For Invoice Generation");
+            System.out.println("====================================================");
+    //            
+    //            while(catIterator.hasNext()){
+    //                
+    //            }
+            for(int i = 1; i <= order.getTotalEntries(); i++){
+                //If the shopping cart is not null and status is false
+                if(order.getItem(i).getUser()!= null && 
+                        !order.getItem(i).isPaymentStatus()){
+                    //If the entered month and the order month is the same
+                    if((order.getItem(i).getOrderDate().getMonth()+1) == monthEntered &&
+                            (order.getItem(i).getOrderDate().getYear()+1900) == yearEntered){
+                        if(userEmail.getTotalEntries() != 0){
+                                for(int k = 1; k <= userEmail.getTotalEntries(); k++){
+                                    if(userEmail.getItem(k).equals(order.getItem(i).getUser().getEmail())){
+
+                                    }else{
+                                        for(int l = 1; l <= userEmail.getTotalEntries(); l++){
+                                            if(userEmail.getItem(l).equals(order.getItem(i).getUser().getEmail())){
+                                                status = false;
+                                                break;
+                                            }
+                                        }
+                                        if(status){
+                                            userEmail.add(order.getItem(i).getUser().getEmail());
                                         }
                                     }
-                                    if(status){
-                                        userEmail.add(order.getItem(i).getUser().getEmail());
-                                    }
                                 }
+                            }else{
+                                userEmail.add(order.getItem(i).getUser().getEmail());
                             }
-                        }else{
-                            userEmail.add(order.getItem(i).getUser().getEmail());
-                        }
-                }
-            }
-        }
-        for(int j = 1; j <= userEmail.getTotalEntries(); j++){
-                System.out.println(FioreFlowershop.ConsoleColors.BLUE + "[" + j + "] " + FioreFlowershop.ConsoleColors.RESET
-                + userEmail.getItem(j));
-                count++;
-            }
-    }
-        if(count <= 0){
-                System.out.println(FioreFlowershop.ConsoleColors.RED+"\nSorry, No Records Found !"+FioreFlowershop.ConsoleColors.RESET);
-                invoiceMaintenance();
-        }else{
-            try{
-                int choiceCorp = 0; 
-                System.out.print("\nPlease Enter The Email of Corporate Customer for Invoice Generations : ");
-                String emailCorp = s.nextLine();
-                for(int a = 1; a<=FioreFlowershop.getCorporate().getTotalEntries();a++){
-                    if(FioreFlowershop.getCorporate().getItem(a).getEmail().equals(emailCorp)){
-                        choiceCorp = a;
-                        break;
                     }
                 }
-                generateInvoiceP2(FioreFlowershop.getCorporate().getItem(choiceCorp));
-            }catch(Exception e){
-                System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"\nAn Error had occurred. Please Enter The Number of the Corporate Customer."+FioreFlowershop.ConsoleColors.RESET);
-                System.out.println(FioreFlowershop.ConsoleColors.BLUE+"\nRedirecting Back to Invoice Maintenance Menu......" + FioreFlowershop.ConsoleColors.RESET);
-                invoiceMaintenance();
             }
-                
+            for(int j = 1; j <= userEmail.getTotalEntries(); j++){
+                    System.out.println(FioreFlowershop.ConsoleColors.BLUE + "[" + j + "] " + FioreFlowershop.ConsoleColors.RESET
+                    + userEmail.getItem(j));
+                    count++;
+                }
+        }
+            if(count <= 0){
+                    System.out.println(FioreFlowershop.ConsoleColors.RED+"\nSorry, No Records Found !"+FioreFlowershop.ConsoleColors.RESET);
+                    invoiceMaintenance();
+            }else{
+                try{
+                    int choiceCorp = 0; 
+                    System.out.print("\nPlease Enter The Email of Corporate Customer for Invoice Generations : ");
+                    String emailCorp = s.nextLine();
+                    for(int a = 1; a<=FioreFlowershop.getCorporate().getTotalEntries();a++){
+                        if(FioreFlowershop.getCorporate().getItem(a).getEmail().equals(emailCorp)){
+                            choiceCorp = a;
+                            break;
+                        }
+                    }
+                    generateInvoiceP2(FioreFlowershop.getCorporate().getItem(choiceCorp));
+                }catch(Exception e){
+                    System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"\nAn Error had occurred. Please Enter The Number of the Corporate Customer."+FioreFlowershop.ConsoleColors.RESET);
+                    System.out.println(FioreFlowershop.ConsoleColors.BLUE+"\nRedirecting Back to Invoice Maintenance Menu......" + FioreFlowershop.ConsoleColors.RESET);
+//                    invoiceMaintenance();
+                    break;
+                }
+
+            }
         }
     }
     
@@ -298,76 +311,77 @@ public class InvoicePayment {
     
     public static void invoicePaymentP1(){//First part for invoice payment
         String usern = "";int monthEntered = 0; int yearEntered = 0;int count = 0;
-        System.out.println("\n====================================================");
-        System.out.println("\t Invoice Payment");
-        System.out.println("======================================================");
-        try{
-            System.out.print("\nPlease Enter the Month and Year for Invoice (Eg. 2018-11) : ");
-            String dateEntered = s.nextLine();
-            yearEntered = Integer.parseInt(dateEntered.substring(0,4));
-            monthEntered = Integer.parseInt(dateEntered.substring(5,7));
-        }catch(Exception e){
-            System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"\nAn Error had occurred. Please enter the format as stated."+FioreFlowershop.ConsoleColors.RESET);
-            invoiceMaintenance();
-        }
-        if(order != null){
+        while (true){
             System.out.println("\n====================================================");
-            System.out.println("\tAvailable Customer For Invoice Payment");
-            System.out.println("====================================================");
-            boolean status = true;
-            for(int i = 1; i <= order.getTotalEntries(); i++){
-                if(order.getItem(i).getUser()!= null && !order.getItem(i).isPaymentStatus()){
-                    if((order.getItem(i).getOrderDate().getMonth()+1) == monthEntered &&(order.getItem(i).getOrderDate().getYear()+1900) == yearEntered){
-                        if(userEmail.getTotalEntries() != 0){
-                            for(int k = 1; k <= userEmail.getTotalEntries(); k++){
-                                if(userEmail.getItem(k).equals(order.getItem(i).getUser().getEmail())){
-                                    
-                                }else{
-                                    for(int l = 1; l <= userEmail.getTotalEntries(); l++){
-                                        if(userEmail.getItem(l).equals(order.getItem(i).getUser().getEmail())){
-                                            status = false;
-                                            break;
+            System.out.println("\t Invoice Payment");
+            System.out.println("======================================================");
+            try{
+                System.out.print("\nPlease Enter the Month and Year for Invoice (Eg. 2018-11) : ");
+                String dateEntered = s.nextLine();
+                yearEntered = Integer.parseInt(dateEntered.substring(0,4));
+                monthEntered = Integer.parseInt(dateEntered.substring(5,7));
+            }catch(Exception e){
+                System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"\nAn Error had occurred. Please enter the format as stated."+FioreFlowershop.ConsoleColors.RESET);
+                break;
+            }
+            if(order != null){
+                System.out.println("\n====================================================");
+                System.out.println("\tAvailable Customer For Invoice Payment");
+                System.out.println("====================================================");
+                boolean status = true;
+                for(int i = 1; i <= order.getTotalEntries(); i++){
+                    if(order.getItem(i).getUser()!= null && !order.getItem(i).isPaymentStatus()){
+                        if((order.getItem(i).getOrderDate().getMonth()+1) == monthEntered &&(order.getItem(i).getOrderDate().getYear()+1900) == yearEntered){
+                            if(userEmail.getTotalEntries() != 0){
+                                for(int k = 1; k <= userEmail.getTotalEntries(); k++){
+                                    if(userEmail.getItem(k).equals(order.getItem(i).getUser().getEmail())){/*DO NOTHING*/}
+                                    else{
+                                        for(int l = 1; l <= userEmail.getTotalEntries(); l++){
+                                            if(userEmail.getItem(l).equals(order.getItem(i).getUser().getEmail())){
+                                                status = false;
+                                                break;
+                                            }
+                                        }
+                                        if(status){
+                                            userEmail.add(order.getItem(i).getUser().getEmail());
                                         }
                                     }
-                                    if(status){
-                                        userEmail.add(order.getItem(i).getUser().getEmail());
-                                    }
                                 }
+                            }else{
+                                userEmail.add(order.getItem(i).getUser().getEmail());
                             }
-                        }else{
-                            userEmail.add(order.getItem(i).getUser().getEmail());
                         }
                     }
                 }
-            }
-            
-            for(int j = 1; j <= userEmail.getTotalEntries(); j++){
-                System.out.println(FioreFlowershop.ConsoleColors.BLUE + "[" + j + "] " + FioreFlowershop.ConsoleColors.RESET
-                + userEmail.getItem(j));
-                count++;
-            }
-                    
-        if(count <= 0){
-                System.out.println(FioreFlowershop.ConsoleColors.RED+"\nSorry, No Records Found !"+FioreFlowershop.ConsoleColors.RESET);
-                invoiceMaintenance();
-        }else{
-            try{
-                System.out.print("\nPlease Enter The Email of Corporate Customer for Invoice Generations : ");
-                int choiceCorp = 0; String emailCorp = s.nextLine();
-                for(int a = 1; a<=FioreFlowershop.getUser().getTotalEntries();a++){
-                    if(FioreFlowershop.getUser().getItem(a).getEmail().equals(emailCorp)){
-                        choiceCorp = a;
-                        break;
-                    }
+
+                for(int j = 1; j <= userEmail.getTotalEntries(); j++){
+                    System.out.println(FioreFlowershop.ConsoleColors.BLUE + "[" + j + "] " + FioreFlowershop.ConsoleColors.RESET
+                    + userEmail.getItem(j));
+                    count++;
                 }
-                invoicePaymentP2(FioreFlowershop.getUser().getItem(choiceCorp));
-            }catch(Exception e){
-                System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"\nAn Error had occurred. Please Enter The Number of the Corporate Customer."+FioreFlowershop.ConsoleColors.RESET);
-                invoiceMaintenance();
+
+            if(count <= 0){
+                    System.out.println(FioreFlowershop.ConsoleColors.RED+"\nSorry, No Records Found !"+FioreFlowershop.ConsoleColors.RESET);
+                    invoiceMaintenance();
+            }else{
+                try{
+                    System.out.print("\nPlease Enter The Email of Corporate Customer for Invoice Generations : ");
+                    int choiceCorp = 0; String emailCorp = s.nextLine();
+                    for(int a = 1; a<=FioreFlowershop.getUser().getTotalEntries();a++){
+                        if(FioreFlowershop.getUser().getItem(a).getEmail().equals(emailCorp)){
+                            choiceCorp = a;
+                            break;
+                        }
+                    }
+                    invoicePaymentP2(FioreFlowershop.getUser().getItem(choiceCorp));
+                }catch(Exception e){
+                    System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"\nAn Error had occurred. Please Enter The Number of the Corporate Customer."+FioreFlowershop.ConsoleColors.RESET);
+                    break;
+                }
+
             }
-                
-        }
-    }else {System.out.println(FioreFlowershop.ConsoleColors.BLUE+ "\nWow, Much Empty for This Flower Shop" + FioreFlowershop.ConsoleColors.RESET);}
+        }else {System.out.println(FioreFlowershop.ConsoleColors.BLUE+ "\nWow, Much Empty for This Flower Shop" + FioreFlowershop.ConsoleColors.RESET);}
+    }
 }
     
     public static void invoicePaymentP2(User user){//Part 2 of invoice payment

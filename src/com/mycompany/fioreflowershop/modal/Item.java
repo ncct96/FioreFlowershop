@@ -9,7 +9,8 @@ package com.mycompany.fioreflowershop.modal;
  *
  * @author Chiu Peeng
  */
-public class Item{
+public class Item {
+
     private String name;
     private double price;
     private int quantity;
@@ -27,7 +28,7 @@ public class Item{
         this.price = price;
         this.quantity = quantity;
     }
-    
+
     public String getName() {
         return name;
     }
@@ -51,14 +52,14 @@ public class Item{
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-    
-    public void minusQuantity(){
+
+    public void minusQuantity() {
         --quantity;
     }
-    
+
     @Override
     public String toString() {
-        return "Name: " + name + ", Price: RM" + price + ", Quantity: " + quantity;
+        return "Name: " + name + ", Price: RM" + price;
     }
-    
+
 }
