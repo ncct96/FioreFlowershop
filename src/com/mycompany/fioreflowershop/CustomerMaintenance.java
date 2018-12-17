@@ -43,8 +43,8 @@ public class CustomerMaintenance {
             if (customerLoggedIn == null && corporateLoggedIn == null) {//Disallow the user from gaining additional features
                 System.out.println("\nPlease Select One Of The Options Below:");
                 System.out.println(GREEN + "[1] " + RESET + "Create New Account");
-                System.out.println(GREEN + "[1] " + RESET + "Login To Existing Account");
-                System.out.println(GREEN + "[1] " + RESET + "Back to Main Menu");
+                System.out.println(GREEN + "[2] " + RESET + "Login To Existing Account");
+                System.out.println(GREEN + "[3] " + RESET + "Back to Main Menu");
                 System.out.print("Selection: ");
                 int logOrCreate = s.nextInt();
                 s.nextLine();
