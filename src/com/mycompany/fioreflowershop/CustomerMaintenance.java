@@ -53,7 +53,7 @@ public class CustomerMaintenance {
                 } else if (logOrCreate == 2) {
                     custLogIn();
                 } else {
-                    break;
+                    FioreFlowershop.userTypeSelection();
                 }
 
             }
@@ -185,41 +185,90 @@ public class CustomerMaintenance {
             Consumer c = new Consumer(usern, passw, email, number, address);
             cust.add(c);
             user.add(c);
-            sortEmailOrder();
+//            sortEmailOrder();
             System.out.println("\n" + FioreFlowershop.ConsoleColors.GREEN + "New Account Successfully Created ! " + FioreFlowershop.ConsoleColors.RESET);
         }else if(!exist && consumerType.equals("Corporate")){
             CorporateCustomer Corporate = new CorporateCustomer(usern, email, number, address, passw, company, creditLimit, true);
             corpC.add(Corporate);
             user.add(Corporate);
-            sortEmailOrder();
+//            sortEmailOrder();
+            for(int i = 1; i <= user.getTotalEntries(); i++){
+                System.out.println(user.getItem(i).getEmail());
+            }
             System.out.println("\n" + FioreFlowershop.ConsoleColors.GREEN + "New Account Successfully Created ! " + FioreFlowershop.ConsoleColors.RESET);
         }
     }
 
-    public static void sortEmailOrder() { //For sorting of email of customer and corporate customer
-        User userUser;
-        if (user != null) { //If the user list is not null
-            for (int i = 1; i <= user.getTotalEntries(); i++) {
-                for (int j = i + 1; j <= user.getTotalEntries(); j++) {
-                    if (user.getItem(i).getEmail().charAt(loop)
-                            == user.getItem(j).getEmail().charAt(loop)) {
-                        //If the character is the same value when compared, plus the loop, then call back the method.
-                        loop++;
-                        sortEmailOrder();
-                    } else if (user.getItem(i).getEmail().charAt(loop)
-                            > user.getItem(j).getEmail().charAt(loop)) {
-                        loop = 0;
-                        userUser = user.getItem(i);
-                        user.replace(i, user.getItem(j));
-                        user.replace(j, userUser);
-                    } else if (user.getItem(i).getEmail().charAt(loop)
-                            < user.getItem(j).getEmail().charAt(loop)) {
-                        //If the character is smaller than when compared, plus the size of I and J, to prevent infinity loop
-                        i++;
-                        j++;
-                        loop = 0;
-                    }
-                }
+//    public static void sortEmailOrder(int initial) { //For sorting of email of customer and corporate customer
+//        User userUser;
+//        if (user != null) { //If the user list is not null
+//            for (int i = 1; i <= user.getTotalEntries(); i++) {
+//                for(int j = i + 1; j <= user.getTotalEntries(); j++){
+////                   if(initial != user.getItem(i).getEmail().length()){ // Base case
+//                        if (user.getItem(i).getEmail().charAt(initial)
+//                                == user.getItem(j).getEmail().charAt(initial)) {
+//                            //If the character is the same value when compared, increment the loop, then call back the method.
+//                            sortEmailOrder(initial++);
+//                        } else if (user.getItem(i).getEmail().charAt(initial)
+//                                > user.getItem(j).getEmail().charAt(initial)) {
+//                            initial = 0;
+//                            userUser = user.getItem(i);
+//                            user.replace(i, user.getItem(j));
+//                            user.replace(j, userUser);
+//                        } else if (user.getItem(j).getEmail().charAt(initial)
+//                                < user.getItem(i).getEmail().charAt(initial)) {
+//                            //If the character is smaller than when compared, plus the size of I and J, to prevent infinity loop
+//                            initial = 0;
+//                            userUser = user.getItem(i);
+//                            user.replace(i, user.getItem(j));
+//                            user.replace(j, userUser);
+//                        } 
+////                    } 
+//                }
+//            }
+//        }
+//    }
+    
+//    public static void sortEmailOrder() { //For sorting of email of customer and corporate customer
+//        User userUser;
+//        if (user != null) { //If the user list is not null
+//            for (int i = 1; i <= user.getTotalEntries(); i++) {
+//                for (int j = i + 1; j <= user.getTotalEntries(); j++) {
+//                    if (user.getItem(i).getEmail().charAt(loop)
+//                            == user.getItem(j).getEmail().charAt(loop)) {
+//                        //If the character is the same value when compared, plus the loop, then call back the method.
+//                        loop++;
+//                        sortEmailOrder();
+//                    } else if (user.getItem(i).getEmail().charAt(loop)
+//                            > user.getItem(j).getEmail().charAt(loop)) {
+//                        loop = 0;
+//                        userUser = user.getItem(i);
+//                        user.replace(i, user.getItem(j));
+//                        user.replace(j, userUser);
+//                    } else if (user.getItem(i).getEmail().charAt(loop)
+//                            < user.getItem(j).getEmail().charAt(loop)) {
+//                        //If the character is smaller than when compared, plus the size of I and J, to prevent infinity loop
+//                        i++;
+//                        j++;
+//                        loop = 0;
+//                    }
+//                }
+//            }
+//        }
+//}
+    
+    public static void sortedAdd(int position, User userAdd){
+        for(int i = 1; i <= user.getTotalEntries(); i++){
+            if(loop != user.getItem(i).getEmail().length()){
+                if (user.getTotalEntries() == 0){
+                    user.add(i, userAdd);
+                }else{
+                    if(userAdd.getEmail().charAt(loop) > user.getItem(i).getEmail().charAt(loop)){
+                        user.add(i+1, userAdd);
+                    }else if(userAdd.getEmail().charAt(loop) < user.getItem(i).getEmail().charAt(loop)){
+                        user.add(i-1, userAdd);
+                    } 
+                }  
             }
         }
     }
