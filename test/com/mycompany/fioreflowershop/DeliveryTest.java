@@ -24,13 +24,6 @@ import static org.junit.Assert.*;
  */
 public class DeliveryTest {
 
-    Consumer testCon = new Consumer("testingCon", "testingCon", "testing@example.com", "0125566922", "Pahang");
-    CorporateCustomer testCorp = new CorporateCustomer("testingCorp", "testingCorp@example.com", "0123456789", "PV 21", "abcdef", "Testing Corp", 5000, true);
-
-    // Initialize Date
-    Date todayDate = new Date();
-    Calendar cal = Calendar.getInstance();
-
     // Initialize Lists
     private static LinkedList<CatalogPackage> catalogPack1 = new LinkedList<>();
     private static LinkedList<CatalogOrders> catalogOrder = new LinkedList<>();
@@ -38,14 +31,19 @@ public class DeliveryTest {
     private static LinkedList<CustomizedPackage> customizeOrder = new LinkedList<>();
     private static LinkedList<Order> result = new LinkedList<>();
 
-    // Initialize Testing Package
-    CatalogPackage cp1 = new CatalogPackage("FlowerStrong", "Stylish", "Small", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20, 5);
-    CatalogPackage cp2 = new CatalogPackage("FlowerWeak", "Colourful", "Medium", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10, 4);
-    CatalogPackage cp3 = new CatalogPackage("FlowerMedium", "Elegant", "Large", "Sunflower", "Belt", "Product Type", "11", 2018, 15, 40, 5, 6);
-
     public DeliveryTest() {
 
-        FioreFlowershop.initializePackages();
+        Consumer testCon = new Consumer("testingCon", "testingCon", "testing@example.com", "0125566922", "Pahang");
+        CorporateCustomer testCorp = new CorporateCustomer("testingCorp", "1estingCorp@example.com", "0123456789", "PV 21", "abcdef", "Testing Corp", 5000, true);
+
+        // Initialize Date
+        Date todayDate = new Date();
+        Calendar cal = Calendar.getInstance();
+
+        // Initialize Testing Package
+        CatalogPackage cp1 = new CatalogPackage("FlowerStrong", "Stylish", "Small", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20, 5);
+        CatalogPackage cp2 = new CatalogPackage("FlowerWeak", "Colourful", "Medium", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10, 4);
+        CatalogPackage cp3 = new CatalogPackage("FlowerMedium", "Elegant", "Large", "Sunflower", "Belt", "Product Type", "11", 2018, 15, 40, 5, 6);
 
         cal.set(Calendar.YEAR, 2018);
         cal.set(Calendar.DAY_OF_MONTH, 13);

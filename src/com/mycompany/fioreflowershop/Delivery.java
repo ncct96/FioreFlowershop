@@ -125,7 +125,7 @@ public class Delivery {
 
         }
 
-        displaySortedDelivery(matchedList);
+        //displaySortedDelivery(matchedList);
         
         return matchedList;
     }
