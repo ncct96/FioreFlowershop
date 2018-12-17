@@ -404,6 +404,8 @@ public class FioreFlowershop {
                 //MISSING FUNCTION
             } else if (counterStaffChoice == 4) {
                 //MISSING FUNCTION
+            } else if(counterStaffChoice == 5){
+                userTypeSelection();
             } else {
                 break;
             }

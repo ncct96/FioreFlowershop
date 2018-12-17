@@ -195,25 +195,22 @@ public class InvoicePayment {
     //            }
             for(int i = 1; i <= order.getTotalEntries(); i++){
                 //If the shopping cart is not null and status is false
-                if(order.getItem(i).getUser()!= null && 
-                        !order.getItem(i).isPaymentStatus()){
+                if(order.getItem(i).getUser()!= null && !order.getItem(i).isPaymentStatus()){
                     //If the entered month and the order month is the same
                     if((order.getItem(i).getOrderDate().getMonth()+1) == monthEntered &&
                             (order.getItem(i).getOrderDate().getYear()+1900) == yearEntered){
                         if(userEmail.getTotalEntries() != 0){
                                 for(int k = 1; k <= userEmail.getTotalEntries(); k++){
                                     if(userEmail.getItem(k).equals(order.getItem(i).getUser().getEmail())){
-
-                                    }else{
-                                        for(int l = 1; l <= userEmail.getTotalEntries(); l++){
-                                            if(userEmail.getItem(l).equals(order.getItem(i).getUser().getEmail())){
-                                                status = false;
-                                                break;
-                                            }
-                                        }
-                                        if(status){
-                                            userEmail.add(order.getItem(i).getUser().getEmail());
-                                        }
+                                        status = false;
+                                        break;
+                                    }else {
+                                        status = true;
+                                    }
+                                }
+                                if(status){
+                                    if(order.getItem(i).getUser() instanceof CorporateCustomer){
+                                        userEmail.add(order.getItem(i).getUser().getEmail());
                                     }
                                 }
                             }else{
@@ -336,17 +333,17 @@ public class InvoicePayment {
                         if((order.getItem(i).getOrderDate().getMonth()+1) == monthEntered &&(order.getItem(i).getOrderDate().getYear()+1900) == yearEntered){
                             if(userEmail.getTotalEntries() != 0){
                                 for(int k = 1; k <= userEmail.getTotalEntries(); k++){
-                                    if(userEmail.getItem(k).equals(order.getItem(i).getUser().getEmail())){/*DO NOTHING*/}
-                                    else{
-                                        for(int l = 1; l <= userEmail.getTotalEntries(); l++){
-                                            if(userEmail.getItem(l).equals(order.getItem(i).getUser().getEmail())){
-                                                status = false;
-                                                break;
-                                            }
-                                        }
-                                        if(status){
-                                            userEmail.add(order.getItem(i).getUser().getEmail());
-                                        }
+                                    if(userEmail.getItem(k).equals(order.getItem(i).getUser().getEmail())){
+                                        /*DO NOTHING*/
+                                        status = false;
+                                        break;
+                                    }else {
+                                        status = true;
+                                    }
+                                }
+                                if(status){
+                                    if(order.getItem(i).getUser() instanceof CorporateCustomer){
+                                       userEmail.add(order.getItem(i).getUser().getEmail()); 
                                     }
                                 }
                             }else{
