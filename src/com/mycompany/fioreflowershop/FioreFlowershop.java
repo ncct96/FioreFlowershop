@@ -31,7 +31,7 @@ public class FioreFlowershop {
     private static LinkedList<Consumer> consumer = new LinkedList<>();
     private static LinkedList<CorporateCustomer> corporate = new LinkedList<>();
     private static LinkedList<User> user = new LinkedList<>();
-    private static ListInterface<User> sortedUser = new LinkedList<>();
+    private static SortedListInterface<User> testSort = new SortedLinkList<>();
     private static LinkedList<Order> pickupOrder = new LinkedList<Order>();
     private static LinkedList<Order> deliveryOrder = new LinkedList<Order>();
     private static LinkedList<Order> paidOrder = new LinkedList<Order>();
@@ -86,24 +86,31 @@ public class FioreFlowershop {
         CorporateCustomer cc2 = new CorporateCustomer("NotNoice", "notnoice@example.com", "0123456781", "PV13", "abc123", "Some Merchant", 5000, true);
         Consumer c1 = new Consumer("ceekay", "abcdef123", "ceekay@example.com", "0125566922", "Johor");
         Consumer c2 = new Consumer("testing", "testing", "testing@example.com", "0125566922", "Penang");
-        Consumer c3 = new Consumer("testing1", "testing", "testing@example.com", "0125566922", "Cheras");
-        Consumer c4 = new Consumer("testing2", "testing", "testing@example.com", "0125566922", "Pahang");
+        Consumer c3 = new Consumer("testing1", "testing", "testing1@example.com", "0125566922", "Cheras");
+        Consumer c4 = new Consumer("testing2", "testing", "testing2@example.com", "0125566922", "Pahang");
+        Consumer c5 = new Consumer("manager", "abc" ,"manager@example.com", "012","lmao");
+        Consumer c6 = new Consumer("manager1", "abc" ,"manager1@example.com", "012","lmao");
+        
+        testSort.add(cc2);
+        testSort.add(cc1);
+        testSort.add(c1);
+        testSort.add(c2);
+        testSort.add(c5);
+        testSort.add(c3);
+        CustomerMaintenance.sortUserList();
+        for(int i = 1; i <= user.getTotalEntries(); i++){
+                System.out.println(user.getItem(i).getEmail());
+        }
+        
         consumer.add(c1);
         consumer.add(c2);
         consumer.add(c3);
         consumer.add(c4);
+        
         corporate.add(cc1);
         corporate.add(cc2);
         corporate.getItem(1).setCreditSpent(4500);
         corporate.getItem(2).setCreditSpent(1500);
-
-        //Initialize users
-        user.add(c2);
-        user.add(cc1);
-        user.add(cc2);
-        user.add(c1);
-
-        CustomerMaintenance.sortEmailOrder();
 
         //Initialize shopping cart
         CatalogPackage cp1 = new CatalogPackage("FlowerStrong", "Stylish", "Small", "", "", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20, 5);
@@ -213,8 +220,6 @@ public class FioreFlowershop {
         Calendar retrieveDate = Calendar.getInstance();
         retrieveDate.setTime(new Date()); // Now use today date.
         retrieveDate.add(Calendar.DATE, 2); // Adding 2 days
-
-        CustomerMaintenance.sortEmailOrder();
 
         //Initialize shopping cart
         LinkedList<CatalogPackage> catalogPack = new LinkedList<>();
@@ -404,6 +409,8 @@ public class FioreFlowershop {
                 //MISSING FUNCTION
             } else if (counterStaffChoice == 4) {
                 //MISSING FUNCTION
+            } else if(counterStaffChoice == 5){
+                userTypeSelection();
             } else {
                 break;
             }
@@ -638,9 +645,9 @@ public class FioreFlowershop {
     public static LinkedList<User> getUser() {
         return user;
     }
-
-    public static ListInterface<User> getSortedUser() {
-        return sortedUser;
+    
+    public static SortedListInterface<User> getSortedUser(){
+        return testSort;
     }
 
     public static LinkedList<CatalogOrders> getShoppingCart() {

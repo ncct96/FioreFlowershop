@@ -11,7 +11,7 @@ import com.mycompany.fioreflowershop.FioreFlowershop;
  *
  * @author Admin
  */
-public class User{
+public class User implements Comparable<User>{
     private String username;
     private String email;
     private String password;
@@ -84,5 +84,9 @@ public class User{
                 +"\n"+FioreFlowershop.ConsoleColors.BLUE + "Address : " + address +FioreFlowershop.ConsoleColors.RESET
                 +"\n"+FioreFlowershop.ConsoleColors.BLUE + "Password : " + password +FioreFlowershop.ConsoleColors.RESET;
     }
-    
+
+    @Override
+    public int compareTo(User o) {
+        return getEmail().compareTo(o.getEmail());
+    }
 }
