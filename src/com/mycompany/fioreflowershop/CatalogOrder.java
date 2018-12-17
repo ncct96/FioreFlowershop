@@ -104,13 +104,13 @@ public class CatalogOrder {
         for (int i = 1; i < normalPackage.getTotalEntries() + 1; i++) {
             catalogPackage = normalPackage.getItem(i);
             if (catalogPackage.getProductType().equals("Fresh flower")) {
-                freshFlower.add(new CatalogPackage(catalogPackage.getName(), catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getProductType(), catalogPackage.getPromoMonth(), catalogPackage.getPromoYear(), catalogPackage.getQuantity(), catalogPackage.getPrice(), catalogPackage.getDiscountRate()));
+                freshFlower.add(new CatalogPackage(catalogPackage.getName(), catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlowerPot(), catalogPackage.getFloralArrangement(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getProductType(), catalogPackage.getPromoMonth(), catalogPackage.getPromoYear(), catalogPackage.getQuantity(), catalogPackage.getPrice(), catalogPackage.getDiscountRate(), catalogPackage.getStatus()));
                 freshFlowerCounter++;
             } else if (catalogPackage.getProductType().equals("Bouquets")) {
-                bouquets.add(new CatalogPackage(catalogPackage.getName(), catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getProductType(), catalogPackage.getPromoMonth(), catalogPackage.getPromoYear(), catalogPackage.getQuantity(), catalogPackage.getPrice(), catalogPackage.getDiscountRate()));
+                bouquets.add(new CatalogPackage(catalogPackage.getName(), catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlowerPot(), catalogPackage.getFloralArrangement(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getProductType(), catalogPackage.getPromoMonth(), catalogPackage.getPromoYear(), catalogPackage.getQuantity(), catalogPackage.getPrice(), catalogPackage.getDiscountRate(), catalogPackage.getStatus()));
                 bouquetsCounter++;
             } else if (catalogPackage.getProductType().equals("Flower arrangement")) {
-                flowerArrangement.add(new CatalogPackage(catalogPackage.getName(), catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getProductType(), catalogPackage.getPromoMonth(), catalogPackage.getPromoYear(), catalogPackage.getQuantity(), catalogPackage.getPrice(), catalogPackage.getDiscountRate()));
+                flowerArrangement.add(new CatalogPackage(catalogPackage.getName(), catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlowerPot(), catalogPackage.getFloralArrangement(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getProductType(), catalogPackage.getPromoMonth(), catalogPackage.getPromoYear(), catalogPackage.getQuantity(), catalogPackage.getPrice(), catalogPackage.getDiscountRate(), catalogPackage.getStatus()));
                 flowerArrangementCounter++;
             }
         }
@@ -119,13 +119,13 @@ public class CatalogOrder {
         for (int i = 1; i < discountedPackage.getTotalEntries() + 1; i++) {
             catalogPackage = discountedPackage.getItem(i);
             if (catalogPackage.getProductType().equals("Fresh flower")) {
-                freshFlower.add(new CatalogPackage(catalogPackage.getName(), catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getProductType(), catalogPackage.getPromoMonth(), catalogPackage.getPromoYear(), catalogPackage.getQuantity(), catalogPackage.getPrice(), catalogPackage.getDiscountRate()));
+                freshFlower.add(new CatalogPackage(catalogPackage.getName(), catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlowerPot(), catalogPackage.getFloralArrangement(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getProductType(), catalogPackage.getPromoMonth(), catalogPackage.getPromoYear(), catalogPackage.getQuantity(), catalogPackage.getPrice(), catalogPackage.getDiscountRate(), catalogPackage.getStatus()));
                 freshFlowerCounter++;
             } else if (catalogPackage.getProductType().equals("Bouquets")) {
-                bouquets.add(new CatalogPackage(catalogPackage.getName(), catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getProductType(), catalogPackage.getPromoMonth(), catalogPackage.getPromoYear(), catalogPackage.getQuantity(), catalogPackage.getPrice(), catalogPackage.getDiscountRate()));
+                bouquets.add(new CatalogPackage(catalogPackage.getName(), catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlowerPot(), catalogPackage.getFloralArrangement(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getProductType(), catalogPackage.getPromoMonth(), catalogPackage.getPromoYear(), catalogPackage.getQuantity(), catalogPackage.getPrice(), catalogPackage.getDiscountRate(), catalogPackage.getStatus()));
                 bouquetsCounter++;
             } else if (catalogPackage.getProductType().equals("Flower arrangement")) {
-                flowerArrangement.add(new CatalogPackage(catalogPackage.getName(), catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getProductType(), catalogPackage.getPromoMonth(), catalogPackage.getPromoYear(), catalogPackage.getQuantity(), catalogPackage.getPrice(), catalogPackage.getDiscountRate()));
+                flowerArrangement.add(new CatalogPackage(catalogPackage.getName(), catalogPackage.getStyle(), catalogPackage.getSize(), catalogPackage.getFlowerPot(), catalogPackage.getFloralArrangement(), catalogPackage.getFlower(), catalogPackage.getAccessory(), catalogPackage.getProductType(), catalogPackage.getPromoMonth(), catalogPackage.getPromoYear(), catalogPackage.getQuantity(), catalogPackage.getPrice(), catalogPackage.getDiscountRate(), catalogPackage.getStatus()));
                 flowerArrangementCounter++;
             }
         }
