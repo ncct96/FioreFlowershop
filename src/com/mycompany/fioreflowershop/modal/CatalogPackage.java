@@ -11,7 +11,7 @@ package com.mycompany.fioreflowershop.modal;
  */
 public class CatalogPackage implements Comparable<CatalogPackage>{
     //Data field
-    private String name, style, size, flower, accessory, productType, promoMonth;
+    private String name, style, size, flowerPot, floralArrangement,flower, accessory, productType, promoMonth, status;
     private int promoYear, quantity;
     private double price;
     private int discountRate;
@@ -20,10 +20,12 @@ public class CatalogPackage implements Comparable<CatalogPackage>{
     public CatalogPackage() {
     }
 
-    public CatalogPackage(String name, String style, String size, String flower, String accessory, String productType, String promoMonth, int promoYear, int quantity, double price, int discountRate) {
+    public CatalogPackage(String name, String style, String size, String flowerPot, String floralArrangement, String flower, String accessory, String productType, String promoMonth, int promoYear, int quantity, double price, int discountRate, String status) {
         this.name = name;
         this.style = style;
         this.size = size;
+        this.flowerPot = flowerPot;
+        this.floralArrangement = floralArrangement;
         this.flower = flower;
         this.accessory = accessory;
         this.productType = productType;
@@ -32,6 +34,7 @@ public class CatalogPackage implements Comparable<CatalogPackage>{
         this.quantity = quantity;
         this.price = price;
         this.discountRate = discountRate;
+        this.status = status;
     }
 
     public CatalogPackage(String name, String style, String size, String flower, String accessory, String productType, String promoMonth, int promoYear, int quantity, double price, int discountRate, int userQuantity) {
@@ -71,6 +74,22 @@ public class CatalogPackage implements Comparable<CatalogPackage>{
 
     public void setSize(String size) {
         this.size = size;
+    }
+
+    public String getFlowerPot() {
+        return flowerPot;
+    }
+
+    public void setFlowerPot(String flowerPot) {
+        this.flowerPot = flowerPot;
+    }
+
+    public String getFloralArrangement() {
+        return floralArrangement;
+    }
+
+    public void setFloralArrangement(String floralArrangement) {
+        this.floralArrangement = floralArrangement;
     }
 
     public String getFlower() {
@@ -145,10 +164,20 @@ public class CatalogPackage implements Comparable<CatalogPackage>{
         this.userQuantity = userQuantity;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
-        return "CatalogPackage{" + "name=" + name + ", style=" + style + ", size=" + size + ", flower=" + flower + ", accessory=" + accessory + ", productType=" + productType + ", promoMonth=" + promoMonth + ", promoYear=" + promoYear + ", quantity=" + quantity + ", price=" + price + ", discountRate=" + discountRate + '}';
+        return "name =" + name + ", style =" + style + ", size =" + size + ", flowerPot =" + flowerPot + ", floralArrangement =" + floralArrangement + ", flower =" + flower + ", accessory =" + accessory + ", productType =" + productType + ", promoMonth =" + promoMonth + ", status =" + status + ", promoYear =" + promoYear + ", quantity =" + quantity + ", price =" + price + ", discountRate =" + discountRate + ", userQuantity =" + userQuantity;
     }
+
+    
     
     @Override
     public int compareTo(CatalogPackage o) {
