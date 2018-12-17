@@ -106,9 +106,9 @@ public class FioreFlowershop {
         CustomerMaintenance.sortEmailOrder();
 
         //Initialize shopping cart
-        CatalogPackage cp1 = new CatalogPackage("FlowerStrong", "Stylish", "Small", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20, 5);
-        CatalogPackage cp2 = new CatalogPackage("FlowerWeak", "Colourful", "Medium", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10, 4);
-        CatalogPackage cp3 = new CatalogPackage("FlowerMedium", "Elegant", "Large", "Sunflower", "Belt", "Product Type", "11", 2018, 15, 40, 5, 6);
+        CatalogPackage cp1 = new CatalogPackage("FlowerStrong", "Stylish", "Small", "", "", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20, 5);
+        CatalogPackage cp2 = new CatalogPackage("FlowerWeak", "Colourful", "Medium", "", "", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10, 4);
+        CatalogPackage cp3 = new CatalogPackage("FlowerMedium", "Elegant", "Large", "", "", "Sunflower", "Belt", "Product Type", "11", 2018, 15, 40, 5, 6);
 
         catalogPack1.add(cp1);
         catalogPack1.add(cp2);
@@ -218,9 +218,9 @@ public class FioreFlowershop {
 
         //Initialize shopping cart
         LinkedList<CatalogPackage> catalogPack = new LinkedList<>();
-        catalogPack.add(new CatalogPackage("FlowerStrong", "Stylish", "Small", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20, 5));
-        catalogPack.add(new CatalogPackage("FlowerWeak", "Colourful", "Medium", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10, 5));
-        catalogPack.add(new CatalogPackage("FlowerMedium", "Elegant", "Large", "Sunflower", "Belt", "Product Type", "11", 2018, 15, 40, 5, 2));
+        catalogPack.add(new CatalogPackage("FlowerStrong", "Stylish", "Small", "Vase", "Valentine", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20, 5));
+        catalogPack.add(new CatalogPackage("FlowerWeak", "Colourful", "Medium", "Jar", "Graduation", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10, 5));
+        catalogPack.add(new CatalogPackage("FlowerMedium", "Elegant", "Large", "Wooden box", "Grand Opening", "Sunflower", "Belt", "Product Type", "11", 2018, 15, 40, 5, 2));
 
         //CatalogOrders ct1 = new CatalogOrders("CO1001", catalogPack, "Delivery", todayDate, cc1, "Order Status", 411, false, retrieveDate.getTime(), retrieveDate.getTime());
         //CatalogOrders ct2 = new CatalogOrders("CO1002", catalogPack, "Delivery", todayDate, cc1, "Order Status", 411, false, retrieveDate.getTime(), retrieveDate.getTime());
@@ -257,14 +257,14 @@ public class FioreFlowershop {
         normalPackage.add(new CatalogPackage("Package 2.0", "Style 2.0", "Small", "", "", "Flower 2.0", "Bear 2.0", "Fresh flower", "", 0, 10, 77.00, 0, "Active"));
         normalPackage.add(new CatalogPackage("Package 3.0", "Style 1.0", "Small", "", "", "Flower 1.0", "Bear 1.0", "Bouquets", "", 0, 10, 80.00, 0, "Active"));
         normalPackage.add(new CatalogPackage("Package 4.0", "Style 2.0", "Small", "", "", "Flower 2.0", "Bear 2.0", "Bouquets", "", 0, 10, 60.00, 0, "Active"));
-        normalPackage.add(new CatalogPackage("Package 5.0", "Style 1.0", "Small", "Woolden toolbox", "Valentine", "Flower 1.0", "Bear 1.0", "Flower arrangement", "", 0, 10, 120.00, 0, "Active"));
-        normalPackage.add(new CatalogPackage("Package 6.0", "Style 2.0", "Small", "Woolden toolbox", "Grand opening", "Flower 2.0", "Bear 2.0", "Flower arrangement", "", 0, 10, 90.00, 0, "Active"));
+        normalPackage.add(new CatalogPackage("Package 1.00", "Style 1.0", "Small", "Woolden toolbox", "Valentine", "Flower 1.0", "Bear 1.0", "Flower arrangement", "", 0, 10, 120.00, 0, "Active"));
+        normalPackage.add(new CatalogPackage("Package 2.00", "Style 2.0", "Small", "Woolden toolbox", "Grand opening", "Flower 2.0", "Bear 2.0", "Flower arrangement", "", 0, 10, 90.00, 0, "Active"));
 
-        normalPackage.add(new CatalogPackage("Package 5.0", "Style 1.0", "Small", "Drinking glass", "Valentine", "Flower 1.0", "Bear 1.0", "Flower arrangement", "", 0, 10, 120.00, 0, "Active"));
-        normalPackage.add(new CatalogPackage("Package 6.0", "Style 2.0", "Small", "Glass bottle", "Graduation", "Flower 2.0", "Bear 2.0", "Flower arrangement", "", 0, 10, 90.00, 0, "Active"));
-        normalPackage.add(new CatalogPackage("Package 5.0", "Style 1.0", "Small", "Woolden box", "Grand opening", "Flower 1.0", "Bear 1.0", "Flower arrangement", "", 0, 10, 120.00, 0, "Active"));
-        normalPackage.add(new CatalogPackage("Package 6.0", "Style 2.0", "Small", "Jar", "Graduation", "Flower 2.0", "Bear 2.0", "Flower arrangement", "", 0, 10, 90.00, 0, "Active"));
-        normalPackage.add(new CatalogPackage("Package 5.0", "Style 1.0", "Small", "Bud vase", "Valentine", "Flower 1.0", "Bear 1.0", "Flower arrangement", "", 0, 10, 120.00, 0, "Active"));
+        normalPackage.add(new CatalogPackage("Package 3.00", "Style 1.0", "Small", "Drinking glass", "Valentine", "Flower 1.0", "Bear 1.0", "Flower arrangement", "", 0, 10, 120.00, 0, "Active"));
+        normalPackage.add(new CatalogPackage("Package 4.00", "Style 2.0", "Small", "Glass bottle", "Graduation", "Flower 2.0", "Bear 2.0", "Flower arrangement", "", 0, 10, 90.00, 0, "Active"));
+        normalPackage.add(new CatalogPackage("Package 5.00", "Style 1.0", "Small", "Wooden box", "Grand opening", "Flower 1.0", "Bear 1.0", "Flower arrangement", "", 0, 10, 120.00, 0, "Active"));
+        normalPackage.add(new CatalogPackage("Package 6.00", "Style 2.0", "Small", "Jar", "Graduation", "Flower 2.0", "Bear 2.0", "Flower arrangement", "", 0, 10, 90.00, 0, "Active"));
+        normalPackage.add(new CatalogPackage("Package 7.00", "Style 1.0", "Small", "Bud vase", "Valentine", "Flower 1.0", "Bear 1.0", "Flower arrangement", "", 0, 10, 120.00, 0, "Active"));
         
 
         discountedPackage.add(new CatalogPackage("Package 1", "Style 1", "Small", "Jar", "Visit patient", "Flower 1", "Bear 1", "Flower arrangement", "December", 2018, 10, 90.00, 10, "Active"));
