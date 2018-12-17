@@ -34,6 +34,8 @@ public class InvoicePayment {
     private static LinkedList<CatalogOrders> order = FioreFlowershop.getCatalogOrder();
     private static Iterator<CatalogOrders> catIterator = order.getIterator();
     private static int invoiceNumber = 100;
+    public static final String RESET = "\033[0m";
+    public static final String GREEN = "\033[0;32m";
     
     public static LinkedList<InvoiceHistory> getPaymentHistory(){
         return paymentHistory;
@@ -42,10 +44,10 @@ public class InvoicePayment {
     public static void invoiceMaintenance(){//Selection of menus
         while(true){
             System.out.println("\nPlease Select The Options Below.");
-            System.out.println("[1] Make Corporate Customer Invoice Payment.");
-            System.out.println("[2] Generate Invoice Payment for Corporate Customer.");
-            System.out.println("[3] View Paid Invoice History");
-            System.out.println("[4] Back to Main Menu.");
+            System.out.println(GREEN+"[1]"+RESET+" Make Corporate Customer Invoice Payment.");
+            System.out.println(GREEN+"[2]"+RESET+" Generate Invoice Payment for Corporate Customer.");
+            System.out.println(GREEN+"[3]"+RESET+" View Paid Invoice History");
+            System.out.println(GREEN+"[4]"+RESET+" Back to Main Menu.");
             try{
                 int invoiceChoice = s.nextInt(); s.nextLine(); 
                 switch(invoiceChoice){
@@ -151,10 +153,10 @@ public class InvoicePayment {
                         + paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getPrice() + " \t     |   " 
                         + paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getPrice()
                         *paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getUserQuantity());
-                        totalPrice = totalPrice(paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getPrice()
+                        totalPrice += totalPrice(paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getPrice()
                                 , paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getUserQuantity());
                         if(paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getDiscountRate() != 0){
-                            discountPrice = discountPrice(paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getPrice(),
+                            discountPrice += discountPrice(paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getPrice(),
                                     paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getUserQuantity(),
                                     paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getDiscountRate());
                         }
@@ -274,7 +276,7 @@ public class InvoicePayment {
     
     public static void invoiceMenuFooter(double totalPrice, double discountPrice){
         System.out.println("\n\n\t\t\t\t\t\t\t\t\t Subtotal :\t\t\t " + totalPrice);
-        System.out.println("\t\t\t\t\t\t\t\t\t Discount :\t\t\t  " + discountPrice);
+        System.out.println("\t\t\t\t\t\t\t\t\t Total Discount :\t\t  " + discountPrice);
         System.out.println("\t\t\t\t\t\t\t\t\t =========================================");
         System.out.println("\t\t\t\t\t\t\t\t\t BALANCE DUE :\t\t\t "+ (totalPrice-discountPrice));
         totalPrice = 0; discountPrice = 0;
@@ -294,10 +296,10 @@ public class InvoicePayment {
                         +order.getItem(i).getCatalogPack().getItem(k).getPrice() + " \t     |   " 
                         +order.getItem(i).getCatalogPack().getItem(k).getPrice()
                         *order.getItem(i).getCatalogPack().getItem(k).getUserQuantity());
-                        totalPrice = totalPrice(order.getItem(i).getCatalogPack().getItem(k).getPrice(), 
+                        totalPrice += totalPrice(order.getItem(i).getCatalogPack().getItem(k).getPrice(), 
                                 order.getItem(i).getCatalogPack().getItem(k).getUserQuantity());
                         if(order.getItem(i).getCatalogPack().getItem(k).getDiscountRate() != 0){
-                            discountPrice = discountPrice(order.getItem(i).getCatalogPack().getItem(k).getPrice(),
+                            discountPrice += discountPrice(order.getItem(i).getCatalogPack().getItem(k).getPrice(),
                                     order.getItem(i).getCatalogPack().getItem(k).getUserQuantity(),
                                     order.getItem(i).getCatalogPack().getItem(k).getDiscountRate());
                         }  
@@ -399,10 +401,10 @@ public class InvoicePayment {
                         +order.getItem(i).getCatalogPack().getItem(k).getPrice() + " \t     |   " 
                         +order.getItem(i).getCatalogPack().getItem(k).getPrice()
                         *order.getItem(i).getCatalogPack().getItem(k).getUserQuantity());
-                        totalPrice = totalPrice(order.getItem(i).getCatalogPack().getItem(k).getPrice(),
+                        totalPrice += totalPrice(order.getItem(i).getCatalogPack().getItem(k).getPrice(),
                                 order.getItem(i).getCatalogPack().getItem(k).getUserQuantity());
                             if(order.getItem(i).getCatalogPack().getItem(k).getDiscountRate() != 0){
-                                discountPrice = discountPrice(order.getItem(i).getCatalogPack().getItem(k).getPrice(),
+                                discountPrice += discountPrice(order.getItem(i).getCatalogPack().getItem(k).getPrice(),
                                         order.getItem(i).getCatalogPack().getItem(k).getUserQuantity(),
                                         order.getItem(i).getCatalogPack().getItem(k).getDiscountRate());
                             }
