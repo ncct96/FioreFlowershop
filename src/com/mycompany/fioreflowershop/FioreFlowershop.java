@@ -457,8 +457,7 @@ public class FioreFlowershop {
             System.out.println(GREEN + "[2] " + RESET + "Payment for Delivery Order");
             System.out.println(GREEN + "[3] " + RESET + "View Delivered Order");
             System.out.println(GREEN + "[4] " + RESET + "View Delivery Payments");
-            System.out.println(GREEN + "[5] " + RESET + "Generate Payment Receipt");
-            System.out.println(GREEN + "[6] " + RESET + "Back");
+            System.out.println(GREEN + "[5] " + RESET + "Back");
             System.out.print("Selection: ");
             int deliveryStaffChoice = s.nextInt();
             s.nextLine();
@@ -495,7 +494,7 @@ public class FioreFlowershop {
             } else if (deliveryStaffChoice == 3) {
                 //MISSING FUNCTION
             } else if (deliveryStaffChoice == 4) {
-                Delivery.searchUserDelivery(shopAddress, catalogOrder, readyOrders, paidOrder);
+                Delivery.searchPaidDelivery(paidOrder);
             } else if (deliveryStaffChoice == 5) {
                 //MISSING FUNCTION
             } else {
