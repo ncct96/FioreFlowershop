@@ -276,21 +276,23 @@ public class CustomerMaintenance {
     }
     
     public static void custTryAgain(){
-        System.out.println(FioreFlowershop.ConsoleColors.RED_BOLD + "\nInvalid Login Credentials" + FioreFlowershop.ConsoleColors.RESET);
-        System.out.println("Would you like to try again or create an account?");
-        System.out.println("[1] Login Again");
-        System.out.println("[2] Create An Account");
-        System.out.println("[3] Back");
-        try{
-           int choice = s.nextInt(); s.nextLine();
-            switch(choice){
-                case 1: custLogIn(); break;
-                case 2: createAccount(); break;
-                case 3: customerOptions(); break;
-            } 
-        }catch(Exception e){
-            System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"An Error Occurred. Please Only Enter Number Only."+FioreFlowershop.ConsoleColors.RESET);
-//                    customerOptions();
+        while(true){
+            System.out.println(FioreFlowershop.ConsoleColors.RED_BOLD + "\nInvalid Login Credentials" + FioreFlowershop.ConsoleColors.RESET);
+            System.out.println("Would you like to try again or create an account?");
+            System.out.println("[1] Login Again");
+            System.out.println("[2] Create An Account");
+            System.out.println("[3] Back");
+            try{
+               int choice = s.nextInt(); s.nextLine();
+                switch(choice){
+                    case 1: custLogIn(); break;
+                    case 2: createAccount(); break;
+                    case 3: customerOptions(); break;
+                } 
+            }catch(Exception e){
+                System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"An Error Occurred. Please Only Enter Number Only."+FioreFlowershop.ConsoleColors.RESET);
+                break;
+            }
         }
     }
 

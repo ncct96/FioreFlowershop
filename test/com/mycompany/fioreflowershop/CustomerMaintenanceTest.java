@@ -18,6 +18,7 @@ import static org.junit.Assert.*;
  */
 public class CustomerMaintenanceTest {
     LinkedList<User> user = FioreFlowershop.getUser();
+    LinkedList<Consumer> cust = FioreFlowershop.getCustomer();
     public CustomerMaintenanceTest() {
     }
     
@@ -29,7 +30,7 @@ public class CustomerMaintenanceTest {
      */
     @Test
     public void testCheckDuplicate() {
-        System.out.println("checkDuplicate");
+        System.out.println("\nCheck for Duplicate and Add Account");
         System.out.println("Pre Add Results : " + user);
         String usern = "junitTest";
         String passw = "abcdef";
@@ -46,9 +47,10 @@ public class CustomerMaintenanceTest {
      */
     @Test
     public void testCustLogInVerify() {
-        System.out.println("custLogInVerify");
+        System.out.println("Login Verification");
         String email = "ceekay@example.com";
         String passw = "abcdef123";
+//        cust.add(new Consumer("ceekay", "abcdef123", "ceekay@example.com", "0125566922", "Johor"));
         CustomerMaintenance.custLogInVerify(email, passw);
         // TODO review the generated test code and remove the default call to fail.
     }
