@@ -37,7 +37,7 @@ import java.util.logging.Logger;
  */
 public class Delivery {
 
-    public static void searchDelivery(LinkedList<CatalogOrders> catalogOrder, Date date, LinkedList<CustomizedPackage> customizeOrder) {
+    public static LinkedList<Order> searchDelivery(LinkedList<CatalogOrders> catalogOrder, Date date, LinkedList<CustomizedPackage> customizeOrder) {
         LinkedList<CatalogOrders> unOrderList = new LinkedList<CatalogOrders>();
         LinkedList<CustomizedPackage> customOrder = new LinkedList<CustomizedPackage>();
         LinkedList<Order> matchedList = new LinkedList<>();
@@ -80,7 +80,7 @@ public class Delivery {
 
         for (int i = 1; i <= unOrderList.getTotalEntries(); i++) {
 
-            listCal.setTime(unOrderList.getItem(i).getOrderDate());
+            listCal.setTime(unOrderList.getItem(i).getRetrieveDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
@@ -97,7 +97,7 @@ public class Delivery {
 
         for (int i = 1; i <= customOrder.getTotalEntries(); i++) {
 
-            listCal.setTime(customOrder.getItem(i).getOrderDate());
+            listCal.setTime(customOrder.getItem(i).getRetrieveDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
@@ -112,25 +112,10 @@ public class Delivery {
             }
         }
 
-//        for (int i = -1; i < count; i++) {
-//
-//            if (!customOrder.isEmpty()) {
-//                CustomizedPackage order = customOrder.dequeue();
-//                CuslistCal.setTime(order.getDeliveryDate());
-//
-//                day = CuslistCal.get(Calendar.DAY_OF_MONTH);
-//                month = CuslistCal.get(Calendar.MONTH) + 1;
-//                year = CuslistCal.get(Calendar.YEAR);
-//
-//                if (day == userDay && month == userMonth && year == userYear) {
-//                    searchQueue.enqueue(order);
-//                }
-//            }
-//        }
         for (int i = 1; i < matchedList.getTotalEntries() - 1; i++) {
             int index = i;
             for (int j = i; j <= matchedList.getTotalEntries(); j++) {
-                if (matchedList.getItem(j).getOrderDate().before(matchedList.getItem(index).getOrderDate())) {
+                if (matchedList.getItem(j).getRetrieveDate().before(matchedList.getItem(index).getRetrieveDate())) {
                     index = j; //searching for lowest index  
                 }
             }
@@ -140,7 +125,9 @@ public class Delivery {
 
         }
 
-        displaySortedDelivery(matchedList);
+        //displaySortedDelivery(matchedList);
+        
+        return matchedList;
     }
 
     public static void sortDeliveryOrder(LinkedList<CatalogOrders> catalogOrder, LinkedList<CustomizedPackage> customizeOrder) {
@@ -205,23 +192,10 @@ public class Delivery {
             }
         }
 
-//        for (int i = -1; i < count; i++) {
-//
-//            CustomizedPackage tempCustomOrder = customOrder.dequeue();
-//            CuslistCal.setTime(tempCustomOrder.getDeliveryDate());
-//
-//            day = CuslistCal.get(Calendar.DAY_OF_MONTH);
-//            month = CuslistCal.get(Calendar.MONTH) + 1;
-//            year = CuslistCal.get(Calendar.YEAR);
-//
-//            if (day == userDay && month == userMonth && year == userYear && tempCustomOrder.getDeliveryType().equals("Delivery")) {
-//                searchQueue.enqueue(tempCustomOrder);
-//            }
-//        }
         for (int i = 1; i < sortedList.getTotalEntries() - 1; i++) {
             int index = i;
             for (int j = i; j <= sortedList.getTotalEntries(); j++) {
-                if (sortedList.getItem(j).getOrderDate().before(sortedList.getItem(index).getOrderDate())) {
+                if (sortedList.getItem(j).getRetrieveDate().before(sortedList.getItem(index).getRetrieveDate())) {
                     index = j; //searching for lowest index  
                 }
             }
@@ -267,7 +241,7 @@ public class Delivery {
 
                 System.out.println("Company Name: " + corp.getCompany());
                 System.out.println("Contact: " + corp.getPhone());
-                String date = df.format(catalogOrder.getItem(k).getOrderDate());
+                String date = df.format(catalogOrder.getItem(k).getRetrieveDate());
                 System.out.println("Delivery Date: " + date + "\n");
             } else {
 
@@ -277,7 +251,7 @@ public class Delivery {
 
                 System.out.println("Name: " + con.getUsername());
                 System.out.println("Contact: " + con.getPhone());
-                String date = df.format(catalogOrder.getItem(k).getOrderDate());
+                String date = df.format(catalogOrder.getItem(k).getRetrieveDate());
                 System.out.println("Delivery Date: " + date + "\n");
             }
         }
@@ -301,7 +275,7 @@ public class Delivery {
 
                 System.out.println("Company Name: " + corp.getCompany());
                 System.out.println("Contact: " + corp.getPhone());
-                String date = df.format(customOrder.getItem(k).getOrderDate());
+                String date = df.format(customOrder.getItem(k).getRetrieveDate());
                 System.out.println("Delivery Date: " + date + "\n");
             } else {
 
@@ -311,7 +285,7 @@ public class Delivery {
 
                 System.out.println("Name: " + con.getUsername());
                 System.out.println("Contact: " + con.getPhone());
-                String date = df.format(customOrder.getItem(k).getOrderDate());
+                String date = df.format(customOrder.getItem(k).getRetrieveDate());
                 System.out.println("Delivery Date: " + date + "\n");
             }
         }
@@ -319,20 +293,6 @@ public class Delivery {
         if (customOrder.isEmpty()) {
             System.out.println(FioreFlowershop.ConsoleColors.RED + "No record found!");
         }
-//        if (!customOrder.isEmpty()) {
-//            for (int i = -1; i <= customOrder.getBackIndex(); i++) {
-//                CustomizedPackage order = customOrder.dequeue();
-//                if (order.getDeliveryType().getName().equals("Deliver")) {
-//                    System.out.println("Order ID: " + order.getOrderID());
-//                    System.out.println("Consumer name: " + order.getUser().getUsername());
-//                    System.out.println("Contact: " + order.getUser().getPhone());
-//                    System.out.println("Delivery date: " + order.getDeliveryDateString() + "\n");
-//                    showQueue.enqueue(order);
-//                }
-//            }
-//        } else {
-//            System.out.println(FioreFlowershop.ConsoleColors.RED + "No record found!");
-//        }
     }
 
     public static void sortRouteDelivery(LinkedList<CatalogOrders> catalogOrder, LinkedList<CustomizedPackage> customizeOrder, String shopAddress) throws ApiException, InterruptedException, IOException {
@@ -398,20 +358,6 @@ public class Delivery {
                 sortedList.add(customOrder.getItem(j));
             }
         }
-
-//        for (int i = -1; i < count; i++) {
-//
-//            CustomizedPackage tempCustomOrder = customOrder.dequeue();
-//            CuslistCal.setTime(tempCustomOrder.getDeliveryDate());
-//
-//            day = CuslistCal.get(Calendar.DAY_OF_MONTH);
-//            month = CuslistCal.get(Calendar.MONTH) + 1;
-//            year = CuslistCal.get(Calendar.YEAR);
-//
-//            if (day == userDay && month == userMonth && year == userYear) {
-//                searchQueue.enqueue(tempCustomOrder);
-//            }
-//        }
         sortRoute(sortedList, shopAddress);
     }
 
@@ -426,9 +372,6 @@ public class Delivery {
             dest.add(sortedList.getItem(i));
         }
 
-//        while (!searchQueue.isEmpty()) {
-//            dest.add(dest.getTotalEntries(), searchQueue.dequeue());
-//        }
         try {
             solver = DeliveryOptimization.distanceMatrix(shopAddress, dest);
             displaySortRoute(solver, dest, shopAddress);
@@ -682,7 +625,7 @@ public class Delivery {
 
             System.out.println("Hi " + user.getUsername() + ",");
             System.out.println("These are your orders with pending payment");
-            System.out.println("|No.|\t|Order ID|\t|Order Type|\t|Order Date|\t\t|Payment Amount (RM)|\t|Payment Status|\t|Pickup Date|");
+            System.out.println("|No.|\t|Order ID|\t|Order Type|\t|Order Date|\t\t|Payment Amount (RM)|\t|Payment Status|\t|Delivered Date|");
             System.out.println("=============================================================================================================================================================");
 
             for (int i = 1; i <= matchOrder.getTotalEntries(); i++) {
@@ -835,7 +778,7 @@ public class Delivery {
             System.out.println("\t\t\t\t    178, Jalan Sehala, ");
             System.out.println("\t\t\t\t 2404 No U Turn, 53300 Kuala Lumpur");
 
-            System.out.println("\nID : " + ((CatalogOrders) order).getOrderID());
+            System.out.println("\nID : " + ((CustomizedPackage) order).getOrderID());
             System.out.println("Payment Date : " + df.format(order.getPaymentTime()));
             System.out.println("Cashier : Admin");
             System.out.println("Payment Time : " + dt.format(order.getPaymentTime()));
@@ -844,9 +787,9 @@ public class Delivery {
             System.out.println("==================================================================================================");
 
             System.out.println("\n-------------------------------------------------------------------------------------------------");
-            System.out.println("\tTOTAL (RM) : \t     \t\t\t\t\t\t\t\t" + String.format("%.2f", order.getOrderAmt()));
+            System.out.println("\tTOTAL (RM) : \t     \t\t\t\t\t\t\t\t" + String.format("%.2f", ((CustomizedPackage) order).CalculateOrder()));
             System.out.println("---------------------------------------------------------------------------------------------------");
-            System.out.println("TOTAL NETT AMOUNT (RM) : \t\t\t\t\t" + String.format("%.2f", order.getOrderAmt()));
+            System.out.println("TOTAL NETT AMOUNT (RM) : \t\t\t\t\t" + String.format("%.2f", ((CustomizedPackage) order).CalculateOrder()));
             System.out.println("CASH TENDERED (RM) : \t\t\t" + String.format("%.2f", payAmt));
             System.out.println("CHANGE (RM) : \t\t\t\t" + String.format("%.2f", change));
             System.out.println("\n==================================================================================================");
@@ -855,9 +798,61 @@ public class Delivery {
         }
         FioreFlowershop.counterStaff();
     }
-    
-    public static void searchPaidDelivery(LinkedList paidOrder){
-        System.out.println("Enter ");
+
+    public static void searchPaidDelivery(LinkedList<Order> paidOrder) {
+
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat dt = new SimpleDateFormat("HH:mm");
+        DateFormat dfdt = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+        Order order = paidOrder.getItem(1);
+
+        System.out.println("Delivery Order Payment History");
+        System.out.println("|No.|\t|Order ID|\t|Order Type|\t|Order Date|\t\t|Payment Amount (RM)|\t|Payment Status|\t|Delivered Date|");
+        System.out.println("=============================================================================================================================================================");
+
+        if (order instanceof CatalogOrders) {
+
+            System.out.print(1 + "\t");
+            System.out.print(((CatalogOrders) order).getOrderID() + "\t\t");
+            System.out.print(order.getOrderType() + "\t\t");
+            System.out.print(df.format(order.getOrderDate()) + "\t\t");
+            //System.out.print(order.getUser().getUsername() + "\t");
+            //System.out.print(order.getUser().getPhone() + "\t");
+            // System.out.print(((CustomizedPackage) order).getFlower() + "\t");
+            System.out.print(String.format("%.2f", order.getOrderAmt()) + "\t\t\t");
+            //System.out.print(((CatalogOrders) order).getCatalogPack().getItem(i).getUserQuantity() + "\t");
+            if (order.isPaymentStatus()) {
+                System.out.print("Paid \t\t\t");
+            } else {
+                System.out.print("Pending \t\t\t");
+            }
+            if (order.getDateOfReceive() == null) {
+                System.out.print("Pending \n");
+            } else {
+                System.out.print(dfdt.format(order.getDateOfReceive()) + "\n");
+            }
+        } else {
+            System.out.print(1 + "\t");
+            System.out.print(((CustomizedPackage) order).getOrderID() + "\t\t");
+            System.out.print(((CustomizedPackage) order).getDeliveryType().getName() + "\t\t");
+            System.out.print(df.format(order.getOrderDate()) + "\t\t");
+            //System.out.print(order.getUser().getUsername() + "\t");
+            //System.out.print(order.getUser().getPhone() + "\t");
+            // System.out.print(((CustomizedPackage) order).getFlower() + "\t");
+            System.out.print(String.format("%.2f", ((CustomizedPackage) order).CalculateOrder()) + "\t\t\t");
+            //System.out.print(((CatalogOrders) order).getCatalogPack().getItem(i).getUserQuantity() + "\t");
+            if (order.isPaymentStatus()) {
+                System.out.print("Paid \t\t\t");
+            } else {
+                System.out.print("Pending \t\t\t");
+            }
+            if (order.getDateOfReceive() == null) {
+                System.out.print("Pending \n");
+            } else {
+                System.out.print(dfdt.format(order.getDateOfReceive()) + "\n");
+            }
+        }
     }
 
 }
