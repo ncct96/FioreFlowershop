@@ -31,7 +31,7 @@ public class FioreFlowershop {
     private static LinkedList<Consumer> consumer = new LinkedList<>();
     private static LinkedList<CorporateCustomer> corporate = new LinkedList<>();
     private static LinkedList<User> user = new LinkedList<>();
-    private static ListInterface<User> sortedUser = new LinkedList<>();
+    private static SortedListInterface<User> testSort = new SortedLinkList<>();
     private static LinkedList<Order> pickupOrder = new LinkedList<Order>();
     private static LinkedList<Order> deliveryOrder = new LinkedList<Order>();
     private static LinkedList<Order> paidOrder = new LinkedList<Order>();
@@ -91,12 +91,15 @@ public class FioreFlowershop {
         Consumer c5 = new Consumer("manager", "abc" ,"manager@example.com", "012","lmao");
         Consumer c6 = new Consumer("manager1", "abc" ,"manager1@example.com", "012","lmao");
         
-        SortedListInterface<String> testSort = new SortedLinkList<>();
-        testSort.add("manager@example.com");
-        testSort.add("noice@example.com");
-        testSort.add("ceekay@example.com");
-        for(int i = 1; i <= testSort.getLength(); i++){
-            System.out.println(testSort.getEntry(i));
+        testSort.add(cc2);
+        testSort.add(cc1);
+        testSort.add(c1);
+        testSort.add(c2);
+        testSort.add(c5);
+        testSort.add(c3);
+        CustomerMaintenance.sortUserList();
+        for(int i = 1; i <= user.getTotalEntries(); i++){
+                System.out.println(user.getItem(i).getEmail());
         }
         
         consumer.add(c1);
@@ -108,20 +111,6 @@ public class FioreFlowershop {
         corporate.add(cc2);
         corporate.getItem(1).setCreditSpent(4500);
         corporate.getItem(2).setCreditSpent(1500);
-
-        //Initialize users
-        user.add(c2);
-        user.add(cc1);
-        user.add(cc2);
-        user.add(c1);
-        
-        user.add(c4);user.add(c5);
-
-//        CustomerMaintenance.sortEmailOrder();
-        
-        for(int i = 1; i <= user.getTotalEntries(); i++){
-            System.out.println(user.getItem(i).getEmail());
-        }
 
         //Initialize shopping cart
         CatalogPackage cp1 = new CatalogPackage("FlowerStrong", "Stylish", "Small", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20, 5);
@@ -656,9 +645,9 @@ public class FioreFlowershop {
     public static LinkedList<User> getUser() {
         return user;
     }
-
-    public static ListInterface<User> getSortedUser() {
-        return sortedUser;
+    
+    public static SortedListInterface<User> getSortedUser(){
+        return testSort;
     }
 
     public static LinkedList<CatalogOrders> getShoppingCart() {
