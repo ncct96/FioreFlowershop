@@ -37,7 +37,7 @@ import java.util.logging.Logger;
  */
 public class Delivery {
 
-    public static void searchDelivery(LinkedList<CatalogOrders> catalogOrder, Date date, LinkedList<CustomizedPackage> customizeOrder) {
+    public static LinkedList<Order> searchDelivery(LinkedList<CatalogOrders> catalogOrder, Date date, LinkedList<CustomizedPackage> customizeOrder) {
         LinkedList<CatalogOrders> unOrderList = new LinkedList<CatalogOrders>();
         LinkedList<CustomizedPackage> customOrder = new LinkedList<CustomizedPackage>();
         LinkedList<Order> matchedList = new LinkedList<>();
@@ -80,7 +80,7 @@ public class Delivery {
 
         for (int i = 1; i <= unOrderList.getTotalEntries(); i++) {
 
-            listCal.setTime(unOrderList.getItem(i).getOrderDate());
+            listCal.setTime(unOrderList.getItem(i).getRetrieveDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
@@ -97,7 +97,7 @@ public class Delivery {
 
         for (int i = 1; i <= customOrder.getTotalEntries(); i++) {
 
-            listCal.setTime(customOrder.getItem(i).getOrderDate());
+            listCal.setTime(customOrder.getItem(i).getRetrieveDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
@@ -115,7 +115,7 @@ public class Delivery {
         for (int i = 1; i < matchedList.getTotalEntries() - 1; i++) {
             int index = i;
             for (int j = i; j <= matchedList.getTotalEntries(); j++) {
-                if (matchedList.getItem(j).getOrderDate().before(matchedList.getItem(index).getOrderDate())) {
+                if (matchedList.getItem(j).getRetrieveDate().before(matchedList.getItem(index).getRetrieveDate())) {
                     index = j; //searching for lowest index  
                 }
             }
@@ -126,6 +126,8 @@ public class Delivery {
         }
 
         displaySortedDelivery(matchedList);
+        
+        return matchedList;
     }
 
     public static void sortDeliveryOrder(LinkedList<CatalogOrders> catalogOrder, LinkedList<CustomizedPackage> customizeOrder) {
@@ -193,7 +195,7 @@ public class Delivery {
         for (int i = 1; i < sortedList.getTotalEntries() - 1; i++) {
             int index = i;
             for (int j = i; j <= sortedList.getTotalEntries(); j++) {
-                if (sortedList.getItem(j).getOrderDate().before(sortedList.getItem(index).getOrderDate())) {
+                if (sortedList.getItem(j).getRetrieveDate().before(sortedList.getItem(index).getRetrieveDate())) {
                     index = j; //searching for lowest index  
                 }
             }
@@ -239,7 +241,7 @@ public class Delivery {
 
                 System.out.println("Company Name: " + corp.getCompany());
                 System.out.println("Contact: " + corp.getPhone());
-                String date = df.format(catalogOrder.getItem(k).getOrderDate());
+                String date = df.format(catalogOrder.getItem(k).getRetrieveDate());
                 System.out.println("Delivery Date: " + date + "\n");
             } else {
 
@@ -249,7 +251,7 @@ public class Delivery {
 
                 System.out.println("Name: " + con.getUsername());
                 System.out.println("Contact: " + con.getPhone());
-                String date = df.format(catalogOrder.getItem(k).getOrderDate());
+                String date = df.format(catalogOrder.getItem(k).getRetrieveDate());
                 System.out.println("Delivery Date: " + date + "\n");
             }
         }
@@ -273,7 +275,7 @@ public class Delivery {
 
                 System.out.println("Company Name: " + corp.getCompany());
                 System.out.println("Contact: " + corp.getPhone());
-                String date = df.format(customOrder.getItem(k).getOrderDate());
+                String date = df.format(customOrder.getItem(k).getRetrieveDate());
                 System.out.println("Delivery Date: " + date + "\n");
             } else {
 
@@ -283,7 +285,7 @@ public class Delivery {
 
                 System.out.println("Name: " + con.getUsername());
                 System.out.println("Contact: " + con.getPhone());
-                String date = df.format(customOrder.getItem(k).getOrderDate());
+                String date = df.format(customOrder.getItem(k).getRetrieveDate());
                 System.out.println("Delivery Date: " + date + "\n");
             }
         }
