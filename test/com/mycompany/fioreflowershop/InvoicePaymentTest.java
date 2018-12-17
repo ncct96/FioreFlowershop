@@ -27,7 +27,8 @@ public class InvoicePaymentTest {
     LinkedList<CatalogOrders> co = FioreFlowershop.getCatalogOrder();
     LinkedList<CatalogPackage> catalogPack1 = new LinkedList<>();
     CorporateCustomer cor = new CorporateCustomer("JunitTest", "junitTest@example.com", "0123456789", "Junit Test Address", "abcdef", "Junit Test Company", 5000, true);
-    CatalogPackage cp1 = new CatalogPackage("FlowerTest", "Stylish", "TestSize", "RoseTest", "Ribbons", "Test Product", "12", 2018, 10, 50, 20, 5);
+    //Zion made changes here (added 2 "" for flower pot and flower arrangement parameter)
+    CatalogPackage cp1 = new CatalogPackage("FlowerTest", "Stylish", "TestSize", "Vase", "Valentine", "RoseTest", "Ribbons", "Test Product", "12", 2018, 10, 50, 20, 5);
     CatalogOrders ct1 = new CatalogOrders("C1", catalogPack1, "Pick Up", today, cor, "Order Status", 308, false, today, today);
     InvoiceHistory ih1 = new InvoiceHistory(100, co, cor, today);
     

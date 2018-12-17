@@ -22,7 +22,8 @@ public class CatalogPackageTest {
     
     @Before
     public void setUp() {
-        this.instance = new CatalogPackage("Package 1", "Style 1", "Small", "Flower 1", "Bear 1", "Flower arrangement", "December", 2018, 10, 90.00, 10, 5);
+        //Zion made changes here (added 2 "" for flower pot and flower arrangement parameter)
+        this.instance = new CatalogPackage("Package 1", "Style 1", "Small", "", "", "Flower 1", "Bear 1", "Flower arrangement", "December", 2018, 10, 90.00, 10, 5);
     }
 
     /**
