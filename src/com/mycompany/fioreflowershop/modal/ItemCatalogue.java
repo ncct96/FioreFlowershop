@@ -4,25 +4,25 @@
  * and open the template in the editor.
  */
 package com.mycompany.fioreflowershop.modal;
-import com.mycompany.fioreflowershop.adt.LinkedList;
-import com.mycompany.fioreflowershop.adt.ListIteratorInterface;
+import com.mycompany.fioreflowershop.adt.ItemList;
+import com.mycompany.fioreflowershop.adt.ItemListInterface;
 
 /**
  *
  * @author Chiu Peeng
  */
 public class ItemCatalogue {
-    private ListIteratorInterface<Item> styles = new LinkedList<>();
-    private ListIteratorInterface<Item> sizes = new LinkedList<>();
-    private ListIteratorInterface<Item> flowers = new LinkedList<>();
-    private ListIteratorInterface<Item> accessories = new LinkedList<>();
-    private ListIteratorInterface<Item> priorities = new LinkedList<>();
-    private ListIteratorInterface<Item> deliveryTypes = new LinkedList<>();
+    private ItemListInterface<Item> styles = new ItemList<>();
+    private ItemListInterface<Item> sizes = new ItemList<>();
+    private ItemListInterface<Item> flowers = new ItemList<>();
+    private ItemListInterface<Item> accessories = new ItemList<>();
+    private ItemListInterface<Item> priorities = new ItemList<>();
+    private ItemListInterface<Item> deliveryTypes = new ItemList<>();
 
     public ItemCatalogue() {
     }
 
-    public ItemCatalogue(ListIteratorInterface<Item> styles, ListIteratorInterface<Item> sizes, ListIteratorInterface<Item> flowers, ListIteratorInterface<Item> accessories, ListIteratorInterface<Item> priorities, ListIteratorInterface<Item> deliveryTypes) {
+    public ItemCatalogue(ItemListInterface<Item> styles, ItemListInterface<Item> sizes, ItemListInterface<Item> flowers, ItemListInterface<Item> accessories, ItemListInterface<Item> priorities, ItemListInterface<Item> deliveryTypes) {
         this.styles = styles;
         this.sizes = sizes;
         this.flowers = flowers;
@@ -31,51 +31,51 @@ public class ItemCatalogue {
         this.deliveryTypes = deliveryTypes;
     }
     
-    public ListIteratorInterface<Item> getStyles() {
+    public ItemListInterface<Item> getStyles() {
         return styles;
     }
 
-    public void setStyles(ListIteratorInterface<Item> styles) {
+    public void setStyles(ItemListInterface<Item> styles) {
         this.styles = styles;
     }
 
-    public ListIteratorInterface<Item> getSizes() {
+    public ItemListInterface<Item> getSizes() {
         return sizes;
     }
 
-    public void setSizes(ListIteratorInterface<Item> sizes) {
+    public void setSizes(ItemListInterface<Item> sizes) {
         this.sizes = sizes;
     }
 
-    public ListIteratorInterface<Item> getFlowers() {
+    public ItemListInterface<Item> getFlowers() {
         return flowers;
     }
 
-    public void setFlowers(ListIteratorInterface<Item> flowers) {
+    public void setFlowers(ItemListInterface<Item> flowers) {
         this.flowers = flowers;
     }
 
-    public ListIteratorInterface<Item> getAccessories() {
+    public ItemListInterface<Item> getAccessories() {
         return accessories;
     }
 
-    public void setAccessories(ListIteratorInterface<Item> accessories) {
+    public void setAccessories(ItemListInterface<Item> accessories) {
         this.accessories = accessories;
     }
 
-    public ListIteratorInterface<Item> getPriorities() {
+    public ItemListInterface<Item> getPriorities() {
         return priorities;
     }
 
-    public void setPriorities(ListIteratorInterface<Item> priorities) {
+    public void setPriorities(ItemListInterface<Item> priorities) {
         this.priorities = priorities;
     }
 
-    public ListIteratorInterface<Item> getDeliveryTypes() {
+    public ItemListInterface<Item> getDeliveryTypes() {
         return deliveryTypes;
     }
 
-    public void setDeliveryTypes(ListIteratorInterface<Item> deliveryTypes) {
+    public void setDeliveryTypes(ItemListInterface<Item> deliveryTypes) {
         this.deliveryTypes = deliveryTypes;
     }
     

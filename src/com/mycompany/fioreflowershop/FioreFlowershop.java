@@ -38,7 +38,7 @@ public class FioreFlowershop {
     private static Scanner s = new Scanner(System.in);
 
     private static ItemCatalogue itemCatalogue = new ItemCatalogue();
-    private static QueueInterface<CustomizedPackage> customizedPackages = new ArrayQueue<>();
+    private static CustomizePackageQueueInterface<CustomizedPackage> customizedPackages = new CustomizePackageQueue<>();
     private static LinkedList<CustomizedPackage> readyOrders = new LinkedList<>();
 
     //Catalog Maintenance part
@@ -139,40 +139,40 @@ public class FioreFlowershop {
         catalogOrder.add(ct6);
         catalogOrder.add(ct7);
 
-        ListIteratorInterface<Item> styles = new LinkedList<>();
-        ListIteratorInterface<Item> sizes = new LinkedList<>();
-        ListIteratorInterface<Item> flowers = new LinkedList<>();
-        ListIteratorInterface<Item> accessories = new LinkedList<>();
-        ListIteratorInterface<Item> priorities = new LinkedList<>();
-        ListIteratorInterface<Item> deliveryTypes = new LinkedList<>();
+        ItemListInterface<Item> styles = new ItemList<>();
+        ItemListInterface<Item> sizes = new ItemList<>();
+        ItemListInterface<Item> flowers = new ItemList<>();
+        ItemListInterface<Item> accessories = new ItemList<>();
+        ItemListInterface<Item> priorities = new ItemList<>();
+        ItemListInterface<Item> deliveryTypes = new ItemList<>();
 
-        styles.add(new Item("Fan", 10));
-        styles.add(new Item("Elliptical", 10));
-        styles.add(new Item("Vertical", 10));
-        styles.add(new Item("Horizontal", 10));
-        styles.add(new Item("Triangular", 10));
+        styles.addItem(new Item("Fan", 10));
+        styles.addItem(new Item("Elliptical", 10));
+        styles.addItem(new Item("Vertical", 10));
+        styles.addItem(new Item("Horizontal", 10));
+        styles.addItem(new Item("Triangular", 10));
 
-        sizes.add(new Item("Small", 1));
-        sizes.add(new Item("Medium", 2));
-        sizes.add(new Item("Large", 4));
+        sizes.addItem(new Item("Small", 1));
+        sizes.addItem(new Item("Medium", 2));
+        sizes.addItem(new Item("Large", 4));
 
-        flowers.add(new Item("Sunflowers", 250, 10));
-        flowers.add(new Item("Red Roses", 300, 20));
-        flowers.add(new Item("White Roses", 250, 10));
-        flowers.add(new Item("Tulips", 450, 50));
-        flowers.add(new Item("Daffodils", 200, 20));
+        flowers.addItem(new Item("Sunflowers", 250, 10));
+        flowers.addItem(new Item("Red Roses", 300, 20));
+        flowers.addItem(new Item("White Roses", 250, 10));
+        flowers.addItem(new Item("Tulips", 450, 50));
+        flowers.addItem(new Item("Daffodils", 200, 20));
 
-        accessories.add(new Item("None", 0, 1));
-        accessories.add(new Item("Name Card", 5, 20));
-        accessories.add(new Item("Bears", 50, 5));
-        accessories.add(new Item("Woven Basket", 35, 10));
+        accessories.addItem(new Item("None", 0, 1));
+        accessories.addItem(new Item("Name Card", 5, 20));
+        accessories.addItem(new Item("Bears", 50, 5));
+        accessories.addItem(new Item("Woven Basket", 35, 10));
 
-        priorities.add(new Item("Flexi", 1, 6));
-        priorities.add(new Item("Normal", 1.5, 4));
-        priorities.add(new Item("Express", 3, 2));
+        priorities.addItem(new Item("Flexi", 1, 6));
+        priorities.addItem(new Item("Normal", 1.5, 4));
+        priorities.addItem(new Item("Express", 3, 2));
 
-        deliveryTypes.add(new Item("Pick Up", 0));
-        deliveryTypes.add(new Item("Delivery", 10));
+        deliveryTypes.addItem(new Item("Pick Up", 0));
+        deliveryTypes.addItem(new Item("Delivery", 10));
 
         itemCatalogue.setStyles(styles);
         itemCatalogue.setSizes(sizes);
@@ -197,19 +197,21 @@ public class FioreFlowershop {
             package2.getFlowerList().add(testFlowers.getItem(i));
             package3.getFlowerList().add(testFlowers.getItem(i));
             package4.getFlowerList().add(testFlowers.getItem(i));
+            package5.getFlowerList().add(testFlowers.getItem(i));
+            package6.getFlowerList().add(testFlowers.getItem(i));
         }
 
         Consumer customer = new Consumer("Johan", "abcdef", "ncct66@gmail.com", "0165919413", "Gelanggang Squash IAB Genting Highlands, Genting Highlands, 69000 Genting Highlands, Pahang");
         Consumer customer1 = new Consumer("Baba", "abcdef", "ncct66@gmail.com", "0165919413", "7, Jalan Legoland, Medini, 79250 Nusajaya, Johor");
-        customizedPackages.enqueue(package1);
-        customizedPackages.enqueue(package2);
-        customizedPackages.enqueue(package3);
-        customizedPackages.enqueue(package4);
-        customizedPackages.enqueue(package5);
-        customizedPackages.enqueue(package6);
+        customizedPackages.addCustomizedPackage(package1);
+        customizedPackages.addCustomizedPackage(package2);
+        customizedPackages.addCustomizedPackage(package3);
+        customizedPackages.addCustomizedPackage(package4);
+        customizedPackages.addCustomizedPackage(package5);
+        customizedPackages.addCustomizedPackage(package6);
 
-        readyOrders.add(customizedPackages.dequeue());
-        readyOrders.add(customizedPackages.dequeue());
+        readyOrders.add(customizedPackages.removeCustomizedPackage());
+        readyOrders.add(customizedPackages.removeCustomizedPackage());
 
 //        CustomizedPackage specialPackage = new CustomizedPackage(styles.getItem(1), sizes.getItem(2), flowers.getItem(5), accessories.getItem(2), priorities.getItem(1), deliveryTypes.getItem(2), customer);
 //        specialPackage.setDeliveryDate(Calendar.getInstance().getTime());

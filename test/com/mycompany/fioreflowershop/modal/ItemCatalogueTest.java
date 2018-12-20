@@ -100,7 +100,7 @@ public class ItemCatalogueTest {
         System.out.println("\nItem to be added into the catalogue at position 2:");
         System.out.printf("%s: RM%.2f\n", testItem.getName(), testItem.getPrice());
         
-        itemCatalogue.getAccessories().add(2, testItem);
+        itemCatalogue.getAccessories().addItem(2, testItem);
         
         System.out.println("\nItem Catalogue Post-Add:");
         for (int i = 1; i <= itemCatalogue.getAccessories().getTotalEntries(); i++) {
@@ -115,7 +115,7 @@ public class ItemCatalogueTest {
      */
     @Test
     public void testDeleteItem() {
-        itemCatalogue.getAccessories().add(2, testItem);
+        itemCatalogue.getAccessories().addItem(2, testItem);
         System.out.println("\n\nTest for deleting items from the customization catalogue");
         System.out.println("======================================================");
         System.out.println("Initial Item Catalogue:");
@@ -128,7 +128,7 @@ public class ItemCatalogueTest {
         System.out.println("\nItem to be deleted from the catalogue at position 2:");
         System.out.printf("%s: RM%.2f\n", itemCatalogue.getAccessories().getItem(2).getName(), itemCatalogue.getAccessories().getItem(2).getPrice());
         
-        itemCatalogue.getAccessories().remove(2);
+        itemCatalogue.getAccessories().removeItem(2);
         
         System.out.println("\nItem Catalogue Post-Delete:");
         for (int i = 1; i <= itemCatalogue.getAccessories().getTotalEntries(); i++) {
