@@ -42,18 +42,18 @@ public class DeliveryOptimization {
         dest[0] = shopAddress;
 
         // Loop address list to origin & destination string array
-        for (int j = 2; j <= destinations.getTotalEntries() + 1; j++) {
+        for (int j = 1; j <= destinations.getTotalEntries(); j++) {
 
-            User user = destinations.getItem(j - 1).getUser();
+            User user = destinations.getItem(j).getUser();
 
             if (user instanceof Consumer) {
-                dest[j - 1] = destinations.getItem(j - 1).getUser().getAddress();
-                origin[j - 1] = destinations.getItem(j - 1).getUser().getAddress();
+                dest[j] = destinations.getItem(j).getUser().getAddress();
+                origin[j] = destinations.getItem(j).getUser().getAddress();
             } else {
                 CorporateCustomer corp;
-                corp = (CorporateCustomer) destinations.getItem(j - 1).getUser();
-                dest[j - 1] = corp.getAddress();
-                origin[j - 1] = corp.getAddress();
+                corp = (CorporateCustomer) destinations.getItem(j).getUser();
+                dest[j] = corp.getAddress();
+                origin[j] = corp.getAddress();
             }
         }
 
