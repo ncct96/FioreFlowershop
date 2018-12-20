@@ -37,6 +37,9 @@ import java.util.logging.Logger;
  */
 public class Delivery {
 
+    public static final String RED = "\033[0;31m";     // RED
+    public static final String GREEN = "\033[0;32m";   // GREEN
+
     public static LinkedList<Order> searchDelivery(LinkedList<CatalogOrders> catalogOrder, Date date, LinkedList<CustomizedPackage> customizeOrder) {
         LinkedList<CatalogOrders> unOrderList = new LinkedList<CatalogOrders>();
         LinkedList<CustomizedPackage> customOrder = new LinkedList<CustomizedPackage>();
@@ -126,7 +129,6 @@ public class Delivery {
         }
 
         //displaySortedDelivery(matchedList);
-        
         return matchedList;
     }
 
@@ -400,7 +402,7 @@ public class Delivery {
         System.out.println("Today's Delivery Route (Nearest to Furthest) ");
         System.out.println("================================================" + "\n");
 
-        System.out.println("Origin: " + shopAddress + "\n");
+        System.out.println("Start from Origin: " + shopAddress + "\n");
 
         for (int i = 0; i < tour.size() - 1; i++) {
             int tourCount = tour.get(i).intValue();
@@ -447,8 +449,8 @@ public class Delivery {
             }
         }
 
-        System.out.println("Origin: " + shopAddress);
-        System.out.println("Total Payment Amount: RM" + String.format("%.2f", totalPayment) + "\n");
+        System.out.println("Back to Origin: " + shopAddress);
+        System.out.println("\nTotal Payment Amount: RM" + String.format("%.2f", totalPayment) + "\n");
 
         System.out.println("1. Record Payment");
         System.out.println("2. Back");
@@ -702,9 +704,8 @@ public class Delivery {
 
                         } else if (payAmt >= matchOrder.getItem(orderChoice).getOrderAmt()) {
 
-                            change = payAmt - matchOrder.getItem(orderChoice).getOrderAmt();
-                            matchOrder.getItem(orderChoice).setPaymentStatus(true);
-                            matchOrder.getItem(orderChoice).setOrderStatus("Picked Up");
+                            change = CalculatePayment(payAmt, matchOrder.getItem(orderChoice));
+                            setPaymentStatus(matchOrder.getItem(orderChoice));
                             paidOrder.add(matchOrder.getItem(orderChoice));
 
                             if (change == 0) {
@@ -713,17 +714,26 @@ public class Delivery {
                                 System.out.println("Payment Change: RM " + String.format("%.2f", change));
                             }
 
-                            matchOrder.getItem(orderChoice).setPaymentTime(new Date());
-                            matchOrder.getItem(orderChoice).setDateOfReceive(new Date());
                             genReceipt(matchOrder.getItem(orderChoice), payAmt, change);
 
                         }
                     } while (payAmt < matchOrder.getItem(orderChoice).getOrderAmt());
                 }
-            } else {
-                FioreFlowershop.counterStaff();
             }
         }
+
+    }
+
+    public static double CalculatePayment(double payAmt, Order order) {
+        double change = payAmt - order.getOrderAmt();
+        return change;
+    }
+
+    public static void setPaymentStatus(Order order) {
+        order.setPaymentStatus(true);
+        order.setOrderStatus("Delivered");
+        order.setPaymentTime(new Date());
+        order.setDateOfReceive(new Date());
 
     }
 
@@ -796,7 +806,8 @@ public class Delivery {
             System.out.println("Thank You For Choosing Fiore Flowershop, Please Come Again! :D");
             System.out.println("====================================================================================================");
         }
-        FioreFlowershop.counterStaff();
+
+        //FioreFlowershop.counterStaff();
     }
 
     public static void searchPaidDelivery(LinkedList<Order> paidOrder) {
@@ -807,11 +818,13 @@ public class Delivery {
 
         Order order = paidOrder.getItem(1);
 
-        System.out.println("Delivery Order Payment History");
+        System.out.println("\nDelivery Order Payment History");
         System.out.println("|No.|\t|Order ID|\t|Order Type|\t|Order Date|\t\t|Payment Amount (RM)|\t|Payment Status|\t|Delivered Date|");
         System.out.println("=============================================================================================================================================================");
 
-        if (order instanceof CatalogOrders) {
+        if (order == null) {
+            System.out.println(RED + "No order found!");
+        } else if (order instanceof CatalogOrders) {
 
             System.out.print(1 + "\t");
             System.out.print(((CatalogOrders) order).getOrderID() + "\t\t");

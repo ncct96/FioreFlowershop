@@ -27,6 +27,8 @@ public class LinkedQueue<T> implements QueueInterface<T> {
         } else {
             lastNode.next = newNode;
         }
+        
+        lastNode = newNode;
     }
 
     public T getFront() {

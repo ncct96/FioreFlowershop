@@ -485,7 +485,7 @@ public class FioreFlowershop {
             } else if (deliveryStaffChoice == 4) {
                 Delivery.searchPaidDelivery(paidOrder);
             } else if (deliveryStaffChoice == 5) {
-                //MISSING FUNCTION
+                break;
             } else {
                 break;
             }
