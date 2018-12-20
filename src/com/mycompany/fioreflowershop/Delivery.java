@@ -145,15 +145,19 @@ public class Delivery {
 
         // Get all delivery order for Catalog Order
         while (catalogIterator.hasNext()) {
-            if (catalogIterator.next().getOrderType().equals("Delivery")) {
-                unOrderList.add(catalogIterator.next());
+            CatalogOrders order = catalogIterator.next();
+
+            if (order.getOrderType().equals("Delivery")) {
+                unOrderList.add(order);
             }
         }
 
         // Get all delivery order for Customize Package
         while (CustomIterator.hasNext()) {
-            if (CustomIterator.next().getOrderType().equals("Delivery")) {
-                customOrder.add(CustomIterator.next());
+            CustomizedPackage order = CustomIterator.next();
+
+            if (order.getDeliveryType().getName().equals("Delivery")) {
+                customOrder.add(order);
             }
         }
 
@@ -688,11 +692,18 @@ public class Delivery {
 
                 int orderChoice = s.nextInt();
 
-                if (matchOrder.getItem(orderChoice).isPaymentStatus()) {
+                Order order = matchOrder.getItem(orderChoice);
+
+                if (order instanceof CatalogOrders) {
+
+                } else {
+
+                }
+                if (order.isPaymentStatus()) {
                     System.out.println("The selected order already paid!");
                     FioreFlowershop.orderMenu();
                 } else {
-                    System.out.println("Total Amount: " + String.format("%.2f", matchOrder.getItem(orderChoice).getOrderAmt()));
+                    System.out.println("Total Amount: " + String.format("%.2f", ((CustomizedPackage) order).CalculateOrder()));
                     double payAmt, change = 0;
 
                     do {
@@ -702,11 +713,11 @@ public class Delivery {
                         if (payAmt < matchOrder.getItem(orderChoice).getOrderAmt()) {
                             System.out.println("Insufficient amount, please reenter amount!");
 
-                        } else if (payAmt >= matchOrder.getItem(orderChoice).getOrderAmt()) {
+                        } else if (payAmt >= ((CustomizedPackage) order).CalculateOrder()) {
 
-                            change = CalculatePayment(payAmt, matchOrder.getItem(orderChoice));
-                            setPaymentStatus(matchOrder.getItem(orderChoice));
-                            paidOrder.add(matchOrder.getItem(orderChoice));
+                            change = CalculatePayment(payAmt, order);
+                            setPaymentStatus(order);
+                            paidOrder.add(order);
 
                             if (change == 0) {
                                 System.out.println("Payment Change: No changes");
@@ -714,10 +725,10 @@ public class Delivery {
                                 System.out.println("Payment Change: RM " + String.format("%.2f", change));
                             }
 
-                            genReceipt(matchOrder.getItem(orderChoice), payAmt, change);
+                            genReceipt(order, payAmt, change);
 
                         }
-                    } while (payAmt < matchOrder.getItem(orderChoice).getOrderAmt());
+                    } while (payAmt < ((CustomizedPackage) order).CalculateOrder());
                 }
             }
         }

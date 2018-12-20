@@ -50,19 +50,22 @@ public class Pickup {
 
         // Get all delivery order for Catalog Order
         while (catalogIterator.hasNext()) {
-            if (catalogIterator.next().getOrderType().equals("Pick Up")) {
-                unOrderList.add(catalogIterator.next());
+            CatalogOrders order = catalogIterator.next();
+
+            if (order.getOrderType().equals("Pick Up")) {
+                unOrderList.add(order);
             }
         }
 
         // Get all delivery order for Customize Package
         while (CustomIterator.hasNext()) {
-            if (CustomIterator.next().getOrderType().equals("Pick Up")) {
-                customOrder.add(CustomIterator.next());
+            CustomizedPackage order = CustomIterator.next();
+
+            if (order.getDeliveryType().getName().equals("Pick Up")) {
+                customOrder.add(order);
             }
         }
 
-        //int count = customOrder.getBackIndex();
         Calendar cal = Calendar.getInstance();
         Calendar listCal = Calendar.getInstance();
         Calendar cal1 = Calendar.getInstance();
@@ -149,15 +152,19 @@ public class Pickup {
 
         // Get all delivery order for Catalog Order
         while (catalogIterator.hasNext()) {
-            if (catalogIterator.next().getOrderType().equals("Pick Up")) {
-                unOrderList.add(catalogIterator.next());
+            CatalogOrders order = catalogIterator.next();
+
+            if (order.getOrderType().equals("Pick Up")) {
+                unOrderList.add(order);
             }
         }
 
         // Get all delivery order for Customize Package
         while (CustomIterator.hasNext()) {
-            if (CustomIterator.next().getOrderType().equals("Pick Up")) {
-                customOrder.add(CustomIterator.next());
+            CustomizedPackage order = CustomIterator.next();
+
+            if (order.getDeliveryType().getName().equals("Pick Up")) {
+                customOrder.add(order);
             }
         }
 
@@ -492,10 +499,9 @@ public class Pickup {
 
                             } else if (payAmt >= ((CustomizedPackage) order).CalculateOrder()) {
 
-                                change = payAmt - ((CustomizedPackage) order).CalculateOrder();
-                                order.setPaymentStatus(true);
-                                order.setOrderStatus("Picked Up");
-                                paidOrder.add(matchOrder.getItem(orderChoice));
+                                change = CalculatePayment(payAmt, ((CustomizedPackage) order).CalculateOrder());
+                                setPaymentStatus(order);
+                                paidOrder.add(order);
 
                                 if (change == 0) {
                                     System.out.println("Payment Change: No changes");
@@ -503,18 +509,28 @@ public class Pickup {
                                     System.out.println("Payment Change: RM " + String.format("%.2f", change));
                                 }
 
-                                order.setPaymentTime(new Date());
-                                order.setDateOfReceive(new Date());
                                 genReceipt(order, payAmt, change);
 
                             }
                         } while (payAmt < ((CustomizedPackage) order).CalculateOrder());
                     }
                 }
-            } else {
-                FioreFlowershop.counterStaff();
             }
         }
+
+    }
+
+    public static double CalculatePayment(double payAmt, double totalAmt) {
+
+        double change = payAmt - totalAmt;
+        return change;
+    }
+
+    public static void setPaymentStatus(Order order) {
+        order.setPaymentStatus(true);
+        order.setOrderStatus("Delivered");
+        order.setPaymentTime(new Date());
+        order.setDateOfReceive(new Date());
 
     }
 
@@ -557,14 +573,6 @@ public class Pickup {
             System.out.println("====================================================================================================");
         } else {
 
-//            ListIteratorInterface<Item> cus = ((CustomizedPackage) order).getFlowerList();
-//            CatalogPackage item;
-//            Iterator<CatalogPackage> catIterator = cat.getIterator();
-//
-//            while (catIterator.hasNext()) {
-//                item = catIterator.next();
-//                System.out.println(item.getName() + item.getFlower() + "\t\t\t" + item.getUserQuantity() + "\t\t" + item.getPrice() + "\t\t");
-//            }
             System.out.println("\n\t\t\t\t   Fiore Flowershop SDN.BHD ");
             System.out.println("\t\t\t\t    178, Jalan Sehala, ");
             System.out.println("\t\t\t\t 2404 No U Turn, 53300 Kuala Lumpur");
@@ -577,6 +585,17 @@ public class Pickup {
             System.out.println("ITEM \t\t\t QUANTITY \t PRICE (RM) \t\tDISCOUNT %\t\t AMOUNT (RM)");
             System.out.println("==================================================================================================");
 
+            ListIteratorInterface<Item> flowerList = ((CustomizedPackage) order).getFlowerList();
+
+            Iterator<Item> flowerIterator = flowerList.getIterator();
+
+            Item item;
+
+            while (flowerIterator.hasNext()) {
+                item = flowerIterator.next();
+                System.out.println(item.getName() + "\t\t\t" + item.getQuantity() + "\t\t" + item.getPrice() + "\t\t");
+            }
+
             System.out.println("\n-------------------------------------------------------------------------------------------------");
             System.out.println("\tTOTAL (RM) : \t     \t\t\t\t\t\t\t\t" + String.format("%.2f", ((CustomizedPackage) order).CalculateOrder()));
             System.out.println("---------------------------------------------------------------------------------------------------");
@@ -587,7 +606,6 @@ public class Pickup {
             System.out.println("Thank You For Choosing Fiore Flowershop, Please Come Again :D");
             System.out.println("====================================================================================================");
         }
-        FioreFlowershop.counterStaff();
     }
 }
 
