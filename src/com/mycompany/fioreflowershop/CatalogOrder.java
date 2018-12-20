@@ -30,7 +30,6 @@ import java.util.logging.Logger;
  */
 public class CatalogOrder {
 
-    // Lines 419,437,555,571,658,674
     static LinkedList<CatalogOrders> shoppingCart = FioreFlowershop.getShoppingCart();
     static LinkedList<CatalogOrders> catalogOrder = FioreFlowershop.getCatalogOrder();
     static LinkedList<CatalogPackage> catalogPack = new LinkedList<>();
