@@ -5,11 +5,8 @@
  */
 package com.mycompany.fioreflowershop;
 
-import com.mycompany.fioreflowershop.adt.ListInterface;
-import com.mycompany.fioreflowershop.adt.QueueInterface;
-import com.mycompany.fioreflowershop.modal.CustomizedPackage;
-import com.mycompany.fioreflowershop.modal.Item;
-import com.mycompany.fioreflowershop.modal.ItemCatalogue;
+import com.mycompany.fioreflowershop.adt.*;
+import com.mycompany.fioreflowershop.modal.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -53,7 +50,7 @@ public class CustomizePackageMaintenance {
         }
     }
 
-    public static void itemsMenu(ItemCatalogue itemCatalogue, QueueInterface<CustomizedPackage> customizedPackages) {
+    public static void itemsMenu(ItemCatalogue itemCatalogue, CustomizePackageQueueInterface<CustomizedPackage> customizedPackages) {
         while (true) {
             System.out.println("\nWhat do you wish to do?");
             System.out.println(ANSI_GREEN + "[1] " + ANSI_RESET + "Update Stock Quantity");
@@ -78,7 +75,7 @@ public class CustomizePackageMaintenance {
         }
     }
 
-    public static void updateOrders(QueueInterface<CustomizedPackage> customizedPackages, ListInterface<CustomizedPackage> readyOrders) {
+    public static void updateOrders(CustomizePackageQueueInterface<CustomizedPackage> customizedPackages, ListInterface<CustomizedPackage> readyOrders) {
         while (true) {
             Scanner scan = new Scanner(System.in);
             char selection;
@@ -86,11 +83,11 @@ public class CustomizePackageMaintenance {
                 System.out.println("\n==================================");
                 System.out.println("Next Order");
                 System.out.println("==================================");
-                System.out.println("Job ID: " + customizedPackages.getFront().getOrderID());
-                System.out.println("Delivery Date: " + customizedPackages.getFront().getDeliveryDateString());
-                System.out.println("Priority: " + customizedPackages.getFront().getPriority());
-                System.out.println("Arrangement: " + customizedPackages.getFront().getSize() + " " + customizedPackages.getFront().getStyle() + " " + customizedPackages.getFront().getFlower());
-                System.out.println("Accessories: " + customizedPackages.getFront().getAccessory());
+                System.out.println("Job ID: " + customizedPackages.getFirstPackage().getOrderID());
+                System.out.println("Delivery Date: " + customizedPackages.getFirstPackage().getDeliveryDateString());
+                System.out.println("Priority: " + customizedPackages.getFirstPackage().getPriority());
+                System.out.println("Arrangement: " + customizedPackages.getFirstPackage().getSize() + " " + customizedPackages.getFirstPackage().getStyle() + " " + customizedPackages.getFirstPackage().getFlower());
+                System.out.println("Accessories: " + customizedPackages.getFirstPackage().getAccessory());
                 System.out.println("==================================");
                 do {
                     System.out.print("Complete order?" + ANSI_GREEN + "[Y/N]" + ANSI_RESET + " ");
@@ -98,7 +95,7 @@ public class CustomizePackageMaintenance {
                 } while (selection != 'Y' && selection != 'N');
                 if (selection == 'Y') {
                     System.out.println("Order marked as ready to deliver!");
-                    readyOrders.add(customizedPackages.dequeue());
+                    readyOrders.add(customizedPackages.removeCustomizedPackage());
                     if (customizedPackages.isEmpty()) {
                         System.out.println("No more orders is queue!\n");
                         break;
@@ -308,13 +305,13 @@ public class CustomizePackageMaintenance {
             }
             System.out.println("Item successfully added!");
             if (selection == 1) {
-                itemCatalogue.getStyles().add(position, newItem);
+                itemCatalogue.getStyles().addItem(position, newItem);
             } else if (selection == 2) {
-                itemCatalogue.getSizes().add(position, newItem);
+                itemCatalogue.getSizes().addItem(position, newItem);
             } else if (selection == 3) {
-                itemCatalogue.getFlowers().add(position, newItem);
+                itemCatalogue.getFlowers().addItem(position, newItem);
             } else if (selection == 4) {
-                itemCatalogue.getAccessories().add(position, newItem);
+                itemCatalogue.getAccessories().addItem(position, newItem);
             }
 
             do {
@@ -361,13 +358,13 @@ public class CustomizePackageMaintenance {
         }
         System.out.println("Item Successfully deleted!\n");
         if (selection == 1) {
-            itemCatalogue.getStyles().remove(position);
+            itemCatalogue.getStyles().removeItem(position);
         } else if (selection == 2) {
-            itemCatalogue.getSizes().remove(position);
+            itemCatalogue.getSizes().removeItem(position);
         } else if (selection == 3) {
-            itemCatalogue.getFlowers().remove(position);
+            itemCatalogue.getFlowers().removeItem(position);
         } else if (selection == 4) {
-            itemCatalogue.getAccessories().remove(position);
+            itemCatalogue.getAccessories().removeItem(position);
         }
     }
 
@@ -419,16 +416,16 @@ public class CustomizePackageMaintenance {
             
             if (selection == 1) {
                 item = itemCatalogue.getStyles().getItem(position);
-                itemCatalogue.getStyles().remove(position);
+                itemCatalogue.getStyles().removeItem(position);
             } else if (selection == 2) {
                 item = itemCatalogue.getSizes().getItem(position);
-                itemCatalogue.getSizes().remove(position);
+                itemCatalogue.getSizes().removeItem(position);
             } else if (selection == 3) {
                 item = itemCatalogue.getFlowers().getItem(position);
-                itemCatalogue.getFlowers().remove(position);
+                itemCatalogue.getFlowers().removeItem(position);
             } else if (selection == 4) {
                 item = itemCatalogue.getAccessories().getItem(position);
-                itemCatalogue.getAccessories().remove(position);
+                itemCatalogue.getAccessories().removeItem(position);
             }
 
             System.out.println("Select the new position to display the item in the catalogue");
@@ -451,16 +448,16 @@ public class CustomizePackageMaintenance {
 
             System.out.println("Catalogue successfully updated!");
             if (selection == 1) {
-                itemCatalogue.getStyles().add(position, item);
+                itemCatalogue.getStyles().addItem(position, item);
             } else if (selection == 2) {
                 item = itemCatalogue.getSizes().getItem(position);
-                itemCatalogue.getSizes().add(position, item);
+                itemCatalogue.getSizes().addItem(position, item);
             } else if (selection == 3) {
                 item = itemCatalogue.getFlowers().getItem(position);
-                itemCatalogue.getFlowers().add(position, item);
+                itemCatalogue.getFlowers().addItem(position, item);
             } else if (selection == 4) {
                 item = itemCatalogue.getAccessories().getItem(position);
-                itemCatalogue.getAccessories().add(position, item);
+                itemCatalogue.getAccessories().addItem(position, item);
             }
             
             do {

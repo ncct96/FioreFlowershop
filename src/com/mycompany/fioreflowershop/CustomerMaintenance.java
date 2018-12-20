@@ -118,9 +118,10 @@ public class CustomerMaintenance {
             if (customerOptionsChoice == 1) {
                 while (true) {
                     System.out.println("\nPlease Select The Options Below.");
-                    System.out.println(GREEN + "[1] " + RESET + "[1] Make Catalog Flower Orders");
-                    System.out.println(GREEN + "[2] " + RESET + "[2] Make Customizable Flower Orders");
-                    System.out.println(GREEN + "[3] " + RESET + "[3] Back");
+                    System.out.println(GREEN + "[1] " + RESET + "Make Catalog Flower Orders");
+                    System.out.println(GREEN + "[2] " + RESET + "Make Customizable Flower Orders");
+                    System.out.println(GREEN + "[3] " + RESET + "Back");
+                    System.out.print("Selection: ");
                     int orderChoice = s.nextInt();
                     s.nextLine();
                     if (orderChoice == 1) {
