@@ -162,7 +162,7 @@ public class CustomizePackageMaintenance {
             }
             if (selection != 0) {
                 System.out.println("Stock quantity successfully updated!");
-                itemCatalogue.getFlowers().getItem(selection + 1).setQuantity(newQuantity);
+                itemCatalogue.getFlowers().getItem(selection).setQuantity(newQuantity);
             }
         } else if (selection == 2) {
             for (int i = 2; i <= itemCatalogue.getAccessories().getTotalEntries(); i++) {
@@ -193,7 +193,7 @@ public class CustomizePackageMaintenance {
             }
             if (selection != 0) {
                 System.out.println("Stock quantity successfully updated!");
-                itemCatalogue.getFlowers().getItem(selection).setQuantity(newQuantity);
+                itemCatalogue.getFlowers().getItem(selection + 1).setQuantity(newQuantity);
             }
         }
     }
@@ -286,11 +286,11 @@ public class CustomizePackageMaintenance {
             } else {
                 newItem.setQuantity(0);
             }
-            System.out.println("Select the position to display the new item in the catalogue");
+            System.out.println("/nSelect the position to display the new item in the catalogue");
             System.out.println("(If you select a position with an existing item,\nthat item will be moved down one slot together with all proceeding items)");
             System.out.println("================================================");
             CustomizePackageMaintenance.printItem(itemCatalogue, selection);
-            System.out.println(ANSI_GREEN + "[" + (itemCatalogue.getStyles().getTotalEntries() + 1) + "]" + ANSI_RESET + "[ BACK ]");
+            System.out.println(ANSI_GREEN + "[" + (itemCatalogue.getStyles().getTotalEntries() + 1) + "]" + ANSI_RESET + "[ NEW SLOT ]");
             while (true) {
                 try {
                     do {
