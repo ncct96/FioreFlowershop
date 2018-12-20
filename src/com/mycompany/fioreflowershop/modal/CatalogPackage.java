@@ -37,10 +37,12 @@ public class CatalogPackage implements Comparable<CatalogPackage>{
         this.status = status;
     }
 
-    public CatalogPackage(String name, String style, String size, String flower, String accessory, String productType, String promoMonth, int promoYear, int quantity, double price, int discountRate, int userQuantity) {
+    public CatalogPackage(String name, String style, String size, String flowerPot, String floralArrangement, String flower, String accessory, String productType, String promoMonth, int promoYear, int quantity, double price, int discountRate, int userQuantity) {
         this.name = name;
         this.style = style;
         this.size = size;
+        this.flowerPot = flowerPot;
+        this.floralArrangement = floralArrangement;
         this.flower = flower;
         this.accessory = accessory;
         this.productType = productType;

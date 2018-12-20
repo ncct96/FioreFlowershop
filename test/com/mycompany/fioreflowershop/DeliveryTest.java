@@ -39,11 +39,6 @@ public class DeliveryTest {
     Date inputDate;
     Calendar cal = Calendar.getInstance();
 
-    // Initialize Testing Package
-    CatalogPackage cp1 = new CatalogPackage("FlowerStrong", "Stylish", "Small", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20, 5);
-    CatalogPackage cp2 = new CatalogPackage("FlowerWeak", "Colourful", "Medium", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10, 4);
-    CatalogPackage cp3 = new CatalogPackage("FlowerMedium", "Elegant", "Large", "Sunflower", "Belt", "Product Type", "11", 2018, 15, 40, 5, 6);
-
     // Initialize Some Orders
     CatalogOrders ct1 = new CatalogOrders("C1", catalogPack1, "Delivery", todayDate, testCon, "Order Status", 308, false, todayDate, todayDate);
 
@@ -58,10 +53,6 @@ public class DeliveryTest {
         cal.set(Calendar.MILLISECOND, 0);
 
         Date inputDate = cal.getTime();
-
-        catalogPack1.add(cp1);
-        catalogPack1.add(cp2);
-        catalogPack1.add(cp3);
 
         catalogOrder.add(ct1);
 
