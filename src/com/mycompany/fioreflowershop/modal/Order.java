@@ -42,6 +42,12 @@ public class Order {
         this.user = user;
     }
 
+    public Order(boolean paymentStatus, User user, Date retrieveDate) {
+        this.paymentStatus = paymentStatus;
+        this.user = user;
+        this.retrieveDate = retrieveDate;
+    }
+
     public Order(boolean paymentStatus, User user) {
         this.paymentStatus = paymentStatus;
         this.user = user;

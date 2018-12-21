@@ -175,7 +175,7 @@ public class Delivery {
         userYear = cal.get(Calendar.YEAR);
 
         for (int j = 1; j <= unOrderList.getTotalEntries(); j++) {
-            listCal.setTime(unOrderList.getItem(j).getOrderDate());
+            listCal.setTime(unOrderList.getItem(j).getRetrieveDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
@@ -187,7 +187,7 @@ public class Delivery {
         }
 
         for (int j = 1; j <= customOrder.getTotalEntries(); j++) {
-            listCal.setTime(customOrder.getItem(j).getOrderDate());
+            listCal.setTime(customOrder.getItem(j).getRetrieveDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
