@@ -344,7 +344,7 @@ public class Delivery {
         userYear = cal.get(Calendar.YEAR);
 
         for (int j = 1; j <= unOrderList.getTotalEntries(); j++) {
-            listCal.setTime(unOrderList.getOrder(j).getOrderDate());
+            listCal.setTime(unOrderList.getOrder(j).getRetrieveDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
@@ -356,7 +356,7 @@ public class Delivery {
         }
 
         for (int j = 1; j <= customOrder.getTotalEntries(); j++) {
-            listCal.setTime(customOrder.getOrder(j).getOrderDate());
+            listCal.setTime(customOrder.getOrder(j).getRetrieveDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
@@ -422,36 +422,57 @@ public class Delivery {
                     CorporateCustomer corp = (CorporateCustomer) dest.getOrder(tourCount).getUser();
                     System.out.println("Delivery Order " + (i));
                     System.out.println("================");
-                    System.out.println("Address: " + dest.getOrder(tourCount).getUser().getAddress());
+                    System.out.println("Address: " + order.getUser().getAddress());
                     if (order instanceof CatalogOrders) {
                         System.out.println("Order ID: " + ((CatalogOrders) order).getOrderID());
+                        System.out.println("Company Name: " + corp.getCompany());
+                        System.out.println("Name: " + dest.getOrder(tourCount).getUser().getUsername());
+                        System.out.println("Contact: " + dest.getOrder(tourCount).getUser().getPhone());
+                        System.out.println("Delivery Date: " + dateFormat.format(dest.getOrder(tourCount).getRetrieveDate()));
+                        System.out.println("Order type: " + dest.getOrder(tourCount).getOrderType());
+                        System.out.println("Payment: RM" + String.format("%.2f", dest.getOrder(tourCount).getOrderAmt()) + "\n");
+
+                        totalPayment += order.getOrderAmt();
                     } else {
                         System.out.println("Order ID: " + ((CustomizedPackage) order).getOrderID());
+                        System.out.println("Company Name: " + corp.getCompany());
+                        System.out.println("Name: " + dest.getOrder(tourCount).getUser().getUsername());
+                        System.out.println("Contact: " + dest.getOrder(tourCount).getUser().getPhone());
+                        System.out.println("Delivery Date: " + dateFormat.format(dest.getOrder(tourCount).getRetrieveDate()));
+                        System.out.println("Order type: " + ((CustomizedPackage) order).getDeliveryType().getName());
+                        System.out.println("Payment: RM" + String.format("%.2f", ((CustomizedPackage) order).CalculateOrder()) + "\n");
+
+                        totalPayment += ((CustomizedPackage) order).CalculateOrder();
 
                     }
-                    System.out.println("Company Name: " + corp.getCompany());
-                    System.out.println("Name: " + dest.getOrder(tourCount).getUser().getUsername());
-                    System.out.println("Contact: " + dest.getOrder(tourCount).getUser().getPhone());
-                    System.out.println("Delivery Date: " + dateFormat.format(dest.getOrder(tourCount).getOrderDate()));
-                    System.out.println("Order type: " + dest.getOrder(tourCount).getOrderType());
-                    System.out.println("Payment: RM" + String.format("%.2f", dest.getOrder(tourCount).getOrderAmt()) + "\n");
+
                 } else {
                     System.out.println("Delivery Order " + (i));
                     System.out.println("================");
                     System.out.println("Address: " + dest.getOrder(tourCount).getUser().getAddress());
                     if (order instanceof CatalogOrders) {
                         System.out.println("Order ID: " + ((CatalogOrders) order).getOrderID());
+                        System.out.println("Name: " + dest.getOrder(tourCount).getUser().getUsername());
+                        System.out.println("Contact: " + dest.getOrder(tourCount).getUser().getPhone());
+                        System.out.println("Delivery Date: " + dateFormat.format(dest.getOrder(tourCount).getRetrieveDate()));
+                        System.out.println("Order type: " + dest.getOrder(tourCount).getOrderType());
+                        System.out.println("Payment: RM" + String.format("%.2f", order.getOrderAmt()) + "\n");
+
+                        totalPayment += order.getOrderAmt();
+
                     } else {
                         System.out.println("Order ID: " + ((CustomizedPackage) order).getOrderID());
+                        System.out.println("Name: " + dest.getOrder(tourCount).getUser().getUsername());
+                        System.out.println("Contact: " + dest.getOrder(tourCount).getUser().getPhone());
+                        System.out.println("Delivery Date: " + dateFormat.format(dest.getOrder(tourCount).getRetrieveDate()));
+                        System.out.println("Order type: " + ((CustomizedPackage) order).getDeliveryType().getName());
+                        System.out.println("Payment: RM" + String.format("%.2f", ((CustomizedPackage) order).CalculateOrder()) + "\n");
 
+                        totalPayment += ((CustomizedPackage) order).CalculateOrder();
                     }
-                    System.out.println("Name: " + dest.getOrder(tourCount).getUser().getUsername());
-                    System.out.println("Contact: " + dest.getOrder(tourCount).getUser().getPhone());
-                    System.out.println("Delivery Date: " + dateFormat.format(dest.getOrder(tourCount).getOrderDate()));
-                    System.out.println("Order type: " + dest.getOrder(tourCount).getOrderType());
-                    System.out.println("Payment: RM" + String.format("%.2f", dest.getOrder(tourCount).getOrderAmt()) + "\n");
+
                 }
-                totalPayment += dest.getOrder(tourCount).getOrderAmt();
+
             }
         }
 
