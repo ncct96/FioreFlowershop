@@ -31,7 +31,6 @@ public class InvoicePayment {
     private static LinkedList<InvoiceHistory> paymentHistory = new LinkedList<>();
     private static LinkedList<CatalogOrders> tempCatalog = new LinkedList<>();
     private static ListInterface<String> userEmail = new LinkedList<>();
-    private static SortedListInterface<User> testSort = FioreFlowershop.getSortedUser();
     private static LinkedList<CatalogOrders> order = FioreFlowershop.getCatalogOrder();
     private static Iterator<CatalogOrders> catIterator = order.getIterator();
     private static int invoiceNumber = 100;

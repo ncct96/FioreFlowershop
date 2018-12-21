@@ -28,10 +28,10 @@ public class FioreFlowershop {
     public static final String GREEN = "\033[0;32m";
 
     // Lines 95 - 98, 154-158
-    private static LinkedList<Consumer> consumer = new LinkedList<>();
-    private static LinkedList<CorporateCustomer> corporate = new LinkedList<>();
-    private static LinkedList<User> user = new LinkedList<>();
-    private static SortedListInterface<User> testSort = new SortedLinkList<>();
+    private static ConsumerInterface<Consumer> consumer = new ConsumerADT<>();
+    private static CorporateInterface<CorporateCustomer> corporate = new CorporateADT<>();
+    private static UserInterface<User> user = new UserADT<>();
+//    private static SortedListInterface<User> testSort = new SortedLinkList<>();
     private static LinkedList<Order> pickupOrder = new LinkedList<Order>();
     private static LinkedList<Order> deliveryOrder = new LinkedList<Order>();
     private static LinkedList<Order> paidOrder = new LinkedList<Order>();
@@ -91,24 +91,23 @@ public class FioreFlowershop {
         Consumer c5 = new Consumer("manager", "abc" ,"manager@example.com", "012","lmao");
         Consumer c6 = new Consumer("manager1", "abc" ,"manager1@example.com", "012","lmao");
         
-        testSort.add(cc2);
-        testSort.add(cc1);
-        testSort.add(c1);
-        testSort.add(c2);
-        testSort.add(c5);
-        testSort.add(c3);
-        CustomerMaintenance.sortUserList();
+        user.addUser(cc2);
+        user.addUser(cc1);
+        user.addUser(c1);
+        user.addUser(c2);
+        user.addUser(c5);
+        user.addUser(c3);
         for(int i = 1; i <= user.getTotalEntries(); i++){
-                System.out.println(user.getItem(i).getEmail());
+            System.out.println(user.getItem(i).getEmail());
         }
         
-        consumer.add(c1);
-        consumer.add(c2);
-        consumer.add(c3);
-        consumer.add(c4);
+        consumer.addConsumer(c1);
+        consumer.addConsumer(c2);
+        consumer.addConsumer(c3);
+        consumer.addConsumer(c4);
         
-        corporate.add(cc1);
-        corporate.add(cc2);
+        corporate.addCorporate(cc1);
+        corporate.addCorporate(cc2);
         corporate.getItem(1).setCreditSpent(4500);
         corporate.getItem(2).setCreditSpent(1500);
 
@@ -629,25 +628,16 @@ public class FioreFlowershop {
         consumer = consumer;
     }
 
-    public static LinkedList<Consumer> getCustomer() {
+    public static ConsumerInterface<Consumer> getCustomer() {
         return consumer;
     }
 
-    //GETTER SETTER FOR CORPORATE LIST
-    public static void setCorporate(LinkedList<CorporateCustomer> corporateCust) {
-        corporate = corporateCust;
-    }
-
-    public static LinkedList<CorporateCustomer> getCorporate() {
+    public static CorporateInterface<CorporateCustomer> getCorporate() {
         return corporate;
     }
 
-    public static LinkedList<User> getUser() {
+    public static UserInterface<User> getUser() {
         return user;
-    }
-    
-    public static SortedListInterface<User> getSortedUser(){
-        return testSort;
     }
 
     public static LinkedList<CatalogOrders> getShoppingCart() {

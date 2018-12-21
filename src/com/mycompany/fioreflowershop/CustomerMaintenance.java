@@ -29,10 +29,10 @@ public class CustomerMaintenance {
     private static CorporateCustomer corpEdit;
     private static Consumer custEdit;
     private static int loop = 0;
-    private static LinkedList<User> user = FioreFlowershop.getUser();
-    private static SortedListInterface<User> testSort = FioreFlowershop.getSortedUser();
-    private static LinkedList<CorporateCustomer> corpC = FioreFlowershop.getCorporate();
-    private static LinkedList<Consumer> cust = FioreFlowershop.getCustomer();
+    private static UserInterface<User> user = FioreFlowershop.getUser();
+//    private static SortedListInterface<User> testSort = FioreFlowershop.getSortedUser();
+    private static CorporateInterface<CorporateCustomer> corpC = FioreFlowershop.getCorporate();
+    private static ConsumerInterface<Consumer> cust = FioreFlowershop.getCustomer();
     //ListInterface<Consumer> customer, ListInterface<CorporateCustomer> corporate
 
     public static final String RESET = "\033[0m";
@@ -173,9 +173,9 @@ public class CustomerMaintenance {
     
     public static void checkDuplicate(String usern, String passw, String email, String number, String address, String company, int creditLimit, String consumerType){
         boolean exist = false;
-        if (testSort != null) {
-            for (int i = 1; i <= testSort.getTotalEntries(); i++) {
-                if (testSort.getItem(i).getEmail().equals(email) && testSort.getItem(i).getUsername().equals(usern)) {
+        if (user != null) {
+            for (int i = 1; i <= user.getTotalEntries(); i++) {
+                if (user.getItem(i).getEmail().equals(email) && user.getItem(i).getUsername().equals(usern)) {
                     System.out.println("\n" + FioreFlowershop.ConsoleColors.RED + "Sorry, Exisiting Account Found, Please Try Again." + FioreFlowershop.ConsoleColors.RESET);
                     exist = true;
                     break;
@@ -184,32 +184,30 @@ public class CustomerMaintenance {
         }
         if (!exist && consumerType.equals("Customer")) {
             Consumer c = new Consumer(usern, passw, email, number, address);
-            cust.add(c);
-            testSort.add(c);
-            sortUserList();
+            cust.addConsumer(c);
+            user.addUser(c);
             System.out.println("\n" + FioreFlowershop.ConsoleColors.GREEN + "New Account Successfully Created ! " + FioreFlowershop.ConsoleColors.RESET);
         }else if(!exist && consumerType.equals("Corporate")){
-            CorporateCustomer Corporate = new CorporateCustomer(usern, email, number, address, passw, company, creditLimit, true);
-            corpC.add(Corporate);
-            testSort.add(Corporate);
-            sortUserList();
+            CorporateCustomer cc = new CorporateCustomer(usern, email, number, address, passw, company, creditLimit, true);
+            corpC.addCorporate(cc);
+            user.addUser(cc);
             System.out.println("\n" + FioreFlowershop.ConsoleColors.GREEN + "New Account Successfully Created ! " + FioreFlowershop.ConsoleColors.RESET);
         }
     }
     
-    public static void sortUserList(){
-        //Initialize users
-        if(user.getTotalEntries() != 0){
-            user.clear();
-            for(int k = 1; k <= testSort.getTotalEntries(); k++){
-                user.add(testSort.getItem(k));
-            }
-        }else{
-            for(int j = 1; j <= testSort.getTotalEntries(); j++){
-                user.add(testSort.getItem(j));
-            }
-        }
-    }
+//    public static void sortUserList(){
+//        //Initialize users
+//        if(user.getTotalEntries() != 0){
+//            user.clear();
+//            for(int k = 1; k <= testSort.getTotalEntries(); k++){
+//                user.add(testSort.getItem(k));
+//            }
+//        }else{
+//            for(int j = 1; j <= testSort.getTotalEntries(); j++){
+//                user.add(testSort.getItem(j));
+//            }
+//        }
+//    }
 
     public static void custLogIn() {//Customer Logging In, not
         if (customerLoggedIn == null && corporateLoggedIn == null) {
