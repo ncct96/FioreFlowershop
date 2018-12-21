@@ -378,6 +378,9 @@ public class CatalogOrder {
             if (confirm.equalsIgnoreCase("Y")) {
                 catalogPack.remove(choice);
                 checkConfirm = true;
+                System.out.println("");
+                System.out.println(FioreFlowershop.ConsoleColors.GREEN + "Selected item is successfully removed." + FioreFlowershop.ConsoleColors.BLACK);
+                System.out.println("");
             } else if (confirm.equalsIgnoreCase("N")) {
                 removeCartItem(normalPackage, discountedPackage);
                 checkConfirm = true;
@@ -394,8 +397,14 @@ public class CatalogOrder {
             if (con.equalsIgnoreCase("Y")) {
                 displayCatalog(normalPackage, discountedPackage);
                 checkCon = true;
-            } else if (con.equalsIgnoreCase("N")) {
+            } else if (con.equalsIgnoreCase("N") && !(catalogPack.isEmpty())) {
                 removeCartItem(normalPackage, discountedPackage);
+                checkCon = true;
+            }else if(con.equalsIgnoreCase("N") && catalogPack.isEmpty()){
+                System.out.println("");
+                System.out.println(FioreFlowershop.ConsoleColors.GREEN + "There is no item left in your shopping cart" + FioreFlowershop.ConsoleColors.BLACK);
+                System.out.println("");
+                displayCatalog(normalPackage, discountedPackage);
                 checkCon = true;
             }
         }while(!checkCon);
