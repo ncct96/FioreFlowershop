@@ -174,8 +174,8 @@ public class CustomerMaintenance {
     public static void checkDuplicate(String usern, String passw, String email, String number, String address, String company, int creditLimit, String consumerType){
         boolean exist = false;
         if (testSort != null) {
-            for (int i = 1; i <= testSort.getLength(); i++) {
-                if (testSort.getEntry(i).getEmail().equals(email) && testSort.getEntry(i).getUsername().equals(usern)) {
+            for (int i = 1; i <= testSort.getTotalEntries(); i++) {
+                if (testSort.getItem(i).getEmail().equals(email) && testSort.getItem(i).getUsername().equals(usern)) {
                     System.out.println("\n" + FioreFlowershop.ConsoleColors.RED + "Sorry, Exisiting Account Found, Please Try Again." + FioreFlowershop.ConsoleColors.RESET);
                     exist = true;
                     break;
@@ -187,18 +187,12 @@ public class CustomerMaintenance {
             cust.add(c);
             testSort.add(c);
             sortUserList();
-            for(int i = 1; i <= user.getTotalEntries(); i++){
-                System.out.println(user.getItem(i).getEmail());
-            }
             System.out.println("\n" + FioreFlowershop.ConsoleColors.GREEN + "New Account Successfully Created ! " + FioreFlowershop.ConsoleColors.RESET);
         }else if(!exist && consumerType.equals("Corporate")){
             CorporateCustomer Corporate = new CorporateCustomer(usern, email, number, address, passw, company, creditLimit, true);
             corpC.add(Corporate);
             testSort.add(Corporate);
             sortUserList();
-            for(int i = 1; i <= user.getTotalEntries(); i++){
-                System.out.println(user.getItem(i).getEmail());
-            }
             System.out.println("\n" + FioreFlowershop.ConsoleColors.GREEN + "New Account Successfully Created ! " + FioreFlowershop.ConsoleColors.RESET);
         }
     }
@@ -207,12 +201,12 @@ public class CustomerMaintenance {
         //Initialize users
         if(user.getTotalEntries() != 0){
             user.clear();
-            for(int k = 1; k <= testSort.getLength(); k++){
-                user.add(testSort.getEntry(k));
+            for(int k = 1; k <= testSort.getTotalEntries(); k++){
+                user.add(testSort.getItem(k));
             }
         }else{
-            for(int j = 1; j <= testSort.getLength(); j++){
-                user.add(testSort.getEntry(j));
+            for(int j = 1; j <= testSort.getTotalEntries(); j++){
+                user.add(testSort.getItem(j));
             }
         }
     }
