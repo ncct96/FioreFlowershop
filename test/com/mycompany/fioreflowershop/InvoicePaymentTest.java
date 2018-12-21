@@ -6,6 +6,7 @@
 package com.mycompany.fioreflowershop;
 
 import com.mycompany.fioreflowershop.adt.LinkedList;
+import com.mycompany.fioreflowershop.adt.OrderListInterface;
 import com.mycompany.fioreflowershop.modal.CatalogOrders;
 import com.mycompany.fioreflowershop.modal.CatalogPackage;
 import com.mycompany.fioreflowershop.modal.CorporateCustomer;
@@ -24,7 +25,7 @@ import static org.junit.Assert.*;
 public class InvoicePaymentTest {
     LinkedList<InvoiceHistory> ih = InvoicePayment.getPaymentHistory();
     Date today = Calendar.getInstance().getTime();
-    LinkedList<CatalogOrders> co = FioreFlowershop.getCatalogOrder();
+    OrderListInterface<CatalogOrders> co = FioreFlowershop.getCatalogOrder();
     LinkedList<CatalogPackage> catalogPack1 = new LinkedList<>();
     CorporateCustomer cor = new CorporateCustomer("JunitTest", "junitTest@example.com", "0123456789", "Junit Test Address", "abcdef", "Junit Test Company", 5000, true);
     //Zion made changes here (added 2 "" for flower pot and flower arrangement parameter)
@@ -34,7 +35,7 @@ public class InvoicePaymentTest {
     
     public InvoicePaymentTest() {
         catalogPack1.add(cp1);
-        co.add(ct1);
+        co.addOrder(ct1);
     }
     
     @Before

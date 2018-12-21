@@ -32,21 +32,21 @@ public class FioreFlowershop {
     private static LinkedList<CorporateCustomer> corporate = new LinkedList<>();
     private static LinkedList<User> user = new LinkedList<>();
     private static SortedListInterface<User> testSort = new SortedLinkList<>();
-    private static LinkedList<Order> pickupOrder = new LinkedList<Order>();
-    private static LinkedList<Order> deliveryOrder = new LinkedList<Order>();
-    private static LinkedList<Order> paidOrder = new LinkedList<Order>();
+    private static OrderListInterface<Order> pickupOrder = new OrderList<Order>();
+    private static OrderListInterface<Order> deliveryOrder = new OrderList<Order>();
+    private static OrderListInterface<Order> paidOrder = new OrderList<Order>();
     private static Scanner s = new Scanner(System.in);
 
     private static ItemCatalogue itemCatalogue = new ItemCatalogue();
     private static CustomizePackageQueueInterface<CustomizedPackage> customizedPackages = new CustomizePackageQueue<>();
-    private static LinkedList<CustomizedPackage> readyOrders = new LinkedList<>();
+    private static OrderListInterface<CustomizedPackage> readyOrders = new OrderList<>();
 
     //Catalog Maintenance part
     private static LinkedList<CatalogPackage> normalPackage = new LinkedList<>();
     private static LinkedList<CatalogPackage> discountedPackage = new LinkedList<>();
 
-    private static LinkedList<CatalogOrders> shoppingCart = new LinkedList<>();
-    private static LinkedList<CatalogOrders> catalogOrder = new LinkedList<>();
+    private static OrderListInterface<CatalogOrders> shoppingCart = new OrderList<>();
+    private static OrderListInterface<CatalogOrders> catalogOrder = new OrderList<>();
 
     private static LinkedList<CatalogPackage> catalogPack1 = new LinkedList<>();
     private static LinkedList<CatalogPackage> catalogPack2 = new LinkedList<>();
@@ -131,13 +131,13 @@ public class FioreFlowershop {
         CatalogOrders ct6 = new CatalogOrders("C6", catalogPack1, "Delivery", todayDate, c2, "Order Status", 308, false, todayDate, todayDate);
         CatalogOrders ct7 = new CatalogOrders("C7", catalogPack1, "Delivery", todayDate, c1, "Order Status", 308, false, todayDate, todayDate);
 
-        catalogOrder.add(ct1);
-        catalogOrder.add(ct2);
-        catalogOrder.add(ct3);
-        catalogOrder.add(ct4);
-        catalogOrder.add(ct5);
-        catalogOrder.add(ct6);
-        catalogOrder.add(ct7);
+        catalogOrder.addOrder(ct1);
+        catalogOrder.addOrder(ct2);
+        catalogOrder.addOrder(ct3);
+        catalogOrder.addOrder(ct4);
+        catalogOrder.addOrder(ct5);
+        catalogOrder.addOrder(ct6);
+        catalogOrder.addOrder(ct7);
 
         ItemListInterface<Item> styles = new ItemList<>();
         ItemListInterface<Item> sizes = new ItemList<>();
@@ -210,8 +210,8 @@ public class FioreFlowershop {
         customizedPackages.addCustomizedPackage(package5);
         customizedPackages.addCustomizedPackage(package6);
 
-        readyOrders.add(customizedPackages.removeCustomizedPackage());
-        readyOrders.add(customizedPackages.removeCustomizedPackage());
+        readyOrders.addOrder(customizedPackages.removeCustomizedPackage());
+        readyOrders.addOrder(customizedPackages.removeCustomizedPackage());
 
 //        CustomizedPackage specialPackage = new CustomizedPackage(styles.getItem(1), sizes.getItem(2), flowers.getItem(5), accessories.getItem(2), priorities.getItem(1), deliveryTypes.getItem(2), customer);
 //        specialPackage.setDeliveryDate(Calendar.getInstance().getTime());
@@ -652,20 +652,20 @@ public class FioreFlowershop {
         return testSort;
     }
 
-    public static LinkedList<CatalogOrders> getShoppingCart() {
+    public static OrderListInterface<CatalogOrders> getShoppingCart() {
         return shoppingCart;
 
     }
 
-    public static LinkedList<CatalogOrders> getCatalogOrder() {
+    public static OrderListInterface<CatalogOrders> getCatalogOrder() {
         return catalogOrder;
     }
 
-    public static LinkedList<CustomizedPackage> getReadyOrder() {
+    public static OrderListInterface<CustomizedPackage> getReadyOrder() {
         return readyOrders;
     }
 
-    public static LinkedList<Order> getPaidOrder() {
+    public static OrderListInterface<Order> getPaidOrder() {
         return paidOrder;
     }
 
