@@ -239,7 +239,7 @@ public class CustomizePackage {
             ArrayQueue<CustomizedPackage> sortingQueue = new ArrayQueue<>();
 
             sortingQueue.enqueue(customizedPackages.removeCustomizedPackage());
-            while (customizedPackages.getBackIndex() > -1) {
+            while (customizedPackages.getSize() > 0) {
                 CustomizedPackage next = customizedPackages.removeCustomizedPackage();
                 for (int i = -1; i < sortingQueue.getBackIndex(); ++i) {
                     if (sortingQueue.getFront().getDeliveryDate().before(next.getDeliveryDate())) {
