@@ -45,7 +45,7 @@ public class FioreFlowershop {
     private static LinkedList<CatalogPackage> normalPackage = new LinkedList<>();
     private static LinkedList<CatalogPackage> discountedPackage = new LinkedList<>();
 
-    private static OrderListInterface<CatalogOrders> shoppingCart = new OrderList<>();
+    private static ShoppingCartListInterface<CatalogOrders> shoppingCart = new ShoppingCartList<>();
     private static OrderListInterface<CatalogOrders> catalogOrder = new OrderList<>();
 
     private static LinkedList<CatalogPackage> catalogPack1 = new LinkedList<>();
@@ -652,7 +652,7 @@ public class FioreFlowershop {
         return testSort;
     }
 
-    public static OrderListInterface<CatalogOrders> getShoppingCart() {
+    public static ShoppingCartListInterface<CatalogOrders> getShoppingCart() {
         return shoppingCart;
 
     }
