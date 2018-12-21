@@ -6,6 +6,8 @@
 package com.mycompany.fioreflowershop;
 
 import com.mycompany.fioreflowershop.adt.LinkedList;
+import com.mycompany.fioreflowershop.adt.OrderList;
+import com.mycompany.fioreflowershop.adt.OrderListInterface;
 import com.mycompany.fioreflowershop.modal.CatalogOrders;
 import com.mycompany.fioreflowershop.modal.CatalogPackage;
 import com.mycompany.fioreflowershop.modal.Consumer;
@@ -26,10 +28,10 @@ public class DeliveryTest {
 
     // Initialize Lists
     private static LinkedList<CatalogPackage> catalogPack1 = new LinkedList<>();
-    private static LinkedList<CatalogOrders> catalogOrder = new LinkedList<>();
-    private static LinkedList<Order> testOrder = new LinkedList<>();
-    private static LinkedList<CustomizedPackage> customizeOrder = new LinkedList<>();
-    private static LinkedList<Order> result = new LinkedList<>();
+    private static OrderListInterface<CatalogOrders> catalogOrder = new OrderList<>();
+    private static OrderListInterface<Order> testOrder = new OrderList<>();
+    private static OrderListInterface<CustomizedPackage> customizeOrder = new OrderList<>();
+    private static OrderListInterface<Order> result = new OrderList<>();
 
     Consumer testCon = new Consumer("testingCon", "testingCon", "testing@example.com", "0125566922", "Pahang");
     CorporateCustomer testCorp = new CorporateCustomer("testingCorp", "1estingCorp@example.com", "0123456789", "PV 21", "abcdef", "Testing Corp", 5000, true);
@@ -54,9 +56,9 @@ public class DeliveryTest {
 
         Date inputDate = cal.getTime();
 
-        catalogOrder.add(ct1);
+        catalogOrder.addOrder(ct1);
 
-        testOrder.add(ct1);
+        testOrder.addOrder(ct1);
 
         customizeOrder = FioreFlowershop.getReadyOrder();
     }

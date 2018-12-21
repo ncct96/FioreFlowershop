@@ -12,6 +12,7 @@ import com.google.maps.errors.ApiException;
 import com.google.maps.model.DistanceMatrix;
 import com.google.maps.model.TravelMode;
 import com.mycompany.fioreflowershop.adt.ListInterface;
+import com.mycompany.fioreflowershop.adt.OrderListInterface;
 import com.mycompany.fioreflowershop.modal.Consumer;
 import com.mycompany.fioreflowershop.modal.CorporateCustomer;
 import com.mycompany.fioreflowershop.modal.Order;
@@ -27,7 +28,7 @@ import java.io.IOException;
  */
 public class DeliveryOptimization {
 
-    public static TSPSolver distanceMatrix(String shopAddress, ListInterface<Order> destinations) throws ApiException, InterruptedException, IOException {
+    public static TSPSolver distanceMatrix(String shopAddress, OrderListInterface<Order> destinations) throws ApiException, InterruptedException, IOException {
         GeoApiContext context = new GeoApiContext.Builder()
                 .apiKey("AIzaSyBXYBscU08iCFkkeKsamT9nmP1tjtO64-w")
                 .build();
@@ -44,14 +45,14 @@ public class DeliveryOptimization {
         // Loop address list to origin & destination string array
         for (int j = 1; j <= destinations.getTotalEntries(); j++) {
 
-            User user = destinations.getItem(j).getUser();
+            User user = destinations.getOrder(j).getUser();
 
             if (user instanceof Consumer) {
-                dest[j] = destinations.getItem(j).getUser().getAddress();
-                origin[j] = destinations.getItem(j).getUser().getAddress();
+                dest[j] = destinations.getOrder(j).getUser().getAddress();
+                origin[j] = destinations.getOrder(j).getUser().getAddress();
             } else {
                 CorporateCustomer corp;
-                corp = (CorporateCustomer) destinations.getItem(j).getUser();
+                corp = (CorporateCustomer) destinations.getOrder(j).getUser();
                 dest[j] = corp.getAddress();
                 origin[j] = corp.getAddress();
             }

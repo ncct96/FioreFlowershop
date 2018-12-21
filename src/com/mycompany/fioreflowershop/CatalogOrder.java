@@ -8,6 +8,8 @@ package com.mycompany.fioreflowershop;
 import com.mycompany.fioreflowershop.adt.LinkedList;
 import com.mycompany.fioreflowershop.adt.LinkedQueue;
 import com.mycompany.fioreflowershop.adt.ListInterface;
+import com.mycompany.fioreflowershop.adt.OrderList;
+import com.mycompany.fioreflowershop.adt.OrderListInterface;
 import com.mycompany.fioreflowershop.modal.CatalogPackage;
 import com.mycompany.fioreflowershop.modal.Consumer;
 import com.mycompany.fioreflowershop.modal.CorporateCustomer;
@@ -30,8 +32,8 @@ import java.util.logging.Logger;
  */
 public class CatalogOrder {
 
-    static LinkedList<CatalogOrders> shoppingCart = FioreFlowershop.getShoppingCart();
-    static LinkedList<CatalogOrders> catalogOrder = FioreFlowershop.getCatalogOrder();
+    static OrderListInterface<CatalogOrders> shoppingCart = FioreFlowershop.getShoppingCart();
+    static OrderListInterface<CatalogOrders> catalogOrder = FioreFlowershop.getCatalogOrder();
     static LinkedList<CatalogPackage> catalogPack = new LinkedList<>();
     static LinkedList<CatalogPackage> custItem = new LinkedList<>();
 
@@ -70,7 +72,7 @@ public class CatalogOrder {
     private static String retrieveDate = "";
     private static int freshFlowerCounter = 0, bouquetsCounter = 0, flowerArrangementCounter = 0;
 
-    public static void CustomerOrderMain(LinkedList<CatalogOrders> cart, LinkedList<CatalogOrders> catalogOrder, Consumer customerLoggedIn, LinkedList<CatalogPackage> normalPackage, LinkedList<CatalogPackage> discountedPackage) {
+    public static void CustomerOrderMain(OrderListInterface<CatalogOrders> cart, OrderListInterface<CatalogOrders> catalogOrder, Consumer customerLoggedIn, LinkedList<CatalogPackage> normalPackage, LinkedList<CatalogPackage> discountedPackage) {
         customer = customerLoggedIn;
 
         freshFlower.clear();
@@ -84,7 +86,7 @@ public class CatalogOrder {
 
     }
 
-    public static void CorporateOrderMain(LinkedList<CatalogOrders> cart, LinkedList<CatalogOrders> catalogOrder, CorporateCustomer customerLoggedIn, LinkedList<CatalogPackage> normalPackage, LinkedList<CatalogPackage> discountedPackage) {
+    public static void CorporateOrderMain(OrderListInterface<CatalogOrders> cart, OrderListInterface<CatalogOrders> catalogOrder, CorporateCustomer customerLoggedIn, LinkedList<CatalogPackage> normalPackage, LinkedList<CatalogPackage> discountedPackage) {
         corporate = customerLoggedIn;
 
         freshFlower.clear();
@@ -397,21 +399,21 @@ public class CatalogOrder {
             retrieveDate2 = dateFormat.parse(retrieveDate);
 
             if (customer != null && corporate == null) {
-                shoppingCart.add(new CatalogOrders(orderID, custItem, orderType, currentDate, customer, orderStatus, orderAmt, paymentStatus, retrieveDate2, retrieveDate2));
+                shoppingCart.addOrder(new CatalogOrders(orderID, custItem, orderType, currentDate, customer, orderStatus, orderAmt, paymentStatus, retrieveDate2, retrieveDate2));
             } else if (customer == null && corporate != null) {
-                shoppingCart.add(new CatalogOrders(orderID, custItem, orderType, currentDate, corporate, orderStatus, orderAmt, paymentStatus, retrieveDate2, retrieveDate2));
+                shoppingCart.addOrder(new CatalogOrders(orderID, custItem, orderType, currentDate, corporate, orderStatus, orderAmt, paymentStatus, retrieveDate2, retrieveDate2));
             }
 
-            catalogOrder.add(new CatalogOrders(orderID, custItem, orderType, currentDate, shoppingCart.getItem(1).getUser(), orderStatus, orderAmt, paymentStatus, retrieveDate2, retrieveDate2));
+            catalogOrder.addOrder(new CatalogOrders(orderID, custItem, orderType, currentDate, shoppingCart.getOrder(1).getUser(), orderStatus, orderAmt, paymentStatus, retrieveDate2, retrieveDate2));
 
         } catch (ParseException ex) {
             Logger.getLogger(CatalogOrder.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        shoppingCart.clear();
+        shoppingCart.clearOrderList();
         int c = catalogOrder.getTotalEntries();
-        CatalogOrders shopping = catalogOrder.getItem(c);
+        CatalogOrders shopping = catalogOrder.getOrder(c);
 
         double totalPrice = 0;
         System.out.println("\n=================================================================================================");
@@ -434,19 +436,19 @@ public class CatalogOrder {
         System.out.println("Description \t\t\t  | Quantity  |  Discount Rate(%) | Unit Price(RM) |  Total(RM)");
 
         if (catalogOrder.getTotalEntries() > 1) {
-            int startIndex = catalogOrder.getItem(c).getCatalogPack().getTotalEntries() - index;
-            for (int i = startIndex + 1; i < catalogOrder.getItem(c).getCatalogPack().getTotalEntries() + 1; i++) {
+            int startIndex = catalogOrder.getOrder(c).getCatalogPack().getTotalEntries() - index;
+            for (int i = startIndex + 1; i < catalogOrder.getOrder(c).getCatalogPack().getTotalEntries() + 1; i++) {
 
-                double total = (double) ((100 - catalogOrder.getItem(c).getCatalogPack().getItem(i).getDiscountRate()) * catalogOrder.getItem(c).getCatalogPack().getItem(i).getPrice() / 100) * catalogOrder.getItem(c).getCatalogPack().getItem(i).getUserQuantity();
-                System.out.printf("%s  \t\t\t  | \t  %d  |\t         %d\t|\t   %7.2f |   %7.2f\n", catalogOrder.getItem(c).getCatalogPack().getItem(i).getName(), catalogOrder.getItem(c).getCatalogPack().getItem(i).getUserQuantity(), catalogOrder.getItem(c).getCatalogPack().getItem(i).getDiscountRate(), catalogOrder.getItem(c).getCatalogPack().getItem(i).getPrice(), total);
+                double total = (double) ((100 - catalogOrder.getOrder(c).getCatalogPack().getItem(i).getDiscountRate()) * catalogOrder.getOrder(c).getCatalogPack().getItem(i).getPrice() / 100) * catalogOrder.getOrder(c).getCatalogPack().getItem(i).getUserQuantity();
+                System.out.printf("%s  \t\t\t  | \t  %d  |\t         %d\t|\t   %7.2f |   %7.2f\n", catalogOrder.getOrder(c).getCatalogPack().getItem(i).getName(), catalogOrder.getOrder(c).getCatalogPack().getItem(i).getUserQuantity(), catalogOrder.getOrder(c).getCatalogPack().getItem(i).getDiscountRate(), catalogOrder.getOrder(c).getCatalogPack().getItem(i).getPrice(), total);
             }
             System.out.println("=================================================================================================");
         } else if (catalogOrder.getTotalEntries() == 1) {
 
             for (int i = 1; i < catalogPack.getTotalEntries() + 1; i++) {
 
-                double total = (double) ((100 - catalogOrder.getItem(c).getCatalogPack().getItem(i).getDiscountRate()) * catalogOrder.getItem(c).getCatalogPack().getItem(i).getPrice() / 100) * catalogOrder.getItem(c).getCatalogPack().getItem(i).getUserQuantity();
-                System.out.printf("%s  \t\t\t  | \t  %d  |\t         %d\t|\t   %7.2f |   %7.2f\n", catalogOrder.getItem(c).getCatalogPack().getItem(i).getName(), catalogOrder.getItem(c).getCatalogPack().getItem(i).getUserQuantity(), catalogOrder.getItem(c).getCatalogPack().getItem(i).getDiscountRate(), catalogOrder.getItem(c).getCatalogPack().getItem(i).getPrice(), total);
+                double total = (double) ((100 - catalogOrder.getOrder(c).getCatalogPack().getItem(i).getDiscountRate()) * catalogOrder.getOrder(c).getCatalogPack().getItem(i).getPrice() / 100) * catalogOrder.getOrder(c).getCatalogPack().getItem(i).getUserQuantity();
+                System.out.printf("%s  \t\t\t  | \t  %d  |\t         %d\t|\t   %7.2f |   %7.2f\n", catalogOrder.getOrder(c).getCatalogPack().getItem(i).getName(), catalogOrder.getOrder(c).getCatalogPack().getItem(i).getUserQuantity(), catalogOrder.getOrder(c).getCatalogPack().getItem(i).getDiscountRate(), catalogOrder.getOrder(c).getCatalogPack().getItem(i).getPrice(), total);
             }
         }
         for (int i = 1; i < catalogPack.getTotalEntries() + 1; i++) {
@@ -580,7 +582,7 @@ public class CatalogOrder {
         } else if (!shoppingCart.isEmpty()) {
             creditSpent = 0;
             for (int i = 1; i < shoppingCart.getTotalEntries() + 1; i++) {
-                creditSpent += shoppingCart.getItem(i).getOrderAmt();
+                creditSpent += shoppingCart.getOrder(i).getOrderAmt();
             }
             creditSpent += itemPrice;
         }
@@ -934,7 +936,7 @@ public class CatalogOrder {
         }
     }
 
-    public static void initializeData(LinkedList<CatalogOrders> catalogOrders, LinkedList<CustomizedPackage> customOrder) {
+    public static void initializeData(OrderListInterface<CatalogOrders> catalogOrders, OrderListInterface<CustomizedPackage> customOrder) {
 
         Consumer con = new Consumer("Ncct96", "adgfafgjyaf", "ncct@gmail.com", "0128198471", "Ipoh");
         CorporateCustomer corp = new CorporateCustomer("Ah Hock", "sdgsjhd@gmail", "0165939123", "Penang", "211221", "TARUC", 5000, true);
