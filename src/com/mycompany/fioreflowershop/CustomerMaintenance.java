@@ -294,7 +294,6 @@ public class CustomerMaintenance {
     }
     
     public static void staffEditCust(int custEditChoice){
-        
         while (true) {
             try{
                 String edit = "";
@@ -305,8 +304,7 @@ public class CustomerMaintenance {
                 System.out.println("[4] Address");
                 System.out.println("[5] Password");
                 System.out.print("Selection : ");
-                int custOptionChoice = s.nextInt();
-                s.nextLine();
+                int custOptionChoice = s.nextInt(); s.nextLine(); 
                 if (custOptionChoice == 1) { //
                     System.out.println("Old Username : " + cust.getConsumer(custEditChoice).getUsername());
                     System.out.print("Please Enter The New Username : ");
@@ -371,7 +369,7 @@ public class CustomerMaintenance {
             }catch(Exception e){
                 System.out.println(RED+"\nSorry, Please Only Enter Number."+RESET); break;
             }
-            custEdit = null; break;
+            custEdit = null; 
         }
     }
     
@@ -396,12 +394,11 @@ public class CustomerMaintenance {
                     }
                 }
                 if (custEdit != null) {
-                    staffEditCust(custEditChoice); 
+                    staffEditCust(custEditChoice);
                 } else if (corpEdit != null) {
                     managerEditCorporate(corpEditChoice); 
                 }
             }catch (Exception e){break;}
-            break;
         }
     }
 
