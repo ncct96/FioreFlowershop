@@ -177,9 +177,7 @@ public class CatalogPackage implements Comparable<CatalogPackage>{
     @Override
     public String toString() {
         return "name =" + name + ", style =" + style + ", size =" + size + ", flowerPot =" + flowerPot + ", floralArrangement =" + floralArrangement + ", flower =" + flower + ", accessory =" + accessory + ", productType =" + productType + ", promoMonth =" + promoMonth + ", status =" + status + ", promoYear =" + promoYear + ", quantity =" + quantity + ", price =" + price + ", discountRate =" + discountRate + ", userQuantity =" + userQuantity;
-    }
-
-    
+    }    
     
     @Override
     public int compareTo(CatalogPackage o) {
