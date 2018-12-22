@@ -294,10 +294,7 @@ public class CustomerMaintenance {
         System.out.println("======================================================");
         System.out.println("\t Customers List.");
         System.out.println("======================================================");
-    }
-    
-    public static void staffEditType() {
-        if (user != null) {
+        if(user != null){
             for (int i = 1; i <= user.getTotalUser(); i++) {
                 String type = "";
                 if(user.getUser(i) instanceof Consumer){
@@ -307,115 +304,117 @@ public class CustomerMaintenance {
                 }
                 System.out.println(BLUE + "[" + i + "] " + RESET + user.getUser(i).getEmail() + type);
             }
-            String email = "";
-            int custEditChoice = 0;
-            int corpEditChoice = 0;
-            System.out.print("\nPlease Enter The Customer's Email For Editing : ");
-            email = s.nextLine();
-            for (int i = 1; i <= user.getTotalUser(); i++) {
-                if (email.equals(user.getUser(i).getEmail())) {
-                    System.out.println(user.getUser(i).toString());
-                    if (user.getUser(i) instanceof Consumer) {
-                        custEdit = (Consumer) user.getUser(i);
-                        custEditChoice = i;
-                    } else if (user.getUser(i) instanceof CorporateCustomer) {
-                        corpEdit = (CorporateCustomer) user.getUser(i);
-                        corpEditChoice = i;
-                    }
-                }
-            }
-            if (custEdit != null) {
-                String edit = "";
-                System.out.println("\nPlease enter which field to edit");
-                System.out.println("[1] Username");
-                System.out.println("[2] Email");
-                System.out.println("[3] Contact Number");
-                System.out.println("[4] Address");
-                System.out.println("[5] Password");
-                int custOptionChoice = s.nextInt();
-                s.nextLine();
-                if (custOptionChoice == 1) { //
-                    System.out.println("Old Username : " + cust.getConsumer(custEditChoice).getUsername());
-                    System.out.print("Please Enter The New Username : ");
-                    try {
-                        edit = s.nextLine();
-                        cust.getConsumer(custEditChoice).setUsername(edit);
-                        System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
-                    } catch (Exception e) {
-                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
-                        staffEditType();
-                    }
-                } else if (custOptionChoice == 2) {
-                    System.out.println("Old Email : " + cust.getConsumer(custEditChoice).getEmail());
-                    System.out.print("Please Enter The New Email : ");
-                    try {
-                        edit = s.nextLine();
-                        if (!edit.contains("@")) {
-                            System.out.println("\n" + RED + "Invalid Email Entered. Please Retry." + RESET);
-                            staffEditType();
-                        }
-                        cust.getConsumer(custEditChoice).setEmail(edit);
-                        System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
-                    } catch (Exception e) {
-                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
-                        staffEditType();
-                    }
-                } else if (custOptionChoice == 3) {
-                    System.out.println("Old Contact Number : " + cust.getConsumer(custEditChoice).getPhone());
-                    System.out.print("Please Enter The New Contact Number : ");
-                    try {
-                        edit = s.nextLine();
-                        if (!edit.matches("[0-9]+")) {
-                            System.out.println("\n" + RED + "Invalid Contact Number Entered. Please Retry." + RESET);
-                            staffEditType();
-                        }
-                        cust.getConsumer(custEditChoice).setPhone(edit);
-                        System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
-                    } catch (Exception e) {
-                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
-                        staffEditType();
-                    }
-                } else if (custOptionChoice == 4) {
-                    System.out.println("Old Address : " + cust.getConsumer(custEditChoice).getAddress());
-                    System.out.print("Please Enter The New Address : ");
-                    try {
-                        edit = s.nextLine();
-                        cust.getConsumer(custEditChoice).setAddress(edit);
-                        System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
-                    } catch (Exception e) {
-                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
-                        staffEditType();
-                    }
-
-                } else if (custOptionChoice == 5) {
-                    System.out.println("Old Password : " + cust.getConsumer(custEditChoice).getPassword());
-                    System.out.print("Please Enter The New Password : ");
-                    try {
-                        edit = s.nextLine();
-                        if (cust.getConsumer(custEditChoice).getPassword().equals(edit)) {
-                            System.out.println("\n" + RED + "Password cannot be same with old password. Please Try Again." + RESET);
-                            staffEditType();
-                        }
-                        cust.getConsumer(custEditChoice).setPassword(edit);
-                        System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
-                    } catch (Exception e) {
-                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
-                        staffEditType();
-                    }
-                }
-                custEdit = null;
-                staffNextOption();
-            } else if (corpEdit != null) {
-                managerEditCorporate(corpEditChoice);
-            } else {
-                System.out.println(RED + "\nSorry, No Records Found !" + RESET);
-                staffNextOption();
-            }
         } else {
             System.out.println(RED + "\nSuch Empty, Much Wow !" + RESET);
             staffNextOption();
         }
+    }
+    
+    public static void staffEditType() {
+        customerListHeader();
+        String email = "";
+        int custEditChoice = 0; int corpEditChoice = 0;
+        System.out.print("\nPlease Enter The Customer's Email For Editing : ");
+        email = s.nextLine();
+        for (int i = 1; i <= user.getTotalUser(); i++) {
+            if (email.equals(user.getUser(i).getEmail())) {
+                if (user.getUser(i) instanceof Consumer) {
+                    custEdit = (Consumer) user.getUser(i);
+                    custEditChoice = i;
+                } else if (user.getUser(i) instanceof CorporateCustomer) {
+                    corpEdit = (CorporateCustomer) user.getUser(i);
+                    corpEditChoice = i;
+                }
+                System.out.println(user.getUser(i).toString());
+            }
+        }
+        if (custEdit != null) {
+            String edit = "";
+            System.out.println("\nPlease enter which field to edit");
+            System.out.println("[1] Username");
+            System.out.println("[2] Email");
+            System.out.println("[3] Contact Number");
+            System.out.println("[4] Address");
+            System.out.println("[5] Password");
+            int custOptionChoice = s.nextInt();
+            s.nextLine();
+            if (custOptionChoice == 1) { //
+                System.out.println("Old Username : " + cust.getConsumer(custEditChoice).getUsername());
+                System.out.print("Please Enter The New Username : ");
+                try {
+                    edit = s.nextLine();
+                    cust.getConsumer(custEditChoice).setUsername(edit);
+                    System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
+                } catch (Exception e) {
+                    System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
+                    staffEditType();
+                }
+            } else if (custOptionChoice == 2) {
+                System.out.println("Old Email : " + cust.getConsumer(custEditChoice).getEmail());
+                System.out.print("Please Enter The New Email : ");
+                try {
+                    edit = s.nextLine();
+                    if (!edit.contains("@")) {
+                        System.out.println("\n" + RED + "Invalid Email Entered. Please Retry." + RESET);
+                        staffEditType();
+                    }
+                    cust.getConsumer(custEditChoice).setEmail(edit);
+                    System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
+                } catch (Exception e) {
+                    System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
+                    staffEditType();
+                }
+            } else if (custOptionChoice == 3) {
+                System.out.println("Old Contact Number : " + cust.getConsumer(custEditChoice).getPhone());
+                System.out.print("Please Enter The New Contact Number : ");
+                try {
+                    edit = s.nextLine();
+                    if (!edit.matches("[0-9]+")) {
+                        System.out.println("\n" + RED + "Invalid Contact Number Entered. Please Retry." + RESET);
+                        staffEditType();
+                    }
+                    cust.getConsumer(custEditChoice).setPhone(edit);
+                    System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
+                } catch (Exception e) {
+                    System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
+                    staffEditType();
+                }
+            } else if (custOptionChoice == 4) {
+                System.out.println("Old Address : " + cust.getConsumer(custEditChoice).getAddress());
+                System.out.print("Please Enter The New Address : ");
+                try {
+                    edit = s.nextLine();
+                    cust.getConsumer(custEditChoice).setAddress(edit);
+                    System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
+                } catch (Exception e) {
+                    System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
+                    staffEditType();
+                }
 
+            } else if (custOptionChoice == 5) {
+                System.out.println("Old Password : " + cust.getConsumer(custEditChoice).getPassword());
+                System.out.print("Please Enter The New Password : ");
+                try {
+                    edit = s.nextLine();
+                    if (cust.getConsumer(custEditChoice).getPassword().equals(edit)) {
+                        System.out.println("\n" + RED + "Password cannot be same with old password. Please Try Again." + RESET);
+                        staffEditType();
+                    }
+                    cust.getConsumer(custEditChoice).setPassword(edit);
+                    System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
+                } catch (Exception e) {
+                    System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
+                    staffEditType();
+                }
+            }
+            custEdit = null;
+            staffNextOption();
+        } else if (corpEdit != null) {
+            managerEditCorporate(corpEditChoice);
+        } else {
+            System.out.println(RED + "\nSorry, No Records Found !" + RESET);
+            staffNextOption();
+        }
     }
 
     public static void managerEditCorporate(int corpEditChoice) {
