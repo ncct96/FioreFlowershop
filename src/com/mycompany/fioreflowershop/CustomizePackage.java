@@ -5,10 +5,9 @@
  */
 package com.mycompany.fioreflowershop;
 
-import static com.mycompany.fioreflowershop.FioreFlowershop.florist;
-import static com.mycompany.fioreflowershop.FioreFlowershop.inventoryClerk;
 import com.mycompany.fioreflowershop.modal.*;
 import com.mycompany.fioreflowershop.adt.*;
+import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -28,7 +27,7 @@ public class CustomizePackage {
     private static final String ANSI_CYAN = "\u001B[36m";
     private static final String ANSI_WHITE = "\u001B[37m";
 
-    public static void customizePackageControl(ItemCatalogue itemCatalogue, Consumer customer, QueueInterface<CustomizedPackage> customizedPackages) {
+    public static void customizePackageControl(ItemCatalogue itemCatalogue, Consumer customer, CustomizePackageQueueInterface<CustomizedPackage> customizedPackages) {
         if (customer == null) {
             System.out.println(ANSI_RED + "You are not allowed to access this part of the system.\n" + ANSI_RESET);
             return;
@@ -232,16 +231,16 @@ public class CustomizePackage {
                 selectedFlowers.remove(1);
             }
 
-            customizedPackages.enqueue(order);
+            customizedPackages.addCustomizedPackage(order);
             order.minusQuantity();
 
             displayItemizedBill(order);
 
             ArrayQueue<CustomizedPackage> sortingQueue = new ArrayQueue<>();
 
-            sortingQueue.enqueue(customizedPackages.dequeue());
-            while (customizedPackages.getBackIndex() > -1) {
-                CustomizedPackage next = customizedPackages.dequeue();
+            sortingQueue.enqueue(customizedPackages.removeCustomizedPackage());
+            while (customizedPackages.getSize() > 0) {
+                CustomizedPackage next = customizedPackages.removeCustomizedPackage();
                 for (int i = -1; i < sortingQueue.getBackIndex(); ++i) {
                     if (sortingQueue.getFront().getDeliveryDate().before(next.getDeliveryDate())) {
                         sortingQueue.enqueue(sortingQueue.dequeue());
@@ -254,10 +253,9 @@ public class CustomizePackage {
             }
 
             while (!sortingQueue.isEmpty()) {
-                customizedPackages.enqueue(sortingQueue.dequeue());
+                customizedPackages.addCustomizedPackage(sortingQueue.dequeue());
             }
         }
-        CustomerMaintenance.customerOptions();
     }
 
     public static void displayItemizedBill(CustomizedPackage order) {
@@ -280,16 +278,16 @@ public class CustomizePackage {
         System.out.println("=====================================================");
     }
 
-    public static void displayOrderHistory(Consumer customer, QueueInterface<CustomizedPackage> customizedPackages) {
+    public static void displayOrderHistory(Consumer customer, CustomizePackageQueueInterface<CustomizedPackage> customizedPackages) {
         if (customer == null) {
             System.out.println(ANSI_RED + "You are not allowed to access this part of the system.\n" + ANSI_RESET);
         } else {
-            QueueInterface<CustomizedPackage> displayQueue = customizedPackages;
+            CustomizePackageQueueInterface<CustomizedPackage> displayQueue = customizedPackages;
             Boolean found = false;
             System.out.println("Your Order History:");
             System.out.println("================================================");
             while (!displayQueue.isEmpty()) {
-                CustomizedPackage order = displayQueue.dequeue();
+                CustomizedPackage order = displayQueue.removeCustomizedPackage();
                 if (order.getUser().getUsername() == customer.getUsername() && order.getUser().getPassword() == customer.getPassword()) {
                     System.out.println(order.getOrderDateString() + " " + order.getOrderID());
                     for (int i = 1; i <= order.getFlowerList().getTotalEntries(); i++) {

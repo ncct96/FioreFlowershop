@@ -40,7 +40,7 @@ public class UserADT<T extends Comparable<? super T>> implements UserInterface<T
   }
 
     @Override
-    public int getTotalEntries() {
+    public int getTotalUser() {
         return numberOfEntries;
     }
 
@@ -69,7 +69,7 @@ public class UserADT<T extends Comparable<? super T>> implements UserInterface<T
     }
     
     @Override
-    public T getItem(int givenPosition) {
+    public T getUser(int givenPosition) {
         T result = null;
 
         if ((givenPosition >= 1) && (givenPosition <= numberOfEntries)) {

@@ -5,8 +5,8 @@
  */
 package com.mycompany.fioreflowershop.modal;
 
-import com.mycompany.fioreflowershop.adt.LinkedList;
-import com.mycompany.fioreflowershop.adt.ListIteratorInterface;
+import com.mycompany.fioreflowershop.adt.ItemList;
+import com.mycompany.fioreflowershop.adt.ItemListInterface;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -24,40 +24,40 @@ public class ItemCatalogueTest {
     private Item testItem = new Item("Lollipop", 30, 25);
 
     public ItemCatalogueTest() {
-        ListIteratorInterface<Item> styles = new LinkedList<>();
-        ListIteratorInterface<Item> sizes = new LinkedList<>();
-        ListIteratorInterface<Item> flowers = new LinkedList<>();
-        ListIteratorInterface<Item> accessories = new LinkedList<>();
-        ListIteratorInterface<Item> priorities = new LinkedList<>();
-        ListIteratorInterface<Item> deliveryTypes = new LinkedList<>();
+        ItemListInterface<Item> styles = new ItemList<>();
+        ItemListInterface<Item> sizes = new ItemList<>();
+        ItemListInterface<Item> flowers = new ItemList<>();
+        ItemListInterface<Item> accessories = new ItemList<>();
+        ItemListInterface<Item> priorities = new ItemList<>();
+        ItemListInterface<Item> deliveryTypes = new ItemList<>();
 
-        styles.add(new Item("Fan", 10));
-        styles.add(new Item("Elliptical", 10));
-        styles.add(new Item("Vertical", 10));
-        styles.add(new Item("Horizontal", 10));
-        styles.add(new Item("Triangular", 10));
+        styles.addItem(new Item("Fan", 10));
+        styles.addItem(new Item("Elliptical", 10));
+        styles.addItem(new Item("Vertical", 10));
+        styles.addItem(new Item("Horizontal", 10));
+        styles.addItem(new Item("Triangular", 10));
 
-        sizes.add(new Item("Small", 1));
-        sizes.add(new Item("Medium", 2));
-        sizes.add(new Item("Large", 4));
+        sizes.addItem(new Item("Small", 1));
+        sizes.addItem(new Item("Medium", 2));
+        sizes.addItem(new Item("Large", 4));
 
-        flowers.add(new Item("Sunflowers", 250, 10));
-        flowers.add(new Item("Red Roses", 300, 20));
-        flowers.add(new Item("White Roses", 250, 10));
-        flowers.add(new Item("Tulips", 450, 50));
-        flowers.add(new Item("Daffodils", 200, 20));
+        flowers.addItem(new Item("Sunflowers", 250, 10));
+        flowers.addItem(new Item("Red Roses", 300, 20));
+        flowers.addItem(new Item("White Roses", 250, 10));
+        flowers.addItem(new Item("Tulips", 450, 50));
+        flowers.addItem(new Item("Daffodils", 200, 20));
 
-        accessories.add(new Item("None", 0, 1));
-        accessories.add(new Item("Name Card", 5, 20));
-        accessories.add(new Item("Bears", 50, 5));
-        accessories.add(new Item("Woven Basket", 35, 10));
+        accessories.addItem(new Item("None", 0, 1));
+        accessories.addItem(new Item("Name Card", 5, 20));
+        accessories.addItem(new Item("Bears", 50, 5));
+        accessories.addItem(new Item("Woven Basket", 35, 10));
 
-        priorities.add(new Item("Flexi", 1, 6));
-        priorities.add(new Item("Normal", 1.5, 4));
-        priorities.add(new Item("Express", 3, 2));
+        priorities.addItem(new Item("Flexi", 1, 6));
+        priorities.addItem(new Item("Normal", 1.5, 4));
+        priorities.addItem(new Item("Express", 3, 2));
 
-        deliveryTypes.add(new Item("Pick Up", 0));
-        deliveryTypes.add(new Item("Delivery", 10));
+        deliveryTypes.addItem(new Item("Pick Up", 0));
+        deliveryTypes.addItem(new Item("Delivery", 10));
 
         itemCatalogue.setStyles(styles);
         itemCatalogue.setSizes(sizes);
@@ -100,7 +100,7 @@ public class ItemCatalogueTest {
         System.out.println("\nItem to be added into the catalogue at position 2:");
         System.out.printf("%s: RM%.2f\n", testItem.getName(), testItem.getPrice());
         
-        itemCatalogue.getAccessories().add(2, testItem);
+        itemCatalogue.getAccessories().addItem(2, testItem);
         
         System.out.println("\nItem Catalogue Post-Add:");
         for (int i = 1; i <= itemCatalogue.getAccessories().getTotalEntries(); i++) {
@@ -115,7 +115,7 @@ public class ItemCatalogueTest {
      */
     @Test
     public void testDeleteItem() {
-        itemCatalogue.getAccessories().add(2, testItem);
+        itemCatalogue.getAccessories().addItem(2, testItem);
         System.out.println("\n\nTest for deleting items from the customization catalogue");
         System.out.println("======================================================");
         System.out.println("Initial Item Catalogue:");
@@ -128,7 +128,7 @@ public class ItemCatalogueTest {
         System.out.println("\nItem to be deleted from the catalogue at position 2:");
         System.out.printf("%s: RM%.2f\n", itemCatalogue.getAccessories().getItem(2).getName(), itemCatalogue.getAccessories().getItem(2).getPrice());
         
-        itemCatalogue.getAccessories().remove(2);
+        itemCatalogue.getAccessories().removeItem(2);
         
         System.out.println("\nItem Catalogue Post-Delete:");
         for (int i = 1; i <= itemCatalogue.getAccessories().getTotalEntries(); i++) {

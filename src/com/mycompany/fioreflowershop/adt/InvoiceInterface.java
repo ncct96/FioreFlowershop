@@ -9,10 +9,6 @@ package com.mycompany.fioreflowershop.adt;
  *
  * @author Admin
  */
-public interface UserInterface <T extends Comparable<? super T>>{
-    public boolean addUser(T newEntry);
-    public int getTotalUser();
-    public boolean isEmpty();
-    public T getUser(int givenPosition);
-    public T remove(int givenPosition);
+public interface InvoiceInterface {
+    
 }

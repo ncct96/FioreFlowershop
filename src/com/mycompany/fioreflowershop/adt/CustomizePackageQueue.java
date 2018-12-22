@@ -7,19 +7,20 @@ package com.mycompany.fioreflowershop.adt;
 
 /**
  *
- * @author Nicholas
+ * @author Chiu Peeng
  */
-public class LinkedQueue<T> implements QueueInterface<T> {
+public class CustomizePackageQueue<T> implements CustomizePackageQueueInterface<T> {
 
     private Node firstNode;
     private Node lastNode;
+    private int size = 0;
 
-    public LinkedQueue() {
+    public CustomizePackageQueue() {
         firstNode = null;
         lastNode = null;
     }
 
-    public void enqueue(T newEntry) {
+    public void addCustomizedPackage(T newEntry) {
         Node newNode = new Node(newEntry, null);
 
         if (isEmpty()) {
@@ -27,20 +28,22 @@ public class LinkedQueue<T> implements QueueInterface<T> {
         } else {
             lastNode.next = newNode;
         }
-        
+
         lastNode = newNode;
+        ++size;
     }
 
-    public T getFront() {
+    public T getFirstPackage() {
         T front = null;
 
         if (!isEmpty()) {
             front = firstNode.data;
         }
+
         return front;
     }
 
-    public T dequeue() {
+    public T removeCustomizedPackage() {
         T front = null;
 
         if (!isEmpty()) {
@@ -51,6 +54,7 @@ public class LinkedQueue<T> implements QueueInterface<T> {
                 lastNode = null;
             }
 
+            --size;
         }
         return front;
     }
@@ -62,29 +66,26 @@ public class LinkedQueue<T> implements QueueInterface<T> {
     public void clear() {
         firstNode = null;
         lastNode = null;
+        size = 0;
     }
 
-    @Override
-    public int getBackIndex() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int getSize() {
+        return size;
     }
 
     private class Node {
 
-        private T data; // entry in queue
-        private Node next; // link to next node
+        private T data;
+        private Node next;
 
         private Node(T dataPortion) {
             data = dataPortion;
             next = null;
-        } // end constructor
+        }
 
         private Node(T dataPortion, Node linkPortion) {
             data = dataPortion;
             next = linkPortion;
-        } // end constructor
+        }
     }
-    
-    
-
 }

@@ -9,10 +9,17 @@ package com.mycompany.fioreflowershop.adt;
  *
  * @author Admin
  */
-public interface CorporateInterface<T extends Comparable<? super T>> {
-    public boolean addCorporate(T newEntry);
-    public int getTotalCorporate();
+public interface CustomizePackageQueueInterface<T> {
+
+    public void addCustomizedPackage(T newEntry);
+
+    public T removeCustomizedPackage();
+
+    public T getFirstPackage();
+
     public boolean isEmpty();
-    public T getCorporate(int givenPosition);
-    public T remove(int givenPosition);
+
+    public void clear();
+
+    public int getSize();
 }

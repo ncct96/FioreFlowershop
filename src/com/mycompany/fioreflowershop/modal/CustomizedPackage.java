@@ -39,6 +39,7 @@ public class CustomizedPackage extends Order {
         cal.add(Calendar.DATE, priority.getQuantity());
         Date addDate = cal.getTime();
 
+        super.setRetrieveDate(addDate);
         deliveryDate = df.format(addDate);
         orderDate = df.format(todayDate);
 
@@ -48,7 +49,7 @@ public class CustomizedPackage extends Order {
         this.priority = priority;
         this.deliveryType = deliveryType;
     }
-    
+
     public CustomizedPackage() {
         orderID = "CP" + orderNo;
         ++orderNo;
@@ -172,14 +173,14 @@ public class CustomizedPackage extends Order {
 
     public double CalculateOrder() {
         double flowerPrice = 0;
-        for(int i = 1; i < flowerList.getTotalEntries(); i++){
+        for (int i = 1; i < flowerList.getTotalEntries(); i++) {
             flowerPrice += flowerList.getItem(i).getPrice();
         }
         return (style.getPrice() + (flowerPrice * size.getPrice()) + accessory.getPrice()) * priority.getPrice() + deliveryType.getPrice();
     }
 
     public void minusQuantity() {
-        for(int i = 1; i <= flowerList.getTotalEntries(); i++){
+        for (int i = 1; i <= flowerList.getTotalEntries(); i++) {
             flowerList.getItem(i).minusQuantity();
         }
         accessory.minusQuantity();

@@ -5,7 +5,7 @@
  */
 package com.mycompany.fioreflowershop;
 
-import com.mycompany.fioreflowershop.adt.LinkedList;
+import com.mycompany.fioreflowershop.adt.*;
 import com.mycompany.fioreflowershop.modal.Consumer;
 import com.mycompany.fioreflowershop.modal.User;
 import org.junit.Before;
@@ -17,8 +17,8 @@ import static org.junit.Assert.*;
  * @author Admin
  */
 public class CustomerMaintenanceTest {
-    LinkedList<User> user = FioreFlowershop.getUser();
-    LinkedList<Consumer> cust = FioreFlowershop.getCustomer();
+    UserInterface<User> user = FioreFlowershop.getUserList();
+    ConsumerInterface<Consumer> cust = FioreFlowershop.getConsumerList();
     public CustomerMaintenanceTest() {
     }
     

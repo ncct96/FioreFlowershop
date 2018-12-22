@@ -51,7 +51,7 @@ public class ConsumerADT<T extends Comparable<? super T>> implements ConsumerInt
     }
      
     @Override
-    public int getTotalEntries() {
+    public int getTotalConsumer() {
         return numberOfEntries;
     }
 
@@ -69,7 +69,7 @@ public class ConsumerADT<T extends Comparable<? super T>> implements ConsumerInt
     }
 
     @Override
-    public T getItem(int givenPosition) {
+    public T getConsumer(int givenPosition) {
         T result = null;
 
         if ((givenPosition >= 1) && (givenPosition <= numberOfEntries)) {

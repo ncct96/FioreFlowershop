@@ -50,7 +50,7 @@ public class CorporateADT<T extends Comparable<? super T>> implements CorporateI
     }
 
     @Override
-    public int getTotalEntries() {
+    public int getTotalCorporate() {
         return numberOfEntries;
     }
 
@@ -68,7 +68,7 @@ public class CorporateADT<T extends Comparable<? super T>> implements CorporateI
     }
 
     @Override
-    public T getItem(int givenPosition) {
+    public T getCorporate(int givenPosition) {
         T result = null;
 
         if ((givenPosition >= 1) && (givenPosition <= numberOfEntries)) {

@@ -7,6 +7,7 @@ package com.mycompany.fioreflowershop;
 
 import com.mycompany.fioreflowershop.adt.*;
 import com.mycompany.fioreflowershop.modal.CatalogOrders;
+import com.mycompany.fioreflowershop.modal.CatalogPackage;
 import com.mycompany.fioreflowershop.modal.CorporateCustomer;
 import com.mycompany.fioreflowershop.modal.Consumer;
 import com.mycompany.fioreflowershop.modal.InvoiceHistory;
@@ -29,13 +30,16 @@ public class InvoicePayment {
     private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     private static InvoiceHistory ih;
     private static LinkedList<InvoiceHistory> paymentHistory = new LinkedList<>();
-    private static LinkedList<CatalogOrders> tempCatalog = new LinkedList<>();
+    private static OrderListInterface<CatalogOrders> tempCatalog = new OrderList<>();
     private static ListInterface<String> userEmail = new LinkedList<>();
-    private static LinkedList<CatalogOrders> order = FioreFlowershop.getCatalogOrder();
+    private static OrderListInterface<CatalogOrders> order = FioreFlowershop.getCatalogOrder();
     private static Iterator<CatalogOrders> catIterator = order.getIterator();
     private static int invoiceNumber = 100;
     public static final String RESET = "\033[0m";
     public static final String GREEN = "\033[0;32m";
+    public static final String RED = "\033[0;31m"; 
+    public static final String BLUE = "\033[0;34m"; 
+    public static final String BLACK_BOLD = "\033[1;30m";
     
     public static LinkedList<InvoiceHistory> getPaymentHistory(){
         return paymentHistory;
@@ -57,13 +61,11 @@ public class InvoicePayment {
                     case 4:FioreFlowershop.counterStaff();break;
                 }
             }catch (Exception e){
-                System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"An Error had occurred. Please Enter The Numbers Stated"+FioreFlowershop.ConsoleColors.RESET);
-                System.out.println(FioreFlowershop.ConsoleColors.BLUE+"\nRedirecting Back to Invoice Maintenance Menu......" + FioreFlowershop.ConsoleColors.RESET);
+                System.out.println("\n"+RED+"An Error had occurred. Please Enter The Numbers Stated"+RESET);
+                System.out.println(BLUE+"\nRedirecting Back to Invoice Maintenance Menu......" + RESET);
                 break;
             }
-            
         }
-        
     }
     
     public static double totalPrice(double price, double quantity){
@@ -88,7 +90,7 @@ public class InvoicePayment {
                     //If duplicates of invoice ID is found, do nothing
                     }else{//If invoice ID is found, print out the id, then store the ID to another variable for checking for duplicates.
                         invoiceID = paymentHistory.getItem(i).getInvoiceNumber();
-                        System.out.println(FioreFlowershop.ConsoleColors.BLUE+"["+count+"] " + FioreFlowershop.ConsoleColors.RESET
+                        System.out.println(BLUE+"["+count+"] " + RESET
                         + invoiceID);
                     }
                 }
@@ -107,18 +109,18 @@ public class InvoicePayment {
                     if(stat){//Pass to 2nd part of view paid invoice
                        viewPaymentHistory2(ih,enteredID); 
                     }else{//If invalid invoice number is entered, show error message
-                        System.out.println(FioreFlowershop.ConsoleColors.RED+"\nPlease Enter A Valid Invoice Number, Try Again !"+FioreFlowershop.ConsoleColors.RESET);
+                        System.out.println(RED+"\nPlease Enter A Valid Invoice Number, Try Again !"+RESET);
     //                    invoiceMaintenance();
                     }
                 }catch(Exception e){//If invalid format for invoice number is entered, show error message
-                    System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"An Error had occurred. Please enter the format as stated."+FioreFlowershop.ConsoleColors.RESET);
-                    System.out.println(FioreFlowershop.ConsoleColors.BLUE+"\nRedirecting Back to Invoice Maintenance Menu......" + FioreFlowershop.ConsoleColors.RESET);
+                    System.out.println("\n"+RED+"An Error had occurred. Please enter the format as stated."+RESET);
+                    System.out.println(BLUE+"\nRedirecting Back to Invoice Maintenance Menu......" + RESET);
     //                invoiceMaintenance();
                     break;
                 }
 
             }else {
-                System.out.println(FioreFlowershop.ConsoleColors.RED+"\nSorry, No Records Found !"+FioreFlowershop.ConsoleColors.RESET);
+                System.out.println(RED+"\nSorry, No Records Found !"+RESET);
     //            invoiceMaintenance();
                 break;
             }
@@ -128,7 +130,7 @@ public class InvoicePayment {
     public static void viewPaymentHistory2(InvoiceHistory ih, String invoiceID){
         double discountPrice = 0; double totalPrice = 0;
         System.out.println("\n===============================================================================================================");
-        System.out.println("\nFiore Flowershop SDN.BHD \t\t\t\t\t\t"+ FioreFlowershop.ConsoleColors.BLACK_BOLD +" INVOICE");
+        System.out.println("\nFiore Flowershop SDN.BHD \t\t\t\t\t\t"+ BLACK_BOLD +" INVOICE");
         System.out.println("\nQ-5-1, Desa Permai Indah \t\t\t\t\t\t"+"STATUS : PAID");
         System.out.println("Bandar Gelugor, 11700 Pulau Pinang \t\t\t\t\t" + "INVOICE #["+invoiceID+"]");
         System.out.println("Phone : 0125566922 \t\t\t\t\t\t\t" + "DATE: " + dateFormat.format(ih.getDatepay()));
@@ -145,20 +147,15 @@ public class InvoicePayment {
         for(int i = 1; i <= paymentHistory.getTotalEntries(); i++){
             if(paymentHistory.getItem(i).getInvoiceNumber().equals(invoiceID)){
                 //for(int k = 1; k <= paymentHistory.getItem(i).getCatalogOrder().getTotalEntries(); k++){
-                    for(int p = 1; p <= paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getTotalEntries(); p++){
-                        System.out.println(sdf.format(paymentHistory.getItem(i).getCatalogOrder().getItem(i).getOrderDate())+"   | "
-                        + paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getName()+ "\t\t\t  | \t" 
-                        + paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getUserQuantity()+ "\t|\t" 
-                        + paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getDiscountRate()+ "\t    |\t" 
-                        + paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getPrice() + " \t     |   " 
-                        + paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getPrice()
-                        *paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getUserQuantity());
-                        totalPrice += totalPrice(paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getPrice()
-                                , paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getUserQuantity());
-                        if(paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getDiscountRate() != 0){
-                            discountPrice += discountPrice(paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getPrice(),
-                                    paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getUserQuantity(),
-                                    paymentHistory.getItem(i).getCatalogOrder().getItem(i).getCatalogPack().getItem(p).getDiscountRate());
+                    for(int p = 1; p <= paymentHistory.getItem(i).getCatalogOrder().getOrder(i).getCatalogPack().getTotalEntries(); p++){
+                        Date orderDate = paymentHistory.getItem(i).getCatalogOrder().getOrder(i).getOrderDate();
+                        CatalogPackage orderInstance = paymentHistory.getItem(i).getCatalogOrder().getOrder(i).getCatalogPack().getItem(p);
+                        System.out.println(sdf.format(orderDate)+"   | "+ orderInstance.getName()+ "\t\t\t  | \t" 
+                        + orderInstance.getUserQuantity()+ "\t|\t" + orderInstance.getDiscountRate()+ "\t    |\t" 
+                        + orderInstance.getPrice() + " \t     |   " + orderInstance.getPrice() *orderInstance.getUserQuantity());
+                        totalPrice += totalPrice(orderInstance.getPrice() , orderInstance.getUserQuantity());
+                        if(orderInstance.getDiscountRate() != 0){
+                            discountPrice += discountPrice(orderInstance.getPrice(), orderInstance.getUserQuantity(), orderInstance.getDiscountRate());
                         }
                     }
                 //}
@@ -181,8 +178,8 @@ public class InvoicePayment {
                 yearEntered = Integer.parseInt(dateEntered.substring(0,4));
                 monthEntered = Integer.parseInt(dateEntered.substring(5,7));
             }catch(Exception e){
-                System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"An Error had occurred. Please enter the format as stated."+FioreFlowershop.ConsoleColors.RESET);
-                System.out.println(FioreFlowershop.ConsoleColors.BLUE+"\nRedirecting Back to Invoice Maintenance Menu......" + FioreFlowershop.ConsoleColors.RESET);
+                System.out.println("\n"+RED+"An Error had occurred. Please enter the format as stated."+RESET);
+                System.out.println(BLUE+"\nRedirecting Back to Invoice Maintenance Menu......" + RESET);
                 break;
             }
             if(order != null){
@@ -195,13 +192,13 @@ public class InvoicePayment {
     //            }
             for(int i = 1; i <= order.getTotalEntries(); i++){
                 //If the shopping cart is not null and status is false
-                if(order.getItem(i).getUser()!= null && !order.getItem(i).isPaymentStatus()){
+                if(order.getOrder(i).getUser()!= null && !order.getOrder(i).isPaymentStatus()){
                     //If the entered month and the order month is the same
-                    if((order.getItem(i).getOrderDate().getMonth()+1) == monthEntered &&
-                            (order.getItem(i).getOrderDate().getYear()+1900) == yearEntered){
+                    if((order.getOrder(i).getOrderDate().getMonth()+1) == monthEntered &&
+                            (order.getOrder(i).getOrderDate().getYear()+1900) == yearEntered){
                         if(userEmail.getTotalEntries() != 0){
                                 for(int k = 1; k <= userEmail.getTotalEntries(); k++){
-                                    if(userEmail.getItem(k).equals(order.getItem(i).getUser().getEmail())){
+                                    if(userEmail.getItem(k).equals(order.getOrder(i).getUser().getEmail())){
                                         status = false;
                                         break;
                                     }else {
@@ -209,40 +206,40 @@ public class InvoicePayment {
                                     }
                                 }
                                 if(status){
-                                    if(order.getItem(i).getUser() instanceof CorporateCustomer){
-                                        userEmail.add(order.getItem(i).getUser().getEmail());
+                                    if(order.getOrder(i).getUser() instanceof CorporateCustomer){
+                                        userEmail.add(order.getOrder(i).getUser().getEmail());
                                     }
                                 }
                             }else{
-                                userEmail.add(order.getItem(i).getUser().getEmail());
+                                userEmail.add(order.getOrder(i).getUser().getEmail());
                             }
                     }
                 }
             }
             for(int j = 1; j <= userEmail.getTotalEntries(); j++){
-                    System.out.println(FioreFlowershop.ConsoleColors.BLUE + "[" + j + "] " + FioreFlowershop.ConsoleColors.RESET
+                    System.out.println(BLUE + "[" + j + "] " + RESET
                     + userEmail.getItem(j));
                     count++;
                 }
         }
             if(count <= 0){
-                    System.out.println(FioreFlowershop.ConsoleColors.RED+"\nSorry, No Records Found !"+FioreFlowershop.ConsoleColors.RESET);
+                    System.out.println(RED+"\nSorry, No Records Found !"+RESET);
                     invoiceMaintenance();
             }else{
                 try{
                     int choiceCorp = 0; 
                     System.out.print("\nPlease Enter The Email of Corporate Customer for Invoice Generations : ");
                     String emailCorp = s.nextLine();
-                    for(int a = 1; a<=FioreFlowershop.getCorporate().getTotalEntries();a++){
-                        if(FioreFlowershop.getCorporate().getItem(a).getEmail().equals(emailCorp)){
+                    for(int a = 1; a<=FioreFlowershop.getCorporateList().getTotalCorporate();a++){
+                        if(FioreFlowershop.getCorporateList().getCorporate(a).getEmail().equals(emailCorp)){
                             choiceCorp = a;
                             break;
                         }
                     }
-                    generateInvoiceP2(FioreFlowershop.getCorporate().getItem(choiceCorp));
+                    generateInvoiceP2(FioreFlowershop.getCorporateList().getCorporate(choiceCorp));
                 }catch(Exception e){
-                    System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"\nAn Error had occurred. Please Enter The Number of the Corporate Customer."+FioreFlowershop.ConsoleColors.RESET);
-                    System.out.println(FioreFlowershop.ConsoleColors.BLUE+"\nRedirecting Back to Invoice Maintenance Menu......" + FioreFlowershop.ConsoleColors.RESET);
+                    System.out.println("\n"+RED+"\nAn Error had occurred. Please Enter The Number of the Corporate Customer."+RESET);
+                    System.out.println(BLUE+"\nRedirecting Back to Invoice Maintenance Menu......" + RESET);
 //                    invoiceMaintenance();
                     break;
                 }
@@ -255,7 +252,7 @@ public class InvoicePayment {
         if(user instanceof CorporateCustomer){
             cc = (CorporateCustomer) user;
             System.out.println("===============================================================================================================");
-            System.out.println("\nFiore Flowershop SDN.BHD \t\t\t\t\t\t"+ FioreFlowershop.ConsoleColors.BLACK_BOLD +" INVOICE");
+            System.out.println("\nFiore Flowershop SDN.BHD \t\t\t\t\t\t"+ BLACK_BOLD +" INVOICE");
             System.out.println("\nQ-5-1, Desa Permai Indah");
             System.out.println("Bandar Gelugor, 11700 Pulau Pinang \t\t\t\t\t" + "INVOICE #["+invoiceNumber+"]");
             System.out.println("Phone : 0125566922 \t\t\t\t\t\t\t" + "DATE: " + dateFormat.format(today));
@@ -283,22 +280,21 @@ public class InvoicePayment {
         double totalPrice = 0; double discountPrice = 0;
         invoiceMenu(user);
         for(int i = 1; i <= order.getTotalEntries() ;i++){
-            if(order.getItem(i).getUser().getEmail().equals(user.getEmail()) && !order.getItem(i).isPaymentStatus()){
-                for(int k = 1; k <= order.getItem(i).getCatalogPack().getTotalEntries(); k++){
-                    if(order.getItem(k).getCatalogPack() != null){
-                        System.out.println(sdf.format(order.getItem(k).getOrderDate())+"   | "
-                        +order.getItem(i).getCatalogPack().getItem(k).getName()+ "\t\t\t  | \t" 
-                        +order.getItem(i).getCatalogPack().getItem(k).getUserQuantity()+ "\t|\t" 
-                        +order.getItem(i).getCatalogPack().getItem(k).getDiscountRate()+ "\t    |\t" 
-                        +order.getItem(i).getCatalogPack().getItem(k).getPrice() + " \t     |   " 
-                        +order.getItem(i).getCatalogPack().getItem(k).getPrice()
-                        *order.getItem(i).getCatalogPack().getItem(k).getUserQuantity());
-                        totalPrice += totalPrice(order.getItem(i).getCatalogPack().getItem(k).getPrice(), 
-                                order.getItem(i).getCatalogPack().getItem(k).getUserQuantity());
-                        if(order.getItem(i).getCatalogPack().getItem(k).getDiscountRate() != 0){
-                            discountPrice += discountPrice(order.getItem(i).getCatalogPack().getItem(k).getPrice(),
-                                    order.getItem(i).getCatalogPack().getItem(k).getUserQuantity(),
-                                    order.getItem(i).getCatalogPack().getItem(k).getDiscountRate());
+            if(order.getOrder(i).getUser().getEmail().equals(user.getEmail()) && !order.getOrder(i).isPaymentStatus()){
+                for(int k = 1; k <= order.getOrder(i).getCatalogPack().getTotalEntries(); k++){
+                    if(order.getOrder(k).getCatalogPack() != null){
+                        CatalogPackage orderInstance = order.getOrder(i).getCatalogPack().getItem(k);
+                        Date orderDate = order.getOrder(k).getOrderDate();
+                        System.out.println(sdf.format(orderDate)+"   | "
+                        +orderInstance.getName()+ "\t\t\t  | \t" 
+                        +orderInstance.getUserQuantity()+ "\t|\t" 
+                        +orderInstance.getDiscountRate()+ "\t    |\t" 
+                        +orderInstance.getPrice() + " \t     |   " 
+                        +orderInstance.getPrice()
+                        *orderInstance.getUserQuantity());
+                        totalPrice += totalPrice(orderInstance.getPrice(), orderInstance.getUserQuantity());
+                        if(orderInstance.getDiscountRate() != 0){
+                            discountPrice += discountPrice(orderInstance.getPrice(), orderInstance.getUserQuantity(), orderInstance.getDiscountRate());
                         }  
                     }
                 }
@@ -320,7 +316,7 @@ public class InvoicePayment {
                 yearEntered = Integer.parseInt(dateEntered.substring(0,4));
                 monthEntered = Integer.parseInt(dateEntered.substring(5,7));
             }catch(Exception e){
-                System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"\nAn Error had occurred. Please enter the format as stated."+FioreFlowershop.ConsoleColors.RESET);
+                System.out.println("\n"+RED+"\nAn Error had occurred. Please enter the format as stated."+RESET);
                 break;
             }
             if(order != null){
@@ -329,11 +325,11 @@ public class InvoicePayment {
                 System.out.println("====================================================");
                 boolean status = true;
                 for(int i = 1; i <= order.getTotalEntries(); i++){
-                    if(order.getItem(i).getUser()!= null && !order.getItem(i).isPaymentStatus()){
-                        if((order.getItem(i).getOrderDate().getMonth()+1) == monthEntered &&(order.getItem(i).getOrderDate().getYear()+1900) == yearEntered){
+                    if(order.getOrder(i).getUser()!= null && !order.getOrder(i).isPaymentStatus()){
+                        if((order.getOrder(i).getOrderDate().getMonth()+1) == monthEntered &&(order.getOrder(i).getOrderDate().getYear()+1900) == yearEntered){
                             if(userEmail.getTotalEntries() != 0){
                                 for(int k = 1; k <= userEmail.getTotalEntries(); k++){
-                                    if(userEmail.getItem(k).equals(order.getItem(i).getUser().getEmail())){
+                                    if(userEmail.getItem(k).equals(order.getOrder(i).getUser().getEmail())){
                                         /*DO NOTHING*/
                                         status = false;
                                         break;
@@ -342,44 +338,44 @@ public class InvoicePayment {
                                     }
                                 }
                                 if(status){
-                                    if(order.getItem(i).getUser() instanceof CorporateCustomer){
-                                       userEmail.add(order.getItem(i).getUser().getEmail()); 
+                                    if(order.getOrder(i).getUser() instanceof CorporateCustomer){
+                                       userEmail.add(order.getOrder(i).getUser().getEmail()); 
                                     }
                                 }
                             }else{
-                                userEmail.add(order.getItem(i).getUser().getEmail());
+                                userEmail.add(order.getOrder(i).getUser().getEmail());
                             }
                         }
                     }
                 }
 
                 for(int j = 1; j <= userEmail.getTotalEntries(); j++){
-                    System.out.println(FioreFlowershop.ConsoleColors.BLUE + "[" + j + "] " + FioreFlowershop.ConsoleColors.RESET
+                    System.out.println(BLUE + "[" + j + "] " + RESET
                     + userEmail.getItem(j));
                     count++;
                 }
 
             if(count <= 0){
-                    System.out.println(FioreFlowershop.ConsoleColors.RED+"\nSorry, No Records Found !"+FioreFlowershop.ConsoleColors.RESET);
+                    System.out.println(RED+"\nSorry, No Records Found !"+RESET);
                     invoiceMaintenance();
             }else{
                 try{
                     System.out.print("\nPlease Enter The Email of Corporate Customer for Invoice Generations : ");
                     int choiceCorp = 0; String emailCorp = s.nextLine();
-                    for(int a = 1; a<=FioreFlowershop.getUser().getTotalEntries();a++){
-                        if(FioreFlowershop.getUser().getItem(a).getEmail().equals(emailCorp)){
+                    for(int a = 1; a<=FioreFlowershop.getUserList().getTotalUser();a++){
+                        if(FioreFlowershop.getUserList().getUser(a).getEmail().equals(emailCorp)){
                             choiceCorp = a;
                             break;
                         }
                     }
-                    invoicePaymentP2(FioreFlowershop.getUser().getItem(choiceCorp));
+                    invoicePaymentP2(FioreFlowershop.getUserList().getUser(choiceCorp));
                 }catch(Exception e){
-                    System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"\nAn Error had occurred. Please Enter The Number of the Corporate Customer."+FioreFlowershop.ConsoleColors.RESET);
+                    System.out.println("\n"+RED+"\nAn Error had occurred. Please Enter The Number of the Corporate Customer."+RESET);
                     break;
                 }
 
             }
-        }else {System.out.println(FioreFlowershop.ConsoleColors.BLUE+ "\nWow, Much Empty for This Flower Shop" + FioreFlowershop.ConsoleColors.RESET);}
+        }else {System.out.println(BLUE+ "\nWow, Much Empty for This Flower Shop" + RESET);}
     }
 }
     
@@ -387,25 +383,24 @@ public class InvoicePayment {
         double affordable = 0; double totalPrice = 0; double discountPrice = 0; int credit = 0;
         invoiceMenu(user);
         for(int i = 1; i <= order.getTotalEntries(); i++){
-            if(order.getItem(i)!= null){
-                if(order.getItem(i).getUser().getEmail().equals(user.getEmail()) && !order.getItem(i).isPaymentStatus()){
-                    if(order.getItem(i).getCatalogPack() != null){
-                        for(int k = 1; k <= order.getItem(i).getCatalogPack().getTotalEntries(); k++){
-                        System.out.println(sdf.format(order.getItem(i).getOrderDate())+"   | "
-                        +order.getItem(i).getCatalogPack().getItem(k).getName()+ "\t\t\t  | \t" 
-                        +order.getItem(i).getCatalogPack().getItem(k).getUserQuantity()+ "\t|\t" 
-                        +order.getItem(i).getCatalogPack().getItem(k).getDiscountRate()+ "\t    |\t" 
-                        +order.getItem(i).getCatalogPack().getItem(k).getPrice() + " \t     |   " 
-                        +order.getItem(i).getCatalogPack().getItem(k).getPrice()
-                        *order.getItem(i).getCatalogPack().getItem(k).getUserQuantity());
-                        totalPrice += totalPrice(order.getItem(i).getCatalogPack().getItem(k).getPrice(),
-                                order.getItem(i).getCatalogPack().getItem(k).getUserQuantity());
-                            if(order.getItem(i).getCatalogPack().getItem(k).getDiscountRate() != 0){
-                                discountPrice += discountPrice(order.getItem(i).getCatalogPack().getItem(k).getPrice(),
-                                        order.getItem(i).getCatalogPack().getItem(k).getUserQuantity(),
-                                        order.getItem(i).getCatalogPack().getItem(k).getDiscountRate());
+            if(order.getOrder(i)!= null){
+                if(order.getOrder(i).getUser().getEmail().equals(user.getEmail()) && !order.getOrder(i).isPaymentStatus()){
+                    if(order.getOrder(i).getCatalogPack() != null){
+                        for(int k = 1; k <= order.getOrder(i).getCatalogPack().getTotalEntries(); k++){
+                        CatalogPackage orderInstance = order.getOrder(i).getCatalogPack().getItem(k);
+                        Date orderDate = order.getOrder(k).getOrderDate();
+                        System.out.println(sdf.format(orderDate)+"   | "
+                        +orderInstance.getName()+ "\t\t\t  | \t" 
+                        +orderInstance.getUserQuantity()+ "\t|\t" 
+                        +orderInstance.getDiscountRate()+ "\t    |\t" 
+                        +orderInstance.getPrice() + " \t     |   " 
+                        +orderInstance.getPrice()
+                        *orderInstance.getUserQuantity());
+                        totalPrice += totalPrice(orderInstance.getPrice(),orderInstance.getUserQuantity());
+                            if(order.getOrder(i).getCatalogPack().getItem(k).getDiscountRate() != 0){
+                                discountPrice += discountPrice(orderInstance.getPrice(),orderInstance.getUserQuantity(), orderInstance.getDiscountRate());
                             }
-                            tempCatalog.add(order.getItem(i));
+                            tempCatalog.addOrder(order.getOrder(i));
                         }
                     }
                 }
@@ -415,47 +410,47 @@ public class InvoicePayment {
         affordable = cc.getMonthlyLimit()-cc.getCreditSpent();
         invoiceMenuFooter(totalPrice, discountPrice);
         if(affordable <= 0){//Credit limit reached
-            System.out.println("\n"+FioreFlowershop.ConsoleColors.RED + "Sorry, looks like this customer's Credit Limit have exceeded. Please make payment right now.");
-            for(int i = 1; i <= FioreFlowershop.getCorporate().getTotalEntries(); i++){
-                if(FioreFlowershop.getCorporate().getItem(i).getEmail().equals(user.getEmail())){
-                    FioreFlowershop.getCorporate().getItem(i).setPaymentStatus(false);
+            System.out.println("\n"+RED + "Sorry, looks like this customer's Credit Limit have exceeded. Please make payment right now.");
+            for(int i = 1; i <= FioreFlowershop.getCorporateList().getTotalCorporate(); i++){
+                if(FioreFlowershop.getCorporateList().getCorporate(i).getEmail().equals(user.getEmail())){
+                    FioreFlowershop.getCorporateList().getCorporate(i).setPaymentStatus(false);
                 }
             }
         } else if(affordable <= totalPrice){//Not enough money
-            System.out.println("\n"+FioreFlowershop.ConsoleColors.RED + "Sorry, looks like this customer can't afford the items." + FioreFlowershop.ConsoleColors.RESET);
-            System.out.println(FioreFlowershop.ConsoleColors.RED + "Current Affordable Balance : "+affordable+ FioreFlowershop.ConsoleColors.RESET);
-            for(int i = 1; i <= FioreFlowershop.getCorporate().getTotalEntries(); i++){
-                if(FioreFlowershop.getCorporate().getItem(i).getEmail().equals(user.getEmail())){
-                    FioreFlowershop.getCorporate().getItem(i).setPaymentStatus(false);
+            System.out.println("\n"+RED + "Sorry, looks like this customer can't afford the items." + RESET);
+            System.out.println(RED + "Current Affordable Balance : "+affordable+ RESET);
+            for(int i = 1; i <= FioreFlowershop.getCorporateList().getTotalCorporate(); i++){
+                if(FioreFlowershop.getCorporateList().getCorporate(i).getEmail().equals(user.getEmail())){
+                    FioreFlowershop.getCorporateList().getCorporate(i).setPaymentStatus(false);
                 }
             }
         }else {//Normal Transaction carried out
             System.out.println("\n\nCurrent Corporate Customer's Credit Limit: " + cc.getMonthlyLimit());
-            System.out.println("Current Corporate Customer's Affordable Limit: " + FioreFlowershop.ConsoleColors.BLUE +affordable + FioreFlowershop.ConsoleColors.RESET);
-            System.out.println("After Payment Balance: "+ FioreFlowershop.ConsoleColors.RED +(affordable-(totalPrice-discountPrice))+ FioreFlowershop.ConsoleColors.RESET);
+            System.out.println("Current Corporate Customer's Affordable Limit: " + BLUE +affordable + RESET);
+            System.out.println("After Payment Balance: "+ RED +(affordable-(totalPrice-discountPrice))+ RESET);
             System.out.print("\nDo you wish to make this payment? [Press Enter for Yes]");
             String enter = s.nextLine();
             if(enter.isEmpty()){
                 //Set corporate customer's payment status to true
-                for(int i = 1; i <= FioreFlowershop.getCorporate().getTotalEntries(); i++){
-                    if(FioreFlowershop.getCorporate().getItem(i).equals(user)){
-                        FioreFlowershop.getCorporate().getItem(i).setPaymentStatus(true);
+                for(int i = 1; i <= FioreFlowershop.getCorporateList().getTotalCorporate(); i++){
+                    if(FioreFlowershop.getCorporateList().getCorporate(i).equals(user)){
+                        FioreFlowershop.getCorporateList().getCorporate(i).setPaymentStatus(true);
                         //Set corporate customer's credit spent back to 0
-                        FioreFlowershop.getCorporate().getItem(i).setCreditSpent(0);
+                        FioreFlowershop.getCorporateList().getCorporate(i).setCreditSpent(0);
                         //credit += FioreFlowershop.getCorporate().getItem(i).getCreditSpent() + (totalPrice-discountPrice);
                     }
                 }
                     //Set shopping cart payment status to true
                 for(int k = 1; k <= order.getTotalEntries(); k++){
-                    if(order.getItem(k).getUser().equals(user)){
-                        order.getItem(k).setPaymentStatus(true);
+                    if(order.getOrder(k).getUser().equals(user)){
+                        order.getOrder(k).setPaymentStatus(true);
                     }
                 }
                 //Store paid invoice into an invoice link list
                 for(int l = 1;l <= order.getTotalEntries(); l++){
-                    if(order.getItem(l).getUser().equals(user)){
+                    if(order.getOrder(l).getUser().equals(user)){
                         for(int m = 1; m <= userEmail.getTotalEntries(); m++){
-                            if(userEmail.getItem(m).equals(order.getItem(l).getUser().getEmail())){
+                            if(userEmail.getItem(m).equals(order.getOrder(l).getUser().getEmail())){
                                 userEmail.remove(m);
                             }
                         }
@@ -463,11 +458,11 @@ public class InvoicePayment {
                     }
                 }
                     ++invoiceNumber; 
-                    System.out.println(FioreFlowershop.ConsoleColors.GREEN+"\nPayment Success, Thanks for the Patronage :D "+ FioreFlowershop.ConsoleColors.RESET);
-                    System.out.println(FioreFlowershop.ConsoleColors.BLUE+"Redirecting Back to User Selection Menu......" + FioreFlowershop.ConsoleColors.RESET);
+                    System.out.println(GREEN+"\nPayment Success, Thanks for the Patronage :D "+ RESET);
+                    System.out.println(BLUE+"Redirecting Back to User Selection Menu......" + RESET);
                     FioreFlowershop.userTypeSelection();
             }else {//Payment Cancel by user
-                System.out.println(FioreFlowershop.ConsoleColors.RED+"\nPayment Cancelled, Redirecting back to Main Menu."+FioreFlowershop.ConsoleColors.RESET);
+                System.out.println(RED+"\nPayment Cancelled, Redirecting back to Main Menu."+RESET);
                 FioreFlowershop.counterStaff();
             }
         }

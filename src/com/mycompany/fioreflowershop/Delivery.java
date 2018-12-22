@@ -10,6 +10,8 @@ import static com.mycompany.fioreflowershop.Pickup.genReceipt;
 import com.mycompany.fioreflowershop.adt.ArrayQueue;
 import com.mycompany.fioreflowershop.adt.LinkedList;
 import com.mycompany.fioreflowershop.adt.ListInterface;
+import com.mycompany.fioreflowershop.adt.OrderList;
+import com.mycompany.fioreflowershop.adt.OrderListInterface;
 import com.mycompany.fioreflowershop.adt.QueueInterface;
 import com.mycompany.fioreflowershop.modal.CatalogOrders;
 import com.mycompany.fioreflowershop.modal.CatalogPackage;
@@ -37,10 +39,13 @@ import java.util.logging.Logger;
  */
 public class Delivery {
 
-    public static LinkedList<Order> searchDelivery(LinkedList<CatalogOrders> catalogOrder, Date date, LinkedList<CustomizedPackage> customizeOrder) {
-        LinkedList<CatalogOrders> unOrderList = new LinkedList<CatalogOrders>();
-        LinkedList<CustomizedPackage> customOrder = new LinkedList<CustomizedPackage>();
-        LinkedList<Order> matchedList = new LinkedList<>();
+    public static final String RED = "\033[0;31m";     // RED
+    public static final String GREEN = "\033[0;32m";   // GREEN
+
+    public static OrderListInterface<Order> searchDelivery(OrderListInterface<CatalogOrders> catalogOrder, Date date, OrderListInterface<CustomizedPackage> customizeOrder) {
+        OrderListInterface<CatalogOrders> unOrderList = new OrderList<CatalogOrders>();
+        OrderListInterface<CustomizedPackage> customOrder = new OrderList<CustomizedPackage>();
+        OrderListInterface<Order> matchedList = new OrderList<>();
 
         Iterator<CatalogOrders> catalogIterator = catalogOrder.getIterator();
         Iterator<CustomizedPackage> CustomIterator = customizeOrder.getIterator();
@@ -51,7 +56,7 @@ public class Delivery {
             CatalogOrders order = catalogIterator.next();
 
             if (order.getOrderType().equals("Delivery")) {
-                unOrderList.add(order);
+                unOrderList.addOrder(order);
             }
         }
 
@@ -61,7 +66,7 @@ public class Delivery {
             CustomizedPackage order = CustomIterator.next();
 
             if (order.getDeliveryType().getName().equals("Delivery")) {
-                customOrder.add(order);
+                customOrder.addOrder(order);
             }
         }
 
@@ -80,7 +85,7 @@ public class Delivery {
 
         for (int i = 1; i <= unOrderList.getTotalEntries(); i++) {
 
-            listCal.setTime(unOrderList.getItem(i).getRetrieveDate());
+            listCal.setTime(unOrderList.getOrder(i).getRetrieveDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
@@ -91,13 +96,13 @@ public class Delivery {
             userYear = cal.get(Calendar.YEAR);
 
             if (day == userDay && month == userMonth && year == userYear) {
-                matchedList.add(unOrderList.getItem(i));
+                matchedList.addOrder(unOrderList.getOrder(i));
             }
         }
 
         for (int i = 1; i <= customOrder.getTotalEntries(); i++) {
 
-            listCal.setTime(customOrder.getItem(i).getRetrieveDate());
+            listCal.setTime(customOrder.getOrder(i).getRetrieveDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
@@ -108,34 +113,33 @@ public class Delivery {
             userYear = cal.get(Calendar.YEAR);
 
             if (day == userDay && month == userMonth && year == userYear) {
-                matchedList.add(customOrder.getItem(i));
+                matchedList.addOrder(customOrder.getOrder(i));
             }
         }
 
         for (int i = 1; i < matchedList.getTotalEntries() - 1; i++) {
             int index = i;
             for (int j = i; j <= matchedList.getTotalEntries(); j++) {
-                if (matchedList.getItem(j).getRetrieveDate().before(matchedList.getItem(index).getRetrieveDate())) {
+                if (matchedList.getOrder(j).getRetrieveDate().before(matchedList.getOrder(index).getRetrieveDate())) {
                     index = j; //searching for lowest index  
                 }
             }
-            Order smallerOrder = matchedList.getItem(index);
-            matchedList.replace(index, matchedList.getItem(i));
-            matchedList.replace(i, smallerOrder);
+            Order smallerOrder = matchedList.getOrder(index);
+            matchedList.replaceOrder(index, matchedList.getOrder(i));
+            matchedList.replaceOrder(i, smallerOrder);
 
         }
 
         //displaySortedDelivery(matchedList);
-        
         return matchedList;
     }
 
-    public static void sortDeliveryOrder(LinkedList<CatalogOrders> catalogOrder, LinkedList<CustomizedPackage> customizeOrder) {
+    public static void sortDeliveryOrder(OrderListInterface<CatalogOrders> catalogOrder, OrderListInterface<CustomizedPackage> customizeOrder) {
 
-        LinkedList<Order> sortedList = new LinkedList<>();
+        OrderListInterface<Order> sortedList = new OrderList<>();
 
-        LinkedList<CatalogOrders> unOrderList = new LinkedList<CatalogOrders>();
-        LinkedList<CustomizedPackage> customOrder = customizeOrder;
+        OrderListInterface<CatalogOrders> unOrderList = new OrderList<CatalogOrders>();
+        OrderListInterface<CustomizedPackage> customOrder = customizeOrder;
 
         //int count = customOrder.getBackIndex();
         Iterator<CatalogOrders> catalogIterator = catalogOrder.getIterator();
@@ -143,15 +147,19 @@ public class Delivery {
 
         // Get all delivery order for Catalog Order
         while (catalogIterator.hasNext()) {
-            if (catalogIterator.next().getOrderType().equals("Delivery")) {
-                unOrderList.add(catalogIterator.next());
+            CatalogOrders order = catalogIterator.next();
+
+            if (order.getOrderType().equals("Delivery")) {
+                unOrderList.addOrder(order);
             }
         }
 
         // Get all delivery order for Customize Package
         while (CustomIterator.hasNext()) {
-            if (CustomIterator.next().getOrderType().equals("Delivery")) {
-                customOrder.add(CustomIterator.next());
+            CustomizedPackage order = CustomIterator.next();
+
+            if (order.getDeliveryType().getName().equals("Delivery")) {
+                customOrder.addOrder(order);
             }
         }
 
@@ -169,46 +177,46 @@ public class Delivery {
         userYear = cal.get(Calendar.YEAR);
 
         for (int j = 1; j <= unOrderList.getTotalEntries(); j++) {
-            listCal.setTime(unOrderList.getItem(j).getOrderDate());
+            listCal.setTime(unOrderList.getOrder(j).getRetrieveDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
             year = listCal.get(Calendar.YEAR);
 
             if (day == userDay && month == userMonth && year == userYear) {
-                sortedList.add(unOrderList.getItem(j));
+                sortedList.addOrder(unOrderList.getOrder(j));
             }
         }
 
         for (int j = 1; j <= customOrder.getTotalEntries(); j++) {
-            listCal.setTime(customOrder.getItem(j).getOrderDate());
+            listCal.setTime(customOrder.getOrder(j).getRetrieveDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
             year = listCal.get(Calendar.YEAR);
 
             if (day == userDay && month == userMonth && year == userYear) {
-                sortedList.add(customOrder.getItem(j));
+                sortedList.addOrder(customOrder.getOrder(j));
             }
         }
 
         for (int i = 1; i < sortedList.getTotalEntries() - 1; i++) {
             int index = i;
             for (int j = i; j <= sortedList.getTotalEntries(); j++) {
-                if (sortedList.getItem(j).getRetrieveDate().before(sortedList.getItem(index).getRetrieveDate())) {
+                if (sortedList.getOrder(j).getRetrieveDate().before(sortedList.getOrder(index).getRetrieveDate())) {
                     index = j; //searching for lowest index  
                 }
             }
-            Order smallerOrder = sortedList.getItem(index);
-            sortedList.replace(index, sortedList.getItem(i));
-            sortedList.replace(i, smallerOrder);
+            Order smallerOrder = sortedList.getOrder(index);
+            sortedList.replaceOrder(index, sortedList.getOrder(i));
+            sortedList.replaceOrder(i, smallerOrder);
         }
 
         displaySortedDelivery(sortedList);
 
     }
 
-    public static void displaySortedDelivery(LinkedList<Order> orderedList) {
+    public static void displaySortedDelivery(OrderListInterface<Order> orderedList) {
 
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         DateFormat dt = new SimpleDateFormat("HH:mm");
@@ -217,7 +225,7 @@ public class Delivery {
         LinkedList<CustomizedPackage> customOrder = new LinkedList<CustomizedPackage>();
 
         for (int i = 1; i <= orderedList.getTotalEntries(); i++) {
-            Order order = orderedList.getItem(i);
+            Order order = orderedList.getOrder(i);
             if (order instanceof CatalogOrders) {
                 catalogOrder.add((CatalogOrders) order);
             } else {
@@ -295,11 +303,11 @@ public class Delivery {
         }
     }
 
-    public static void sortRouteDelivery(LinkedList<CatalogOrders> catalogOrder, LinkedList<CustomizedPackage> customizeOrder, String shopAddress) throws ApiException, InterruptedException, IOException {
-        LinkedList<Order> sortedList = new LinkedList<>();
+    public static void sortRouteDelivery(OrderListInterface<CatalogOrders> catalogOrder, OrderListInterface<CustomizedPackage> customizeOrder, String shopAddress) throws ApiException, InterruptedException, IOException {
+        OrderListInterface<Order> sortedList = new OrderList<>();
 
-        LinkedList<CatalogOrders> unOrderList = new LinkedList<CatalogOrders>();
-        LinkedList<CustomizedPackage> customOrder = new LinkedList<CustomizedPackage>();
+        OrderListInterface<CatalogOrders> unOrderList = new OrderList<CatalogOrders>();
+        OrderListInterface<CustomizedPackage> customOrder = new OrderList<CustomizedPackage>();
 
         //int count = customOrder.getBackIndex();
         Iterator<CatalogOrders> catalogIterator = catalogOrder.getIterator();
@@ -310,7 +318,7 @@ public class Delivery {
             CatalogOrders order = catalogIterator.next();
 
             if (order.getOrderType().equals("Delivery")) {
-                unOrderList.add(order);
+                unOrderList.addOrder(order);
             }
         }
 
@@ -319,7 +327,7 @@ public class Delivery {
             CustomizedPackage order = CustomIterator.next();
 
             if (order.getDeliveryType().getName().equals("Delivery")) {
-                customOrder.add(order);
+                customOrder.addOrder(order);
             }
         }
 
@@ -336,40 +344,40 @@ public class Delivery {
         userYear = cal.get(Calendar.YEAR);
 
         for (int j = 1; j <= unOrderList.getTotalEntries(); j++) {
-            listCal.setTime(unOrderList.getItem(j).getOrderDate());
+            listCal.setTime(unOrderList.getOrder(j).getOrderDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
             year = listCal.get(Calendar.YEAR);
 
             if (day == userDay && month == userMonth && year == userYear) {
-                sortedList.add(unOrderList.getItem(j));
+                sortedList.addOrder(unOrderList.getOrder(j));
             }
         }
 
         for (int j = 1; j <= customOrder.getTotalEntries(); j++) {
-            listCal.setTime(customOrder.getItem(j).getOrderDate());
+            listCal.setTime(customOrder.getOrder(j).getOrderDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
             year = listCal.get(Calendar.YEAR);
 
             if (day == userDay && month == userMonth && year == userYear) {
-                sortedList.add(customOrder.getItem(j));
+                sortedList.addOrder(customOrder.getOrder(j));
             }
         }
         sortRoute(sortedList, shopAddress);
     }
 
-    public static void sortRoute(LinkedList<Order> sortedList, String shopAddress) throws ApiException, InterruptedException, IOException {
+    public static void sortRoute(OrderListInterface<Order> sortedList, String shopAddress) throws ApiException, InterruptedException, IOException {
 
         Date date = new Date();
         TSPSolver solver;
 
-        LinkedList<Order> dest = new LinkedList<>();
+        OrderListInterface<Order> dest = new OrderList<>();
 
         for (int i = 1; i <= sortedList.getTotalEntries(); i++) {
-            dest.add(sortedList.getItem(i));
+            dest.addOrder(sortedList.getOrder(i));
         }
 
         try {
@@ -381,7 +389,7 @@ public class Delivery {
 
     }
 
-    public static void displaySortRoute(TSPSolver solver, LinkedList<Order> dest, String shopAddress) {
+    public static void displaySortRoute(TSPSolver solver, OrderListInterface<Order> dest, String shopAddress) {
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -392,7 +400,7 @@ public class Delivery {
         List<Integer> tour = solver.getTour();
         double totalPayment = 0, payAmt;
         Order matchOrder = new Order();
-        LinkedList<Order> paidOrder = FioreFlowershop.getPaidOrder();
+        OrderListInterface<Order> paidOrder = FioreFlowershop.getPaidOrder();
         int payChoice;
 
         System.out.println("Date: " + dateFormat.format(date));
@@ -400,21 +408,21 @@ public class Delivery {
         System.out.println("Today's Delivery Route (Nearest to Furthest) ");
         System.out.println("================================================" + "\n");
 
-        System.out.println("Origin: " + shopAddress + "\n");
+        System.out.println("Start from Origin: " + shopAddress + "\n");
 
         for (int i = 0; i < tour.size() - 1; i++) {
             int tourCount = tour.get(i).intValue();
             User user;
 
             if (i > 0 && i < tour.size() - 1) {
-                user = dest.getItem(tourCount).getUser();
-                Order order = dest.getItem(tourCount);
+                user = dest.getOrder(tourCount).getUser();
+                Order order = dest.getOrder(tourCount);
 
                 if (user instanceof CorporateCustomer) {
-                    CorporateCustomer corp = (CorporateCustomer) dest.getItem(tourCount).getUser();
+                    CorporateCustomer corp = (CorporateCustomer) dest.getOrder(tourCount).getUser();
                     System.out.println("Delivery Order " + (i));
                     System.out.println("================");
-                    System.out.println("Address: " + dest.getItem(tourCount).getUser().getAddress());
+                    System.out.println("Address: " + dest.getOrder(tourCount).getUser().getAddress());
                     if (order instanceof CatalogOrders) {
                         System.out.println("Order ID: " + ((CatalogOrders) order).getOrderID());
                     } else {
@@ -422,33 +430,33 @@ public class Delivery {
 
                     }
                     System.out.println("Company Name: " + corp.getCompany());
-                    System.out.println("Name: " + dest.getItem(tourCount).getUser().getUsername());
-                    System.out.println("Contact: " + dest.getItem(tourCount).getUser().getPhone());
-                    System.out.println("Delivery Date: " + dateFormat.format(dest.getItem(tourCount).getOrderDate()));
-                    System.out.println("Order type: " + dest.getItem(tourCount).getOrderType());
-                    System.out.println("Payment: RM" + String.format("%.2f", dest.getItem(tourCount).getOrderAmt()) + "\n");
+                    System.out.println("Name: " + dest.getOrder(tourCount).getUser().getUsername());
+                    System.out.println("Contact: " + dest.getOrder(tourCount).getUser().getPhone());
+                    System.out.println("Delivery Date: " + dateFormat.format(dest.getOrder(tourCount).getOrderDate()));
+                    System.out.println("Order type: " + dest.getOrder(tourCount).getOrderType());
+                    System.out.println("Payment: RM" + String.format("%.2f", dest.getOrder(tourCount).getOrderAmt()) + "\n");
                 } else {
                     System.out.println("Delivery Order " + (i));
                     System.out.println("================");
-                    System.out.println("Address: " + dest.getItem(tourCount).getUser().getAddress());
+                    System.out.println("Address: " + dest.getOrder(tourCount).getUser().getAddress());
                     if (order instanceof CatalogOrders) {
                         System.out.println("Order ID: " + ((CatalogOrders) order).getOrderID());
                     } else {
                         System.out.println("Order ID: " + ((CustomizedPackage) order).getOrderID());
 
                     }
-                    System.out.println("Name: " + dest.getItem(tourCount).getUser().getUsername());
-                    System.out.println("Contact: " + dest.getItem(tourCount).getUser().getPhone());
-                    System.out.println("Delivery Date: " + dateFormat.format(dest.getItem(tourCount).getOrderDate()));
-                    System.out.println("Order type: " + dest.getItem(tourCount).getOrderType());
-                    System.out.println("Payment: RM" + String.format("%.2f", dest.getItem(tourCount).getOrderAmt()) + "\n");
+                    System.out.println("Name: " + dest.getOrder(tourCount).getUser().getUsername());
+                    System.out.println("Contact: " + dest.getOrder(tourCount).getUser().getPhone());
+                    System.out.println("Delivery Date: " + dateFormat.format(dest.getOrder(tourCount).getOrderDate()));
+                    System.out.println("Order type: " + dest.getOrder(tourCount).getOrderType());
+                    System.out.println("Payment: RM" + String.format("%.2f", dest.getOrder(tourCount).getOrderAmt()) + "\n");
                 }
-                totalPayment += dest.getItem(tourCount).getOrderAmt();
+                totalPayment += dest.getOrder(tourCount).getOrderAmt();
             }
         }
 
-        System.out.println("Origin: " + shopAddress);
-        System.out.println("Total Payment Amount: RM" + String.format("%.2f", totalPayment) + "\n");
+        System.out.println("Back to Origin: " + shopAddress);
+        System.out.println("\nTotal Payment Amount: RM" + String.format("%.2f", totalPayment) + "\n");
 
         System.out.println("1. Record Payment");
         System.out.println("2. Back");
@@ -460,8 +468,8 @@ public class Delivery {
             System.out.println("Enter Order ID to make payment :");
             String orderID = s.nextLine();
 
-            LinkedList<CatalogOrders> catalogOrder = FioreFlowershop.getCatalogOrder();
-            LinkedList<CustomizedPackage> customOrder = FioreFlowershop.getReadyOrder();
+            OrderListInterface<CatalogOrders> catalogOrder = FioreFlowershop.getCatalogOrder();
+            OrderListInterface<CustomizedPackage> customOrder = FioreFlowershop.getReadyOrder();
 
             Iterator<CatalogOrders> catIterator = catalogOrder.getIterator();
             Iterator<CustomizedPackage> cusIterator = customOrder.getIterator();
@@ -549,7 +557,7 @@ public class Delivery {
                             double change = payAmt - matchOrder.getOrderAmt();
                             matchOrder.setPaymentStatus(true);
                             matchOrder.setOrderStatus("Picked Up");
-                            paidOrder.add(matchOrder);
+                            paidOrder.addOrder(matchOrder);
 
                             if (change == 0) {
                                 System.out.println("Payment Change: No changes");
@@ -686,11 +694,18 @@ public class Delivery {
 
                 int orderChoice = s.nextInt();
 
-                if (matchOrder.getItem(orderChoice).isPaymentStatus()) {
+                Order order = matchOrder.getItem(orderChoice);
+
+                if (order instanceof CatalogOrders) {
+
+                } else {
+
+                }
+                if (order.isPaymentStatus()) {
                     System.out.println("The selected order already paid!");
                     FioreFlowershop.orderMenu();
                 } else {
-                    System.out.println("Total Amount: " + String.format("%.2f", matchOrder.getItem(orderChoice).getOrderAmt()));
+                    System.out.println("Total Amount: " + String.format("%.2f", ((CustomizedPackage) order).CalculateOrder()));
                     double payAmt, change = 0;
 
                     do {
@@ -700,12 +715,11 @@ public class Delivery {
                         if (payAmt < matchOrder.getItem(orderChoice).getOrderAmt()) {
                             System.out.println("Insufficient amount, please reenter amount!");
 
-                        } else if (payAmt >= matchOrder.getItem(orderChoice).getOrderAmt()) {
+                        } else if (payAmt >= ((CustomizedPackage) order).CalculateOrder()) {
 
-                            change = payAmt - matchOrder.getItem(orderChoice).getOrderAmt();
-                            matchOrder.getItem(orderChoice).setPaymentStatus(true);
-                            matchOrder.getItem(orderChoice).setOrderStatus("Picked Up");
-                            paidOrder.add(matchOrder.getItem(orderChoice));
+                            change = CalculatePayment(payAmt, order);
+                            setPaymentStatus(order);
+                            paidOrder.add(order);
 
                             if (change == 0) {
                                 System.out.println("Payment Change: No changes");
@@ -713,17 +727,26 @@ public class Delivery {
                                 System.out.println("Payment Change: RM " + String.format("%.2f", change));
                             }
 
-                            matchOrder.getItem(orderChoice).setPaymentTime(new Date());
-                            matchOrder.getItem(orderChoice).setDateOfReceive(new Date());
-                            genReceipt(matchOrder.getItem(orderChoice), payAmt, change);
+                            genReceipt(order, payAmt, change);
 
                         }
-                    } while (payAmt < matchOrder.getItem(orderChoice).getOrderAmt());
+                    } while (payAmt < ((CustomizedPackage) order).CalculateOrder());
                 }
-            } else {
-                FioreFlowershop.counterStaff();
             }
         }
+
+    }
+
+    public static double CalculatePayment(double payAmt, Order order) {
+        double change = payAmt - order.getOrderAmt();
+        return change;
+    }
+
+    public static void setPaymentStatus(Order order) {
+        order.setPaymentStatus(true);
+        order.setOrderStatus("Delivered");
+        order.setPaymentTime(new Date());
+        order.setDateOfReceive(new Date());
 
     }
 
@@ -796,22 +819,25 @@ public class Delivery {
             System.out.println("Thank You For Choosing Fiore Flowershop, Please Come Again! :D");
             System.out.println("====================================================================================================");
         }
-        FioreFlowershop.counterStaff();
+
+        //FioreFlowershop.counterStaff();
     }
 
-    public static void searchPaidDelivery(LinkedList<Order> paidOrder) {
+    public static void searchPaidDelivery(OrderListInterface<Order> paidOrder) {
 
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         DateFormat dt = new SimpleDateFormat("HH:mm");
         DateFormat dfdt = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-        Order order = paidOrder.getItem(1);
+        Order order = paidOrder.getOrder(1);
 
-        System.out.println("Delivery Order Payment History");
+        System.out.println("\nDelivery Order Payment History");
         System.out.println("|No.|\t|Order ID|\t|Order Type|\t|Order Date|\t\t|Payment Amount (RM)|\t|Payment Status|\t|Delivered Date|");
         System.out.println("=============================================================================================================================================================");
 
-        if (order instanceof CatalogOrders) {
+        if (order == null) {
+            System.out.println(RED + "No order found!");
+        } else if (order instanceof CatalogOrders) {
 
             System.out.print(1 + "\t");
             System.out.print(((CatalogOrders) order).getOrderID() + "\t\t");

@@ -11,6 +11,8 @@ import com.mycompany.fioreflowershop.adt.ArrayQueue;
 import com.mycompany.fioreflowershop.adt.LinkedList;
 import com.mycompany.fioreflowershop.adt.ListInterface;
 import com.mycompany.fioreflowershop.adt.ListIteratorInterface;
+import com.mycompany.fioreflowershop.adt.OrderList;
+import com.mycompany.fioreflowershop.adt.OrderListInterface;
 import com.mycompany.fioreflowershop.adt.QueueInterface;
 import com.mycompany.fioreflowershop.modal.CatalogOrders;
 import com.mycompany.fioreflowershop.modal.CatalogPackage;
@@ -38,31 +40,34 @@ public class Pickup {
 
     static Scanner sc = new Scanner(System.in);
 
-    LinkedList<CustomizedPackage> customPackageList = new LinkedList<>();
+    OrderListInterface<CustomizedPackage> customPackageList = new OrderList<>();
 
-    public static void searchPickUp(LinkedList<CatalogOrders> catalogOrder, Date date, LinkedList<CustomizedPackage> customizeOrder) {
-        LinkedList<CatalogOrders> unOrderList = new LinkedList<CatalogOrders>();
-        LinkedList<CustomizedPackage> customOrder = new LinkedList<CustomizedPackage>();
-        LinkedList<Order> matchedList = new LinkedList<>();
+    public static void searchPickUp(OrderListInterface<CatalogOrders> catalogOrder, Date date, OrderListInterface<CustomizedPackage> customizeOrder) {
+        OrderListInterface<CatalogOrders> unOrderList = new OrderList<CatalogOrders>();
+        OrderListInterface<CustomizedPackage> customOrder = new OrderList<CustomizedPackage>();
+        OrderListInterface<Order> matchedList = new OrderList<>();
 
         Iterator<CatalogOrders> catalogIterator = catalogOrder.getIterator();
         Iterator<CustomizedPackage> CustomIterator = customizeOrder.getIterator();
 
         // Get all delivery order for Catalog Order
         while (catalogIterator.hasNext()) {
-            if (catalogIterator.next().getOrderType().equals("Pick Up")) {
-                unOrderList.add(catalogIterator.next());
+            CatalogOrders order = catalogIterator.next();
+
+            if (order.getOrderType().equals("Pick Up")) {
+                unOrderList.addOrder(order);
             }
         }
 
         // Get all delivery order for Customize Package
         while (CustomIterator.hasNext()) {
-            if (CustomIterator.next().getOrderType().equals("Pick Up")) {
-                customOrder.add(CustomIterator.next());
+            CustomizedPackage order = CustomIterator.next();
+
+            if (order.getDeliveryType().getName().equals("Pick Up")) {
+                customOrder.addOrder(order);
             }
         }
 
-        //int count = customOrder.getBackIndex();
         Calendar cal = Calendar.getInstance();
         Calendar listCal = Calendar.getInstance();
         Calendar cal1 = Calendar.getInstance();
@@ -77,20 +82,20 @@ public class Pickup {
 
         for (int i = 1; i <= unOrderList.getTotalEntries(); i++) {
 
-            listCal.setTime(unOrderList.getItem(i).getOrderDate());
+            listCal.setTime(unOrderList.getOrder(i).getOrderDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
             year = listCal.get(Calendar.YEAR);
 
             if (day == userDay && month == userMonth && year == userYear) {
-                matchedList.add(unOrderList.getItem(i));
+                matchedList.addOrder(unOrderList.getOrder(i));
             }
         }
 
         for (int i = 1; i <= customOrder.getTotalEntries(); i++) {
 
-            listCal.setTime(customOrder.getItem(i).getOrderDate());
+            listCal.setTime(customOrder.getOrder(i).getOrderDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
@@ -101,7 +106,7 @@ public class Pickup {
             userYear = cal.get(Calendar.YEAR);
 
             if (day == userDay && month == userMonth && year == userYear) {
-                matchedList.add(customOrder.getItem(i));
+                matchedList.addOrder(customOrder.getOrder(i));
             }
         }
 
@@ -123,41 +128,45 @@ public class Pickup {
         for (int i = 1; i < matchedList.getTotalEntries() - 1; i++) {
             int index = i;
             for (int j = i; j <= matchedList.getTotalEntries(); j++) {
-                if (matchedList.getItem(j).getOrderDate().before(matchedList.getItem(index).getOrderDate())) {
+                if (matchedList.getOrder(j).getOrderDate().before(matchedList.getOrder(index).getOrderDate())) {
                     index = j; //searching for lowest index  
                 }
             }
-            Order smallerOrder = matchedList.getItem(index);
-            matchedList.replace(index, matchedList.getItem(i));
-            matchedList.replace(i, smallerOrder);
+            Order smallerOrder = matchedList.getOrder(index);
+            matchedList.replaceOrder(index, matchedList.getOrder(i));
+            matchedList.replaceOrder(i, smallerOrder);
 
         }
 
         displaySortedPickup(matchedList);
     }
 
-    public static void sortPickupOrder(LinkedList<CatalogOrders> catalogOrder, LinkedList<CustomizedPackage> customizeOrder) {
+    public static void sortPickupOrder(OrderListInterface<CatalogOrders> catalogOrder, OrderListInterface<CustomizedPackage> customizeOrder) {
 
-        ListInterface<Order> sortedList = new LinkedList<>();
+        OrderListInterface<Order> sortedList = new OrderList<>();
 
-        LinkedList<CatalogOrders> unOrderList = new LinkedList<CatalogOrders>();
-        LinkedList<CustomizedPackage> customOrder = new LinkedList<CustomizedPackage>();
-        LinkedList<Order> matchedList = new LinkedList<>();
+        OrderListInterface<CatalogOrders> unOrderList = new OrderList<CatalogOrders>();
+        OrderListInterface<CustomizedPackage> customOrder = new OrderList<CustomizedPackage>();
+        OrderListInterface<Order> matchedList = new OrderList<>();
 
         Iterator<CatalogOrders> catalogIterator = catalogOrder.getIterator();
         Iterator<CustomizedPackage> CustomIterator = customizeOrder.getIterator();
 
         // Get all delivery order for Catalog Order
         while (catalogIterator.hasNext()) {
-            if (catalogIterator.next().getOrderType().equals("Pick Up")) {
-                unOrderList.add(catalogIterator.next());
+            CatalogOrders order = catalogIterator.next();
+
+            if (order.getOrderType().equals("Pick Up")) {
+                unOrderList.addOrder(order);
             }
         }
 
         // Get all delivery order for Customize Package
         while (CustomIterator.hasNext()) {
-            if (CustomIterator.next().getOrderType().equals("Pick Up")) {
-                customOrder.add(CustomIterator.next());
+            CustomizedPackage order = CustomIterator.next();
+
+            if (order.getDeliveryType().getName().equals("Pick Up")) {
+                customOrder.addOrder(order);
             }
         }
 
@@ -174,26 +183,26 @@ public class Pickup {
         userYear = cal.get(Calendar.YEAR);
 
         for (int j = 1; j <= unOrderList.getTotalEntries(); j++) {
-            listCal.setTime(unOrderList.getItem(j).getOrderDate());
+            listCal.setTime(unOrderList.getOrder(j).getRetrieveDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
             year = listCal.get(Calendar.YEAR);
 
             if (day == userDay && month == userMonth && year == userYear) {
-                sortedList.add(unOrderList.getItem(j));
+                sortedList.addOrder(unOrderList.getOrder(j));
             }
         }
 
         for (int j = 1; j <= customOrder.getTotalEntries(); j++) {
-            listCal.setTime(customOrder.getItem(j).getOrderDate());
+            listCal.setTime(customOrder.getOrder(j).getRetrieveDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
             year = listCal.get(Calendar.YEAR);
 
             if (day == userDay && month == userMonth && year == userYear) {
-                sortedList.add(customOrder.getItem(j));
+                sortedList.addOrder(customOrder.getOrder(j));
             }
         }
 
@@ -213,20 +222,20 @@ public class Pickup {
         for (int i = 1; i < sortedList.getTotalEntries() - 1; i++) {
             int index = i;
             for (int j = i; j <= sortedList.getTotalEntries(); j++) {
-                if (sortedList.getItem(j).getOrderDate().before(sortedList.getItem(index).getOrderDate())) {
+                if (sortedList.getOrder(j).getRetrieveDate().before(sortedList.getOrder(index).getRetrieveDate())) {
                     index = j; //searching for lowest index  
                 }
             }
-            Order smallerOrder = sortedList.getItem(index);
-            sortedList.replace(index, sortedList.getItem(i));
-            sortedList.replace(i, smallerOrder);
+            Order smallerOrder = sortedList.getOrder(index);
+            sortedList.replaceOrder(index, sortedList.getOrder(i));
+            sortedList.replaceOrder(i, smallerOrder);
         }
 
         displaySortedPickup(sortedList);
 
     }
 
-    public static void displaySortedPickup(ListInterface<Order> orderedList) {
+    public static void displaySortedPickup(OrderListInterface<Order> orderedList) {
 
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         DateFormat dt = new SimpleDateFormat("HH:mm");
@@ -235,7 +244,7 @@ public class Pickup {
         LinkedList<CustomizedPackage> customOrder = new LinkedList<CustomizedPackage>();
 
         for (int i = 1; i <= orderedList.getTotalEntries(); i++) {
-            Order order = orderedList.getItem(i);
+            Order order = orderedList.getOrder(i);
             if (order instanceof CatalogOrders) {
                 catalogOrder.add((CatalogOrders) order);
             } else {
@@ -331,10 +340,10 @@ public class Pickup {
 //        }
     }
 
-    public static void searchUserPickUp(String userID, LinkedList<CatalogOrders> catalogOrder, LinkedList<CustomizedPackage> customOrder, LinkedList<Order> paidOrder) {
+    public static void searchUserPickUp(String userID, OrderListInterface<CatalogOrders> catalogOrder, OrderListInterface<CustomizedPackage> customOrder, OrderListInterface<Order> paidOrder) {
 
-        LinkedList<CatalogOrders> pickuporder = catalogOrder;
-        LinkedList<Order> matchOrder = new LinkedList<>();
+        OrderListInterface<CatalogOrders> pickuporder = catalogOrder;
+        OrderListInterface<Order> matchOrder = new OrderList<>();
         User user = null;
 
         Scanner s = new Scanner(System.in);
@@ -350,7 +359,7 @@ public class Pickup {
 
             if (order.getUser().getUsername().equals(userID) && order.getOrderType().equals("Pick Up") && (order.getUser() instanceof Consumer)) {
                 user = order.getUser();
-                matchOrder.add(order);
+                matchOrder.addOrder(order);
             }
         }
 
@@ -361,7 +370,7 @@ public class Pickup {
 
             if (order.getUser().getUsername().equals(userID) && order.getDeliveryType().getName().equals("Pick Up") && (order.getUser() instanceof Consumer)) {
                 user = order.getUser();
-                matchOrder.add(order);
+                matchOrder.addOrder(order);
             }
         }
 
@@ -381,7 +390,7 @@ public class Pickup {
             System.out.println("=============================================================================================================================================================");
 
             for (int i = 1; i <= matchOrder.getTotalEntries(); i++) {
-                Order order = matchOrder.getItem(i);
+                Order order = matchOrder.getOrder(i);
 
                 if (user instanceof Consumer) {
                     if (order instanceof CatalogOrders) {
@@ -438,29 +447,29 @@ public class Pickup {
 
                 int orderChoice = s.nextInt();
 
-                Order order = matchOrder.getItem(orderChoice);
+                Order order = matchOrder.getOrder(orderChoice);
 
                 if (order instanceof CatalogOrders) {
-                    if (matchOrder.getItem(orderChoice).isPaymentStatus()) {
+                    if (matchOrder.getOrder(orderChoice).isPaymentStatus()) {
                         System.out.println("The selected order already paid!");
                         FioreFlowershop.orderMenu();
                     } else {
-                        System.out.println("Total Amount: " + String.format("%.2f", matchOrder.getItem(orderChoice).getOrderAmt()));
+                        System.out.println("Total Amount: " + String.format("%.2f", matchOrder.getOrder(orderChoice).getOrderAmt()));
                         double payAmt, change = 0;
 
                         do {
                             System.out.println("Enter amount to pay: ");
                             payAmt = s.nextDouble();
 
-                            if (payAmt < matchOrder.getItem(orderChoice).getOrderAmt()) {
+                            if (payAmt < matchOrder.getOrder(orderChoice).getOrderAmt()) {
                                 System.out.println("Insufficient amount, please reenter amount!");
 
-                            } else if (payAmt >= matchOrder.getItem(orderChoice).getOrderAmt()) {
+                            } else if (payAmt >= matchOrder.getOrder(orderChoice).getOrderAmt()) {
 
-                                change = payAmt - matchOrder.getItem(orderChoice).getOrderAmt();
-                                matchOrder.getItem(orderChoice).setPaymentStatus(true);
-                                matchOrder.getItem(orderChoice).setOrderStatus("Picked Up");
-                                paidOrder.add(matchOrder.getItem(orderChoice));
+                                change = payAmt - matchOrder.getOrder(orderChoice).getOrderAmt();
+                                matchOrder.getOrder(orderChoice).setPaymentStatus(true);
+                                matchOrder.getOrder(orderChoice).setOrderStatus("Picked Up");
+                                paidOrder.addOrder(matchOrder.getOrder(orderChoice));
 
                                 if (change == 0) {
                                     System.out.println("Payment Change: No changes");
@@ -468,12 +477,12 @@ public class Pickup {
                                     System.out.println("Payment Change: RM " + String.format("%.2f", change));
                                 }
 
-                                matchOrder.getItem(orderChoice).setPaymentTime(new Date());
-                                matchOrder.getItem(orderChoice).setDateOfReceive(new Date());
-                                genReceipt(matchOrder.getItem(orderChoice), payAmt, change);
+                                matchOrder.getOrder(orderChoice).setPaymentTime(new Date());
+                                matchOrder.getOrder(orderChoice).setDateOfReceive(new Date());
+                                genReceipt(matchOrder.getOrder(orderChoice), payAmt, change);
 
                             }
-                        } while (payAmt < matchOrder.getItem(orderChoice).getOrderAmt());
+                        } while (payAmt < matchOrder.getOrder(orderChoice).getOrderAmt());
                     }
                 } else {
                     if (order.isPaymentStatus()) {
@@ -492,10 +501,9 @@ public class Pickup {
 
                             } else if (payAmt >= ((CustomizedPackage) order).CalculateOrder()) {
 
-                                change = payAmt - ((CustomizedPackage) order).CalculateOrder();
-                                order.setPaymentStatus(true);
-                                order.setOrderStatus("Picked Up");
-                                paidOrder.add(matchOrder.getItem(orderChoice));
+                                change = CalculatePayment(payAmt, ((CustomizedPackage) order).CalculateOrder());
+                                setPaymentStatus(order);
+                                paidOrder.addOrder(order);
 
                                 if (change == 0) {
                                     System.out.println("Payment Change: No changes");
@@ -503,18 +511,28 @@ public class Pickup {
                                     System.out.println("Payment Change: RM " + String.format("%.2f", change));
                                 }
 
-                                order.setPaymentTime(new Date());
-                                order.setDateOfReceive(new Date());
                                 genReceipt(order, payAmt, change);
 
                             }
                         } while (payAmt < ((CustomizedPackage) order).CalculateOrder());
                     }
                 }
-            } else {
-                FioreFlowershop.counterStaff();
             }
         }
+
+    }
+
+    public static double CalculatePayment(double payAmt, double totalAmt) {
+
+        double change = payAmt - totalAmt;
+        return change;
+    }
+
+    public static void setPaymentStatus(Order order) {
+        order.setPaymentStatus(true);
+        order.setOrderStatus("Delivered");
+        order.setPaymentTime(new Date());
+        order.setDateOfReceive(new Date());
 
     }
 
@@ -557,14 +575,6 @@ public class Pickup {
             System.out.println("====================================================================================================");
         } else {
 
-//            ListIteratorInterface<Item> cus = ((CustomizedPackage) order).getFlowerList();
-//            CatalogPackage item;
-//            Iterator<CatalogPackage> catIterator = cat.getIterator();
-//
-//            while (catIterator.hasNext()) {
-//                item = catIterator.next();
-//                System.out.println(item.getName() + item.getFlower() + "\t\t\t" + item.getUserQuantity() + "\t\t" + item.getPrice() + "\t\t");
-//            }
             System.out.println("\n\t\t\t\t   Fiore Flowershop SDN.BHD ");
             System.out.println("\t\t\t\t    178, Jalan Sehala, ");
             System.out.println("\t\t\t\t 2404 No U Turn, 53300 Kuala Lumpur");
@@ -577,6 +587,17 @@ public class Pickup {
             System.out.println("ITEM \t\t\t QUANTITY \t PRICE (RM) \t\tDISCOUNT %\t\t AMOUNT (RM)");
             System.out.println("==================================================================================================");
 
+            ListIteratorInterface<Item> flowerList = ((CustomizedPackage) order).getFlowerList();
+
+            Iterator<Item> flowerIterator = flowerList.getIterator();
+
+            Item item;
+
+            while (flowerIterator.hasNext()) {
+                item = flowerIterator.next();
+                System.out.println(item.getName() + "\t\t\t" + item.getQuantity() + "\t\t" + item.getPrice() + "\t\t");
+            }
+
             System.out.println("\n-------------------------------------------------------------------------------------------------");
             System.out.println("\tTOTAL (RM) : \t     \t\t\t\t\t\t\t\t" + String.format("%.2f", ((CustomizedPackage) order).CalculateOrder()));
             System.out.println("---------------------------------------------------------------------------------------------------");
@@ -587,7 +608,6 @@ public class Pickup {
             System.out.println("Thank You For Choosing Fiore Flowershop, Please Come Again :D");
             System.out.println("====================================================================================================");
         }
-        FioreFlowershop.counterStaff();
     }
 }
 

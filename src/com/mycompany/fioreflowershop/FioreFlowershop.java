@@ -32,21 +32,23 @@ public class FioreFlowershop {
     private static CorporateInterface<CorporateCustomer> corporate = new CorporateADT<>();
     private static UserInterface<User> user = new UserADT<>();
 //    private static SortedListInterface<User> testSort = new SortedLinkList<>();
-    private static LinkedList<Order> pickupOrder = new LinkedList<Order>();
-    private static LinkedList<Order> deliveryOrder = new LinkedList<Order>();
-    private static LinkedList<Order> paidOrder = new LinkedList<Order>();
+    private static SortedListInterface<User> testSort = new SortedLinkList<>();
+    private static OrderListInterface<Order> pickupOrder = new OrderList<Order>();
+    private static OrderListInterface<Order> deliveryOrder = new OrderList<Order>();
+    private static OrderListInterface<Order> paidOrder = new OrderList<Order>();
+
     private static Scanner s = new Scanner(System.in);
 
     private static ItemCatalogue itemCatalogue = new ItemCatalogue();
-    private static QueueInterface<CustomizedPackage> customizedPackages = new ArrayQueue<>();
-    private static LinkedList<CustomizedPackage> readyOrders = new LinkedList<>();
+    private static CustomizePackageQueueInterface<CustomizedPackage> customizedPackages = new CustomizePackageQueue<>();
+    private static OrderListInterface<CustomizedPackage> readyOrders = new OrderList<>();
 
     //Catalog Maintenance part
     private static LinkedList<CatalogPackage> normalPackage = new LinkedList<>();
     private static LinkedList<CatalogPackage> discountedPackage = new LinkedList<>();
 
-    private static LinkedList<CatalogOrders> shoppingCart = new LinkedList<>();
-    private static LinkedList<CatalogOrders> catalogOrder = new LinkedList<>();
+    private static OrderListInterface<CatalogOrders> shoppingCart = new OrderList<>();
+    private static OrderListInterface<CatalogOrders> catalogOrder = new OrderList<>();
 
     private static LinkedList<CatalogPackage> catalogPack1 = new LinkedList<>();
     private static LinkedList<CatalogPackage> catalogPack2 = new LinkedList<>();
@@ -97,9 +99,6 @@ public class FioreFlowershop {
         user.addUser(c2);
         user.addUser(c5);
         user.addUser(c3);
-        for(int i = 1; i <= user.getTotalEntries(); i++){
-            System.out.println(user.getItem(i).getEmail());
-        }
         
         consumer.addConsumer(c1);
         consumer.addConsumer(c2);
@@ -108,8 +107,8 @@ public class FioreFlowershop {
         
         corporate.addCorporate(cc1);
         corporate.addCorporate(cc2);
-        corporate.getItem(1).setCreditSpent(4500);
-        corporate.getItem(2).setCreditSpent(1500);
+        corporate.getCorporate(1).setCreditSpent(4500);
+        corporate.getCorporate(2).setCreditSpent(1500);
 
         //Initialize shopping cart
         CatalogPackage cp1 = new CatalogPackage("FlowerStrong", "Stylish", "Small", "", "", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20, 5);
@@ -130,48 +129,48 @@ public class FioreFlowershop {
         CatalogOrders ct6 = new CatalogOrders("C6", catalogPack1, "Delivery", todayDate, c2, "Order Status", 308, false, todayDate, todayDate);
         CatalogOrders ct7 = new CatalogOrders("C7", catalogPack1, "Delivery", todayDate, c1, "Order Status", 308, false, todayDate, todayDate);
 
-        catalogOrder.add(ct1);
-        catalogOrder.add(ct2);
-        catalogOrder.add(ct3);
-        catalogOrder.add(ct4);
-        catalogOrder.add(ct5);
-        catalogOrder.add(ct6);
-        catalogOrder.add(ct7);
+        catalogOrder.addOrder(ct1);
+        catalogOrder.addOrder(ct2);
+        catalogOrder.addOrder(ct3);
+        catalogOrder.addOrder(ct4);
+        catalogOrder.addOrder(ct5);
+        catalogOrder.addOrder(ct6);
+        catalogOrder.addOrder(ct7);
 
-        ListIteratorInterface<Item> styles = new LinkedList<>();
-        ListIteratorInterface<Item> sizes = new LinkedList<>();
-        ListIteratorInterface<Item> flowers = new LinkedList<>();
-        ListIteratorInterface<Item> accessories = new LinkedList<>();
-        ListIteratorInterface<Item> priorities = new LinkedList<>();
-        ListIteratorInterface<Item> deliveryTypes = new LinkedList<>();
+        ItemListInterface<Item> styles = new ItemList<>();
+        ItemListInterface<Item> sizes = new ItemList<>();
+        ItemListInterface<Item> flowers = new ItemList<>();
+        ItemListInterface<Item> accessories = new ItemList<>();
+        ItemListInterface<Item> priorities = new ItemList<>();
+        ItemListInterface<Item> deliveryTypes = new ItemList<>();
 
-        styles.add(new Item("Fan", 10));
-        styles.add(new Item("Elliptical", 10));
-        styles.add(new Item("Vertical", 10));
-        styles.add(new Item("Horizontal", 10));
-        styles.add(new Item("Triangular", 10));
+        styles.addItem(new Item("Fan", 10));
+        styles.addItem(new Item("Elliptical", 10));
+        styles.addItem(new Item("Vertical", 10));
+        styles.addItem(new Item("Horizontal", 10));
+        styles.addItem(new Item("Triangular", 10));
 
-        sizes.add(new Item("Small", 1));
-        sizes.add(new Item("Medium", 2));
-        sizes.add(new Item("Large", 4));
+        sizes.addItem(new Item("Small", 1));
+        sizes.addItem(new Item("Medium", 2));
+        sizes.addItem(new Item("Large", 4));
 
-        flowers.add(new Item("Sunflowers", 250, 10));
-        flowers.add(new Item("Red Roses", 300, 20));
-        flowers.add(new Item("White Roses", 250, 10));
-        flowers.add(new Item("Tulips", 450, 50));
-        flowers.add(new Item("Daffodils", 200, 20));
+        flowers.addItem(new Item("Sunflowers", 250, 10));
+        flowers.addItem(new Item("Red Roses", 300, 20));
+        flowers.addItem(new Item("White Roses", 250, 10));
+        flowers.addItem(new Item("Tulips", 450, 50));
+        flowers.addItem(new Item("Daffodils", 200, 20));
 
-        accessories.add(new Item("None", 0, 1));
-        accessories.add(new Item("Name Card", 5, 20));
-        accessories.add(new Item("Bears", 50, 5));
-        accessories.add(new Item("Woven Basket", 35, 10));
+        accessories.addItem(new Item("None", 0, 1));
+        accessories.addItem(new Item("Name Card", 5, 20));
+        accessories.addItem(new Item("Bears", 50, 5));
+        accessories.addItem(new Item("Woven Basket", 35, 10));
 
-        priorities.add(new Item("Flexi", 1, 6));
-        priorities.add(new Item("Normal", 1.5, 4));
-        priorities.add(new Item("Express", 3, 2));
+        priorities.addItem(new Item("Flexi", 1, 6));
+        priorities.addItem(new Item("Normal", 1.5, 4));
+        priorities.addItem(new Item("Express", 3, 2));
 
-        deliveryTypes.add(new Item("Pick Up", 0));
-        deliveryTypes.add(new Item("Delivery", 10));
+        deliveryTypes.addItem(new Item("Pick Up", 0));
+        deliveryTypes.addItem(new Item("Delivery", 10));
 
         itemCatalogue.setStyles(styles);
         itemCatalogue.setSizes(sizes);
@@ -196,19 +195,21 @@ public class FioreFlowershop {
             package2.getFlowerList().add(testFlowers.getItem(i));
             package3.getFlowerList().add(testFlowers.getItem(i));
             package4.getFlowerList().add(testFlowers.getItem(i));
+            package5.getFlowerList().add(testFlowers.getItem(i));
+            package6.getFlowerList().add(testFlowers.getItem(i));
         }
 
         Consumer customer = new Consumer("Johan", "abcdef", "ncct66@gmail.com", "0165919413", "Gelanggang Squash IAB Genting Highlands, Genting Highlands, 69000 Genting Highlands, Pahang");
         Consumer customer1 = new Consumer("Baba", "abcdef", "ncct66@gmail.com", "0165919413", "7, Jalan Legoland, Medini, 79250 Nusajaya, Johor");
-        customizedPackages.enqueue(package1);
-        customizedPackages.enqueue(package2);
-        customizedPackages.enqueue(package3);
-        customizedPackages.enqueue(package4);
-        customizedPackages.enqueue(package5);
-        customizedPackages.enqueue(package6);
+        customizedPackages.addCustomizedPackage(package1);
+        customizedPackages.addCustomizedPackage(package2);
+        customizedPackages.addCustomizedPackage(package3);
+        customizedPackages.addCustomizedPackage(package4);
+        customizedPackages.addCustomizedPackage(package5);
+        customizedPackages.addCustomizedPackage(package6);
 
-        readyOrders.add(customizedPackages.dequeue());
-        readyOrders.add(customizedPackages.dequeue());
+        readyOrders.addOrder(customizedPackages.removeCustomizedPackage());
+        readyOrders.addOrder(customizedPackages.removeCustomizedPackage());
 
 //        CustomizedPackage specialPackage = new CustomizedPackage(styles.getItem(1), sizes.getItem(2), flowers.getItem(5), accessories.getItem(2), priorities.getItem(1), deliveryTypes.getItem(2), customer);
 //        specialPackage.setDeliveryDate(Calendar.getInstance().getTime());
@@ -338,8 +339,9 @@ public class FioreFlowershop {
     public static void manager() {
         while (true) {
             System.out.println("\nPlease Select The Options Below.");
-            System.out.println(GREEN + "[1] " + RESET + "Customer Maintenance");
+            System.out.println(GREEN + "[1] " + RESET + "Edit Customer Details");
             System.out.println(GREEN + "[2] " + RESET + "Create Corporate Customer Account");
+            System.out.println(GREEN + "[3] " + RESET + "Remove Customer Account");
             System.out.println(GREEN + "[3] " + RESET + "Modify the product catalogue");
             //System.out.println(GREEN + "[3] " + RESET + "Add a product to catalog");
             //System.out.println(GREEN + "[4] " + RESET + "Remove a product from catalog");
@@ -354,7 +356,9 @@ public class FioreFlowershop {
                 CustomerMaintenance.staffEditType();
             } else if (managerChoice == 2) {
                 CustomerMaintenance.staffCreateCorporate();
-            } else if (managerChoice == 3) {
+            } else if(managerChoice == 3){
+                CustomerMaintenance.staffRemoveCust();
+            } else if (managerChoice == 4) {
                 CatalogMaintenance.catalogMaintenance(normalPackage, discountedPackage);
             } else {
                 break;
@@ -484,7 +488,7 @@ public class FioreFlowershop {
             } else if (deliveryStaffChoice == 4) {
                 Delivery.searchPaidDelivery(paidOrder);
             } else if (deliveryStaffChoice == 5) {
-                //MISSING FUNCTION
+                break;
             } else {
                 break;
             }
@@ -628,32 +632,32 @@ public class FioreFlowershop {
         consumer = consumer;
     }
 
-    public static ConsumerInterface<Consumer> getCustomer() {
+    public static ConsumerInterface<Consumer> getConsumerList() {
         return consumer;
     }
 
-    public static CorporateInterface<CorporateCustomer> getCorporate() {
+    public static CorporateInterface<CorporateCustomer> getCorporateList() {
         return corporate;
     }
 
-    public static UserInterface<User> getUser() {
+    public static UserInterface<User> getUserList() {
         return user;
     }
 
-    public static LinkedList<CatalogOrders> getShoppingCart() {
+    public static OrderListInterface<CatalogOrders> getShoppingCart() {
         return shoppingCart;
 
     }
 
-    public static LinkedList<CatalogOrders> getCatalogOrder() {
+    public static OrderListInterface<CatalogOrders> getCatalogOrder() {
         return catalogOrder;
     }
 
-    public static LinkedList<CustomizedPackage> getReadyOrder() {
+    public static OrderListInterface<CustomizedPackage> getReadyOrder() {
         return readyOrders;
     }
 
-    public static LinkedList<Order> getPaidOrder() {
+    public static OrderListInterface<Order> getPaidOrder() {
         return paidOrder;
     }
 

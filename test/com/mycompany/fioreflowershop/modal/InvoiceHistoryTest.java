@@ -6,6 +6,8 @@
 package com.mycompany.fioreflowershop.modal;
 
 import com.mycompany.fioreflowershop.adt.LinkedList;
+import com.mycompany.fioreflowershop.adt.OrderList;
+import com.mycompany.fioreflowershop.adt.OrderListInterface;
 import java.util.Calendar;
 import java.util.Date;
 import org.junit.Before;
@@ -18,11 +20,11 @@ import static org.junit.Assert.*;
  */
 public class InvoiceHistoryTest {
     public InvoiceHistory instance; public Date datepay;
-    public LinkedList<CatalogOrders> catalogOrd;
+    public OrderListInterface<CatalogOrders> catalogOrd;
     public CorporateCustomer corpCust;
     public InvoiceHistoryTest() {
         datepay = Calendar.getInstance().getTime();
-        catalogOrd = new LinkedList<>();
+        catalogOrd = new OrderList<>();
         instance = new InvoiceHistory();
         corpCust = new CorporateCustomer();
         instance.setDatepay(datepay);
@@ -87,8 +89,8 @@ public class InvoiceHistoryTest {
     @Test
     public void testGetCatalogOrder() {
         System.out.println("getCatalogOrder");
-        LinkedList<CatalogOrders> expResult = catalogOrd;
-        LinkedList<CatalogOrders> result = instance.getCatalogOrder();
+        OrderListInterface<CatalogOrders> expResult = catalogOrd;
+        OrderListInterface<CatalogOrders> result = instance.getCatalogOrder();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
     }
@@ -99,7 +101,7 @@ public class InvoiceHistoryTest {
     @Test
     public void testSetCatalogOrder() {
         System.out.println("setCatalogOrder");
-        LinkedList<CatalogOrders> catalogOrder = new LinkedList<>();
+        OrderListInterface<CatalogOrders> catalogOrder = new OrderList<>();
         instance.setCatalogOrder(catalogOrder);
         // TODO review the generated test code and remove the default call to fail.
     }

@@ -11,8 +11,8 @@ package com.mycompany.fioreflowershop.adt;
  */
 public interface ConsumerInterface<T extends Comparable<? super T>> {
     public boolean addConsumer(T newEntry);
-    public int getTotalEntries();
+    public int getTotalConsumer();
     public boolean isEmpty();
-    public T getItem(int givenPosition);
+    public T getConsumer(int givenPosition);
     public T remove(int givenPosition);
 }
