@@ -287,8 +287,7 @@ public class FioreFlowershop {
             System.out.println(GREEN + "[2] " + RESET + "Staff");
             System.out.println(GREEN + "[3] " + RESET + "Exit System");
             System.out.print("Selection: ");
-            int userTypeChoice = s.nextInt();
-            s.nextLine();
+            int userTypeChoice = s.nextInt(); s.nextLine();
             if (userTypeChoice == 1) {
                 CustomerMaintenance.customerOptions();
             } else if (userTypeChoice == 2) {

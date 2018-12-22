@@ -622,7 +622,7 @@ public class CatalogOrder {
         } else if (!shoppingCart.isEmpty()) {
             creditSpent = 0;
             for (int i = 1; i < shoppingCart.getTotalEntries() + 1; i++) {
-                creditSpent += shoppingCart.getOrder(i).getOrderAmt();
+                creditSpent += shoppingCart.getItem(i).getOrderAmt();
             }
             creditSpent += itemPrice;
         }
