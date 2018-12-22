@@ -200,6 +200,7 @@ public class CatalogOrder {
             System.out.print("Please enter a number (1-2): ");
             if (scan.hasNextInt()) {
                 userMenuOption = scan.nextInt();
+                scan.nextLine();
                 isInteger = true;
             } else {
                 isInteger = false;
@@ -216,6 +217,8 @@ public class CatalogOrder {
                 System.out.print("\nDo you want to proceed to select your item retrieval method? (Y/y = yes AND No = any key, go back to menu)");
 
                 String con = scan.next();
+
+                scan.nextLine();
 
                 if (con.equalsIgnoreCase("Y")) {
                     int retrieveItem = 0;
@@ -310,6 +313,8 @@ public class CatalogOrder {
                     System.out.print("Do you wish to checkout? (Y/y = yes OR N/n = no)");
                     String checkout = scan.next();
 
+                    scan.nextLine();
+
                     if (checkout.equalsIgnoreCase("Y")) {
                         checkoutStatus = true;
                         //Generate sales order for different customer
@@ -388,7 +393,7 @@ public class CatalogOrder {
         } while (!checkConfirm);
 
         showShoppingCart(catalogPack);
-        
+
         String con = "";
         boolean checkCon = false;
         do {
@@ -400,16 +405,15 @@ public class CatalogOrder {
             } else if (con.equalsIgnoreCase("N") && !(catalogPack.isEmpty())) {
                 removeCartItem(normalPackage, discountedPackage);
                 checkCon = true;
-            }else if(con.equalsIgnoreCase("N") && catalogPack.isEmpty()){
+            } else if (con.equalsIgnoreCase("N") && catalogPack.isEmpty()) {
                 System.out.println("");
                 System.out.println(FioreFlowershop.ConsoleColors.GREEN + "There is no item left in your shopping cart" + FioreFlowershop.ConsoleColors.BLACK);
                 System.out.println("");
                 displayCatalog(normalPackage, discountedPackage);
                 checkCon = true;
             }
-        }while(!checkCon);
+        } while (!checkCon);
 
-    
     }
 
     public static void salesOrder() {
@@ -564,7 +568,7 @@ public class CatalogOrder {
             if (freshFlower.getItem(itemSelection).getQuantity() == 0) {
                 haveStock = false;
                 System.out.println("");
-                System.out.println(FioreFlowershop.ConsoleColors.RED + "Sorry, the item type you have selected is out of stock.\n" + FioreFlowershop.ConsoleColors.BLACK);              
+                System.out.println(FioreFlowershop.ConsoleColors.RED + "Sorry, the item type you have selected is out of stock.\n" + FioreFlowershop.ConsoleColors.BLACK);
             }
         } while (itemSelection == 0 || itemSelection > freshFlower.getTotalEntries() || !(isInteger) || !(haveStock));
 

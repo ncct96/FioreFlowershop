@@ -88,9 +88,9 @@ public class FioreFlowershop {
         Consumer c2 = new Consumer("testing", "testing", "testing@example.com", "0125566922", "Penang");
         Consumer c3 = new Consumer("testing1", "testing", "testing1@example.com", "0125566922", "Cheras");
         Consumer c4 = new Consumer("testing2", "testing", "testing2@example.com", "0125566922", "Pahang");
-        Consumer c5 = new Consumer("manager", "abc" ,"manager@example.com", "012","lmao");
-        Consumer c6 = new Consumer("manager1", "abc" ,"manager1@example.com", "012","lmao");
-        
+        Consumer c5 = new Consumer("manager", "abc", "manager@example.com", "012", "lmao");
+        Consumer c6 = new Consumer("manager1", "abc", "manager1@example.com", "012", "lmao");
+
         testSort.add(cc2);
         testSort.add(cc1);
         testSort.add(c1);
@@ -98,15 +98,15 @@ public class FioreFlowershop {
         testSort.add(c5);
         testSort.add(c3);
         CustomerMaintenance.sortUserList();
-        for(int i = 1; i <= user.getTotalEntries(); i++){
-                System.out.println(user.getItem(i).getEmail());
+        for (int i = 1; i <= user.getTotalEntries(); i++) {
+            System.out.println(user.getItem(i).getEmail());
         }
-        
+
         consumer.add(c1);
         consumer.add(c2);
         consumer.add(c3);
         consumer.add(c4);
-        
+
         corporate.add(cc1);
         corporate.add(cc2);
         corporate.getItem(1).setCreditSpent(4500);
@@ -272,7 +272,6 @@ public class FioreFlowershop {
         normalPackage.add(new CatalogPackage("Package 5.00", "Style 1.0", "Small", "Wooden box", "Grand opening", "Flower 1.0", "Bear 1.0", "Flower arrangement", "", 0, 10, 120.00, 0, "Active"));
         normalPackage.add(new CatalogPackage("Package 6.00", "Style 2.0", "Small", "Jar", "Graduation", "Flower 2.0", "Bear 2.0", "Flower arrangement", "", 0, 10, 90.00, 0, "Active"));
         normalPackage.add(new CatalogPackage("Package 7.00", "Style 1.0", "Small", "Bud vase", "Valentine", "Flower 1.0", "Bear 1.0", "Flower arrangement", "", 0, 10, 120.00, 0, "Active"));
-        
 
         discountedPackage.add(new CatalogPackage("Package 1", "Style 1", "Small", "Jar", "Visit patient", "Flower 1", "Bear 1", "Flower arrangement", "December", 2018, 10, 90.00, 10, "Active"));
         discountedPackage.add(new CatalogPackage("Package 2", "Style 2", "Small", "Jar", "Visit patient", "Flower 2", "Bear 2", "Flower arrangement", "December", 2018, 9, 90.00, 10, "Active"));
@@ -411,7 +410,7 @@ public class FioreFlowershop {
                 //MISSING FUNCTION
             } else if (counterStaffChoice == 4) {
                 //MISSING FUNCTION
-            } else if(counterStaffChoice == 5){
+            } else if (counterStaffChoice == 5) {
                 userTypeSelection();
             } else {
                 break;
@@ -453,34 +452,39 @@ public class FioreFlowershop {
             int deliveryStaffChoice = s.nextInt();
             s.nextLine();
             if (deliveryStaffChoice == 1) {
-                try {
-                    Delivery.sortRouteDelivery(catalogOrder, readyOrders, shopAddress);
-                } catch (ApiException ex) {
-                    Logger.getLogger(FioreFlowershop.class
-                            .getName()).log(Level.SEVERE, null, ex);
 
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(FioreFlowershop.class
-                            .getName()).log(Level.SEVERE, null, ex);
+                System.out.println(GREEN + "[1]" + RESET + "Today's Sorted Delivery Order List");
+                System.out.println(GREEN + "[2]" + RESET + "Search Sorted Delivery Order List by Date");
+                int deliveryChoice = s.nextInt();
+                s.nextLine();
 
-                } catch (IOException ex) {
-                    Logger.getLogger(FioreFlowershop.class
-                            .getName()).log(Level.SEVERE, null, ex);
+                if (deliveryChoice == 1) {
+                    try {
+                        Delivery.sortRouteDelivery(catalogOrder, readyOrders, shopAddress);
+                    } catch (ApiException | InterruptedException | IOException ex) {
+                        Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else if (deliveryChoice == 2) {
+                    try {
+                        System.out.print("Please enter date to search (yyyy-MM-dd): ");
+
+                        String dateStr = s.nextLine();
+
+                        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+
+                        Date date = dateformat.parse(dateStr);
+
+                        Delivery.searchSortRouteDelivery(catalogOrder, readyOrders, shopAddress, date);
+                    } catch (ParseException ex) {
+                        Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             } else if (deliveryStaffChoice == 2) {
                 try {
                     Delivery.sortRouteDelivery(catalogOrder, readyOrders, shopAddress);
-                } catch (ApiException ex) {
-                    Logger.getLogger(FioreFlowershop.class
-                            .getName()).log(Level.SEVERE, null, ex);
 
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(FioreFlowershop.class
-                            .getName()).log(Level.SEVERE, null, ex);
-
-                } catch (IOException ex) {
-                    Logger.getLogger(FioreFlowershop.class
-                            .getName()).log(Level.SEVERE, null, ex);
+                } catch (ApiException | InterruptedException | IOException ex) {
+                    Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else if (deliveryStaffChoice == 3) {
                 //MISSING FUNCTION
@@ -647,8 +651,8 @@ public class FioreFlowershop {
     public static LinkedList<User> getUser() {
         return user;
     }
-    
-    public static SortedListInterface<User> getSortedUser(){
+
+    public static SortedListInterface<User> getSortedUser() {
         return testSort;
     }
 

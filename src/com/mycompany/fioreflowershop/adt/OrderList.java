@@ -139,10 +139,6 @@ public class OrderList<T> implements OrderListInterface<T> {
         return result;
     }
 
-    public boolean isFull() {
-        return false;
-    }
-
     public String toString() {
         String outputStr = "";
         Node<T> currentNode = firstNode;

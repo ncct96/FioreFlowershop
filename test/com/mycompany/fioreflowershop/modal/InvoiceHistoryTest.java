@@ -19,9 +19,12 @@ import static org.junit.Assert.*;
  * @author Admin
  */
 public class InvoiceHistoryTest {
-    public InvoiceHistory instance; public Date datepay;
+
+    public InvoiceHistory instance;
+    public Date datepay;
     public OrderListInterface<CatalogOrders> catalogOrd;
     public CorporateCustomer corpCust;
+
     public InvoiceHistoryTest() {
         datepay = Calendar.getInstance().getTime();
         catalogOrd = new OrderList<>();
@@ -32,7 +35,7 @@ public class InvoiceHistoryTest {
         instance.setCatalogOrder(catalogOrd);
         instance.setCorp(corpCust);
     }
-    
+
     @Before
     public void setUp() {
     }
@@ -128,5 +131,5 @@ public class InvoiceHistoryTest {
         instance.setCorp(corpCust);
         // TODO review the generated test code and remove the default call to fail.
     }
-    
+
 }
