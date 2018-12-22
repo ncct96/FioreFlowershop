@@ -303,6 +303,7 @@ public class CustomerMaintenance {
                 System.out.println("[3] Contact Number");
                 System.out.println("[4] Address");
                 System.out.println("[5] Password");
+                System.out.println("[6] Back");
                 System.out.print("Selection : ");
                 int custOptionChoice = s.nextInt(); s.nextLine(); 
                 if (custOptionChoice == 1) { //
@@ -312,6 +313,7 @@ public class CustomerMaintenance {
                         edit = s.nextLine();
                         cust.getConsumer(custEditChoice).setUsername(edit);
                         System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
+                        custEdit = null; break;
                     } catch (Exception e) {
                         System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
                     }
@@ -322,9 +324,11 @@ public class CustomerMaintenance {
                         edit = s.nextLine();
                         if (!edit.contains("@")) {
                             System.out.println("\n" + RED + "Invalid Email Entered. Please Retry." + RESET);
+                            break;
                         }
                         cust.getConsumer(custEditChoice).setEmail(edit);
                         System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
+                        custEdit = null; break;
                     } catch (Exception e) {
                         System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
                     }
@@ -335,9 +339,11 @@ public class CustomerMaintenance {
                         edit = s.nextLine();
                         if (!edit.matches("[0-9]+")) {
                             System.out.println("\n" + RED + "Invalid Contact Number Entered. Please Retry." + RESET); 
+                            break;
                         }
                         cust.getConsumer(custEditChoice).setPhone(edit);
                         System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET); 
+                        custEdit = null; break;
                     } catch (Exception e) {
                         System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET); 
                     }
@@ -348,6 +354,7 @@ public class CustomerMaintenance {
                         edit = s.nextLine();
                         cust.getConsumer(custEditChoice).setAddress(edit);
                         System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
+                        custEdit = null; break;
                     } catch (Exception e) {
                         System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
                     }
@@ -362,14 +369,16 @@ public class CustomerMaintenance {
                         }
                         cust.getConsumer(custEditChoice).setPassword(edit);
                         System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
+                        custEdit = null; break;
                     } catch (Exception e) {
                         System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
                     }
-                } 
+                } else {
+                    break;
+                }
             }catch(Exception e){
-                System.out.println(RED+"\nSorry, Please Only Enter Number."+RESET); break;
+                System.out.println(RED+"\nSorry, Please Only Enter Number."+RESET); s.next();
             }
-            custEdit = null; 
         }
     }
     
@@ -379,26 +388,34 @@ public class CustomerMaintenance {
                 customerListHeader();
                 String email = "";
                 int custEditChoice = 0; int corpEditChoice = 0;
-                System.out.print("\nPlease Enter The Customer's Email For Editing : ");
+                System.out.print("\nPlease Enter The Customer's Email For Editing (ENTER B to BACK) : ");
                 email = s.nextLine();
-                for (int i = 1; i <= user.getTotalUser(); i++) {
-                    if (email.equals(user.getUser(i).getEmail())) {
-                        if (user.getUser(i) instanceof Consumer) {
-                            custEdit = (Consumer) user.getUser(i);
-                            custEditChoice = i;
-                        } else if (user.getUser(i) instanceof CorporateCustomer) {
-                            corpEdit = (CorporateCustomer) user.getUser(i);
-                            corpEditChoice = i;
+                if(email.equalsIgnoreCase("B")){
+                    break;
+                }else{
+                    for (int i = 1; i <= user.getTotalUser(); i++) {
+                        if (email.equals(user.getUser(i).getEmail())) {
+                            if (user.getUser(i) instanceof Consumer) {
+                                custEdit = (Consumer) user.getUser(i);
+                                custEditChoice = i;
+                            } else if (user.getUser(i) instanceof CorporateCustomer) {
+                                corpEdit = (CorporateCustomer) user.getUser(i);
+                                corpEditChoice = i;
+                            }
+                            System.out.println(user.getUser(i).toString());
                         }
-                        System.out.println(user.getUser(i).toString());
-                    }
+                    } 
                 }
+                
                 if (custEdit != null) {
                     staffEditCust(custEditChoice);
                 } else if (corpEdit != null) {
                     managerEditCorporate(corpEditChoice); 
+                } else {
+                    System.out.println("\n"+RED+"Please Enter A Valid Email Address Listed."+RESET);
+                    break;
                 }
-            }catch (Exception e){break;}
+            }catch (Exception e){s.next();}
         }
     }
 
