@@ -5,6 +5,8 @@
  */
 package com.mycompany.fioreflowershop;
 
+import com.mycompany.fioreflowershop.adt.CatalogPackageInterface;
+import com.mycompany.fioreflowershop.adt.CatalogPackageList;
 import com.mycompany.fioreflowershop.adt.LinkedList;
 import com.mycompany.fioreflowershop.adt.OrderList;
 import com.mycompany.fioreflowershop.adt.OrderListInterface;
@@ -27,7 +29,7 @@ import static org.junit.Assert.*;
 public class DeliveryTest {
 
     // Initialize Lists
-    private static LinkedList<CatalogPackage> catalogPack1 = new LinkedList<>();
+    private static CatalogPackageInterface<CatalogPackage> catalogPack1 = new CatalogPackageList<>();
     private static OrderListInterface<CatalogOrders> catalogOrder = new OrderList<>();
     private static OrderListInterface<Order> testOrder = new OrderList<>();
     private static OrderListInterface<CustomizedPackage> customizeOrder = new OrderList<>();
