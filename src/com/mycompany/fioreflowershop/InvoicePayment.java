@@ -52,6 +52,7 @@ public class InvoicePayment {
             System.out.println(GREEN+"[2]"+RESET+" Generate Invoice Payment for Corporate Customer.");
             System.out.println(GREEN+"[3]"+RESET+" View Paid Invoice History");
             System.out.println(GREEN+"[4]"+RESET+" Back to Main Menu.");
+            System.out.println("Selection : ");
             try{
                 int invoiceChoice = s.nextInt(); s.nextLine(); 
                 switch(invoiceChoice){
@@ -124,6 +125,7 @@ public class InvoicePayment {
     //            invoiceMaintenance();
                 break;
             }
+            break;
         }
     }
     
