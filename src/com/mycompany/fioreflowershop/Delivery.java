@@ -8,6 +8,7 @@ package com.mycompany.fioreflowershop;
 import com.google.maps.errors.ApiException;
 import static com.mycompany.fioreflowershop.Pickup.genReceipt;
 import com.mycompany.fioreflowershop.adt.ArrayQueue;
+import com.mycompany.fioreflowershop.adt.CatalogPackageInterface;
 import com.mycompany.fioreflowershop.adt.LinkedList;
 import com.mycompany.fioreflowershop.adt.ListInterface;
 import com.mycompany.fioreflowershop.adt.OrderList;
@@ -788,7 +789,7 @@ public class Delivery {
             System.out.println("==================================================================================================");
             System.out.println("ITEM \t\t\t QUANTITY \t PRICE (RM) \t\tDISCOUNT (%)\t\t AMOUNT (RM)");
             System.out.println("==================================================================================================");
-            LinkedList<CatalogPackage> cat = ((CatalogOrders) order).getCatalogPack();
+            CatalogPackageInterface<CatalogPackage> cat = ((CatalogOrders) order).getCatalogPack();
             CatalogPackage item;
             Iterator<CatalogPackage> catIterator = cat.getIterator();
 

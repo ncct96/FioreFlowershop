@@ -148,18 +148,18 @@ public class InvoicePayment {
                 //for(int k = 1; k <= paymentHistory.getItem(i).getCatalogOrder().getTotalEntries(); k++){
                     for(int p = 1; p <= paymentHistory.getItem(i).getCatalogOrder().getOrder(i).getCatalogPack().getTotalEntries(); p++){
                         System.out.println(sdf.format(paymentHistory.getItem(i).getCatalogOrder().getOrder(i).getOrderDate())+"   | "
-                        + paymentHistory.getItem(i).getCatalogOrder().getOrder(i).getCatalogPack().getItem(p).getName()+ "\t\t\t  | \t" 
-                        + paymentHistory.getItem(i).getCatalogOrder().getOrder(i).getCatalogPack().getItem(p).getUserQuantity()+ "\t|\t" 
-                        + paymentHistory.getItem(i).getCatalogOrder().getOrder(i).getCatalogPack().getItem(p).getDiscountRate()+ "\t    |\t" 
-                        + paymentHistory.getItem(i).getCatalogOrder().getOrder(i).getCatalogPack().getItem(p).getPrice() + " \t     |   " 
-                        + paymentHistory.getItem(i).getCatalogOrder().getOrder(i).getCatalogPack().getItem(p).getPrice()
-                        *paymentHistory.getItem(i).getCatalogOrder().getOrder(i).getCatalogPack().getItem(p).getUserQuantity());
-                        totalPrice += totalPrice(paymentHistory.getItem(i).getCatalogOrder().getOrder(i).getCatalogPack().getItem(p).getPrice()
-                                , paymentHistory.getItem(i).getCatalogOrder().getOrder(i).getCatalogPack().getItem(p).getUserQuantity());
-                        if(paymentHistory.getItem(i).getCatalogOrder().getOrder(i).getCatalogPack().getItem(p).getDiscountRate() != 0){
-                            discountPrice += discountPrice(paymentHistory.getItem(i).getCatalogOrder().getOrder(i).getCatalogPack().getItem(p).getPrice(),
-                                    paymentHistory.getItem(i).getCatalogOrder().getOrder(i).getCatalogPack().getItem(p).getUserQuantity(),
-                                    paymentHistory.getItem(i).getCatalogOrder().getOrder(i).getCatalogPack().getItem(p).getDiscountRate());
+                        + paymentHistory.getItem(i).getCatalogOrder().getOrder(i).getCatalogPack().getProduct(p).getName()+ "\t\t\t  | \t" 
+                        + paymentHistory.getItem(i).getCatalogOrder().getOrder(i).getCatalogPack().getProduct(p).getUserQuantity()+ "\t|\t" 
+                        + paymentHistory.getItem(i).getCatalogOrder().getOrder(i).getCatalogPack().getProduct(p).getDiscountRate()+ "\t    |\t" 
+                        + paymentHistory.getItem(i).getCatalogOrder().getOrder(i).getCatalogPack().getProduct(p).getPrice() + " \t     |   " 
+                        + paymentHistory.getItem(i).getCatalogOrder().getOrder(i).getCatalogPack().getProduct(p).getPrice()
+                        *paymentHistory.getItem(i).getCatalogOrder().getOrder(i).getCatalogPack().getProduct(p).getUserQuantity());
+                        totalPrice += totalPrice(paymentHistory.getItem(i).getCatalogOrder().getOrder(i).getCatalogPack().getProduct(p).getPrice()
+                                , paymentHistory.getItem(i).getCatalogOrder().getOrder(i).getCatalogPack().getProduct(p).getUserQuantity());
+                        if(paymentHistory.getItem(i).getCatalogOrder().getOrder(i).getCatalogPack().getProduct(p).getDiscountRate() != 0){
+                            discountPrice += discountPrice(paymentHistory.getItem(i).getCatalogOrder().getOrder(i).getCatalogPack().getProduct(p).getPrice(),
+                                    paymentHistory.getItem(i).getCatalogOrder().getOrder(i).getCatalogPack().getProduct(p).getUserQuantity(),
+                                    paymentHistory.getItem(i).getCatalogOrder().getOrder(i).getCatalogPack().getProduct(p).getDiscountRate());
                         }
                     }
                 //}
@@ -288,18 +288,18 @@ public class InvoicePayment {
                 for(int k = 1; k <= order.getOrder(i).getCatalogPack().getTotalEntries(); k++){
                     if(order.getOrder(k).getCatalogPack() != null){
                         System.out.println(sdf.format(order.getOrder(k).getOrderDate())+"   | "
-                        +order.getOrder(i).getCatalogPack().getItem(k).getName()+ "\t\t\t  | \t" 
-                        +order.getOrder(i).getCatalogPack().getItem(k).getUserQuantity()+ "\t|\t" 
-                        +order.getOrder(i).getCatalogPack().getItem(k).getDiscountRate()+ "\t    |\t" 
-                        +order.getOrder(i).getCatalogPack().getItem(k).getPrice() + " \t     |   " 
-                        +order.getOrder(i).getCatalogPack().getItem(k).getPrice()
-                        *order.getOrder(i).getCatalogPack().getItem(k).getUserQuantity());
-                        totalPrice += totalPrice(order.getOrder(i).getCatalogPack().getItem(k).getPrice(), 
-                                order.getOrder(i).getCatalogPack().getItem(k).getUserQuantity());
-                        if(order.getOrder(i).getCatalogPack().getItem(k).getDiscountRate() != 0){
-                            discountPrice += discountPrice(order.getOrder(i).getCatalogPack().getItem(k).getPrice(),
-                                    order.getOrder(i).getCatalogPack().getItem(k).getUserQuantity(),
-                                    order.getOrder(i).getCatalogPack().getItem(k).getDiscountRate());
+                        +order.getOrder(i).getCatalogPack().getProduct(k).getName()+ "\t\t\t  | \t" 
+                        +order.getOrder(i).getCatalogPack().getProduct(k).getUserQuantity()+ "\t|\t" 
+                        +order.getOrder(i).getCatalogPack().getProduct(k).getDiscountRate()+ "\t    |\t" 
+                        +order.getOrder(i).getCatalogPack().getProduct(k).getPrice() + " \t     |   " 
+                        +order.getOrder(i).getCatalogPack().getProduct(k).getPrice()
+                        *order.getOrder(i).getCatalogPack().getProduct(k).getUserQuantity());
+                        totalPrice += totalPrice(order.getOrder(i).getCatalogPack().getProduct(k).getPrice(), 
+                                order.getOrder(i).getCatalogPack().getProduct(k).getUserQuantity());
+                        if(order.getOrder(i).getCatalogPack().getProduct(k).getDiscountRate() != 0){
+                            discountPrice += discountPrice(order.getOrder(i).getCatalogPack().getProduct(k).getPrice(),
+                                    order.getOrder(i).getCatalogPack().getProduct(k).getUserQuantity(),
+                                    order.getOrder(i).getCatalogPack().getProduct(k).getDiscountRate());
                         }  
                     }
                 }
@@ -393,18 +393,18 @@ public class InvoicePayment {
                     if(order.getOrder(i).getCatalogPack() != null){
                         for(int k = 1; k <= order.getOrder(i).getCatalogPack().getTotalEntries(); k++){
                         System.out.println(sdf.format(order.getOrder(i).getOrderDate())+"   | "
-                        +order.getOrder(i).getCatalogPack().getItem(k).getName()+ "\t\t\t  | \t" 
-                        +order.getOrder(i).getCatalogPack().getItem(k).getUserQuantity()+ "\t|\t" 
-                        +order.getOrder(i).getCatalogPack().getItem(k).getDiscountRate()+ "\t    |\t" 
-                        +order.getOrder(i).getCatalogPack().getItem(k).getPrice() + " \t     |   " 
-                        +order.getOrder(i).getCatalogPack().getItem(k).getPrice()
-                        *order.getOrder(i).getCatalogPack().getItem(k).getUserQuantity());
-                        totalPrice += totalPrice(order.getOrder(i).getCatalogPack().getItem(k).getPrice(),
-                                order.getOrder(i).getCatalogPack().getItem(k).getUserQuantity());
-                            if(order.getOrder(i).getCatalogPack().getItem(k).getDiscountRate() != 0){
-                                discountPrice += discountPrice(order.getOrder(i).getCatalogPack().getItem(k).getPrice(),
-                                        order.getOrder(i).getCatalogPack().getItem(k).getUserQuantity(),
-                                        order.getOrder(i).getCatalogPack().getItem(k).getDiscountRate());
+                        +order.getOrder(i).getCatalogPack().getProduct(k).getName()+ "\t\t\t  | \t" 
+                        +order.getOrder(i).getCatalogPack().getProduct(k).getUserQuantity()+ "\t|\t" 
+                        +order.getOrder(i).getCatalogPack().getProduct(k).getDiscountRate()+ "\t    |\t" 
+                        +order.getOrder(i).getCatalogPack().getProduct(k).getPrice() + " \t     |   " 
+                        +order.getOrder(i).getCatalogPack().getProduct(k).getPrice()
+                        *order.getOrder(i).getCatalogPack().getProduct(k).getUserQuantity());
+                        totalPrice += totalPrice(order.getOrder(i).getCatalogPack().getProduct(k).getPrice(),
+                                order.getOrder(i).getCatalogPack().getProduct(k).getUserQuantity());
+                            if(order.getOrder(i).getCatalogPack().getProduct(k).getDiscountRate() != 0){
+                                discountPrice += discountPrice(order.getOrder(i).getCatalogPack().getProduct(k).getPrice(),
+                                        order.getOrder(i).getCatalogPack().getProduct(k).getUserQuantity(),
+                                        order.getOrder(i).getCatalogPack().getProduct(k).getDiscountRate());
                             }
                             tempCatalog.addOrder(order.getOrder(i));
                         }

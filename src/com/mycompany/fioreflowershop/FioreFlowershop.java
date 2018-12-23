@@ -48,8 +48,8 @@ public class FioreFlowershop {
     private static ShoppingCartListInterface<CatalogOrders> shoppingCart = new ShoppingCartList<>();
     private static OrderListInterface<CatalogOrders> catalogOrder = new OrderList<>();
 
-    private static LinkedList<CatalogPackage> catalogPack1 = new LinkedList<>();
-    private static LinkedList<CatalogPackage> catalogPack2 = new LinkedList<>();
+    private static CatalogPackageInterface<CatalogPackage> catalogPack1 = new CatalogPackageList<>();
+    private static CatalogPackageInterface<CatalogPackage> catalogPack2 = new CatalogPackageList<>();
 
     private static String[] origin = {"Taiping", "Penang", "Cheras", "Johor"};
     private static String[] dest = {"Taiping", "Penang", "Cheras", "Johor"};
@@ -117,11 +117,11 @@ public class FioreFlowershop {
         CatalogPackage cp2 = new CatalogPackage("FlowerWeak", "Colourful", "Medium", "", "", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10, 4);
         CatalogPackage cp3 = new CatalogPackage("FlowerMedium", "Elegant", "Large", "", "", "Sunflower", "Belt", "Product Type", "11", 2018, 15, 40, 5, 6);
 
-        catalogPack1.add(cp1);
-        catalogPack1.add(cp2);
-        catalogPack2.add(cp1);
-        catalogPack2.add(cp2);
-        catalogPack2.add(cp3);
+        catalogPack1.addProduct(cp1);
+        catalogPack1.addProduct(cp2);
+        catalogPack2.addProduct(cp1);
+        catalogPack2.addProduct(cp2);
+        catalogPack2.addProduct(cp3);
 
         CatalogOrders ct1 = new CatalogOrders("C1", catalogPack1, "Pick Up", todayDate, cc1, "Order Status", 308, false, todayDate, todayDate);
         CatalogOrders ct2 = new CatalogOrders("C2", catalogPack2, "Pick Up", todayDate, cc2, "Order Status", 200, false, todayDate, todayDate);
