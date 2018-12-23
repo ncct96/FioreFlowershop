@@ -340,10 +340,6 @@ public class FioreFlowershop {
             System.out.println(GREEN + "[2] " + RESET + "Create Corporate Customer Account");
             System.out.println(GREEN + "[3] " + RESET + "Remove Customer Account");
             System.out.println(GREEN + "[3] " + RESET + "Modify the product catalogue");
-            //System.out.println(GREEN + "[3] " + RESET + "Add a product to catalog");
-            //System.out.println(GREEN + "[4] " + RESET + "Remove a product from catalog");
-            //System.out.println(GREEN + "[5] " + RESET + "Edit the details of product in catalog");
-            //System.out.println(GREEN + "[6] " + RESET + "Display created catalog");
             System.out.println(GREEN + "[4] " + RESET + "Back");
             System.out.print("Selection: ");
             int managerChoice = s.nextInt();

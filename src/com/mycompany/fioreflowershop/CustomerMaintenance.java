@@ -43,134 +43,137 @@ public class CustomerMaintenance {
 
     public static void customerOptions() {
         while (true) {
-            double reminderRange = 0; //Declared for assigning reminder range
             if (customerLoggedIn == null && corporateLoggedIn == null) {//Disallow the user from gaining additional features
                 System.out.println("\nPlease Select One Of The Options Below:");
                 System.out.println(GREEN + "[1] " + RESET + "Create New Account");
                 System.out.println(GREEN + "[2] " + RESET + "Login To Existing Account");
                 System.out.println(GREEN + "[3] " + RESET + "Back to Main Menu");
                 System.out.print("Selection: ");
-                int logOrCreate = s.nextInt();
-                s.nextLine();
+                int logOrCreate = s.nextInt(); s.nextLine();
                 if (logOrCreate == 1) {
                     createAccount();
                 } else if (logOrCreate == 2) {
                     custLogIn();
                 } else {
-                    break;
+                    break; 
                 }
             }
-            if (corporateLoggedIn != null) {//If the customer is logged in
-                reminderRange = corporateLoggedIn.getMonthlyLimit() * .9; //Get the monthly limit of customer, then multiplies it with 90%
-                try {
-                    //Set Preset Date
-                    presetDate = Calendar.getInstance();
-                    presetDate.set(presetDate.get(Calendar.YEAR), presetDate.get(Calendar.MONTH), 7, 0, 0, 0);
-
-                    //Get Current Date
-                    currentDate = Calendar.getInstance();
-                    currentDate.set(currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH),
-                            currentDate.get(Calendar.DAY_OF_MONTH), currentDate.get(Calendar.HOUR_OF_DAY),
-                            currentDate.get(Calendar.MINUTE));
-
-                    //Set the payment status back to false when a new month have passed
-                    if (!dateStack.equals(null) && corporateLoggedIn.getCreditSpent() != 0) {
-                        if (dateStack.get(Calendar.MONTH) + 2 == currentDate.get(Calendar.MONTH) + 1
-                                || dateStack.get(Calendar.YEAR) + 1 == currentDate.get(Calendar.YEAR)) {
-                            //New Month, New Invoice Payment
-                            corporateLoggedIn.setPaymentStatus(false);
-                            //If the customer have not paid after the 7th of the following month, restrict it
-                            if (currentDate.after(presetDate) && corporateLoggedIn.getCreditSpent() != 0 && !corporateLoggedIn.getPaymentStatus()) {//
-                                System.out.println("\n" + RED + "Sorry, It seems like you have not paid for last month." + RESET);
-                                //Redirect back to the main menu, restrict access to making order.
-                                System.out.println("\n" + BLUE + "Thanks For Your Patronage ! :D" + RESET);
-                                corporateLoggedIn = null;
-                                FioreFlowershop.userTypeSelection();
-                            }
-                        }
-                    } else {
-//                    dateStack.push(currentDate);
-                        dateStack = currentDate;
-                    }
-                } catch (Exception e) {
-                    //When exception is found, print out the exception error message to customer.
-                    System.out.println(e.toString());
-                }
-                if (corporateLoggedIn.getCreditSpent() >= reminderRange) {
-                    System.out.println(RED_BOLD + "Your Credit Spent For this Month is close to reaching the limit" + RESET);
-                    System.out.println(RED_BOLD + "Your Credit Spent : " + String.format("%.0f", corporateLoggedIn.getCreditSpent()) + RESET);
-                    System.out.println(RED_BOLD + "Your Maximum Limit : " + corporateLoggedIn.getMonthlyLimit() + RESET);
-                }
-            }//If the corporate credit spent exceeds or equals to the reminder range
-//            customerMenu();
         }
     }
 
     public static void customerMenu() {
-        System.out.println("\nWelcome Customers! Fiore Flowershop is at your service!");
+        System.out.println("\nWelcome Customers! Fiore Flowershop is at your service!"); double reminderRange = 0; //Declared for assigning reminder range
         while (true) {
-            System.out.println("Please Select One Of The Options Below:");
-            System.out.println(GREEN + "[1] " + RESET + "Make Flower Order");
-            System.out.println(GREEN + "[2] " + RESET + "View Ordered Items");
-            System.out.println(GREEN + "[3] " + RESET + "Log Out");
-            System.out.print("Selection: ");
-            int customerOptionsChoice = s.nextInt();
-            s.nextLine();
+            try{
+                if(corporateLoggedIn != null){
+                    reminderRange = corporateLoggedIn.getMonthlyLimit() * .9; //Get the monthly limit of customer, then multiplies it with 90%
+                    try {
+                        //Set Preset Date
+                        presetDate = Calendar.getInstance();
+                        presetDate.set(presetDate.get(Calendar.YEAR), presetDate.get(Calendar.MONTH), 7, 0, 0, 0);
 
-            if (customerOptionsChoice == 1) {
-                while (true) {
-                    System.out.println("\nPlease Select The Options Below.");
-                    System.out.println(GREEN + "[1] " + RESET + "Make Catalog Flower Orders");
-                    System.out.println(GREEN + "[2] " + RESET + "Make Customizable Flower Orders");
-                    System.out.println(GREEN + "[3] " + RESET + "Back");
-                    System.out.print("Selection: ");
-                    int orderChoice = s.nextInt();
-                    s.nextLine();
-                    if (orderChoice == 1) {
-                        FioreFlowershop.gotoCatalogOrders(customerLoggedIn, corporateLoggedIn);
-                    } else if (orderChoice == 2) {
-                        FioreFlowershop.gotoCustomizePackage(customerLoggedIn, 1);
-                    } else {
-                        break;
+                        //Get Current Date
+                        currentDate = Calendar.getInstance();
+                        currentDate.set(currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH),
+                                currentDate.get(Calendar.DAY_OF_MONTH), currentDate.get(Calendar.HOUR_OF_DAY),
+                                currentDate.get(Calendar.MINUTE));
+
+                        //Set the payment status back to false when a new month have passed
+                        if (!dateStack.equals(null) && corporateLoggedIn.getCreditSpent() != 0) {
+                            if (dateStack.get(Calendar.MONTH) + 2 == currentDate.get(Calendar.MONTH) + 1
+                                    || dateStack.get(Calendar.YEAR) + 1 == currentDate.get(Calendar.YEAR)) {
+                                //New Month, New Invoice Payment
+                                corporateLoggedIn.setPaymentStatus(false);
+                                //If the customer have not paid after the 7th of the following month, restrict it
+                                if (currentDate.after(presetDate) && corporateLoggedIn.getCreditSpent() != 0 && !corporateLoggedIn.getPaymentStatus()) {//
+                                    System.out.println("\n" + RED + "Sorry, It seems like you have not paid for last month." + RESET);
+                                    //Redirect back to the main menu, restrict access to making order.
+                                    System.out.println("\n" + BLUE + "Thanks For Your Patronage ! :D" + RESET);
+                                    corporateLoggedIn = null;
+                                    break;
+                                }
+                            }
+                        } else {
+    //                    dateStack.push(currentDate);
+                            dateStack = currentDate;
+                        }
+                    } catch (Exception e) {
+                        //When exception is found, print out the exception error message to customer.
+                        System.out.println(e.toString()); break;
+                    }
+                    if (corporateLoggedIn.getCreditSpent() >= reminderRange) {
+                        System.out.println(RED_BOLD + "Your Credit Spent For this Month is close to reaching the limit" + RESET);
+                        System.out.println(RED_BOLD + "Your Credit Spent : " + String.format("%.0f", corporateLoggedIn.getCreditSpent()) + RESET);
+                        System.out.println(RED_BOLD + "Your Maximum Limit : " + corporateLoggedIn.getMonthlyLimit() + RESET); customerLoggedIn = null; corporateLoggedIn = null; break;
                     }
                 }
-            } else if (customerOptionsChoice == 2) { //View Ordered Items
-                FioreFlowershop.gotoCustomizePackage(customerLoggedIn, 2);
-            } else {
-                customerLoggedIn = null;
-                corporateLoggedIn = null;
-                System.out.println("\n" + GREEN + "Successfully Logged Out From Account! " + RESET);
+                System.out.println("Please Select One Of The Options Below:");
+                System.out.println(GREEN + "[1] " + RESET + "Make Flower Order");
+                System.out.println(GREEN + "[2] " + RESET + "View Ordered Items");
+                System.out.println(GREEN + "[3] " + RESET + "Log Out");
+                System.out.print("Selection : ");
+                int customerOptionsChoice = s.nextInt(); s.nextLine();
+                if (customerOptionsChoice == 1) {
+                    while (true) {
+                        System.out.println("\nPlease Select The Options Below.");
+                        System.out.println(GREEN + "[1] " + RESET + "Make Catalog Flower Orders");
+                        System.out.println(GREEN + "[2] " + RESET + "Make Customizable Flower Orders");
+                        System.out.println(GREEN + "[3] " + RESET + "Back");
+                        System.out.print("Selection: ");
+                        int orderChoice = s.nextInt();
+                        s.nextLine();
+                        if (orderChoice == 1) {
+                            FioreFlowershop.gotoCatalogOrders(customerLoggedIn, corporateLoggedIn);
+                        } else if (orderChoice == 2) {
+                            FioreFlowershop.gotoCustomizePackage(customerLoggedIn, 1);
+                        } else {
+                            break;
+                        }
+                    }
+                } else if (customerOptionsChoice == 2) { //View Ordered Items
+                    FioreFlowershop.gotoCustomizePackage(customerLoggedIn, 2);
+                } else {
+                    customerLoggedIn = null;
+                    corporateLoggedIn = null;
+                    System.out.println("\n" + GREEN + "Successfully Logged Out From Account! " + RESET);
+                    break;
+                }
+            }catch(Exception e){
                 break;
             }
         }
     }
 
     public static void createAccount() {
-        boolean passwCheck; int consumerType = 0;
-        String passw = "";
-        passwCheck = false;
-        System.out.println("\nPlease Fill In The Fields As Prompted.");
-        System.out.print("Username : ");
-        String usern = s.nextLine();
-        System.out.print("Email : ");
-        String email = s.nextLine();
-        System.out.print("Contact Number : ");
-        String number = s.nextLine();
-        System.out.print("Address (For Delivery Services) : ");
-        String address = s.nextLine();
-        do {
-            System.out.print("Password : ");
-            passw = s.nextLine();
-            System.out.print("Retype Password : ");
-            String repassw = s.nextLine();
-            if (repassw.equals(passw)) {
-                passwCheck = true;
-            } else {
-                System.out.println("\n" + RED_BOLD + "Password Mismatched, Please Try Again.\n" + RESET);
-            }
-        } while (passwCheck == false);
-        //Check for duplicate account created, disallow duplicate entries
-        checkDuplicate(usern, passw, email, number, address, "", 0, "Customer");
+        while(true){
+            boolean passwCheck; int consumerType = 0;
+            String passw = "";
+            passwCheck = false;
+            System.out.println("\nPlease Fill In The Fields As Prompted.");
+            System.out.print("Username : ");
+            String usern = s.nextLine();
+            System.out.print("Email : ");
+            String email = s.nextLine();
+            System.out.print("Contact Number : ");
+            String number = s.nextLine();
+            System.out.print("Address (For Delivery Services) : ");
+            String address = s.nextLine();
+            do {
+                System.out.print("Password : ");
+                passw = s.nextLine();
+                System.out.print("Retype Password : ");
+                String repassw = s.nextLine();
+                if (repassw.equals(passw)) {
+                    passwCheck = true;
+                } else {
+                    System.out.println("\n" + RED_BOLD + "Password Mismatched, Please Try Again.\n" + RESET); 
+                }
+            } while (passwCheck == false);
+            //Check for duplicate account created, disallow duplicate entries
+            checkDuplicate(usern, passw, email, number, address, "", 0, "Customer");
+            break;
+        }
+        
     }
     
     public static void checkDuplicate(String usern, String passw, String email, String number, String address, String company, int creditLimit, String consumerType){
@@ -197,24 +200,26 @@ public class CustomerMaintenance {
         }
     }
 
-    public static void custLogIn() {//Customer Logging In, not
-        if (customerLoggedIn == null && corporateLoggedIn == null) {
+    public static void custLogIn() {
+        while (true) {
+            if (customerLoggedIn == null && corporateLoggedIn == null) {
             System.out.println("\nPlease Fill In The Confidentials As Prompted");
             System.out.print("Please Enter Your Email : ");
             String email = s.nextLine();
             System.out.print("Please Enter Your Password : ");
             String passw = s.nextLine();
             //Verify for valid account
-            custLogInVerify(email, passw);
-        } else {
-            System.out.println(RED_BOLD + "\nYou Are Already Logged In ! " + RESET);
+            custLogInVerify(email, passw); break;
+            } else {
+                System.out.println(RED_BOLD + "\nYou Are Already Logged In ! " + RESET); break;
+            }
         }
     }
     
     public static void custLogInVerify(String email, String passw){
-        boolean customerHit = false;
-        boolean corporateHit = false;
-        for (int i = 1; i <= cust.getTotalConsumer(); i++) {
+        while(true){
+            boolean customerHit = false; boolean corporateHit = false;
+            for (int i = 1; i <= cust.getTotalConsumer(); i++) {
                 if (cust.getConsumer(i).getEmail().equals(email) && cust.getConsumer(i).getPassword().equals(passw)) {
                     customerLoggedIn = new Consumer(cust.getConsumer(i).getUsername(), cust.getConsumer(i).getPassword(), cust.getConsumer(i).getEmail(),
                             cust.getConsumer(i).getPhone(), cust.getConsumer(i).getAddress());
@@ -243,10 +248,12 @@ public class CustomerMaintenance {
                 }
             }
             if (!customerHit && !corporateHit) {//If corporate customer is not found 
-                custTryAgain();
+                custTryAgain(); 
             }else {
-                customerMenu();
+                customerMenu(); 
             }
+            break;
+        }
     }
     
     public static void custTryAgain(){
@@ -257,12 +264,17 @@ public class CustomerMaintenance {
             System.out.println("[2] Create An Account");
             System.out.println("[3] Back");
             try{
-               int choice = s.nextInt(); s.nextLine();
-                switch(choice){
-                    case 1: custLogIn(); break;
-                    case 2: createAccount(); break;
-                    case 3: customerOptions(); break;
-                } 
+                int choice = s.nextInt(); s.nextLine();
+                if(choice == 1){
+                    custLogIn();
+                }else if(choice == 2){
+                    createAccount();
+                }else if(choice == 3){
+                    customerOptions();
+                }else {
+                    break;
+                }
+                break;
             }catch(Exception e){
                 System.out.println("\n"+RED+"An Error Occurred. Please Only Enter Number Only."+RESET);
                 break;

@@ -52,7 +52,7 @@ public class InvoicePayment {
             System.out.println(GREEN+"[2]"+RESET+" Generate Invoice Payment for Corporate Customer.");
             System.out.println(GREEN+"[3]"+RESET+" View Paid Invoice History");
             System.out.println(GREEN+"[4]"+RESET+" Back to Main Menu.");
-            System.out.println("Selection : ");
+            System.out.print("Selection : ");
             try{
                 int invoiceChoice = s.nextInt(); s.nextLine(); 
                 switch(invoiceChoice){
@@ -85,7 +85,7 @@ public class InvoicePayment {
             System.out.println("\n====================================================");
             System.out.println("\tAvailable Paid Invoice(s)");
             System.out.println("====================================================");
-            if(paymentHistory != null){
+            if(paymentHistory.getTotalInvoice() != 0){
                 for(int i = 1; i <= paymentHistory.getTotalInvoice(); i++){//Get all available paid invoices, and display it 
                     if(invoiceID.equals(paymentHistory.getInvoice(i).getInvoiceNumber())){
                     //If duplicates of invoice ID is found, do nothing
@@ -119,7 +119,6 @@ public class InvoicePayment {
     //                invoiceMaintenance();
                     break;
                 }
-
             }else {
                 System.out.println(RED+"\nSorry, No Records Found !"+RESET);
     //            invoiceMaintenance();
@@ -169,7 +168,7 @@ public class InvoicePayment {
     }
     
     public static void generateInvoiceP1(){
-        String usern = ""; boolean stat = true;int yearEntered = 0;int monthEntered = 0;int count = 0;boolean status = true;
+        int yearEntered = 0; int monthEntered = 0; int count = 0; boolean status = true;
         while (true){  
             System.out.println("\n====================================================");
             System.out.println("\t Invoice Generation");
@@ -184,14 +183,10 @@ public class InvoicePayment {
                 System.out.println(BLUE+"\nRedirecting Back to Invoice Maintenance Menu......" + RESET);
                 break;
             }
-            if(order != null){
+            if(order.getTotalEntries() != 0){
             System.out.println("\n====================================================");
             System.out.println("\tAvailable Customer For Invoice Generation");
             System.out.println("====================================================");
-    //            
-    //            while(catIterator.hasNext()){
-    //                
-    //            }
             for(int i = 1; i <= order.getTotalEntries(); i++){
                 //If the shopping cart is not null and status is false
                 if(order.getOrder(i).getUser()!= null && !order.getOrder(i).isPaymentStatus()){
@@ -209,11 +204,13 @@ public class InvoicePayment {
                                 }
                                 if(status){
                                     if(order.getOrder(i).getUser() instanceof CorporateCustomer){
-                                        userEmail.add(order.getOrder(i).getUser().getEmail());
+                                        String email = order.getOrder(i).getUser().getEmail();
+                                        userEmail.add(email);
                                     }
                                 }
                             }else{
-                                userEmail.add(order.getOrder(i).getUser().getEmail());
+                                String email = order.getOrder(i).getUser().getEmail();
+                                userEmail.add(email);
                             }
                     }
                 }
@@ -260,11 +257,11 @@ public class InvoicePayment {
             System.out.println("Phone : 0125566922 \t\t\t\t\t\t\t" + "DATE: " + dateFormat.format(today));
 
             System.out.println("\nTO:");
-            System.out.println("[" + user.getEmail()+ "]");
+            System.out.println("[" + cc.getEmail()+ "]");
             System.out.println("[" + cc.getCompany() +"]");
-            System.out.println("["+ user.getAddress() +"]");
+            System.out.println("["+ cc.getAddress() +"]");
             System.out.println("[City, ST ZIP Code]");
-            System.out.println("[" + user.getPhone() + "]");
+            System.out.println("[" + cc.getPhone() + "]");
             System.out.println("===============================================================================================================");
             System.out.println("Date Ordered | Description \t\t\t  | Quantity    |  Discount Rate(%) | Unit Price(RM) |  Total(RM)");
         }
