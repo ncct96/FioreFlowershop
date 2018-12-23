@@ -5,8 +5,7 @@
  */
 package com.mycompany.fioreflowershop;
 
-import com.mycompany.fioreflowershop.adt.LinkedList;
-import com.mycompany.fioreflowershop.adt.OrderListInterface;
+import com.mycompany.fioreflowershop.adt.*;
 import com.mycompany.fioreflowershop.modal.CatalogOrders;
 import com.mycompany.fioreflowershop.modal.CatalogPackage;
 import com.mycompany.fioreflowershop.modal.CorporateCustomer;
@@ -23,7 +22,7 @@ import static org.junit.Assert.*;
  * @author Admin
  */
 public class InvoicePaymentTest {
-    LinkedList<InvoiceHistory> ih = InvoicePayment.getPaymentHistory();
+    InvoiceInterface<InvoiceHistory> ih = InvoicePayment.getPaymentHistory();
     Date today = Calendar.getInstance().getTime();
     OrderListInterface<CatalogOrders> co = FioreFlowershop.getCatalogOrder();
     LinkedList<CatalogPackage> catalogPack1 = new LinkedList<>();
@@ -77,7 +76,7 @@ public class InvoicePaymentTest {
     @Test
     public void testViewPaymentHistory2() {
         System.out.println("\nView Payment History");
-        ih.add(ih1);
+        ih.addInvoice(ih1);
         String invoiceID = "IH100";
         InvoicePayment.viewPaymentHistory2(ih1, invoiceID);
     }
