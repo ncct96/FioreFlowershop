@@ -272,8 +272,59 @@ public class CustomerMaintenance {
 
     //STAFF SECTION
     public static void staffRemoveCust(){
-        customerListHeader();
+        Consumer consumerInstance = null; CorporateCustomer corporateInstance = null; boolean remove = false;
+        while (true){
+            try{
+                customerListHeader(); String email = "";
+                System.out.print("\nPlease Enter The Email To be Removed : ");
+                email = s.nextLine();
+                for(int i = 1; i <= user.getTotalUser(); i++){
+                    if(user.getUser(i).getEmail().equals(email)){
+                        System.out.print("\n"+RED+"Are you Sure? Press Enter To Continue/Other Keys To Cancel : "+RESET);
+                        String enter = s.nextLine();
+                        if(enter.isEmpty()){
+                            user.remove(i); remove = true;
+                        }else {
+                            break;
+                        }
+                        
+                        if(user.getUser(i) instanceof Consumer){
+                            consumerInstance = (Consumer) user.getUser(i);
+                        }else if(user.getUser(i) instanceof CorporateCustomer){
+                            corporateInstance = (CorporateCustomer) user.getUser(i);
+                        }else {
+                            remove = false;
+                        }
+                        break;
+                    }
+                }
+                if(remove){
+                    if(consumerInstance != null){
+                        for(int k = 1; k <= cust.getTotalConsumer(); k++){
+                            if(cust.getConsumer(k).equals(consumerInstance)){
+                                cust.remove(k); break;
+                            }
+                        }
+                    }else if(corporateInstance != null){
+                        for(int j = 1; j <= corpC.getTotalCorporate(); j++){
+                            if(corpC.getCorporate(j).equals(corporateInstance)){
+                                corpC.remove(j); break;
+                            }
+                        }
+                    }
+                    System.out.println("\n"+GREEN+"Customer Successfully Removed ! "+RESET);
+                    break;
+                }else {
+                    System.out.println("\n"+RED+"Unable to Remove Customer, Please Enter The Valid Email Shown."+RESET);
+                    break;
+                }
+            }catch (Exception e){
+                System.out.println("\n"+RED+"An Error Occurred. Please Try Again."+RESET); s.next();
+            }
+        }
+        
     }
+    
     public static void customerListHeader(){
         System.out.println("\n======================================================");
         System.out.println("\t Customers List.");
@@ -374,6 +425,7 @@ public class CustomerMaintenance {
                         System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
                     }
                 } else {
+                    custEdit = null;
                     break;
                 }
             }catch(Exception e){
@@ -408,8 +460,20 @@ public class CustomerMaintenance {
                 }
                 
                 if (custEdit != null) {
+                    for (int i = 1; i <= cust.getTotalConsumer(); i++) {
+                        if (cust.getConsumer(i).getEmail().equals(user.getUser(custEditChoice).getEmail())) {
+                            custEditChoice = i;
+                            break;
+                        }
+                    }
                     staffEditCust(custEditChoice);
                 } else if (corpEdit != null) {
+                    for (int i = 1; i <= corpC.getTotalCorporate(); i++) {
+                        if (corpC.getCorporate(i).getEmail().equals(user.getUser(corpEditChoice).getEmail())) {
+                            corpEditChoice = i;
+                            break;
+                        }
+                    }
                     managerEditCorporate(corpEditChoice); 
                 } else {
                     System.out.println("\n"+RED+"Please Enter A Valid Email Address Listed."+RESET);
@@ -420,126 +484,123 @@ public class CustomerMaintenance {
     }
 
     public static void managerEditCorporate(int corpEditChoice) {
-        for (int i = 1; i <= corpC.getTotalCorporate(); i++) {
-            if (corpC.getCorporate(i).getEmail().equals(user.getUser(corpEditChoice).getEmail())) {
-                corpEditChoice = i;
-                break;
-            }
-        }
-        String edit; int editLimit;
-        System.out.println("\nPlease enter which field to edit");
-        System.out.println("[1] Username");
-        System.out.println("[2] Email");
-        System.out.println("[3] Contact Number");
-        System.out.println("[4] Address");
-        System.out.println("[5] Password");
-        System.out.println("[6] Company");
-        System.out.println("[7] Credit Limit");
-        int corpOptionChoice = s.nextInt(); s.nextLine();
-        if (corpOptionChoice == 1) {
-            System.out.println("Old Username : " + corpC.getCorporate(corpEditChoice).getUsername());
-            System.out.print("Please Enter The New Username : ");
-            try {
-                edit = s.nextLine();
-                corpC.getCorporate(corpEditChoice).setUsername(edit);
-                System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
-                staffNextOption();
-            } catch (Exception e) {
-                System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
-                staffEditType();
-            }
-        } else if (corpOptionChoice == 2) {
-            System.out.println("Old Email : " + corpC.getCorporate(corpEditChoice).getEmail());
-            System.out.print("Please Enter The New Email : ");
-            try {
-                edit = s.nextLine();
-                if (!edit.contains("@")) {
-                    System.out.println("\n" + RED + "Invalid Email Entered. Please Retry." + RESET);
-                    staffEditType();
-                }
-                corpC.getCorporate(corpEditChoice).setEmail(edit);
-                System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
-                staffNextOption();
-            } catch (Exception e) {
-                System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
-                staffEditType();
-            }
+        while (true) {
+            try{
+                String edit; int editLimit;
+                System.out.println("\nPlease enter which field to edit");
+                System.out.println("[1] Username");
+                System.out.println("[2] Email");
+                System.out.println("[3] Contact Number");
+                System.out.println("[4] Address");
+                System.out.println("[5] Password");
+                System.out.println("[6] Company");
+                System.out.println("[7] Credit Limit");
+                System.out.println("[8] Back");
+                System.out.print("Selection : ");
+                int corpOptionChoice = s.nextInt(); s.nextLine();
+                if (corpOptionChoice == 1) {
+                    System.out.println("Old Username : " + corpC.getCorporate(corpEditChoice).getUsername());
+                    System.out.print("Please Enter The New Username : ");
+                    try {
+                        edit = s.nextLine();
+                        corpC.getCorporate(corpEditChoice).setUsername(edit);
+                        System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
+                        corpEdit = null; break;
+                    } catch (Exception e) {
+                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
+                    }
+                } else if (corpOptionChoice == 2) {
+                    System.out.println("Old Email : " + corpC.getCorporate(corpEditChoice).getEmail());
+                    System.out.print("Please Enter The New Email : ");
+                    try {
+                        edit = s.nextLine();
+                        if (!edit.contains("@")) {
+                            System.out.println("\n" + RED + "Invalid Email Entered. Please Retry." + RESET);
+                            break;
+                        }
+                        corpC.getCorporate(corpEditChoice).setEmail(edit);
+                        System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
+                        corpEdit = null; break;
+                    } catch (Exception e) {
+                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET); 
+                    }
 
-        } else if (corpOptionChoice == 3) {
-            System.out.println("Old Contact Number : " + corpC.getCorporate(corpEditChoice).getPhone());
-            System.out.print("Please Enter The New Phone : ");
-            try {
-                edit = s.nextLine();
-                if (!edit.matches("[0-9]+")) {
-                    System.out.println("\n" + RED + "Invalid Contact Number Entered. Please Retry." + RESET);
-                    staffEditType();
-                }
-                corpC.getCorporate(corpEditChoice).setPhone(edit);
-                System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
-                staffNextOption();
-            } catch (Exception e) {
-                System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
-                staffEditType();
-            }
+                } else if (corpOptionChoice == 3) {
+                    System.out.println("Old Contact Number : " + corpC.getCorporate(corpEditChoice).getPhone());
+                    System.out.print("Please Enter The New Phone : ");
+                    try {
+                        edit = s.nextLine();
+                        if (!edit.matches("[0-9]+")) {
+                            System.out.println("\n" + RED + "Invalid Contact Number Entered. Please Retry." + RESET); break;
+                        }
+                        corpC.getCorporate(corpEditChoice).setPhone(edit);
+                        System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
+                        corpEdit = null; break;
+                    } catch (Exception e) {
+                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
+                    }
 
-        } else if (corpOptionChoice == 4) {
-            System.out.println("Old Address : " + corpC.getCorporate(corpEditChoice).getAddress());
-            System.out.print("Please Enter The New Address : ");
-            try {
-                edit = s.nextLine();
-                corpC.getCorporate(corpEditChoice).setAddress(edit);
-                System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
-                staffNextOption();
-            } catch (Exception e) {
-                System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
-                staffEditType();
-            }
+                } else if (corpOptionChoice == 4) {
+                    System.out.println("Old Address : " + corpC.getCorporate(corpEditChoice).getAddress());
+                    System.out.print("Please Enter The New Address : ");
+                    try {
+                        edit = s.nextLine();
+                        corpC.getCorporate(corpEditChoice).setAddress(edit);
+                        System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
+                        corpEdit = null; break;
+                    } catch (Exception e) {
+                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
+                    }
 
-        } else if (corpOptionChoice == 5) {
-            System.out.println("Old Password : " + corpC.getCorporate(corpEditChoice).getPassword());
-            System.out.print("Please Enter The New Password : ");
-            try {
-                edit = s.nextLine();
-                if (corpC.getCorporate(corpEditChoice).getPassword().equals(edit)) {
-                    System.out.println("\n" + RED + "Password cannot be same with old password. Please Try Again." + RESET);
-                    staffEditType();
-                }
-                corpC.getCorporate(corpEditChoice).setPassword(edit);
-                System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
-                staffNextOption();
-            } catch (Exception e) {
-                System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
-                staffEditType();
-            }
+                } else if (corpOptionChoice == 5) {
+                    System.out.println("Old Password : " + corpC.getCorporate(corpEditChoice).getPassword());
+                    System.out.print("Please Enter The New Password : ");
+                    try {
+                        edit = s.nextLine();
+                        if (corpC.getCorporate(corpEditChoice).getPassword().equals(edit)) {
+                            System.out.println("\n" + RED + "Password cannot be same with old password. Please Try Again." + RESET);
+                            break;
+                        }
+                        corpC.getCorporate(corpEditChoice).setPassword(edit);
+                        System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
+                        corpEdit = null; break;
+                    } catch (Exception e) {
+                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
+                    }
 
-        } else if (corpOptionChoice == 6) {
-            System.out.println("Old Company : " + corpC.getCorporate(corpEditChoice).getCompany());
-            System.out.print("Please Enter The New Company : ");
-            try {
-                edit = s.nextLine();
-                if (corpC.getCorporate(corpEditChoice).getCompany().equals(edit)) {
-                    System.out.println("\n" + RED + "Company Name cannot be same as Old Company Name, Please Try Again." + RESET);
-                    staffEditType();
-                }
-                corpC.getCorporate(corpEditChoice).setCompany(edit);
-                System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
-                staffNextOption();
-            } catch (Exception e) {
-                System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
-                staffEditType();
-            }
-        } else if (corpOptionChoice == 7) {
-            System.out.println("Old Credit Limit : " + corpC.getCorporate(corpEditChoice).getMonthlyLimit());
-            System.out.print("Please Enter The New Credit Limit : ");
-            try {
-                editLimit = s.nextInt();
-                s.nextLine();
-                corpC.getCorporate(corpEditChoice).setMonthlyLimit(editLimit);
-                System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
-                staffNextOption();
-            } catch (Exception e) {
-                System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
-                staffEditType();
+                } else if (corpOptionChoice == 6) {
+                    System.out.println("Old Company : " + corpC.getCorporate(corpEditChoice).getCompany());
+                    System.out.print("Please Enter The New Company : ");
+                    try {
+                        edit = s.nextLine();
+                        if (corpC.getCorporate(corpEditChoice).getCompany().equals(edit)) {
+                            System.out.println("\n" + RED + "Company Name cannot be same as Old Company Name, Please Try Again." + RESET);
+                            break;
+                        }
+                        corpC.getCorporate(corpEditChoice).setCompany(edit);
+                        System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
+                        corpEdit = null; break;
+                    } catch (Exception e) {
+                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
+                    }
+                } else if (corpOptionChoice == 7) {
+                    System.out.println("Old Credit Limit : " + corpC.getCorporate(corpEditChoice).getMonthlyLimit());
+                    System.out.print("Please Enter The New Credit Limit : ");
+                    try {
+                        editLimit = s.nextInt();
+                        s.nextLine();
+                        corpC.getCorporate(corpEditChoice).setMonthlyLimit(editLimit);
+                        System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
+                        corpEdit = null; break;
+                    } catch (Exception e) {
+                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
+                    }
+                } else {
+                    corpEdit = null;
+                    break;
+                }  
+            }catch(Exception e){
+                System.out.println(RED+"\nSorry, Please Only Enter Number."+RESET); s.next();
             }
         }
     }

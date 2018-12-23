@@ -9,6 +9,9 @@ package com.mycompany.fioreflowershop.adt;
  *
  * @author Admin
  */
-public interface InvoiceInterface {
-    
+public interface InvoiceInterface<T> {
+    public boolean addInvoice(T newEntry);
+    public int getTotalInvoice();
+    public T getInvoice(int givenPosition);
+    public boolean isEmpty();
 }

@@ -29,7 +29,7 @@ public class InvoicePayment {
     private static CorporateCustomer cc;
     private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     private static InvoiceHistory ih;
-    private static LinkedList<InvoiceHistory> paymentHistory = new LinkedList<>();
+    private static InvoiceInterface<InvoiceHistory> paymentHistory = new InvoiceADT<>();
     private static OrderListInterface<CatalogOrders> tempCatalog = new OrderList<>();
     private static ListInterface<String> userEmail = new LinkedList<>();
     private static OrderListInterface<CatalogOrders> order = FioreFlowershop.getCatalogOrder();
@@ -41,7 +41,7 @@ public class InvoicePayment {
     public static final String BLUE = "\033[0;34m"; 
     public static final String BLACK_BOLD = "\033[1;30m";
     
-    public static LinkedList<InvoiceHistory> getPaymentHistory(){
+    public static InvoiceInterface<InvoiceHistory> getPaymentHistory(){
         return paymentHistory;
     }
     
@@ -85,11 +85,11 @@ public class InvoicePayment {
             System.out.println("\tAvailable Paid Invoice(s)");
             System.out.println("====================================================");
             if(paymentHistory != null){
-                for(int i = 1; i <= paymentHistory.getTotalEntries(); i++){//Get all available paid invoices, and display it 
-                    if(invoiceID.equals(paymentHistory.getItem(i).getInvoiceNumber())){
+                for(int i = 1; i <= paymentHistory.getTotalInvoice(); i++){//Get all available paid invoices, and display it 
+                    if(invoiceID.equals(paymentHistory.getInvoice(i).getInvoiceNumber())){
                     //If duplicates of invoice ID is found, do nothing
                     }else{//If invoice ID is found, print out the id, then store the ID to another variable for checking for duplicates.
-                        invoiceID = paymentHistory.getItem(i).getInvoiceNumber();
+                        invoiceID = paymentHistory.getInvoice(i).getInvoiceNumber();
                         System.out.println(BLUE+"["+count+"] " + RESET
                         + invoiceID);
                     }
@@ -97,9 +97,9 @@ public class InvoicePayment {
                 try{//For user to enter their desired invoice number
                     System.out.print("\n" + "Please Enter The Invoice Number ID : ");
                     String enteredID = s.nextLine();
-                    for(int a = 1; a <= paymentHistory.getTotalEntries(); a++){
-                        if(paymentHistory.getItem(a).getInvoiceNumber().equals(enteredID)){
-                            ih =  paymentHistory.getItem(a);
+                    for(int a = 1; a <= paymentHistory.getTotalInvoice(); a++){
+                        if(paymentHistory.getInvoice(a).getInvoiceNumber().equals(enteredID)){
+                            ih =  paymentHistory.getInvoice(a);
                             stat = true;
                             break;
                         }else{
@@ -144,12 +144,12 @@ public class InvoicePayment {
         System.out.println("==================================================================================================================");
         System.out.println("Date Ordered | Description \t\t\t  | Quantity    |  Discount Rate(%) | Unit Price(RM) |  Total(RM)");
         System.out.println("==================================================================================================================");
-        for(int i = 1; i <= paymentHistory.getTotalEntries(); i++){
-            if(paymentHistory.getItem(i).getInvoiceNumber().equals(invoiceID)){
+        for(int i = 1; i <= paymentHistory.getTotalInvoice(); i++){
+            if(paymentHistory.getInvoice(i).getInvoiceNumber().equals(invoiceID)){
                 //for(int k = 1; k <= paymentHistory.getItem(i).getCatalogOrder().getTotalEntries(); k++){
-                    for(int p = 1; p <= paymentHistory.getItem(i).getCatalogOrder().getOrder(i).getCatalogPack().getTotalEntries(); p++){
-                        Date orderDate = paymentHistory.getItem(i).getCatalogOrder().getOrder(i).getOrderDate();
-                        CatalogPackage orderInstance = paymentHistory.getItem(i).getCatalogOrder().getOrder(i).getCatalogPack().getItem(p);
+                    for(int p = 1; p <= paymentHistory.getInvoice(i).getCatalogOrder().getOrder(i).getCatalogPack().getTotalEntries(); p++){
+                        Date orderDate = paymentHistory.getInvoice(i).getCatalogOrder().getOrder(i).getOrderDate();
+                        CatalogPackage orderInstance = paymentHistory.getInvoice(i).getCatalogOrder().getOrder(i).getCatalogPack().getItem(p);
                         System.out.println(sdf.format(orderDate)+"   | "+ orderInstance.getName()+ "\t\t\t  | \t" 
                         + orderInstance.getUserQuantity()+ "\t|\t" + orderInstance.getDiscountRate()+ "\t    |\t" 
                         + orderInstance.getPrice() + " \t     |   " + orderInstance.getPrice() *orderInstance.getUserQuantity());
@@ -454,7 +454,7 @@ public class InvoicePayment {
                                 userEmail.remove(m);
                             }
                         }
-                        paymentHistory.add(new InvoiceHistory(invoiceNumber,tempCatalog, cc, today));
+                        paymentHistory.addInvoice(new InvoiceHistory(invoiceNumber,tempCatalog, cc, today));
                     }
                 }
                     ++invoiceNumber; 
