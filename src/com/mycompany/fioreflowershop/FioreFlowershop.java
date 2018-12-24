@@ -406,7 +406,7 @@ public class FioreFlowershop {
                 //MISSING FUNCTION
             } else if (counterStaffChoice == 4) {
                 //MISSING FUNCTION
-            } else if(counterStaffChoice == 5){
+            } else if (counterStaffChoice == 5) {
                 userTypeSelection();
             } else {
                 break;
@@ -448,34 +448,39 @@ public class FioreFlowershop {
             int deliveryStaffChoice = s.nextInt();
             s.nextLine();
             if (deliveryStaffChoice == 1) {
-                try {
-                    Delivery.sortRouteDelivery(catalogOrder, readyOrders, shopAddress);
-                } catch (ApiException ex) {
-                    Logger.getLogger(FioreFlowershop.class
-                            .getName()).log(Level.SEVERE, null, ex);
 
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(FioreFlowershop.class
-                            .getName()).log(Level.SEVERE, null, ex);
+                System.out.println(GREEN + "[1]" + RESET + "Today's Sorted Delivery Order List");
+                System.out.println(GREEN + "[2]" + RESET + "Search Sorted Delivery Order List by Date");
+                int deliveryChoice = s.nextInt();
+                s.nextLine();
 
-                } catch (IOException ex) {
-                    Logger.getLogger(FioreFlowershop.class
-                            .getName()).log(Level.SEVERE, null, ex);
+                if (deliveryChoice == 1) {
+                    try {
+                        Delivery.sortRouteDelivery(catalogOrder, readyOrders, shopAddress);
+                    } catch (ApiException | InterruptedException | IOException ex) {
+                        Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else if (deliveryChoice == 2) {
+                    try {
+                        System.out.print("Please enter date to search (yyyy-MM-dd): ");
+
+                        String dateStr = s.nextLine();
+
+                        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+
+                        Date date = dateformat.parse(dateStr);
+
+                        Delivery.searchSortRouteDelivery(catalogOrder, readyOrders, shopAddress, date);
+                    } catch (ParseException ex) {
+                        Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             } else if (deliveryStaffChoice == 2) {
                 try {
                     Delivery.sortRouteDelivery(catalogOrder, readyOrders, shopAddress);
-                } catch (ApiException ex) {
-                    Logger.getLogger(FioreFlowershop.class
-                            .getName()).log(Level.SEVERE, null, ex);
 
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(FioreFlowershop.class
-                            .getName()).log(Level.SEVERE, null, ex);
-
-                } catch (IOException ex) {
-                    Logger.getLogger(FioreFlowershop.class
-                            .getName()).log(Level.SEVERE, null, ex);
+                } catch (ApiException | InterruptedException | IOException ex) {
+                    Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else if (deliveryStaffChoice == 3) {
                 //MISSING FUNCTION

@@ -131,7 +131,8 @@ public class Delivery {
 
         }
 
-        //displaySortedDelivery(matchedList);
+        displaySortedDelivery(matchedList);
+
         return matchedList;
     }
 
@@ -367,6 +368,73 @@ public class Delivery {
                 sortedList.addOrder(customOrder.getOrder(j));
             }
         }
+        sortRoute(sortedList, shopAddress);
+    }
+
+    public static void searchSortRouteDelivery(OrderListInterface<CatalogOrders> catalogOrder, OrderListInterface<CustomizedPackage> customizeOrder, String shopAddress, Date date) throws ApiException, InterruptedException, IOException {
+        OrderListInterface<Order> sortedList = new OrderList<>();
+
+        OrderListInterface<CatalogOrders> unOrderList = new OrderList<CatalogOrders>();
+        OrderListInterface<CustomizedPackage> customOrder = new OrderList<CustomizedPackage>();
+
+        //int count = customOrder.getBackIndex();
+        Iterator<CatalogOrders> catalogIterator = catalogOrder.getIterator();
+        Iterator<CustomizedPackage> CustomIterator = customizeOrder.getIterator();
+
+        // Get all delivery order for Catalog Order
+        while (catalogIterator.hasNext()) {
+            CatalogOrders order = catalogIterator.next();
+
+            if (order.getOrderType().equals("Delivery")) {
+                unOrderList.addOrder(order);
+            }
+        }
+
+        // Get all delivery order for Customize Package
+        while (CustomIterator.hasNext()) {
+            CustomizedPackage order = CustomIterator.next();
+
+            if (order.getDeliveryType().getName().equals("Delivery")) {
+                customOrder.addOrder(order);
+            }
+        }
+
+        Calendar cal = Calendar.getInstance();
+        Calendar listCal = Calendar.getInstance();
+        Calendar cal1 = Calendar.getInstance();
+        Calendar CuslistCal = Calendar.getInstance();
+        cal.setTime(date);
+
+        int day, month, year, userDay, userMonth, userYear;
+
+        userDay = cal.get(Calendar.DAY_OF_MONTH);
+        userMonth = cal.get(Calendar.MONTH) + 1;
+        userYear = cal.get(Calendar.YEAR);
+
+        for (int j = 1; j <= unOrderList.getTotalEntries(); j++) {
+            listCal.setTime(unOrderList.getOrder(j).getRetrieveDate());
+
+            day = listCal.get(Calendar.DAY_OF_MONTH);
+            month = listCal.get(Calendar.MONTH) + 1;
+            year = listCal.get(Calendar.YEAR);
+
+            if (day == userDay && month == userMonth && year == userYear) {
+                sortedList.addOrder(unOrderList.getOrder(j));
+            }
+        }
+
+        for (int j = 1; j <= customOrder.getTotalEntries(); j++) {
+            listCal.setTime(customOrder.getOrder(j).getRetrieveDate());
+
+            day = listCal.get(Calendar.DAY_OF_MONTH);
+            month = listCal.get(Calendar.MONTH) + 1;
+            year = listCal.get(Calendar.YEAR);
+
+            if (day == userDay && month == userMonth && year == userYear) {
+                sortedList.addOrder(customOrder.getOrder(j));
+            }
+        }
+
         sortRoute(sortedList, shopAddress);
     }
 

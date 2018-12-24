@@ -202,6 +202,7 @@ public class CatalogOrder {
             System.out.print("Please enter a number (1-2): ");
             if (scan.hasNextInt()) {
                 userMenuOption = scan.nextInt();
+                scan.nextLine();
                 isInteger = true;
             } else {
                 isInteger = false;
@@ -218,6 +219,8 @@ public class CatalogOrder {
                 System.out.print("\nDo you want to proceed to select your item retrieval method? (Y/y = yes AND No = any key, go back to menu)");
 
                 String con = scan.next();
+
+                scan.nextLine();
 
                 if (con.equalsIgnoreCase("Y")) {
                     int retrieveItem = 0;
@@ -311,6 +314,8 @@ public class CatalogOrder {
 
                     System.out.print("Do you wish to checkout? (Y/y = yes OR N/n = no)");
                     String checkout = scan.next();
+
+                    scan.nextLine();
 
                     if (checkout.equalsIgnoreCase("Y")) {
                         checkoutStatus = true;
