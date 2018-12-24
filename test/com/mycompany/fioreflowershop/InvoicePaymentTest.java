@@ -5,7 +5,7 @@
  */
 package com.mycompany.fioreflowershop;
 
-import com.mycompany.fioreflowershop.adt.LinkedList;
+import com.mycompany.fioreflowershop.adt.*;
 import com.mycompany.fioreflowershop.modal.CatalogOrders;
 import com.mycompany.fioreflowershop.modal.CatalogPackage;
 import com.mycompany.fioreflowershop.modal.CorporateCustomer;
@@ -22,10 +22,10 @@ import static org.junit.Assert.*;
  * @author Admin
  */
 public class InvoicePaymentTest {
-    LinkedList<InvoiceHistory> ih = InvoicePayment.getPaymentHistory();
+    InvoiceInterface<InvoiceHistory> ih = InvoicePayment.getPaymentHistory();
     Date today = Calendar.getInstance().getTime();
-    LinkedList<CatalogOrders> co = FioreFlowershop.getCatalogOrder();
-    LinkedList<CatalogPackage> catalogPack1 = new LinkedList<>();
+    OrderListInterface<CatalogOrders> co = FioreFlowershop.getCatalogOrder();
+    CatalogPackageInterface<CatalogPackage> catalogPack1 = new CatalogPackageList<>();
     CorporateCustomer cor = new CorporateCustomer("JunitTest", "junitTest@example.com", "0123456789", "Junit Test Address", "abcdef", "Junit Test Company", 5000, true);
     //Zion made changes here (added 2 "" for flower pot and flower arrangement parameter)
     CatalogPackage cp1 = new CatalogPackage("FlowerTest", "Stylish", "TestSize", "Vase", "Valentine", "RoseTest", "Ribbons", "Test Product", "12", 2018, 10, 50, 20, 5);
@@ -33,8 +33,8 @@ public class InvoicePaymentTest {
     InvoiceHistory ih1 = new InvoiceHistory(100, co, cor, today);
     
     public InvoicePaymentTest() {
-        catalogPack1.add(cp1);
-        co.add(ct1);
+        catalogPack1.addProduct(cp1);
+        co.addOrder(ct1);
     }
     
     @Before
@@ -76,7 +76,7 @@ public class InvoicePaymentTest {
     @Test
     public void testViewPaymentHistory2() {
         System.out.println("\nView Payment History");
-        ih.add(ih1);
+        ih.addInvoice(ih1);
         String invoiceID = "IH100";
         InvoicePayment.viewPaymentHistory2(ih1, invoiceID);
     }

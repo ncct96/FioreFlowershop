@@ -17,7 +17,7 @@ public interface SortedListInterface<T extends Comparable<? super T>> {
 
   public int getPosition(T anEntry);
 
-  public T getEntry(int givenPosition);
+  public T getItem(int givenPosition);
 
   public boolean contains(T anEntry);
 
@@ -25,7 +25,7 @@ public interface SortedListInterface<T extends Comparable<? super T>> {
 
   public void clear();
 
-  public int getLength();
+  public int getTotalEntries();
 
   public boolean isEmpty();
 
