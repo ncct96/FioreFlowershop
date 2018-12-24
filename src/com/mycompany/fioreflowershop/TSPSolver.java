@@ -30,9 +30,9 @@ public class TSPSolver {
     public TSPSolver(int start, double[][] distance, double[][] duration) {
         N = distance.length;
 
-        if (N <= 2) {
-            throw new IllegalStateException("N <= 2 not yet supported.");
-        }
+//        if (N <= 2) {
+//            throw new IllegalStateException("N <= 2 not yet supported.");
+//        }
         if (N != distance[0].length) {
             throw new IllegalStateException("Matrix must be square (n x n)");
         }

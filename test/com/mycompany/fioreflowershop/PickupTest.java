@@ -7,6 +7,7 @@ package com.mycompany.fioreflowershop;
 
 import com.mycompany.fioreflowershop.adt.LinkedList;
 import com.mycompany.fioreflowershop.adt.ListInterface;
+import com.mycompany.fioreflowershop.adt.OrderListInterface;
 import com.mycompany.fioreflowershop.modal.CatalogOrders;
 import com.mycompany.fioreflowershop.modal.CustomizedPackage;
 import com.mycompany.fioreflowershop.modal.Order;
@@ -34,9 +35,9 @@ public class PickupTest {
     @Test
     public void testSearchPickUp() {
         System.out.println("searchPickUp");
-        LinkedList<CatalogOrders> catalogOrder = null;
+        OrderListInterface<CatalogOrders> catalogOrder = null;
         Date date = null;
-        LinkedList<CustomizedPackage> customizeOrder = null;
+        OrderListInterface<CustomizedPackage> customizeOrder = null;
         Pickup.searchPickUp(catalogOrder, date, customizeOrder);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -48,8 +49,8 @@ public class PickupTest {
     @Test
     public void testSortPickupOrder() {
         System.out.println("sortPickupOrder");
-        LinkedList<CatalogOrders> catalogOrder = null;
-        LinkedList<CustomizedPackage> customizeOrder = null;
+        OrderListInterface<CatalogOrders> catalogOrder = null;
+        OrderListInterface<CustomizedPackage> customizeOrder = null;
         Pickup.sortPickupOrder(catalogOrder, customizeOrder);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -61,7 +62,7 @@ public class PickupTest {
     @Test
     public void testDisplaySortedPickup() {
         System.out.println("displaySortedPickup");
-        ListInterface<Order> orderedList = null;
+        OrderListInterface<Order> orderedList = null;
         Pickup.displaySortedPickup(orderedList);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -74,9 +75,9 @@ public class PickupTest {
     public void testSearchUserPickUp() {
         System.out.println("searchUserPickUp");
         String userID = "";
-        LinkedList<CatalogOrders> catalogOrder = null;
-        LinkedList<CustomizedPackage> customOrder = null;
-        LinkedList<Order> paidOrder = null;
+        OrderListInterface<CatalogOrders> catalogOrder = null;
+        OrderListInterface<CustomizedPackage> customOrder = null;
+        OrderListInterface<Order> paidOrder = null;
         Pickup.searchUserPickUp(userID, catalogOrder, customOrder, paidOrder);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
