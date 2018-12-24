@@ -5,7 +5,7 @@
  */
 package com.mycompany.fioreflowershop;
 
-import com.mycompany.fioreflowershop.adt.LinkedList;
+import com.mycompany.fioreflowershop.adt.CatalogPackageInterface;
 import com.mycompany.fioreflowershop.adt.OrderListInterface;
 import com.mycompany.fioreflowershop.modal.CatalogOrders;
 import com.mycompany.fioreflowershop.modal.CatalogPackage;
@@ -36,7 +36,7 @@ public class CatalogOrderTest {
     String retrievalDate = "";
     private Date retrieveDate;
     private Date retrieveTime;
-    LinkedList<CatalogPackage> cartItem = CatalogOrder.getCartItem();
+    CatalogPackageInterface<CatalogPackage> cartItem = CatalogOrder.getCartItem();
     OrderListInterface<CatalogOrders> catalogOrder = FioreFlowershop.getCatalogOrder();
     private CorporateCustomer corporate = new CorporateCustomer();
     private Consumer customer = new Consumer();
@@ -54,8 +54,8 @@ public class CatalogOrderTest {
         retrieveTime = validRetrieveDate.getTime();
 
         for (int i = 1; i < cartItem.getTotalEntries() + 1; i++) {
-            double discountedPrice = (double) ((100 - cartItem.getItem(i).getDiscountRate()) * cartItem.getItem(i).getPrice() / 100);
-            orderAmt += (discountedPrice * cartItem.getItem(i).getUserQuantity());
+            double discountedPrice = (double) ((100 - cartItem.getProduct(i).getDiscountRate()) * cartItem.getProduct(i).getPrice() / 100);
+            orderAmt += (discountedPrice * cartItem.getProduct(i).getUserQuantity());
         }
     }
 
@@ -96,9 +96,9 @@ public class CatalogOrderTest {
      */
     @Test
     public void testShowShoppingCart() {
-        cartItem.add(new CatalogPackage("FlowerStrong", "Stylish", "Small", "Vase", "Valentine", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20, 5));
-        cartItem.add(new CatalogPackage("FlowerSmall", "Simple", "Medium", "Jar", "Graduation", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10, 5));
-        cartItem.add(new CatalogPackage("FlowerMedium", "Elegant", "Large", "Wooden box", "Grand Opening", "Sunflower", "Belt", "Product Type", "11", 2018, 15, 40, 5, 2));
+        cartItem.addProduct(new CatalogPackage("FlowerStrong", "Stylish", "Small", "Vase", "Valentine", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20, 5));
+        cartItem.addProduct(new CatalogPackage("FlowerSmall", "Simple", "Medium", "Jar", "Graduation", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10, 5));
+        cartItem.addProduct(new CatalogPackage("FlowerMedium", "Elegant", "Large", "Wooden box", "Grand Opening", "Sunflower", "Belt", "Product Type", "11", 2018, 15, 40, 5, 2));
         System.out.println("testShowSoppingCart");
         CatalogOrder.showShoppingCart(cartItem);
     }
@@ -150,16 +150,16 @@ public class CatalogOrderTest {
 
         for (int i = 1; i < cartItem.getTotalEntries() + 1; i++) {
 
-            double total = (double) ((100 - catalogOrder.getOrder(1).getCatalogPack().getItem(i).getDiscountRate()) * 
-                    catalogOrder.getOrder(1).getCatalogPack().getItem(i).getPrice() / 100)
-                    * catalogOrder.getOrder(1).getCatalogPack().getItem(i).getUserQuantity();
-            System.out.printf("%s  \t\t\t  | \t  %d  |\t         %d\t|\t   %7.2f |   %7.2f\n", catalogOrder.getOrder(1).getCatalogPack().getItem(i).getName(), 
-                    catalogOrder.getOrder(1).getCatalogPack().getItem(i).getUserQuantity(),catalogOrder.getOrder(1).getCatalogPack().getItem(i).getDiscountRate(), 
-                    catalogOrder.getOrder(1).getCatalogPack().getItem(i).getPrice(), total);
+            double total = (double) ((100 - catalogOrder.getOrder(1).getCatalogPack().getProduct(i).getDiscountRate()) * 
+                    catalogOrder.getOrder(1).getCatalogPack().getProduct(i).getPrice() / 100)
+                    * catalogOrder.getOrder(1).getCatalogPack().getProduct(i).getUserQuantity();
+            System.out.printf("%s  \t\t\t  | \t  %d  |\t         %d\t|\t   %7.2f |   %7.2f\n", catalogOrder.getOrder(1).getCatalogPack().getProduct(i).getName(), 
+                    catalogOrder.getOrder(1).getCatalogPack().getProduct(i).getUserQuantity(),catalogOrder.getOrder(1).getCatalogPack().getProduct(i).getDiscountRate(), 
+                    catalogOrder.getOrder(1).getCatalogPack().getProduct(i).getPrice(), total);
         }
 
         for (int i = 1; i < cartItem.getTotalEntries() + 1; i++) {
-            orderAmt += (double) ((100 - cartItem.getItem(i).getDiscountRate()) * cartItem.getItem(i).getPrice() / 100) * cartItem.getItem(i).getUserQuantity();
+            orderAmt += (double) ((100 - cartItem.getProduct(i).getDiscountRate()) * cartItem.getProduct(i).getPrice() / 100) * cartItem.getProduct(i).getUserQuantity();
         }
 
         System.out.println(FioreFlowershop.ConsoleColors.BLACK + "\n\n\t\t\t\t\t\t\t Subtotal :\t\t\t " + FioreFlowershop.ConsoleColors.GREEN + "RM " + orderAmt 
