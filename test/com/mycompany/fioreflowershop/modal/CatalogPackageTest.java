@@ -22,8 +22,9 @@ public class CatalogPackageTest {
     
     @Before
     public void setUp() {
-        //Zion made changes here (added 2 "" for flower pot and flower arrangement parameter)
-        this.instance = new CatalogPackage("Package 1", "Style 1", "Small", "", "", "Flower 1", "Bear 1", "Flower arrangement", "December", 2018, 10, 90.00, 10, 5);
+        this.instance = new CatalogPackage("Package 1", "Style 1", "Small", 
+                "Jar", "Visit patient", "Flower 1", "Bear 1", 
+                "Flower arrangement", "December", 2018, 10, 90.00, 10, "Active");
     }
 
     /**
@@ -87,6 +88,48 @@ public class CatalogPackageTest {
         System.out.println("setSize");
         String size = "Small";
         instance.setSize(size);
+    }
+
+    /**
+     * Test of getFlowerPot method, of class CatalogPackage.
+     */
+    @Test
+    public void testGetFlowerPot() {
+        System.out.println("getFlowerPot");
+        String expResult = "Jar";
+        String result = instance.getFlowerPot();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of setFlowerPot method, of class CatalogPackage.
+     */
+    @Test
+    public void testSetFlowerPot() {
+        System.out.println("setFlowerPot");
+        String flowerPot = "Jar";
+        instance.setFlowerPot(flowerPot);
+    }
+
+    /**
+     * Test of getFloralArrangement method, of class CatalogPackage.
+     */
+    @Test
+    public void testGetFloralArrangement() {
+        System.out.println("getFloralArrangement");
+        String expResult = "Visit patient";
+        String result = instance.getFloralArrangement();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of setFloralArrangement method, of class CatalogPackage.
+     */
+    @Test
+    public void testSetFloralArrangement() {
+        System.out.println("setFloralArrangement");
+        String floralArrangement = "Visit patient";
+        instance.setFloralArrangement(floralArrangement);
     }
 
     /**
@@ -263,7 +306,7 @@ public class CatalogPackageTest {
     @Test
     public void testGetUserQuantity() {
         System.out.println("getUserQuantity");
-        int expResult = 5;
+        int expResult = 0;
         int result = instance.getUserQuantity();
         assertEquals(expResult, result);
     }
@@ -274,7 +317,28 @@ public class CatalogPackageTest {
     @Test
     public void testSetUserQuantity() {
         System.out.println("setUserQuantity");
-        int userQuantity = 5;
+        int userQuantity = 0;
         instance.setUserQuantity(userQuantity);
     }
+
+    /**
+     * Test of getStatus method, of class CatalogPackage.
+     */
+    @Test
+    public void testGetStatus() {
+        System.out.println("getStatus");
+        String expResult = "Active";
+        String result = instance.getStatus();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of setStatus method, of class CatalogPackage.
+     */
+    @Test
+    public void testSetStatus() {
+        System.out.println("setStatus");
+        String status = "Active";
+        instance.setStatus(status);
+    }    
 }
