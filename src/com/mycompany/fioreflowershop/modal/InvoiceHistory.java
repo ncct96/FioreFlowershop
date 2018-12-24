@@ -27,9 +27,9 @@ public class InvoiceHistory {
     
     public InvoiceHistory(int invoiceNum , OrderListInterface<CatalogOrders> cart, CorporateCustomer corp, Date paid){
         invoiceNumber = "IH"+invoiceNum;
-        this.catalogOrder = cart;
-        this.corp = corp;
-        this.datepay = paid;
+        setCatalogOrder(catalogOrder);
+        setCorp(corp);
+        setDatepay(datepay);
     }
 
     public Date getDatepay() {

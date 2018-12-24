@@ -22,18 +22,18 @@ public class User implements Comparable<User>{
     }
     
     public User(String username, String email, String phone, String address){
-        this.username = username;
-        this.email = email;
-        this.phone = phone;
-        this.address = address;
+        setUsername(username);
+        setEmail(email);
+        setPhone(phone);
+        setAddress(address);
     }
     
     public User(String username, String email, String phone, String address, String password){
-        this.username = username;
-        this.email = email;
-        this.address = address;
-        this.password = password;
-        this.phone = phone;
+        setUsername(username);
+        setEmail(email);
+        setAddress(address);
+        setPassword(password);
+        setPhone(phone);
     }
     
     public String getUsername() {
