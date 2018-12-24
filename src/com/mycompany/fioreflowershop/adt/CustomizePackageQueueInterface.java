@@ -22,8 +22,8 @@ public interface CustomizePackageQueueInterface<T> {
     public void clear();
 
     public int getSize();
-    
+
     public boolean contains(T item);
-    
-    public boolean merge(CustomizePackageQueueInterface queue);
+
+    public boolean merge(CustomizePackageQueueInterface<T> queue);
 }
