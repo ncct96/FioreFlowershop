@@ -28,22 +28,22 @@ public class CustomizePackageMaintenance {
 
     public static void printItem(ItemCatalogue itemCatalogue, int type) {
         if (type == 1) {
-            for (int i = 1; i <= itemCatalogue.getStyles().getTotalEntries(); i++) {
+            for (int i = 1; i <= itemCatalogue.getStyles().getSize(); i++) {
                 System.out.print(ANSI_GREEN + "[" + i + "]" + ANSI_RESET);
                 System.out.printf(" %s: RM%.2f\n", itemCatalogue.getStyles().getItem(i).getName(), itemCatalogue.getStyles().getItem(i).getPrice());
             }
         } else if (type == 2) {
-            for (int i = 1; i <= itemCatalogue.getSizes().getTotalEntries(); i++) {
+            for (int i = 1; i <= itemCatalogue.getSizes().getSize(); i++) {
                 System.out.print(ANSI_GREEN + "[" + i + "]" + ANSI_RESET);
                 System.out.printf(" %s: x %.0f\n", itemCatalogue.getSizes().getItem(i).getName(), itemCatalogue.getSizes().getItem(i).getPrice());
             }
         } else if (type == 3) {
-            for (int i = 1; i <= itemCatalogue.getFlowers().getTotalEntries(); i++) {
+            for (int i = 1; i <= itemCatalogue.getFlowers().getSize(); i++) {
                 System.out.print(ANSI_GREEN + "[" + i + "]" + ANSI_RESET);
                 System.out.printf(" %s: RM%.2f\n", itemCatalogue.getFlowers().getItem(i).getName(), itemCatalogue.getFlowers().getItem(i).getPrice());
             }
         } else if (type == 4) {
-            for (int i = 1; i <= itemCatalogue.getAccessories().getTotalEntries(); i++) {
+            for (int i = 1; i <= itemCatalogue.getAccessories().getSize(); i++) {
                 System.out.print(ANSI_GREEN + "[" + i + "]" + ANSI_RESET);
                 System.out.printf(" %s: RM%.2f\n", itemCatalogue.getAccessories().getItem(i).getName(), itemCatalogue.getAccessories().getItem(i).getPrice());
             }
@@ -95,7 +95,7 @@ public class CustomizePackageMaintenance {
                 } while (selection != 'Y' && selection != 'N');
                 if (selection == 'Y') {
                     System.out.println("Order marked as ready to deliver!");
-                    readyOrders.add(customizedPackages.removeCustomizedPackage());
+                    readyOrders.add(customizedPackages.dequeuePackage());
                     if (customizedPackages.isEmpty()) {
                         System.out.println("No more orders is queue!\n");
                         break;
@@ -134,7 +134,7 @@ public class CustomizePackageMaintenance {
             }
         }
         if (selection == 1) {
-            for (int i = 1; i <= itemCatalogue.getFlowers().getTotalEntries(); i++) {
+            for (int i = 1; i <= itemCatalogue.getFlowers().getSize(); i++) {
                 System.out.print(ANSI_GREEN + "[" + i + "]" + ANSI_RESET);
                 System.out.printf(" %s: %d\n", itemCatalogue.getFlowers().getItem(i).getName(), itemCatalogue.getFlowers().getItem(i).getQuantity());
             }
@@ -144,7 +144,7 @@ public class CustomizePackageMaintenance {
                     do {
                         System.out.print("Select the item to update: ");
                         selection = scan.nextInt();
-                    } while (selection < 0 || selection > itemCatalogue.getFlowers().getTotalEntries());
+                    } while (selection < 0 || selection > itemCatalogue.getFlowers().getSize());
 
                     if (selection == 0) {
                         break;
@@ -165,7 +165,7 @@ public class CustomizePackageMaintenance {
                 itemCatalogue.getFlowers().getItem(selection).setQuantity(newQuantity);
             }
         } else if (selection == 2) {
-            for (int i = 2; i <= itemCatalogue.getAccessories().getTotalEntries(); i++) {
+            for (int i = 2; i <= itemCatalogue.getAccessories().getSize(); i++) {
                 System.out.print(ANSI_GREEN + "[" + (i - 1) + "]" + ANSI_RESET);
                 System.out.printf(" %s: %d\n", itemCatalogue.getAccessories().getItem(i).getName(), itemCatalogue.getAccessories().getItem(i).getQuantity());
             }
@@ -175,7 +175,7 @@ public class CustomizePackageMaintenance {
                     do {
                         System.out.print("Select the item to update: ");
                         selection = scan.nextInt();
-                    } while (selection < 0 || selection > itemCatalogue.getAccessories().getTotalEntries());
+                    } while (selection < 0 || selection > itemCatalogue.getAccessories().getSize());
 
                     if (selection == 0) {
                         break;
@@ -234,16 +234,16 @@ public class CustomizePackageMaintenance {
             selection = CustomizePackageMaintenance.selectItem();
             if (selection == 1) {
                 type = "arrangement style: ";
-                maxSize = itemCatalogue.getStyles().getTotalEntries();
+                maxSize = itemCatalogue.getStyles().getSize();
             } else if (selection == 2) {
                 type = "arrangement size: ";
-                maxSize = itemCatalogue.getSizes().getTotalEntries();
+                maxSize = itemCatalogue.getSizes().getSize();
             } else if (selection == 3) {
                 type = "flower: ";
-                maxSize = itemCatalogue.getFlowers().getTotalEntries();
+                maxSize = itemCatalogue.getFlowers().getSize();
             } else if (selection == 4) {
                 type = "accessory: ";
-                maxSize = itemCatalogue.getAccessories().getTotalEntries();
+                maxSize = itemCatalogue.getAccessories().getSize();
             }
             System.out.print("Enter the name of the new " + type);
             newItem.setName(scan.nextLine());
@@ -290,7 +290,7 @@ public class CustomizePackageMaintenance {
             System.out.println("(If you select a position with an existing item,\nthat item will be moved down one slot together with all proceeding items)");
             System.out.println("================================================");
             CustomizePackageMaintenance.printItem(itemCatalogue, selection);
-            System.out.println(ANSI_GREEN + "[" + (itemCatalogue.getStyles().getTotalEntries() + 1) + "]" + ANSI_RESET + "[ NEW SLOT ]");
+            System.out.println(ANSI_GREEN + "[" + (itemCatalogue.getStyles().getSize() + 1) + "]" + ANSI_RESET + "[ NEW SLOT ]");
             while (true) {
                 try {
                     do {
@@ -333,13 +333,13 @@ public class CustomizePackageMaintenance {
         int position = 0;
         selection = CustomizePackageMaintenance.selectItem();
         if (selection == 1) {
-            maxSize = itemCatalogue.getStyles().getTotalEntries();
+            maxSize = itemCatalogue.getStyles().getSize();
         } else if (selection == 2) {
-            maxSize = itemCatalogue.getSizes().getTotalEntries();
+            maxSize = itemCatalogue.getSizes().getSize();
         } else if (selection == 3) {
-            maxSize = itemCatalogue.getFlowers().getTotalEntries();
+            maxSize = itemCatalogue.getFlowers().getSize();
         } else if (selection == 4) {
-            maxSize = itemCatalogue.getAccessories().getTotalEntries();
+            maxSize = itemCatalogue.getAccessories().getSize();
         }
         System.out.println("Select the item to be deleted");
         CustomizePackageMaintenance.printItem(itemCatalogue, selection);
@@ -382,16 +382,16 @@ public class CustomizePackageMaintenance {
             selection = CustomizePackageMaintenance.selectItem();
             if (selection == 1) {
                 type = "arrangement style: ";
-                maxSize = itemCatalogue.getStyles().getTotalEntries();
+                maxSize = itemCatalogue.getStyles().getSize();
             } else if (selection == 2) {
                 type = "arrangement size: ";
-                maxSize = itemCatalogue.getSizes().getTotalEntries();
+                maxSize = itemCatalogue.getSizes().getSize();
             } else if (selection == 3) {
                 type = "flower: ";
-                maxSize = itemCatalogue.getFlowers().getTotalEntries();
+                maxSize = itemCatalogue.getFlowers().getSize();
             } else if (selection == 4) {
                 type = "accessory: ";
-                maxSize = itemCatalogue.getAccessories().getTotalEntries();
+                maxSize = itemCatalogue.getAccessories().getSize();
             }
 
             System.out.println("Select the item to be moved");
@@ -432,7 +432,7 @@ public class CustomizePackageMaintenance {
             System.out.println("(If you select a position with an existing item,\nthat item will be moved down one slot together with all proceeding items)");
             System.out.println("================================================");
             CustomizePackageMaintenance.printItem(itemCatalogue, selection);
-            System.out.println(ANSI_GREEN + "[" + (itemCatalogue.getStyles().getTotalEntries() + 1) + "]" + ANSI_RESET + "[ NEW SLOT ]");
+            System.out.println(ANSI_GREEN + "[" + (itemCatalogue.getStyles().getSize() + 1) + "]" + ANSI_RESET + "[ NEW SLOT ]");
             while (true) {
                 try {
                     do {

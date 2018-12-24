@@ -203,15 +203,15 @@ public class FioreFlowershop {
 
         Consumer customer = new Consumer("Johan", "abcdef", "ncct66@gmail.com", "0165919413", "Gelanggang Squash IAB Genting Highlands, Genting Highlands, 69000 Genting Highlands, Pahang");
         Consumer customer1 = new Consumer("Baba", "abcdef", "ncct66@gmail.com", "0165919413", "7, Jalan Legoland, Medini, 79250 Nusajaya, Johor");
-        customizedPackages.addCustomizedPackage(package1);
-        customizedPackages.addCustomizedPackage(package2);
-        customizedPackages.addCustomizedPackage(package3);
-        customizedPackages.addCustomizedPackage(package4);
-        customizedPackages.addCustomizedPackage(package5);
-        customizedPackages.addCustomizedPackage(package6);
+        customizedPackages.enqueuePackage(package1);
+        customizedPackages.enqueuePackage(package2);
+        customizedPackages.enqueuePackage(package3);
+        customizedPackages.enqueuePackage(package4);
+        customizedPackages.enqueuePackage(package5);
+        customizedPackages.enqueuePackage(package6);
 
-        readyOrders.add(customizedPackages.removeCustomizedPackage());
-        readyOrders.add(customizedPackages.removeCustomizedPackage());
+        readyOrders.add(customizedPackages.dequeuePackage());
+        readyOrders.add(customizedPackages.dequeuePackage());
 
 //        CustomizedPackage specialPackage = new CustomizedPackage(styles.getItem(1), sizes.getItem(2), flowers.getItem(5), accessories.getItem(2), priorities.getItem(1), deliveryTypes.getItem(2), customer);
 //        specialPackage.setDeliveryDate(Calendar.getInstance().getTime());
@@ -344,10 +344,6 @@ public class FioreFlowershop {
             System.out.println(GREEN + "[1] " + RESET + "Customer Maintenance");
             System.out.println(GREEN + "[2] " + RESET + "Create Corporate Customer Account");
             System.out.println(GREEN + "[3] " + RESET + "Modify the product catalogue");
-            //System.out.println(GREEN + "[3] " + RESET + "Add a product to catalog");
-            //System.out.println(GREEN + "[4] " + RESET + "Remove a product from catalog");
-            //System.out.println(GREEN + "[5] " + RESET + "Edit the details of product in catalog");
-            //System.out.println(GREEN + "[6] " + RESET + "Display created catalog");
             System.out.println(GREEN + "[4] " + RESET + "Back");
             System.out.print("Selection: ");
             int managerChoice = s.nextInt();
