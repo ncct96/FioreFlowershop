@@ -28,9 +28,10 @@ public class FioreFlowershop {
     public static final String GREEN = "\033[0;32m";
 
     // Lines 95 - 98, 154-158
-    private static LinkedList<Consumer> consumer = new LinkedList<>();
-    private static LinkedList<CorporateCustomer> corporate = new LinkedList<>();
-    private static LinkedList<User> user = new LinkedList<>();
+    private static ConsumerInterface<Consumer> consumer = new ConsumerADT<>();
+    private static CorporateInterface<CorporateCustomer> corporate = new CorporateADT<>();
+    private static UserInterface<User> user = new UserADT<>();
+//    private static SortedListInterface<User> testSort = new SortedLinkList<>();
     private static SortedListInterface<User> testSort = new SortedLinkList<>();
     private static OrderListInterface<Order> pickupOrder = new OrderList<Order>();
     private static OrderListInterface<Order> deliveryOrder = new OrderList<Order>();
@@ -48,8 +49,8 @@ public class FioreFlowershop {
     private static ShoppingCartListInterface<CatalogOrders> shoppingCart = new ShoppingCartList<>();
     private static OrderListInterface<CatalogOrders> catalogOrder = new OrderList<>();
 
-    private static LinkedList<CatalogPackage> catalogPack1 = new LinkedList<>();
-    private static LinkedList<CatalogPackage> catalogPack2 = new LinkedList<>();
+    private static CatalogPackageInterface<CatalogPackage> catalogPack1 = new CatalogPackageList<>();
+    private static CatalogPackageInterface<CatalogPackage> catalogPack2 = new CatalogPackageList<>();
 
     private static String[] origin = {"Taiping", "Penang", "Cheras", "Johor"};
     private static String[] dest = {"Taiping", "Penang", "Cheras", "Johor"};
@@ -88,40 +89,36 @@ public class FioreFlowershop {
         Consumer c2 = new Consumer("testing", "testing", "testing@example.com", "0125566922", "Penang");
         Consumer c3 = new Consumer("testing1", "testing", "testing1@example.com", "0125566922", "Cheras");
         Consumer c4 = new Consumer("testing2", "testing", "testing2@example.com", "0125566922", "Pahang");
-        Consumer c5 = new Consumer("manager", "abc", "manager@example.com", "012", "lmao");
-        Consumer c6 = new Consumer("manager1", "abc", "manager1@example.com", "012", "lmao");
-
-        testSort.add(cc2);
-        testSort.add(cc1);
-        testSort.add(c1);
-        testSort.add(c2);
-        testSort.add(c5);
-        testSort.add(c3);
-        CustomerMaintenance.sortUserList();
-        for (int i = 1; i <= user.getTotalEntries(); i++) {
-            System.out.println(user.getItem(i).getEmail());
-        }
-
-        consumer.add(c1);
-        consumer.add(c2);
-        consumer.add(c3);
-        consumer.add(c4);
-
-        corporate.add(cc1);
-        corporate.add(cc2);
-        corporate.getItem(1).setCreditSpent(4500);
-        corporate.getItem(2).setCreditSpent(1500);
+        Consumer c5 = new Consumer("manager", "abc" ,"manager@example.com", "012","lmao");
+        Consumer c6 = new Consumer("manager1", "abc" ,"manager1@example.com", "012","lmao");
+        
+        user.addUser(cc2);
+        user.addUser(cc1);
+        user.addUser(c1);
+        user.addUser(c2);
+        user.addUser(c5);
+        user.addUser(c3);
+        
+        consumer.addConsumer(c1);
+        consumer.addConsumer(c2);
+        consumer.addConsumer(c3);
+        consumer.addConsumer(c4);
+        
+        corporate.addCorporate(cc1);
+        corporate.addCorporate(cc2);
+        corporate.getCorporate(1).setCreditSpent(4500);
+        corporate.getCorporate(2).setCreditSpent(1500);
 
         //Initialize shopping cart
         CatalogPackage cp1 = new CatalogPackage("FlowerStrong", "Stylish", "Small", "", "", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20, 5);
         CatalogPackage cp2 = new CatalogPackage("FlowerWeak", "Colourful", "Medium", "", "", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10, 4);
         CatalogPackage cp3 = new CatalogPackage("FlowerMedium", "Elegant", "Large", "", "", "Sunflower", "Belt", "Product Type", "11", 2018, 15, 40, 5, 6);
 
-        catalogPack1.add(cp1);
-        catalogPack1.add(cp2);
-        catalogPack2.add(cp1);
-        catalogPack2.add(cp2);
-        catalogPack2.add(cp3);
+        catalogPack1.addProduct(cp1);
+        catalogPack1.addProduct(cp2);
+        catalogPack2.addProduct(cp1);
+        catalogPack2.addProduct(cp2);
+        catalogPack2.addProduct(cp3);
 
         CatalogOrders ct1 = new CatalogOrders("C1", catalogPack1, "Pick Up", todayDate, cc1, "Order Status", 308, false, todayDate, todayDate);
         CatalogOrders ct2 = new CatalogOrders("C2", catalogPack2, "Pick Up", todayDate, cc2, "Order Status", 200, false, todayDate, todayDate);
@@ -249,12 +246,11 @@ public class FioreFlowershop {
     public static void gotoCatalogOrders(Consumer customerLoggedIn, CorporateCustomer corporateLoggedIn) {
         //Zion part need change since tutor told me use one array so my multiple array is gone
 
-        if (corporateLoggedIn == null) {
-            //CatalogOrder.CustomerOrderMain(shoppingCart, catalogOrder, customerLoggedIn, normalPackage, discountedPackage);
-        } else if (customerLoggedIn == null) {
-            //CatalogOrder.CorporateOrderMain(shoppingCart, catalogOrder, corporateLoggedIn, normalPackage, discountedPackage);
-        }
-
+//        if (corporateLoggedIn == null) {
+//            CatalogOrder.CustomerOrderMain(shoppingCart, catalogOrder, customerLoggedIn, normalPackage, discountedPackage);
+//        } else if (customerLoggedIn == null) {
+//            CatalogOrder.CorporateOrderMain(shoppingCart, catalogOrder, corporateLoggedIn, normalPackage, discountedPackage);
+//        }
     }
 
     //Dummy data - woo for display purpose
@@ -290,8 +286,7 @@ public class FioreFlowershop {
             System.out.println(GREEN + "[2] " + RESET + "Staff");
             System.out.println(GREEN + "[3] " + RESET + "Exit System");
             System.out.print("Selection: ");
-            int userTypeChoice = s.nextInt();
-            s.nextLine();
+            int userTypeChoice = s.nextInt(); s.nextLine();
             if (userTypeChoice == 1) {
                 CustomerMaintenance.customerOptions();
             } else if (userTypeChoice == 2) {
@@ -341,13 +336,10 @@ public class FioreFlowershop {
     public static void manager() {
         while (true) {
             System.out.println("\nPlease Select The Options Below.");
-            System.out.println(GREEN + "[1] " + RESET + "Customer Maintenance");
+            System.out.println(GREEN + "[1] " + RESET + "Edit Customer Details");
             System.out.println(GREEN + "[2] " + RESET + "Create Corporate Customer Account");
+            System.out.println(GREEN + "[3] " + RESET + "Remove Customer Account");
             System.out.println(GREEN + "[3] " + RESET + "Modify the product catalogue");
-            //System.out.println(GREEN + "[3] " + RESET + "Add a product to catalog");
-            //System.out.println(GREEN + "[4] " + RESET + "Remove a product from catalog");
-            //System.out.println(GREEN + "[5] " + RESET + "Edit the details of product in catalog");
-            //System.out.println(GREEN + "[6] " + RESET + "Display created catalog");
             System.out.println(GREEN + "[4] " + RESET + "Back");
             System.out.print("Selection: ");
             int managerChoice = s.nextInt();
@@ -357,7 +349,9 @@ public class FioreFlowershop {
                 CustomerMaintenance.staffEditType();
             } else if (managerChoice == 2) {
                 CustomerMaintenance.staffCreateCorporate();
-            } else if (managerChoice == 3) {
+            } else if(managerChoice == 3){
+                CustomerMaintenance.staffRemoveCust();
+            } else if (managerChoice == 4) {
                 CatalogMaintenance.catalogMaintenance(normalPackage, discountedPackage);
             } else {
                 break;
@@ -637,25 +631,16 @@ public class FioreFlowershop {
         consumer = consumer;
     }
 
-    public static LinkedList<Consumer> getCustomer() {
+    public static ConsumerInterface<Consumer> getConsumerList() {
         return consumer;
     }
 
-    //GETTER SETTER FOR CORPORATE LIST
-    public static void setCorporate(LinkedList<CorporateCustomer> corporateCust) {
-        corporate = corporateCust;
-    }
-
-    public static LinkedList<CorporateCustomer> getCorporate() {
+    public static CorporateInterface<CorporateCustomer> getCorporateList() {
         return corporate;
     }
 
-    public static LinkedList<User> getUser() {
+    public static UserInterface<User> getUserList() {
         return user;
-    }
-
-    public static SortedListInterface<User> getSortedUser() {
-        return testSort;
     }
 
     public static ShoppingCartListInterface<CatalogOrders> getShoppingCart() {

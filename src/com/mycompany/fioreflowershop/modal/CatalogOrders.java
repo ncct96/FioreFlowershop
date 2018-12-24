@@ -5,7 +5,8 @@
  */
 package com.mycompany.fioreflowershop.modal;
 
-import com.mycompany.fioreflowershop.adt.LinkedList;
+import com.mycompany.fioreflowershop.adt.CatalogPackageInterface;
+import com.mycompany.fioreflowershop.adt.CatalogPackageList;
 import java.util.Date;
 
 /**
@@ -14,13 +15,13 @@ import java.util.Date;
  */
 public class CatalogOrders extends Order {
     private String orderID;
-    private LinkedList<CatalogPackage> catalogPack = new LinkedList<>();
+    private CatalogPackageInterface<CatalogPackage> catalogPack = new CatalogPackageList<>();
     private Date retrieveTime;
 
     public CatalogOrders() {
     }
 
-    public CatalogOrders(String orderID, LinkedList<CatalogPackage> catalogPack,
+    public CatalogOrders(String orderID, CatalogPackageInterface<CatalogPackage> catalogPack,
             String orderType, Date orderDate, User user, String orderStatus, double orderAmt,
             boolean paymentStatus, Date retrieveDate, Date retrieveTime) {
         super(orderType, orderDate, user, orderStatus, orderAmt, paymentStatus, retrieveDate);
@@ -37,11 +38,11 @@ public class CatalogOrders extends Order {
         this.orderID = orderID;
     }
 
-    public LinkedList<CatalogPackage> getCatalogPack() {
+    public CatalogPackageInterface<CatalogPackage> getCatalogPack() {
         return catalogPack;
     }
 
-    public void setCatalogPack(LinkedList<CatalogPackage> catalogPack) {
+    public void setCatalogPack(CatalogPackageInterface<CatalogPackage> catalogPack) {
         this.catalogPack = catalogPack;
     }   
 

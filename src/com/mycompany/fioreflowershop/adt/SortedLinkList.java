@@ -12,11 +12,11 @@ package com.mycompany.fioreflowershop.adt;
 public class SortedLinkList<T extends Comparable<? super T>> implements SortedListInterface<T> {
 
   private Node firstNode;
-  private int length;
+  private int numberOfEntries;
 
   public SortedLinkList() {
     firstNode = null;
-    length = 0;
+    numberOfEntries = 0;
   }
 
   public boolean add(T newEntry) {
@@ -36,23 +36,23 @@ public class SortedLinkList<T extends Comparable<? super T>> implements SortedLi
 //      newNode.next = currentNode;
 //      nodeBefore.next = newNode;
 //    }
-//    length++;
+//    numberOfEntries++;
     
     firstNode = add(newEntry, firstNode);
-    length++;
+    numberOfEntries++;
     return true;  
   }
 
   private Node add(T newEntry, Node currNode)
   {
-      if((currNode == null)||newEntry.compareTo(currNode.data)<=0)
+      if((currNode == null)||newEntry.compareTo((T)currNode.getData())<=0)
       {
           currNode = new Node(newEntry, currNode);
       }
       else
       {
-          Node nodeAfter = add(newEntry, currNode.next);
-          currNode.next = nodeAfter;
+          Node nodeAfter = add(newEntry, currNode.getNext());
+          currNode.setNext(nodeAfter);
       }
       return currNode;
   }
@@ -65,15 +65,15 @@ public class SortedLinkList<T extends Comparable<? super T>> implements SortedLi
     throw new UnsupportedOperationException();	// Left as Practical exercise
   }
 
-  public T getEntry(int givenPosition) {
+  public T getItem(int givenPosition) {
     T result = null;
 
-    if ((givenPosition >= 1) && (givenPosition <= length)) {
+    if ((givenPosition >= 1) && (givenPosition <= numberOfEntries)) {
       Node currentNode = firstNode;
       for (int i = 0; i < givenPosition - 1; ++i) {
-        currentNode = currentNode.next;		// advance currentNode to next node
+        currentNode = currentNode.getNext();		// advance currentNode to next node
       }
-      result = currentNode.data;	// currentNode is pointing to the node at givenPosition
+      result = (T) currentNode.getData();	// currentNode is pointing to the node at givenPosition
     }
 
     return result;
@@ -99,15 +99,15 @@ public class SortedLinkList<T extends Comparable<? super T>> implements SortedLi
     int pos = 1;
 
     while (!found && (tempNode != null)) {
-      if (anEntry.compareTo(tempNode.data) <= 0) {
+      if (anEntry.compareTo((T)tempNode.getData()) <= 0) {
         found = true;
       } else {
-        tempNode = tempNode.next;
+        tempNode = tempNode.getNext();
         pos++;
       }
     }
-    System.out.println("\n***TRACE: tempNode.data is " + tempNode.data + " " + pos);
-    if (tempNode != null && tempNode.data.equals(anEntry))
+    System.out.println("\n***TRACE: tempNode.data is " + tempNode.getData() + " " + pos);
+    if (tempNode != null && tempNode.getData().equals(anEntry))
       return true;
     else 
       return false;
@@ -116,20 +116,20 @@ public class SortedLinkList<T extends Comparable<? super T>> implements SortedLi
   public T remove(int givenPosition) {
     T result = null;
 
-    if ((givenPosition >= 1) && (givenPosition <= length)) {
+    if ((givenPosition >= 1) && (givenPosition <= numberOfEntries)) {
       if (givenPosition == 1) {      	// CASE 1: remove first entry
-        result = firstNode.data;     	// save entry to be removed 
-        firstNode = firstNode.next;		// update firstNode to point to the next node
+        result = (T) firstNode.getData();     	// save entry to be removed 
+        firstNode = firstNode.getNext();		// update firstNode to point to the next node
       } else {                         	// CASE 2: remove interior entry or last entry
         Node nodeBefore = firstNode;
         for (int i = 1; i < givenPosition - 1; ++i) {
-          nodeBefore = nodeBefore.next;		// advance nodeBefore to its next node
+          nodeBefore = nodeBefore.getNext();		// advance nodeBefore to its next node
         }
-        result = nodeBefore.next.data;  	// save entry to be removed	
-        nodeBefore.next = nodeBefore.next.next;	// make node before point to node after the 
+        result = (T) nodeBefore.getNext().getData();  	// save entry to be removed	
+        nodeBefore.setNext(nodeBefore.getNext().getNext());	// make node before point to node after the 
       } 															// one to be deleted (to disconnect node from chain)
 
-      length--;
+      numberOfEntries--;
     }
 
     return result;
@@ -137,15 +137,15 @@ public class SortedLinkList<T extends Comparable<? super T>> implements SortedLi
 
   public final void clear() {
     firstNode = null;
-    length = 0;
+    numberOfEntries = 0;
   }
 
-  public int getLength() {
-    return length;
+  public int getTotalEntries() {
+    return numberOfEntries;
   }
 
   public boolean isEmpty() {
-    return (length == 0);
+    return (numberOfEntries == 0);
   }
 
   public boolean isFull() {
@@ -156,25 +156,9 @@ public class SortedLinkList<T extends Comparable<? super T>> implements SortedLi
     String outputStr = "";
     Node currentNode = firstNode;
     while (currentNode != null) {
-      outputStr += currentNode.data + "\n";;
-      currentNode = currentNode.next;
+      outputStr += currentNode.getData() + "\n";;
+      currentNode = currentNode.getNext();
     }
     return outputStr;
-  }
-
-  private class Node {
-
-    private T data;
-    private Node next;
-
-    private Node(T dataPortion) {
-      data = dataPortion;
-      next = null;
-    }
-
-    private Node(T dataPortion, Node nextNode) {
-      data = dataPortion;
-      next = nextNode;
-    }
   }
 }
