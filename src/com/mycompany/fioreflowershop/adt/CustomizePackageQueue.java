@@ -83,17 +83,24 @@ public class CustomizePackageQueue<T> implements CustomizePackageQueueInterface<
             if (item.equals(currentNode.getData())) {
                 return true;
             }
-            if(currentNode.getNext() == null)
+            if (currentNode.getNext() == null) {
                 break;
-            else
+            } else {
                 currentNode = currentNode.getNext();
+            }
         }
         return false;
     }
 
     @Override
-    public boolean merge(CustomizePackageQueueInterface queue) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean merge(CustomizePackageQueueInterface<T> queue) {
+        if (queue.isEmpty()) {
+            return false;
+        }
+        while (!queue.isEmpty()) {
+            enqueuePackage(queue.dequeuePackage());
+        }
+        return true;
     }
 
     private class Node<T> {

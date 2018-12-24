@@ -56,7 +56,7 @@ public class CustomizePackageMaintenance {
             System.out.println(ANSI_GREEN + "[1] " + ANSI_RESET + "Update Stock Quantity");
             System.out.println(ANSI_GREEN + "[2] " + ANSI_RESET + "Add New Items");
             System.out.println(ANSI_GREEN + "[3] " + ANSI_RESET + "Delete Items");
-            System.out.println(ANSI_GREEN + "[4] " + ANSI_RESET + "Rearrange Catalogue");
+            System.out.println(ANSI_GREEN + "[4] " + ANSI_RESET + "Rearrange/View Catalogue");
             System.out.println(ANSI_GREEN + "[5] " + ANSI_RESET + "Return to previous menu");
             System.out.print("Selection: ");
             Scanner scan = new Scanner(System.in);
@@ -230,7 +230,7 @@ public class CustomizePackageMaintenance {
         String type = "";
         while (true) {
             Item newItem = new Item();
-            System.out.println("Select the type of item you wish to add");
+            System.out.println("\nSelect the type of item you wish to add");
             selection = CustomizePackageMaintenance.selectItem();
             if (selection == 1) {
                 type = "arrangement style: ";
@@ -286,7 +286,7 @@ public class CustomizePackageMaintenance {
             } else {
                 newItem.setQuantity(0);
             }
-            System.out.println("/nSelect the position to display the new item in the catalogue");
+            System.out.println("\nSelect the position to display the new item in the catalogue");
             System.out.println("(If you select a position with an existing item,\nthat item will be moved down one slot together with all proceeding items)");
             System.out.println("================================================");
             CustomizePackageMaintenance.printItem(itemCatalogue, selection);
@@ -378,7 +378,7 @@ public class CustomizePackageMaintenance {
 
         while (true) {
             Item newItem = new Item();
-            System.out.println("Select the catalogue to modify");
+            System.out.println("\nSelect the catalogue to modify");
             selection = CustomizePackageMaintenance.selectItem();
             if (selection == 1) {
                 type = "arrangement style: ";

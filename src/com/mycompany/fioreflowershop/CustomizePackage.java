@@ -241,7 +241,7 @@ public class CustomizePackage {
             sortingQueue.enqueuePackage(customizedPackages.dequeuePackage());
             while (customizedPackages.getSize() > 0) {
                 CustomizedPackage next = customizedPackages.dequeuePackage();
-                for (int i = -1; i < sortingQueue.getSize(); ++i) {
+                for (int i = 0; i < sortingQueue.getSize(); ++i) {
                     if (sortingQueue.getFirstPackage().getDeliveryDate().before(next.getDeliveryDate())) {
                         sortingQueue.enqueuePackage(sortingQueue.dequeuePackage());
                     } else {
@@ -251,10 +251,7 @@ public class CustomizePackage {
                 }
                 sortingQueue.enqueuePackage(next);
             }
-
-            while (!sortingQueue.isEmpty()) {
-                customizedPackages.enqueuePackage(sortingQueue.dequeuePackage());
-            }
+            customizedPackages.merge(sortingQueue);
         }
     }
 
