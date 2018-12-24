@@ -46,7 +46,7 @@ public class CustomizePackage {
             try {
                 do {
                     System.out.println("\nSelect the flower arrangement style");
-                    for (int i = 1; i <= itemCatalogue.getStyles().getTotalEntries(); i++) {
+                    for (int i = 1; i <= itemCatalogue.getStyles().getSize(); i++) {
                         System.out.print(ANSI_GREEN + "[" + i + "]" + ANSI_RESET);
                         System.out.printf(" %s: RM%.2f\n", itemCatalogue.getStyles().getItem(i).getName(), itemCatalogue.getStyles().getItem(i).getPrice());
                     }
@@ -56,10 +56,10 @@ public class CustomizePackage {
                         cancel = true;
                         break;
                     }
-                    if (style < 1 || style > itemCatalogue.getStyles().getTotalEntries()) {
+                    if (style < 1 || style > itemCatalogue.getStyles().getSize()) {
                         System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
                     }
-                } while (style < 1 || style > itemCatalogue.getStyles().getTotalEntries());
+                } while (style < 1 || style > itemCatalogue.getStyles().getSize());
                 break;
             } catch (InputMismatchException e) {
                 System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
@@ -73,7 +73,7 @@ public class CustomizePackage {
                     do {
                         System.out.println("\nSelect the floral arrangement size");
                         System.out.println("This will be multiplied by the selected flower's price");
-                        for (int i = 1; i <= itemCatalogue.getSizes().getTotalEntries(); i++) {
+                        for (int i = 1; i <= itemCatalogue.getSizes().getSize(); i++) {
                             System.out.print(ANSI_GREEN + "[" + i + "]" + ANSI_RESET);
                             System.out.printf(" %s: Flower Price x %.0f\n", itemCatalogue.getSizes().getItem(i).getName(), itemCatalogue.getSizes().getItem(i).getPrice());
                         }
@@ -83,10 +83,10 @@ public class CustomizePackage {
                             cancel = true;
                             break;
                         }
-                        if (size < 1 || size > itemCatalogue.getSizes().getTotalEntries()) {
+                        if (size < 1 || size > itemCatalogue.getSizes().getSize()) {
                             System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
                         }
-                    } while (size < 1 || size > itemCatalogue.getSizes().getTotalEntries());
+                    } while (size < 1 || size > itemCatalogue.getSizes().getSize());
                     break;
                 } catch (InputMismatchException e) {
                     System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
@@ -95,7 +95,7 @@ public class CustomizePackage {
             }
         }
         if (!cancel) {
-            for (int i = 1; i <= itemCatalogue.getFlowers().getTotalEntries(); i++) {
+            for (int i = 1; i <= itemCatalogue.getFlowers().getSize(); i++) {
                 displayFlowers.add(itemCatalogue.getFlowers().getItem(i));
             }
             boolean flowerSelected = false;
@@ -149,7 +149,7 @@ public class CustomizePackage {
                 try {
                     do {
                         System.out.println("\nSelect the accessory to be added");
-                        for (int i = 1; i <= itemCatalogue.getAccessories().getTotalEntries(); i++) {
+                        for (int i = 1; i <= itemCatalogue.getAccessories().getSize(); i++) {
                             System.out.print(ANSI_GREEN + "[" + i + "]" + ANSI_RESET);
                             System.out.printf(" %s: RM%.2f\n", itemCatalogue.getAccessories().getItem(i).getName(), itemCatalogue.getAccessories().getItem(i).getPrice());
                         }
@@ -159,10 +159,10 @@ public class CustomizePackage {
                             cancel = true;
                             break;
                         }
-                        if (accessory < 1 || accessory > itemCatalogue.getAccessories().getTotalEntries()) {
+                        if (accessory < 1 || accessory > itemCatalogue.getAccessories().getSize()) {
                             System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
                         }
-                    } while (accessory < 1 || accessory > itemCatalogue.getAccessories().getTotalEntries());
+                    } while (accessory < 1 || accessory > itemCatalogue.getAccessories().getSize());
                     break;
                 } catch (InputMismatchException e) {
                     System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
@@ -176,7 +176,7 @@ public class CustomizePackage {
                     do {
                         System.out.println("\nSelect the order priority");
                         System.out.println("This will be multiplied by the sum of the floral arrangement");
-                        for (int i = 1; i <= itemCatalogue.getPriorities().getTotalEntries(); i++) {
+                        for (int i = 1; i <= itemCatalogue.getPriorities().getSize(); i++) {
                             System.out.print(ANSI_GREEN + "[" + i + "]" + ANSI_RESET);
                             System.out.printf(" %s: Order price x %.0f\n", itemCatalogue.getPriorities().getItem(i).getName(), itemCatalogue.getPriorities().getItem(i).getPrice());
                         }
@@ -186,10 +186,10 @@ public class CustomizePackage {
                             cancel = true;
                             break;
                         }
-                        if (priority < 1 || priority > itemCatalogue.getPriorities().getTotalEntries()) {
+                        if (priority < 1 || priority > itemCatalogue.getPriorities().getSize()) {
                             System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
                         }
-                    } while (priority < 1 || priority > itemCatalogue.getPriorities().getTotalEntries());
+                    } while (priority < 1 || priority > itemCatalogue.getPriorities().getSize());
                     break;
                 } catch (InputMismatchException e) {
                     System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
@@ -202,7 +202,7 @@ public class CustomizePackage {
                 try {
                     do {
                         System.out.println("\nSelect the delivery type");
-                        for (int i = 1; i <= itemCatalogue.getDeliveryTypes().getTotalEntries(); i++) {
+                        for (int i = 1; i <= itemCatalogue.getDeliveryTypes().getSize(); i++) {
                             System.out.print(ANSI_GREEN + "[" + i + "]" + ANSI_RESET);
                             System.out.printf(" %s: Extra Charges: RM%.0f\n", itemCatalogue.getDeliveryTypes().getItem(i).getName(), itemCatalogue.getDeliveryTypes().getItem(i).getPrice());
                         }
@@ -212,10 +212,10 @@ public class CustomizePackage {
                             cancel = true;
                             break;
                         }
-                        if (deliveryType < 1 || deliveryType > itemCatalogue.getDeliveryTypes().getTotalEntries()) {
+                        if (deliveryType < 1 || deliveryType > itemCatalogue.getDeliveryTypes().getSize()) {
                             System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
                         }
-                    } while (deliveryType < 1 || deliveryType > itemCatalogue.getDeliveryTypes().getTotalEntries());
+                    } while (deliveryType < 1 || deliveryType > itemCatalogue.getDeliveryTypes().getSize());
                     break;
                 } catch (InputMismatchException e) {
                     System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
@@ -231,30 +231,27 @@ public class CustomizePackage {
                 selectedFlowers.remove(1);
             }
 
-            customizedPackages.addCustomizedPackage(order);
+            customizedPackages.enqueuePackage(order);
             order.minusQuantity();
 
             displayItemizedBill(order);
 
-            ArrayQueue<CustomizedPackage> sortingQueue = new ArrayQueue<>();
+            CustomizePackageQueueInterface<CustomizedPackage> sortingQueue = new CustomizePackageQueue<>();
 
-            sortingQueue.enqueue(customizedPackages.removeCustomizedPackage());
+            sortingQueue.enqueuePackage(customizedPackages.dequeuePackage());
             while (customizedPackages.getSize() > 0) {
-                CustomizedPackage next = customizedPackages.removeCustomizedPackage();
-                for (int i = -1; i < sortingQueue.getBackIndex(); ++i) {
-                    if (sortingQueue.getFront().getDeliveryDate().before(next.getDeliveryDate())) {
-                        sortingQueue.enqueue(sortingQueue.dequeue());
+                CustomizedPackage next = customizedPackages.dequeuePackage();
+                for (int i = 0; i < sortingQueue.getSize(); ++i) {
+                    if (sortingQueue.getFirstPackage().getDeliveryDate().before(next.getDeliveryDate())) {
+                        sortingQueue.enqueuePackage(sortingQueue.dequeuePackage());
                     } else {
-                        sortingQueue.enqueue(next);
-                        next = sortingQueue.dequeue();
+                        sortingQueue.enqueuePackage(next);
+                        next = sortingQueue.dequeuePackage();
                     }
                 }
-                sortingQueue.enqueue(next);
+                sortingQueue.enqueuePackage(next);
             }
-
-            while (!sortingQueue.isEmpty()) {
-                customizedPackages.addCustomizedPackage(sortingQueue.dequeue());
-            }
+            customizedPackages.merge(sortingQueue);
         }
     }
 
@@ -287,7 +284,7 @@ public class CustomizePackage {
             System.out.println("Your Order History:");
             System.out.println("================================================");
             while (!displayQueue.isEmpty()) {
-                CustomizedPackage order = displayQueue.removeCustomizedPackage();
+                CustomizedPackage order = displayQueue.dequeuePackage();
                 if (order.getUser().getUsername() == customer.getUsername() && order.getUser().getPassword() == customer.getPassword()) {
                     System.out.println(order.getOrderDateString() + " " + order.getOrderID());
                     for (int i = 1; i <= order.getFlowerList().getTotalEntries(); i++) {

@@ -5,6 +5,8 @@
  */
 package com.mycompany.fioreflowershop.modal;
 
+import com.mycompany.fioreflowershop.adt.CatalogPackageInterface;
+import com.mycompany.fioreflowershop.adt.CatalogPackageList;
 import com.mycompany.fioreflowershop.adt.LinkedList;
 import java.util.Calendar;
 import java.util.Date;
@@ -27,7 +29,7 @@ public class CatalogOrdersTest {
     private double orderAmt = 0;
     private Date retrieveDate;
     private Date retrieveTime;
-    private LinkedList<CatalogPackage> catalogPackage = new LinkedList<>();
+    private CatalogPackageInterface<CatalogPackage> catalogPackage = new CatalogPackageList<>();
     private User corporate = new CorporateCustomer();                    
     public CatalogOrdersTest() {
     }
@@ -40,9 +42,9 @@ public class CatalogOrdersTest {
         retrieveDate = validRetrieveDate.getTime();
         retrieveTime = validRetrieveDate.getTime();
         
-        catalogPackage.add(new CatalogPackage("FlowerStrong", "Stylish", "Small", "", "", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20, 5));
-        catalogPackage.add(new CatalogPackage("FlowerWeak", "Colourful", "Medium", "", "", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10, 5));
-        catalogPackage.add(new CatalogPackage("FlowerMedium", "Elegant", "Large", "", "", "Sunflower", "Belt", "Product Type", "11", 2018, 15, 40, 5, 2));
+        catalogPackage.addProduct(new CatalogPackage("FlowerStrong", "Stylish", "Small", "", "", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20, 5));
+        catalogPackage.addProduct(new CatalogPackage("FlowerWeak", "Colourful", "Medium", "", "", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10, 5));
+        catalogPackage.addProduct(new CatalogPackage("FlowerMedium", "Elegant", "Large", "", "", "Sunflower", "Belt", "Product Type", "11", 2018, 15, 40, 5, 2));
         
         corporate = new CorporateCustomer("Noice", "noice@example.com", "0123456789", "Petaling Jaya", "abcdef", "Not your business", 5000, true);
         
@@ -80,8 +82,8 @@ public class CatalogOrdersTest {
     @Test
     public void testGetCatalogPack() {
         System.out.println("getCatalogPack");       
-        LinkedList<CatalogPackage> expResult = catalogPackage;
-        LinkedList<CatalogPackage> result = CO1.getCatalogPack();
+        CatalogPackageInterface<CatalogPackage> expResult = catalogPackage;
+        CatalogPackageInterface<CatalogPackage> result = CO1.getCatalogPack();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
     }
@@ -92,7 +94,7 @@ public class CatalogOrdersTest {
     @Test
     public void testSetCatalogPack() {
         System.out.println("setCatalogPack");
-        LinkedList<CatalogPackage> catalogPack = catalogPackage;
+        CatalogPackageInterface<CatalogPackage> catalogPack = catalogPackage;
         CatalogOrders instance = new CatalogOrders();
         instance.setCatalogPack(catalogPack);
         // TODO review the generated test code and remove the default call to fail.

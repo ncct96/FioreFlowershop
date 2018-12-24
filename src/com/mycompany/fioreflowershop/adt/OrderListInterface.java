@@ -29,7 +29,5 @@ public interface OrderListInterface<T> {
 
     public boolean isEmpty();
 
-    public boolean isFull();
-
     public Iterator<T> getIterator();
 }

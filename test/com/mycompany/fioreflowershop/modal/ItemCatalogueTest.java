@@ -92,7 +92,7 @@ public class ItemCatalogueTest {
         System.out.println("======================================================");
         System.out.println("Initial Item Catalogue:");
 
-        for (int i = 1; i <= itemCatalogue.getAccessories().getTotalEntries(); i++) {
+        for (int i = 1; i <= itemCatalogue.getAccessories().getSize(); i++) {
             System.out.print("[" + i + "]");
             System.out.printf(" %s: RM%.2f\n", itemCatalogue.getAccessories().getItem(i).getName(), itemCatalogue.getAccessories().getItem(i).getPrice());
         }
@@ -103,7 +103,7 @@ public class ItemCatalogueTest {
         itemCatalogue.getAccessories().addItem(2, testItem);
         
         System.out.println("\nItem Catalogue Post-Add:");
-        for (int i = 1; i <= itemCatalogue.getAccessories().getTotalEntries(); i++) {
+        for (int i = 1; i <= itemCatalogue.getAccessories().getSize(); i++) {
             System.out.print("[" + i + "]");
             System.out.printf(" %s: RM%.2f\n", itemCatalogue.getAccessories().getItem(i).getName(), itemCatalogue.getAccessories().getItem(i).getPrice());
         }
@@ -120,7 +120,7 @@ public class ItemCatalogueTest {
         System.out.println("======================================================");
         System.out.println("Initial Item Catalogue:");
 
-        for (int i = 1; i <= itemCatalogue.getAccessories().getTotalEntries(); i++) {
+        for (int i = 1; i <= itemCatalogue.getAccessories().getSize(); i++) {
             System.out.print("[" + i + "]");
             System.out.printf(" %s: RM%.2f\n", itemCatalogue.getAccessories().getItem(i).getName(), itemCatalogue.getAccessories().getItem(i).getPrice());
         }
@@ -131,7 +131,7 @@ public class ItemCatalogueTest {
         itemCatalogue.getAccessories().removeItem(2);
         
         System.out.println("\nItem Catalogue Post-Delete:");
-        for (int i = 1; i <= itemCatalogue.getAccessories().getTotalEntries(); i++) {
+        for (int i = 1; i <= itemCatalogue.getAccessories().getSize(); i++) {
             System.out.print("[" + i + "]");
             System.out.printf(" %s: RM%.2f\n", itemCatalogue.getAccessories().getItem(i).getName(), itemCatalogue.getAccessories().getItem(i).getPrice());
         }

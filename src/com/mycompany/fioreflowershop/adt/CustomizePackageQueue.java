@@ -11,61 +11,63 @@ package com.mycompany.fioreflowershop.adt;
  */
 public class CustomizePackageQueue<T> implements CustomizePackageQueueInterface<T> {
 
-    private Node firstNode;
-    private Node lastNode;
+    private Node<T> head;
+    private Node<T> tail;
     private int size = 0;
 
     public CustomizePackageQueue() {
-        firstNode = null;
-        lastNode = null;
+        head = null;
+        tail = null;
     }
 
-    public void addCustomizedPackage(T newEntry) {
-        Node newNode = new Node(newEntry, null);
+    public void enqueuePackage(T newPackage) {
+        Node newNode = new Node(newPackage, null);
 
         if (isEmpty()) {
-            firstNode = newNode;
+            head = newNode;
         } else {
-            lastNode.next = newNode;
+            tail.next = newNode;
         }
 
-        lastNode = newNode;
+        tail = newNode;
         ++size;
+    }
+
+    public T dequeuePackage() {
+        T front = null;
+
+        if (size == 1) {
+            front = head.getData();
+            head = null;
+            tail = null;
+        } else if (size > 0) {
+            front = head.getData();
+            head = head.getNext();
+        } else {
+            size = 1;
+        }
+
+        --size;
+        return front;
     }
 
     public T getFirstPackage() {
         T front = null;
 
         if (!isEmpty()) {
-            front = firstNode.data;
+            front = head.getData();
         }
 
-        return front;
-    }
-
-    public T removeCustomizedPackage() {
-        T front = null;
-
-        if (!isEmpty()) {
-            front = firstNode.data;
-            firstNode = firstNode.next;
-
-            if (firstNode == null) {
-                lastNode = null;
-            }
-
-            --size;
-        }
         return front;
     }
 
     public boolean isEmpty() {
-        return (firstNode == null) && (lastNode == null);
+        return (head == null) && (tail == null);
     }
 
     public void clear() {
-        firstNode = null;
-        lastNode = null;
+        head = null;
+        tail = null;
         size = 0;
     }
 
@@ -73,7 +75,35 @@ public class CustomizePackageQueue<T> implements CustomizePackageQueueInterface<
         return size;
     }
 
-    private class Node {
+    @Override
+    public boolean contains(T item) {
+        Node<T> currentNode = head;
+
+        while (currentNode.getNext() != null) {
+            if (item.equals(currentNode.getData())) {
+                return true;
+            }
+            if (currentNode.getNext() == null) {
+                break;
+            } else {
+                currentNode = currentNode.getNext();
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean merge(CustomizePackageQueueInterface<T> queue) {
+        if (queue.isEmpty()) {
+            return false;
+        }
+        while (!queue.isEmpty()) {
+            enqueuePackage(queue.dequeuePackage());
+        }
+        return true;
+    }
+
+    private class Node<T> {
 
         private T data;
         private Node next;
@@ -86,6 +116,22 @@ public class CustomizePackageQueue<T> implements CustomizePackageQueueInterface<
         private Node(T dataPortion, Node linkPortion) {
             data = dataPortion;
             next = linkPortion;
+        }
+
+        public T getData() {
+            return data;
+        }
+
+        public void setData(T data) {
+            this.data = data;
+        }
+
+        public Node getNext() {
+            return next;
+        }
+
+        public void setNext(Node next) {
+            this.next = next;
         }
     }
 }

@@ -7,13 +7,13 @@ package com.mycompany.fioreflowershop.adt;
 
 /**
  *
- * @author Admin
+ * @author Chiu Peeng
  */
 public interface CustomizePackageQueueInterface<T> {
 
-    public void addCustomizedPackage(T newEntry);
+    public void enqueuePackage(T newPackage);
 
-    public T removeCustomizedPackage();
+    public T dequeuePackage();
 
     public T getFirstPackage();
 
@@ -22,4 +22,8 @@ public interface CustomizePackageQueueInterface<T> {
     public void clear();
 
     public int getSize();
+
+    public boolean contains(T item);
+
+    public boolean merge(CustomizePackageQueueInterface<T> queue);
 }

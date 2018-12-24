@@ -49,8 +49,8 @@ public class FioreFlowershop {
     private static ShoppingCartListInterface<CatalogOrders> shoppingCart = new ShoppingCartList<>();
     private static OrderListInterface<CatalogOrders> catalogOrder = new OrderList<>();
 
-    private static LinkedList<CatalogPackage> catalogPack1 = new LinkedList<>();
-    private static LinkedList<CatalogPackage> catalogPack2 = new LinkedList<>();
+    private static CatalogPackageInterface<CatalogPackage> catalogPack1 = new CatalogPackageList<>();
+    private static CatalogPackageInterface<CatalogPackage> catalogPack2 = new CatalogPackageList<>();
 
     private static String[] origin = {"Taiping", "Penang", "Cheras", "Johor"};
     private static String[] dest = {"Taiping", "Penang", "Cheras", "Johor"};
@@ -114,11 +114,11 @@ public class FioreFlowershop {
         CatalogPackage cp2 = new CatalogPackage("FlowerWeak", "Colourful", "Medium", "", "", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10, 4);
         CatalogPackage cp3 = new CatalogPackage("FlowerMedium", "Elegant", "Large", "", "", "Sunflower", "Belt", "Product Type", "11", 2018, 15, 40, 5, 6);
 
-        catalogPack1.add(cp1);
-        catalogPack1.add(cp2);
-        catalogPack2.add(cp1);
-        catalogPack2.add(cp2);
-        catalogPack2.add(cp3);
+        catalogPack1.addProduct(cp1);
+        catalogPack1.addProduct(cp2);
+        catalogPack2.addProduct(cp1);
+        catalogPack2.addProduct(cp2);
+        catalogPack2.addProduct(cp3);
 
         CatalogOrders ct1 = new CatalogOrders("C1", catalogPack1, "Pick Up", todayDate, cc1, "Order Status", 308, false, todayDate, todayDate);
         CatalogOrders ct2 = new CatalogOrders("C2", catalogPack2, "Pick Up", todayDate, cc2, "Order Status", 200, false, todayDate, todayDate);
@@ -183,12 +183,12 @@ public class FioreFlowershop {
         testFlowers.add(flowers.getItem(3));
         testFlowers.add(flowers.getItem(5));
 
-        CustomizedPackage package1 = new CustomizedPackage(styles.getItem(2), sizes.getItem(3), accessories.getItem(4), priorities.getItem(3), deliveryTypes.getItem(1), c1, false);
-        CustomizedPackage package2 = new CustomizedPackage(styles.getItem(1), sizes.getItem(2), accessories.getItem(3), priorities.getItem(2), deliveryTypes.getItem(2), c2, false);
-        CustomizedPackage package3 = new CustomizedPackage(styles.getItem(3), sizes.getItem(1), accessories.getItem(1), priorities.getItem(2), deliveryTypes.getItem(2), c1, false);
-        CustomizedPackage package4 = new CustomizedPackage(styles.getItem(4), sizes.getItem(2), accessories.getItem(1), priorities.getItem(1), deliveryTypes.getItem(1), c2, false);
-        CustomizedPackage package5 = new CustomizedPackage(styles.getItem(1), sizes.getItem(1), accessories.getItem(2), priorities.getItem(2), deliveryTypes.getItem(1), c2, false);
-        CustomizedPackage package6 = new CustomizedPackage(styles.getItem(2), sizes.getItem(3), accessories.getItem(2), priorities.getItem(1), deliveryTypes.getItem(2), c2, false);
+        CustomizedPackage package1 = new CustomizedPackage(styles.getItem(2), sizes.getItem(3), accessories.getItem(4), priorities.getItem(1), deliveryTypes.getItem(1), c1, false);
+        CustomizedPackage package2 = new CustomizedPackage(styles.getItem(1), sizes.getItem(2), accessories.getItem(3), priorities.getItem(1), deliveryTypes.getItem(2), c2, false);
+        CustomizedPackage package3 = new CustomizedPackage(styles.getItem(3), sizes.getItem(1), accessories.getItem(1), priorities.getItem(1), deliveryTypes.getItem(2), c1, false);
+        CustomizedPackage package4 = new CustomizedPackage(styles.getItem(4), sizes.getItem(2), accessories.getItem(1), priorities.getItem(2), deliveryTypes.getItem(1), c2, false);
+        CustomizedPackage package5 = new CustomizedPackage(styles.getItem(1), sizes.getItem(1), accessories.getItem(2), priorities.getItem(3), deliveryTypes.getItem(1), c2, false);
+        CustomizedPackage package6 = new CustomizedPackage(styles.getItem(2), sizes.getItem(3), accessories.getItem(2), priorities.getItem(3), deliveryTypes.getItem(2), c2, false);
         for (int i = 1; i <= testFlowers.getTotalEntries(); i++) {
             package1.getFlowerList().add(testFlowers.getItem(i));
             package2.getFlowerList().add(testFlowers.getItem(i));
@@ -200,15 +200,16 @@ public class FioreFlowershop {
 
         Consumer customer = new Consumer("Johan", "abcdef", "ncct66@gmail.com", "0165919413", "Gelanggang Squash IAB Genting Highlands, Genting Highlands, 69000 Genting Highlands, Pahang");
         Consumer customer1 = new Consumer("Baba", "abcdef", "ncct66@gmail.com", "0165919413", "7, Jalan Legoland, Medini, 79250 Nusajaya, Johor");
-        customizedPackages.addCustomizedPackage(package1);
-        customizedPackages.addCustomizedPackage(package2);
-        customizedPackages.addCustomizedPackage(package3);
-        customizedPackages.addCustomizedPackage(package4);
-        customizedPackages.addCustomizedPackage(package5);
-        customizedPackages.addCustomizedPackage(package6);
+        customizedPackages.enqueuePackage(package1);
+        customizedPackages.enqueuePackage(package2);
+        customizedPackages.enqueuePackage(package3);
+        customizedPackages.enqueuePackage(package4);
+        customizedPackages.enqueuePackage(package5);
+        customizedPackages.enqueuePackage(package6);
 
-        readyOrders.addOrder(customizedPackages.removeCustomizedPackage());
-        readyOrders.addOrder(customizedPackages.removeCustomizedPackage());
+        readyOrders.addOrder(customizedPackages.dequeuePackage());
+        readyOrders.addOrder(customizedPackages.dequeuePackage());
+
 
 //        CustomizedPackage specialPackage = new CustomizedPackage(styles.getItem(1), sizes.getItem(2), flowers.getItem(5), accessories.getItem(2), priorities.getItem(1), deliveryTypes.getItem(2), customer);
 //        specialPackage.setDeliveryDate(Calendar.getInstance().getTime());
@@ -406,7 +407,7 @@ public class FioreFlowershop {
                 //MISSING FUNCTION
             } else if (counterStaffChoice == 4) {
                 //MISSING FUNCTION
-            } else if(counterStaffChoice == 5){
+            } else if (counterStaffChoice == 5) {
                 userTypeSelection();
             } else {
                 break;
@@ -448,34 +449,39 @@ public class FioreFlowershop {
             int deliveryStaffChoice = s.nextInt();
             s.nextLine();
             if (deliveryStaffChoice == 1) {
-                try {
-                    Delivery.sortRouteDelivery(catalogOrder, readyOrders, shopAddress);
-                } catch (ApiException ex) {
-                    Logger.getLogger(FioreFlowershop.class
-                            .getName()).log(Level.SEVERE, null, ex);
 
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(FioreFlowershop.class
-                            .getName()).log(Level.SEVERE, null, ex);
+                System.out.println(GREEN + "[1]" + RESET + "Today's Sorted Delivery Order List");
+                System.out.println(GREEN + "[2]" + RESET + "Search Sorted Delivery Order List by Date");
+                int deliveryChoice = s.nextInt();
+                s.nextLine();
 
-                } catch (IOException ex) {
-                    Logger.getLogger(FioreFlowershop.class
-                            .getName()).log(Level.SEVERE, null, ex);
+                if (deliveryChoice == 1) {
+                    try {
+                        Delivery.sortRouteDelivery(catalogOrder, readyOrders, shopAddress);
+                    } catch (ApiException | InterruptedException | IOException ex) {
+                        Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else if (deliveryChoice == 2) {
+                    try {
+                        System.out.print("Please enter date to search (yyyy-MM-dd): ");
+
+                        String dateStr = s.nextLine();
+
+                        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+
+                        Date date = dateformat.parse(dateStr);
+
+                        Delivery.searchSortRouteDelivery(catalogOrder, readyOrders, shopAddress, date);
+                    } catch (ParseException ex) {
+                        Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             } else if (deliveryStaffChoice == 2) {
                 try {
                     Delivery.sortRouteDelivery(catalogOrder, readyOrders, shopAddress);
-                } catch (ApiException ex) {
-                    Logger.getLogger(FioreFlowershop.class
-                            .getName()).log(Level.SEVERE, null, ex);
 
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(FioreFlowershop.class
-                            .getName()).log(Level.SEVERE, null, ex);
-
-                } catch (IOException ex) {
-                    Logger.getLogger(FioreFlowershop.class
-                            .getName()).log(Level.SEVERE, null, ex);
+                } catch (ApiException | InterruptedException | IOException ex) {
+                    Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else if (deliveryStaffChoice == 3) {
                 //MISSING FUNCTION

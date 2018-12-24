@@ -9,28 +9,31 @@ import java.util.Iterator;
 
 /**
  *
- * @author Nicholas
+ * @author Chiu Peeng
  */
 public interface ItemListInterface<T> {
 
-    public boolean addItem(T newEntry);
+    public boolean addItem(T newItem);
 
-    public boolean addItem(int newPosition, T newEntry);
+    public boolean addItem(int position, T newItem);
+    
+    public boolean addFront(T newItem);
 
-    public T removeItem(int existPosition);
+    public T removeItem(int position);
+    
+    public T removeItem();
+    
+    public T removeFront();
 
-    public boolean replaceItem(int givenPosition, T newEntry);
+    public boolean replaceItem(int position, T newItem);
 
     public void clear();
 
     public T getItem(int position);
 
-    public int getTotalEntries();
+    public boolean contains(T item);
+            
+    public int getSize();
 
     public boolean isEmpty();
-
-    public boolean isFull();
-    
-     public Iterator<T> getIterator();
-
 }
