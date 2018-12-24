@@ -5,90 +5,146 @@
  */
 package com.mycompany.fioreflowershop.adt;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-
 /**
  *
- * @author Nicholas
+ * @author Chiu Peeng
  */
 public class ItemList<T> implements ItemListInterface<T> {
 
-    private Node<T> firstNode;
-    private int numberOfEntries;
+    private Node<T> head;
+    private Node<T> tail;
+    private int size;
 
     public ItemList() {
-        clear();
+        head = null;
+        tail = null;
     }
 
-    public final void clear() {
-        firstNode = null;
-        numberOfEntries = 0;
+    //Add to front of list
+    @Override
+    public boolean addFront(T newItem) {
+        Node newNode = new Node(newItem);
+
+        if (head == null) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            newNode.setNext(head);
+            head = newNode;
+        }
+
+        ++size;
+        return true;
     }
 
+    //Add to rear of list
+    @Override
     public boolean addItem(T newEntry) {
         Node<T> newNode = new Node<>(newEntry);
 
         if (isEmpty()) {
-            firstNode = newNode;
+            head = newNode;
         } else {
-            Node<T> lastNode = getNodeAt(numberOfEntries);
-            lastNode.setNext(newNode);
+            tail.setNext(newNode);
         }
 
-        numberOfEntries++;
+        tail = newNode;
+        size++;
         return true;
     }
 
+    //Add item at index
+    @Override
     public boolean addItem(int newPosition, T newEntry) {
-        boolean isSuccessful = true;
 
-        if ((newPosition >= 1) && (newPosition <= numberOfEntries + 1)) {
+        if (newPosition == 1) {
+            addFront(newEntry);
+        } else if (newPosition == size + 1) {
+            addItem(newEntry);
+        } else if ((newPosition >= 1) && (newPosition <= size + 1)) {
             Node<T> newNode = new Node<T>(newEntry);
-
-            if (isEmpty() || (newPosition == 1)) {     // case 1: add to beginning of list
-                newNode.setNext(firstNode);
-                firstNode = newNode;
-            } else {			// case 2: list is not empty and newPosition > 1
-                Node nodeBefore = getNodeAt(newPosition - 1);
-                Node nodeAfter = nodeBefore.getNext();
-                newNode.setNext(nodeAfter);
-                nodeBefore.setNext(newNode);
-            }
-
-            numberOfEntries++;
+            Node nodeBefore = getNodeAt(newPosition - 1);
+            Node nodeAfter = nodeBefore.getNext();
+            newNode.setNext(nodeAfter);
+            nodeBefore.setNext(newNode);
+            ++size;
         } else {
-            isSuccessful = false;
+            return false;
         }
-
-        return isSuccessful;
+        return true;
     }
 
-    public T removeItem(int givenPosition) {
-        T result = null;
+    //Remove from front of list
+    @Override
+    public T removeFront() {
+        T front = null;
 
-        if ((givenPosition >= 1) && (givenPosition <= numberOfEntries)) {
-            if (givenPosition == 1) {      // case 1: remove first entry
-                result = firstNode.getData();     // save entry to be removed 
-                firstNode = firstNode.getNext();
-            } else {                         // case 2: givenPosition > 1
-                Node<T> nodeBefore = getNodeAt(givenPosition - 1);
-                Node<T> nodeToRemove = nodeBefore.getNext();
-                Node<T> nodeAfter = nodeToRemove.getNext();
-                nodeBefore.setNext(nodeAfter); // disconnect the node to be removed
-                result = nodeToRemove.getData();  // save entry to be removed
-            }
-
-            numberOfEntries--;
+        if (size == 1) {
+            front = head.getData();
+            head = null;
+            tail = null;
+        } else if (size > 0) {
+            front = head.getData();
+            head = head.getNext();
+        } else {
+            size = 1;
         }
 
+        --size;
+        return front;
+    }
+
+    //Remove from rear of list
+    @Override
+    public T removeItem() {
+        T rear = null;
+
+        if (size == 1) {
+            rear = tail.getData();
+            head = null;
+            tail = null;
+        } else if (size > 0) {
+            rear = tail.getData();
+
+            Node node = head;
+            while (node.getNext() != tail) {
+                node = node.getNext();
+            }
+            tail = node;
+            tail.setNext(null);
+        } else {
+            size = 1;
+        }
+
+        --size;
+        return rear;
+    }
+
+    //Remove from index
+    @Override
+    public T removeItem(int position) {
+        T result = null;
+
+        if (position == 1) {
+            removeFront();
+        } else if (position == size) {
+            removeItem();
+        } else if ((position >= 1) && (position <= size)) {
+            Node<T> nodeBefore = getNodeAt(position - 1);
+            Node<T> nodeToRemove = nodeBefore.getNext();
+            Node<T> nodeAfter = nodeToRemove.getNext();
+            nodeBefore.setNext(nodeAfter);
+            result = nodeToRemove.getData();
+            --size;
+        }
         return result;
     }
 
+    @Override
     public boolean replaceItem(int givenPosition, T newEntry) {
         boolean isSuccessful = true;
 
-        if ((givenPosition >= 1) && (givenPosition <= numberOfEntries)) {
+        if ((givenPosition >= 1) && (givenPosition <= size)) {
             Node<T> desiredNode = getNodeAt(givenPosition);
             desiredNode.setData(newEntry);
         } else {
@@ -98,39 +154,43 @@ public class ItemList<T> implements ItemListInterface<T> {
         return isSuccessful;
     }
 
+    @Override
     public T getItem(int givenPosition) {
         T result = null;
 
-        if ((givenPosition >= 1) && (givenPosition <= numberOfEntries)) {
+        if ((givenPosition >= 1) && (givenPosition <= size)) {
             result = getNodeAt(givenPosition).getData();
         }
 
         return result;
     }
 
-    public boolean contains(T anEntry) {
-        boolean found = false;
-        Node<T> currentNode = firstNode;
+    @Override
+    public boolean contains(T item) {
+        Node<T> currentNode = head;
 
-        while (!found && (currentNode != null)) {
-            if (anEntry.equals(currentNode.getData())) {
-                found = true;
-            } else {
-                currentNode = currentNode.getNext();
+        while (currentNode.getNext() != null) {
+            if (item.equals(currentNode.getData())) {
+                return true;
             }
+            if(currentNode.getNext() == null)
+                break;
+            else
+                currentNode = currentNode.getNext();
         }
-
-        return found;
+        return false;
     }
 
-    public int getTotalEntries() {
-        return numberOfEntries;
+    @Override
+    public int getSize() {
+        return size;
     }
 
+    @Override
     public boolean isEmpty() {
         boolean result;
 
-        if (numberOfEntries == 0) {
+        if (size == 0) {
             result = true;
         } else {
             result = false;
@@ -139,13 +199,10 @@ public class ItemList<T> implements ItemListInterface<T> {
         return result;
     }
 
-    public boolean isFull() {
-        return false;
-    }
-
+    @Override
     public String toString() {
         String outputStr = "";
-        Node<T> currentNode = firstNode;
+        Node<T> currentNode = head;
         while (currentNode != null) {
             outputStr += currentNode.getData() + "\n";;
             currentNode = currentNode.getNext();
@@ -153,21 +210,12 @@ public class ItemList<T> implements ItemListInterface<T> {
         return outputStr;
     }
 
-    private void displayChain(Node nodeOne) {
-        if (nodeOne != null) {
-            System.out.print(nodeOne.getData() + " ");
-            displayChain(nodeOne.getNext());
-        }
-    }
-
     /**
      * Task: Returns a reference to the node at a given position. Precondition:
      * List is not empty; 1 <= givenPosition <= numberOfEntries.
      */
     private Node<T> getNodeAt(int givenPosition) {
-        Node<T> currentNode = firstNode;
-
-        // traverse the list to locate the desired node
+        Node<T> currentNode = head;
         for (int counter = 1; counter < givenPosition; counter++) {
             currentNode = currentNode.getNext();
         }
@@ -175,38 +223,40 @@ public class ItemList<T> implements ItemListInterface<T> {
         return currentNode;
     }
 
-    @Override
-    public Iterator<T> getIterator() {
-        return new LinkedListIterator<>();
+    public final void clear() {
+        head = null;
+        size = 0;
     }
 
-    public class LinkedListIterator<T> implements Iterator<T> {
+    private class Node<T> {
 
-        private Node currentNode;
+        private T data;
+        private Node next;
 
-        public LinkedListIterator() {
-            currentNode = firstNode;
+        private Node(T dataPortion) {
+            data = dataPortion;
+            next = null;
         }
 
-        @Override
-        public boolean hasNext() {
-            return currentNode != null;
+        private Node(T dataPortion, Node linkPortion) {
+            data = dataPortion;
+            next = linkPortion;
         }
 
-        @Override
-        public T next() {
-            if (hasNext()) {
-                T returnData = (T) currentNode.getData();
-                currentNode = currentNode.getNext();
-                return returnData;
-            } else {
-                throw new NoSuchElementException("Illegal call to next(); iterator is after end of list.");
-            }
+        public T getData() {
+            return data;
         }
 
-        @Override
-        public void remove() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        public void setData(T data) {
+            this.data = data;
+        }
+
+        public Node getNext() {
+            return next;
+        }
+
+        public void setNext(Node next) {
+            this.next = next;
         }
     }
 }

@@ -200,15 +200,16 @@ public class FioreFlowershop {
 
         Consumer customer = new Consumer("Johan", "abcdef", "ncct66@gmail.com", "0165919413", "Gelanggang Squash IAB Genting Highlands, Genting Highlands, 69000 Genting Highlands, Pahang");
         Consumer customer1 = new Consumer("Baba", "abcdef", "ncct66@gmail.com", "0165919413", "7, Jalan Legoland, Medini, 79250 Nusajaya, Johor");
-        customizedPackages.addCustomizedPackage(package1);
-        customizedPackages.addCustomizedPackage(package2);
-        customizedPackages.addCustomizedPackage(package3);
-        customizedPackages.addCustomizedPackage(package4);
-        customizedPackages.addCustomizedPackage(package5);
-        customizedPackages.addCustomizedPackage(package6);
+        customizedPackages.enqueuePackage(package1);
+        customizedPackages.enqueuePackage(package2);
+        customizedPackages.enqueuePackage(package3);
+        customizedPackages.enqueuePackage(package4);
+        customizedPackages.enqueuePackage(package5);
+        customizedPackages.enqueuePackage(package6);
 
         readyOrders.addOrder(customizedPackages.removeCustomizedPackage());
         readyOrders.addOrder(customizedPackages.removeCustomizedPackage());
+
 
 //        CustomizedPackage specialPackage = new CustomizedPackage(styles.getItem(1), sizes.getItem(2), flowers.getItem(5), accessories.getItem(2), priorities.getItem(1), deliveryTypes.getItem(2), customer);
 //        specialPackage.setDeliveryDate(Calendar.getInstance().getTime());
