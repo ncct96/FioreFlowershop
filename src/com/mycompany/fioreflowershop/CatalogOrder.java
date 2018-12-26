@@ -17,6 +17,7 @@ import java.util.Scanner;
 import java.util.Calendar;
 import java.util.Date;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 /**
@@ -52,6 +53,7 @@ public class CatalogOrder {
     private static String orderType;
     private static boolean status = true;
     private static Date todayDate = new Date();
+    private static Date currentDate;
     private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private static DateFormat timeFormat = new SimpleDateFormat("HH:mm");
     private static String pickupDate, pickupTime, deliveryDate = "";
@@ -107,7 +109,130 @@ public class CatalogOrder {
                 System.out.printf(FioreFlowershop.ConsoleColors.RED + "Amount: \t\t\t\tRM%7.2f\n", payAmount2);
                 System.out.println("================================================================================================");
 
-                
+                System.out.print("Do you want to proceed to select your item retrieval method? (Y = yes / No = any key, go back to menu)");
+                String con = scan.next();
+
+                if (con.equalsIgnoreCase("Y")) {
+                    int retrieveItem = 0;
+                    do {
+                        System.out.println("==========================================================================");
+                        System.out.println("How do you want to retrieve your ordered items?\n1.Delivery\n2.Self Pickup");
+                        if (scan.hasNextInt()) {
+                            retrieveItem = scan.nextInt();
+                            isInteger = true;
+                        } else {
+                            isInteger = false;
+                            System.err.println("Please enter shown number only.");
+                            scan.next();
+                        }
+                    } while (!(isInteger) || retrieveItem < 1 || retrieveItem > 2);
+
+                    if (retrieveItem == 1) { //Delivery
+                        orderType = "Delivery";
+                        int delivery = 0;
+                        do { //User retrieve item method either delivery or self pickup
+                            System.out.println("Delivery Options");
+                            System.out.println("===========================");
+                            System.out.println("1.Express Delivery (2 days)");
+                            System.out.println("2.Standard Delivery (4 days)");
+                            if (scan.hasNextInt()) {
+                                delivery = scan.nextInt();
+                                isInteger = true;
+                            } else {
+                                isInteger = false;
+                                System.err.println("Please enter shown number only.");
+                                scan.next();
+                            }
+                        } while (!(isInteger) || delivery < 1 || delivery > 2);
+                        Calendar c = Calendar.getInstance();
+                        c.setTime(new Date()); // Set to today date.
+                        //set the date of delivery
+                        if (delivery == 1) { //Express Delivery                                               
+                            c.add(Calendar.DATE, 2); // Adding 2 days
+                            deliveryDate = dateFormat.format(c.getTime());
+
+                            //set the orderType to Delivery and set the deliveryDate
+                            for (int x = 0; x < shoppingCart.getTotalEntries(); x++) {
+                                shoppingCart.getItem(x).setOrderType(orderType);
+                                try {
+                                    shoppingCart.getItem(x).setRetrieveDate(dateFormat.parse(deliveryDate));
+                                } catch (Exception ex) {
+
+                                }
+                            }
+
+                            System.out.println("");
+                            System.out.println("=====================================================");
+                            System.out.println(FioreFlowershop.ConsoleColors.GREEN + "Your items will be delivered to you by " + deliveryDate);
+                            System.out.println("=====================================================");
+
+                        } else if (delivery == 2) { //Normal Delivery                       
+                            c.add(Calendar.DATE, 4); // Adding 4 days
+                            deliveryDate = dateFormat.format(c.getTime());
+
+                            //set the orderType to Delivery and set the deliveryDate
+                            for (int x = 0; x < shoppingCart.getTotalEntries(); x++) {
+                                shoppingCart.getItem(x).setOrderType(orderType);
+                                try{
+                                shoppingCart.getItem(x).setRetrieveDate(dateFormat.parse(deliveryDate));
+                                }catch(Exception ex){
+                                    
+                                }
+                            }
+
+                            System.out.println("");
+                            System.out.println("=====================================================");
+                            System.out.println(FioreFlowershop.ConsoleColors.GREEN + "Your items will be delviered to you by " + deliveryDate);
+                            System.out.println("=====================================================");
+
+                        }
+                    } else if (retrieveItem == 2) { //Self Pickup
+                        orderType = "Pickup";
+                        String pickDate;
+                        boolean checkDate = false;
+                        do {
+                            System.out.println("When do you want to pickup your items? (yyyy-MM-dd)");
+                            pickDate = scan.next();
+                            if (!pickDate.isEmpty()) {
+                                try {
+                                    if (todayDate.equals(dateFormat.parse(pickDate))) {
+                                        System.err.println(FioreFlowershop.ConsoleColors.RED + "Sorry, you cannot pickup your items by today.");
+                                        checkDate = false;
+                                    } else if (todayDate.after(dateFormat.parse(pickDate))) {
+                                        System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter a valid date after today's date.");
+                                        checkDate = false;
+                                    } else {
+                                        pickupDate = dateFormat.format(dateFormat.parse(pickDate));
+                                        //set the orderType to Delivery and set the deliveryDate
+                                        for (int x = 0; x < shoppingCart.getTotalEntries(); x++) {
+                                            shoppingCart.getItem(x).setOrderType(orderType);
+                                            try{
+                                            shoppingCart.getItem(x).setRetrieveDate(dateFormat.parse(pickupDate));
+                                            }catch(Exception ex){
+                                                
+                                            }
+                                        }
+                                        System.out.println("");
+                                        System.out.println("=====================================================");
+                                        System.out.println(FioreFlowershop.ConsoleColors.GREEN + "You can pickup your items by " + pickupDate);
+                                        System.out.println("=====================================================");
+//                                System.out.print(FioreFlowershop.ConsoleColors.RED + pickupDate); checking on user date input
+                                        checkDate = true;
+                                    }
+                                } catch (Exception e) {
+
+                                }
+                            }
+                        } while (!checkDate);
+                    }
+                    System.out.println("");
+                    System.out.println(FioreFlowershop.ConsoleColors.GREEN + "Back to Catalog Order Menu....");
+                    displayCatalog(freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
+                } else {
+                    System.out.println("");
+                    System.out.println(FioreFlowershop.ConsoleColors.GREEN + "Back to Catalog Order Menu....");
+                    displayCatalog(freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
+                }
             } else if (shoppingCart.isEmpty()) {
                 System.out.println(FioreFlowershop.ConsoleColors.RED + "Your shopping cart is empty. You have not add in any item yet.");
                 displayCatalog(freshFlower, bouquets, flowerArrangement, freshFlowerDiscounted, bouquetsDiscounted, flowerArrangementDiscounted);
@@ -232,10 +357,13 @@ public class CatalogOrder {
 
         //Add in the selected item inside the shoppingCart arraylist
         if (customer != null && corporate == null) {
-            shoppingCart.add(new CatalogOrder1(customer, dateFormat.format(todayDate), orderType, deliveryDate, freshFlower.getItem(itemSelection), itemPrice, quantity));
+            try {
+                currentDate = dateFormat.parse(dateFormat.format(todayDate));
+                shoppingCart.add(new CatalogOrder1(customer, currentDate, orderType, dateFormat.parse(deliveryDate), freshFlower.getItem(itemSelection), itemPrice, quantity));
+            } catch (ParseException ex) {
+                
+            }
         } else if (customer == null && corporate != null) {
-            //ORIGINAL ZION's CODE
-//            shoppingCart.add(new CatalogOrder1(corporate, orderType, pickupTime, catalogPackage, false));
 
             //CK MADE SOME CHANGES HERE
             if((corporate.getMonthlyLimit()-corporate.getCreditSpent()) < 0){
@@ -246,9 +374,12 @@ public class CatalogOrder {
                 }else {
                     corporate.setCreditSpent((freshFlower.getItem(itemSelection).getPrice() * quantity));
                 }
-                shoppingCart.add(new CatalogOrder1(corporate, dateFormat.format(todayDate), orderType, deliveryDate, freshFlower.getItem(itemSelection), itemPrice, quantity, status));
+                try {
+                    currentDate = dateFormat.parse(dateFormat.format(todayDate));
+                    shoppingCart.add(new CatalogOrder1(corporate, currentDate, orderType, dateFormat.parse(deliveryDate), freshFlower.getItem(itemSelection), itemPrice, quantity, status));
+                } catch (ParseException ex) {}
             }
-        }
+        
 
         System.out.println("\nDisplay Shopping Cart");
         System.out.println("================================================================================================");
@@ -297,6 +428,7 @@ public class CatalogOrder {
 //        if (userOption == 'y' || userOption == 'Y') {
 //            catalogMaintenanceMenu();
 //        }
+        }
     }
 
     public static void bouquetsCatalog(ArrayList<CatalogPackage> freshFlower, ArrayList<CatalogPackage> bouquets, ArrayList<CatalogPackage> flowerArrangement, ArrayList<CatalogPackage> freshFlowerDiscounted, ArrayList<CatalogPackage> bouquetsDiscounted, ArrayList<CatalogPackage> flowerArrangementDiscounted) {
@@ -376,11 +508,13 @@ public class CatalogOrder {
 
         //Add in the selected item inside the shoppingCart arraylist       
         if (customer != null && corporate == null) {
-            shoppingCart.add(new CatalogOrder1(customer, dateFormat.format(todayDate), orderType, deliveryDate, freshFlower.getItem(itemSelection), itemPrice, quantity));
+            try {
+                currentDate = dateFormat.parse(dateFormat.format(todayDate));
+                shoppingCart.add(new CatalogOrder1(customer, currentDate, orderType, dateFormat.parse(deliveryDate), freshFlower.getItem(itemSelection), itemPrice, quantity));
+            } catch (ParseException ex) {
+                
+            }
         } else if (customer == null && corporate != null) {
-            //ORIGINAL ZION's CODE
-            //shoppingCart.add(new CatalogOrder1(corporate, orderType, pickupTime, catalogPackage, false));
-            
             //CK MADE SOME CHANGES HERE
             if((corporate.getMonthlyLimit()-corporate.getCreditSpent()) < 0){
                 System.out.println(FioreFlowershop.ConsoleColors.RED+"Sorry, it seems that you will exceed the credit limit after this purchase. Please make payment ASAP."+FioreFlowershop.ConsoleColors.RESET);
@@ -390,9 +524,13 @@ public class CatalogOrder {
                 }else {
                     corporate.setCreditSpent((bouquets.getItem(itemSelection).getPrice() * quantity));
                 }
-                shoppingCart.add(new CatalogOrder1(corporate, dateFormat.format(todayDate), orderType, deliveryDate, freshFlower.getItem(itemSelection), itemPrice, quantity, status));
+                try {
+                    currentDate = dateFormat.parse(dateFormat.format(todayDate));
+                    shoppingCart.add(new CatalogOrder1(corporate, currentDate, orderType, dateFormat.parse(deliveryDate), freshFlower.getItem(itemSelection), itemPrice, quantity, status));
+                } catch (ParseException ex) { }
             }
         }
+            
 
         System.out.println("\nDisplay Shopping Cart");
         System.out.println("================================================================================================");
@@ -494,11 +632,13 @@ public class CatalogOrder {
 
         //Add in the selected item inside the shoppingCart arraylist
         if (customer != null && corporate == null) {
-            shoppingCart.add(new CatalogOrder1(customer, dateFormat.format(todayDate), orderType, deliveryDate, freshFlower.getItem(itemSelection), itemPrice, quantity));
+            try {
+                currentDate = dateFormat.parse(dateFormat.format(todayDate));
+                shoppingCart.add(new CatalogOrder1(customer, currentDate, orderType, dateFormat.parse(deliveryDate), freshFlower.getItem(itemSelection), itemPrice, quantity));
+            } catch (ParseException ex) {
+                
+            }
         } else if (customer == null && corporate != null) {
-            //ORIGINAL ZION's CODE
-            //shoppingCart.add(new CatalogOrder1(corporate, orderType, pickupTime, catalogPackage, false));
-            
             //CK MADE SOME CHANGES HERE
             if((corporate.getMonthlyLimit()-corporate.getCreditSpent()) < 0){
                 System.out.println(FioreFlowershop.ConsoleColors.RED+"Sorry, it seems that you will exceed the credit limit after this purchase. Please make payment ASAP."+FioreFlowershop.ConsoleColors.RESET);
@@ -508,8 +648,11 @@ public class CatalogOrder {
                 }else {
                     corporate.setCreditSpent(flowerArrangement.getItem(itemSelection).getPrice() * quantity);
                 }
-                shoppingCart.add(new CatalogOrder1(corporate, dateFormat.format(todayDate), orderType, deliveryDate, freshFlower.getItem(itemSelection), itemPrice, quantity, status));
-            }
+                try {
+                    currentDate = dateFormat.parse(dateFormat.format(todayDate));
+                shoppingCart.add(new CatalogOrder1(corporate, currentDate, orderType, dateFormat.parse(deliveryDate), freshFlower.getItem(itemSelection), itemPrice, quantity, status));
+                } catch (ParseException ex) {}
+            } 
         }
         System.out.println("\nDisplay Shopping Cart");
         System.out.println("================================================================================================");

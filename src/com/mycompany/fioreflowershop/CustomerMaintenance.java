@@ -39,11 +39,13 @@ public class CustomerMaintenance {
                 case 3: FioreFlowershop.userTypeSelection(); break;
             }
         }//Welcome message for when user logged in as valid user
-        
-        if(corporateLoggedIn.getCreditSpent() >= corporateLoggedIn.getMonthlyLimit()){
-            System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"Sorry, Your maximum spending limit has reached, please pay before making further orders."+FioreFlowershop.ConsoleColors.RESET);
-            System.out.println("\n" + FioreFlowershop.ConsoleColors.BLUE + "Thanks For Your Patronage ! :D"+FioreFlowershop.ConsoleColors.RESET);
-            FioreFlowershop.userTypeSelection();
+        if(corporateLoggedIn.getCreditSpent()!= 0){
+            if(corporateLoggedIn.getCreditSpent() >= corporateLoggedIn.getMonthlyLimit()){
+                System.out.println("\n"+FioreFlowershop.ConsoleColors.RED+"Sorry, Your maximum spending limit has reached, please pay before making further orders."+FioreFlowershop.ConsoleColors.RESET);
+                System.out.println("\n" + FioreFlowershop.ConsoleColors.BLUE + "Thanks For Your Patronage ! :D"+FioreFlowershop.ConsoleColors.RESET);
+                corporateLoggedIn = null;
+                FioreFlowershop.userTypeSelection();
+            }
         }
         
         try{
@@ -58,7 +60,7 @@ public class CustomerMaintenance {
                     currentDate.get(Calendar.MINUTE));
             
             //Set the payment status back to false when a new month have passed
-            if(!dateStack.isEmpty()){
+            if(!dateStack.isEmpty() && corporateLoggedIn.getCreditSpent() != 0){
                 if(dateStack.peek().get(Calendar.MONTH)+2 == currentDate.get(Calendar.MONTH)+1
                     || dateStack.peek().get(Calendar.YEAR)+1 == currentDate.get(Calendar.YEAR)){
                     //New Month, New Invoice Payment
@@ -68,6 +70,7 @@ public class CustomerMaintenance {
                         System.out.println("\n"+ FioreFlowershop.ConsoleColors.RED +"Sorry, It seems like you have not paid for last month." + FioreFlowershop.ConsoleColors.RESET);
                         //Redirect back to the main menu, restrict access to making order.
                         System.out.println("\n" + FioreFlowershop.ConsoleColors.BLUE + "Thanks For Your Patronage ! :D"+FioreFlowershop.ConsoleColors.RESET);
+                        corporateLoggedIn = null;
                         FioreFlowershop.userTypeSelection();
                     } 
                 }
@@ -103,11 +106,12 @@ public class CustomerMaintenance {
             if(customerLoggedIn != null){
             customerLoggedIn = null;
             System.out.println("\n" + FioreFlowershop.ConsoleColors.GREEN + "Successfully Logged Out From Customer Account ! " + FioreFlowershop.ConsoleColors.RESET);
+            FioreFlowershop.userTypeSelection();
         } else if (corporateLoggedIn != null) {
             corporateLoggedIn = null;
             System.out.println("\n" + FioreFlowershop.ConsoleColors.GREEN + "Successfully Logged Out From Corporate Customer Account ! " + FioreFlowershop.ConsoleColors.RESET);
+            FioreFlowershop.userTypeSelection();
         }
-            customerOptions();
     }
 }
     
@@ -136,8 +140,7 @@ public class CustomerMaintenance {
                 System.out.println("\n" + FioreFlowershop.ConsoleColors.RED_BOLD + "Password Mismatched, Please Try Again.\n" + FioreFlowershop.ConsoleColors.RESET);
             }
         }while(passwCheck == false);
-
-
+        
         Consumer c = new Consumer(usern,passw,email,number,address);
 
     if(userSize != null){
