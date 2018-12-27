@@ -96,9 +96,9 @@ public class CatalogOrderTest {
      */
     @Test
     public void testShowShoppingCart() {
-        cartItem.addProduct(new CatalogPackage("FlowerStrong", "Stylish", "Small", "Vase", "Valentine", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20, 5));
-        cartItem.addProduct(new CatalogPackage("FlowerSmall", "Simple", "Medium", "Jar", "Graduation", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10, 5));
-        cartItem.addProduct(new CatalogPackage("FlowerMedium", "Elegant", "Large", "Wooden box", "Grand Opening", "Sunflower", "Belt", "Product Type", "11", 2018, 15, 40, 5, 2));
+//        cartItem.addProduct(new CatalogPackage("FlowerStrong", "Stylish", "Small", "Vase", "Valentine", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20, 5));
+//        cartItem.addProduct(new CatalogPackage("FlowerSmall", "Simple", "Medium", "Jar", "Graduation", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10, 5));
+//        cartItem.addProduct(new CatalogPackage("FlowerMedium", "Elegant", "Large", "Wooden box", "Grand Opening", "Sunflower", "Belt", "Product Type", "11", 2018, 15, 40, 5, 2));
         System.out.println("testShowSoppingCart");
         CatalogOrder.showShoppingCart(cartItem);
     }

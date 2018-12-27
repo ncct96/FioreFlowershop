@@ -151,13 +151,13 @@ public class InvoicePayment {
                     for(int p = 1; p <= paymentHistory.getInvoice(i).getCatalogOrder().getOrder(i).getCatalogPack().getTotalEntries(); p++){
                         Date orderDate = paymentHistory.getInvoice(i).getCatalogOrder().getOrder(i).getOrderDate();
                         CatalogPackage orderInstance = paymentHistory.getInvoice(i).getCatalogOrder().getOrder(i).getCatalogPack().getProduct(p);
-                        System.out.println(sdf.format(orderDate)+"   | "+ orderInstance.getName()+ "\t\t\t  | \t" 
-                        + orderInstance.getUserQuantity()+ "\t|\t" + orderInstance.getDiscountRate()+ "\t    |\t" 
-                        + orderInstance.getPrice() + " \t     |   " + orderInstance.getPrice() *orderInstance.getUserQuantity());
-                        totalPrice += totalPrice(orderInstance.getPrice() , orderInstance.getUserQuantity());
-                        if(orderInstance.getDiscountRate() != 0){
-                            discountPrice += discountPrice(orderInstance.getPrice(), orderInstance.getUserQuantity(), orderInstance.getDiscountRate());
-                        }
+//                        System.out.println(sdf.format(orderDate)+"   | "+ orderInstance.getName()+ "\t\t\t  | \t" 
+//                        + orderInstance.getUserQuantity()+ "\t|\t" + orderInstance.getDiscountRate()+ "\t    |\t" 
+//                        + orderInstance.getPrice() + " \t     |   " + orderInstance.getPrice() *orderInstance.getUserQuantity());
+//                        totalPrice += totalPrice(orderInstance.getPrice() , orderInstance.getUserQuantity());
+//                        if(orderInstance.getDiscountRate() != 0){
+//                            discountPrice += discountPrice(orderInstance.getPrice(), orderInstance.getUserQuantity(), orderInstance.getDiscountRate());
+//                        }
                     }
                 //}
             }
@@ -284,17 +284,17 @@ public class InvoicePayment {
                     if(order.getOrder(k).getCatalogPack() != null){
                         CatalogPackage orderInstance = order.getOrder(i).getCatalogPack().getProduct(k);
                         Date orderDate = order.getOrder(k).getOrderDate();
-                        System.out.println(sdf.format(orderDate)+"   | "
-                        +orderInstance.getName()+ "\t\t\t  | \t" 
-                        +orderInstance.getUserQuantity()+ "\t|\t" 
-                        +orderInstance.getDiscountRate()+ "\t    |\t" 
-                        +orderInstance.getPrice() + " \t     |   " 
-                        +orderInstance.getPrice()
-                        *orderInstance.getUserQuantity());
-                        totalPrice += totalPrice(orderInstance.getPrice(), orderInstance.getUserQuantity());
-                        if(orderInstance.getDiscountRate() != 0){
-                            discountPrice += discountPrice(orderInstance.getPrice(), orderInstance.getUserQuantity(), orderInstance.getDiscountRate());
-                        }  
+//                        System.out.println(sdf.format(orderDate)+"   | "
+//                        +orderInstance.getName()+ "\t\t\t  | \t" 
+//                        +orderInstance.getUserQuantity()+ "\t|\t" 
+//                        +orderInstance.getDiscountRate()+ "\t    |\t" 
+//                        +orderInstance.getPrice() + " \t     |   " 
+//                        +orderInstance.getPrice()
+//                        *orderInstance.getUserQuantity());
+//                        totalPrice += totalPrice(orderInstance.getPrice(), orderInstance.getUserQuantity());
+//                        if(orderInstance.getDiscountRate() != 0){
+//                            discountPrice += discountPrice(orderInstance.getPrice(), orderInstance.getUserQuantity(), orderInstance.getDiscountRate());
+//                        }  
                     }
                 }
             }
@@ -388,17 +388,17 @@ public class InvoicePayment {
                         for(int k = 1; k <= order.getOrder(i).getCatalogPack().getTotalEntries(); k++){
                         CatalogPackage orderInstance = order.getOrder(i).getCatalogPack().getProduct(k);
                         Date orderDate = order.getOrder(k).getOrderDate();
-                        System.out.println(sdf.format(orderDate)+"   | "
-                        +orderInstance.getName()+ "\t\t\t  | \t" 
-                        +orderInstance.getUserQuantity()+ "\t|\t" 
-                        +orderInstance.getDiscountRate()+ "\t    |\t" 
-                        +orderInstance.getPrice() + " \t     |   " 
-                        +orderInstance.getPrice()
-                        *orderInstance.getUserQuantity());
-                        totalPrice += totalPrice(orderInstance.getPrice(),orderInstance.getUserQuantity());
-                            if(order.getOrder(i).getCatalogPack().getProduct(k).getDiscountRate() != 0){
-                                discountPrice += discountPrice(orderInstance.getPrice(),orderInstance.getUserQuantity(), orderInstance.getDiscountRate());
-                            }
+//                        System.out.println(sdf.format(orderDate)+"   | "
+//                        +orderInstance.getName()+ "\t\t\t  | \t" 
+//                        +orderInstance.getUserQuantity()+ "\t|\t" 
+//                        +orderInstance.getDiscountRate()+ "\t    |\t" 
+//                        +orderInstance.getPrice() + " \t     |   " 
+//                        +orderInstance.getPrice()
+//                        *orderInstance.getUserQuantity());
+//                        totalPrice += totalPrice(orderInstance.getPrice(),orderInstance.getUserQuantity());
+//                            if(order.getOrder(i).getCatalogPack().getProduct(k).getDiscountRate() != 0){
+//                                discountPrice += discountPrice(orderInstance.getPrice(),orderInstance.getUserQuantity(), orderInstance.getDiscountRate());
+//                            }
                             tempCatalog.addOrder(order.getOrder(i));
                         }
                     }

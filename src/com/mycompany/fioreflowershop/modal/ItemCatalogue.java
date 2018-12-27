@@ -18,8 +18,21 @@ public class ItemCatalogue {
     private ItemListInterface<Item> accessories = new ItemList<>();
     private ItemListInterface<Item> priorities = new ItemList<>();
     private ItemListInterface<Item> deliveryTypes = new ItemList<>();
+    private ItemListInterface<Item> flowerPot = new ItemList<>();
+    private ItemListInterface<String> season = new ItemList<>();
 
     public ItemCatalogue() {
+    }
+    
+    public ItemCatalogue(ItemListInterface<Item> styles, ItemListInterface<Item> sizes, ItemListInterface<Item> flowers, ItemListInterface<Item> accessories, ItemListInterface<Item> priorities, ItemListInterface<Item> deliveryTypes , ItemListInterface<Item> flowerPot, ItemListInterface<String> season) {
+        this.styles = styles;
+        this.sizes = sizes;
+        this.flowers = flowers;
+        this.accessories = accessories;
+        this.priorities = priorities;
+        this.deliveryTypes = deliveryTypes;
+        this.flowerPot = flowerPot;
+        this.season = season;
     }
 
     public ItemCatalogue(ItemListInterface<Item> styles, ItemListInterface<Item> sizes, ItemListInterface<Item> flowers, ItemListInterface<Item> accessories, ItemListInterface<Item> priorities, ItemListInterface<Item> deliveryTypes) {
@@ -78,6 +91,21 @@ public class ItemCatalogue {
     public void setDeliveryTypes(ItemListInterface<Item> deliveryTypes) {
         this.deliveryTypes = deliveryTypes;
     }
-    
+
+    public ItemListInterface<Item> getFlowerPot() {
+        return flowerPot;
+    }
+
+    public void setFlowerPot(ItemListInterface<Item> flowerPot) {
+        this.flowerPot = flowerPot;
+    }
+
+    public ItemListInterface<String> getSeason() {
+        return season;
+    }
+
+    public void setSeason(ItemListInterface<String> season) {
+        this.season = season;
+    }
     
 }

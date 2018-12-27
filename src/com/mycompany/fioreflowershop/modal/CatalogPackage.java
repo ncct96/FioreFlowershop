@@ -5,55 +5,93 @@
  */
 package com.mycompany.fioreflowershop.modal;
 
+import com.mycompany.fioreflowershop.adt.LinkedList;
+import com.mycompany.fioreflowershop.adt.ListIteratorInterface;
+
 /**
  *
  * @author Woo
  */
-public class CatalogPackage implements Comparable<CatalogPackage>{
+public class CatalogPackage implements Comparable<CatalogPackage> {
+
     //Data field
-    private String name, style, size, flowerPot, floralArrangement,flower, accessory, productType, promoMonth, status;
-    private int promoYear, quantity;
+    private String name;
+    private Item style, size, flower;
+    private String season;
+    private Item flowerPot, accessory, priority, deliveryType;
+    private String productType, promoMonth;
+    private int promoYear;
     private double price;
     private int discountRate;
+    private String status;
     private int userQuantity;
+    private ListIteratorInterface<Item> flowerList = new LinkedList<Item>();
 
     public CatalogPackage() {
     }
 
-    public CatalogPackage(String name, String style, String size, String flowerPot, String floralArrangement, String flower, String accessory, String productType, String promoMonth, int promoYear, int quantity, double price, int discountRate, String status) {
+    public CatalogPackage(String name, Item style, Item size, Item flower, String season, Item flowerPot, Item accessory, String productType, String promoMonth, int promoYear, double price, int discountRate, String status) {
         this.name = name;
         this.style = style;
         this.size = size;
-        this.flowerPot = flowerPot;
-        this.floralArrangement = floralArrangement;
         this.flower = flower;
+        this.season = season;
+        this.flowerPot = flowerPot;
         this.accessory = accessory;
         this.productType = productType;
         this.promoMonth = promoMonth;
         this.promoYear = promoYear;
-        this.quantity = quantity;
         this.price = price;
         this.discountRate = discountRate;
         this.status = status;
     }
 
-    public CatalogPackage(String name, String style, String size, String flowerPot, String floralArrangement, String flower, String accessory, String productType, String promoMonth, int promoYear, int quantity, double price, int discountRate, int userQuantity) {
+    public CatalogPackage(String name, Item style, Item size, Item accessory, String productType, String promoMonth, int promoYear, double price, int discountRate, String status) {
         this.name = name;
         this.style = style;
         this.size = size;
-        this.flowerPot = flowerPot;
-        this.floralArrangement = floralArrangement;
-        this.flower = flower;
         this.accessory = accessory;
         this.productType = productType;
         this.promoMonth = promoMonth;
         this.promoYear = promoYear;
-        this.quantity = quantity;
         this.price = price;
         this.discountRate = discountRate;
+        this.status = status;
+    }
+
+    public CatalogPackage(String name, Item style, Item size, String season, Item flowerPot, Item accessory, String productType, String promoMonth, int promoYear, double price, int discountRate, String status) {
+        this.name = name;
+        this.style = style;
+        this.size = size;
+        this.season = season;
+        this.flowerPot = flowerPot;
+        this.accessory = accessory;
+        this.productType = productType;
+        this.promoMonth = promoMonth;
+        this.promoYear = promoYear;
+        this.price = price;
+        this.discountRate = discountRate;
+        this.status = status;
+    }
+
+    public CatalogPackage(String name, Item style, Item size, String season, Item flowerPot, Item accessory, Item priority, Item deliveryType, String productType, String promoMonth, int promoYear, double price, int discountRate, String status, int userQuantity) {
+        this.name = name;
+        this.style = style;
+        this.size = size;
+        this.season = season;
+        this.flowerPot = flowerPot;
+        this.accessory = accessory;
+        this.priority = priority;
+        this.deliveryType = deliveryType;
+        this.productType = productType;
+        this.promoMonth = promoMonth;
+        this.promoYear = promoYear;
+        this.price = price;
+        this.discountRate = discountRate;
+        this.status = status;
         this.userQuantity = userQuantity;
     }
-     
+
     public String getName() {
         return name;
     }
@@ -62,52 +100,68 @@ public class CatalogPackage implements Comparable<CatalogPackage>{
         this.name = name;
     }
 
-    public String getStyle() {
+    public Item getStyle() {
         return style;
     }
 
-    public void setStyle(String style) {
+    public void setStyle(Item style) {
         this.style = style;
     }
 
-    public String getSize() {
+    public Item getSize() {
         return size;
     }
 
-    public void setSize(String size) {
+    public void setSize(Item size) {
         this.size = size;
     }
 
-    public String getFlowerPot() {
-        return flowerPot;
-    }
-
-    public void setFlowerPot(String flowerPot) {
-        this.flowerPot = flowerPot;
-    }
-
-    public String getFloralArrangement() {
-        return floralArrangement;
-    }
-
-    public void setFloralArrangement(String floralArrangement) {
-        this.floralArrangement = floralArrangement;
-    }
-
-    public String getFlower() {
+    public Item getFlower() {
         return flower;
     }
 
-    public void setFlower(String flower) {
+    public void setFlower(Item flower) {
         this.flower = flower;
     }
 
-    public String getAccessory() {
+    public String getSeason() {
+        return season;
+    }
+
+    public void setSeason(String season) {
+        this.season = season;
+    }
+
+    public Item getFlowerPot() {
+        return flowerPot;
+    }
+
+    public void setFlowerPot(Item flowerPot) {
+        this.flowerPot = flowerPot;
+    }
+
+    public Item getAccessory() {
         return accessory;
     }
 
-    public void setAccessory(String accessory) {
+    public void setAccessory(Item accessory) {
         this.accessory = accessory;
+    }
+
+    public Item getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Item priority) {
+        this.priority = priority;
+    }
+
+    public Item getDeliveryType() {
+        return deliveryType;
+    }
+
+    public void setDeliveryType(Item deliveryType) {
+        this.deliveryType = deliveryType;
     }
 
     public String getProductType() {
@@ -134,14 +188,6 @@ public class CatalogPackage implements Comparable<CatalogPackage>{
         this.promoYear = promoYear;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
     public double getPrice() {
         return price;
     }
@@ -158,14 +204,6 @@ public class CatalogPackage implements Comparable<CatalogPackage>{
         this.discountRate = discountRate;
     }
 
-    public int getUserQuantity() {
-        return userQuantity;
-    }
-
-    public void setUserQuantity(int userQuantity) {
-        this.userQuantity = userQuantity;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -174,11 +212,35 @@ public class CatalogPackage implements Comparable<CatalogPackage>{
         this.status = status;
     }
 
+    public int getUserQuantity() {
+        return userQuantity;
+    }
+
+    public void setUserQuantity(int userQuantity) {
+        this.userQuantity = userQuantity;
+    }
+
+    public double CalculateOrder() {
+        double flowerPrice = 0;
+        for (int i = 1; i < flowerList.getTotalEntries(); i++) {
+            flowerPrice += flowerList.getItem(i).getPrice();
+        }
+        return (style.getPrice() + (flowerPrice * size.getPrice()) + accessory.getPrice()) * priority.getPrice() + deliveryType.getPrice();
+    }
+    
+    public ListIteratorInterface<Item> getFlowerList() {
+        return flowerList;
+    }
+
+    public void setFlowerList(ListIteratorInterface<Item> flowerList) {
+        this.flowerList = flowerList;
+    }
+
     @Override
     public String toString() {
-        return "name =" + name + ", style =" + style + ", size =" + size + ", flowerPot =" + flowerPot + ", floralArrangement =" + floralArrangement + ", flower =" + flower + ", accessory =" + accessory + ", productType =" + productType + ", promoMonth =" + promoMonth + ", status =" + status + ", promoYear =" + promoYear + ", quantity =" + quantity + ", price =" + price + ", discountRate =" + discountRate + ", userQuantity =" + userQuantity;
-    }    
-    
+        return "name=" + name + ", style=" + style + ", size=" + size + ", flower=" + flower + ", season=" + season + ", flowerPot=" + flowerPot + ", accessory=" + accessory + ", priority=" + priority + ", deliveryType=" + deliveryType + ", productType=" + productType + ", promoMonth=" + promoMonth + ", promoYear=" + promoYear + ", price=" + price + ", discountRate=" + discountRate + ", status=" + status + ", userQuantity=" + userQuantity;
+    }
+
     @Override
     public int compareTo(CatalogPackage o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

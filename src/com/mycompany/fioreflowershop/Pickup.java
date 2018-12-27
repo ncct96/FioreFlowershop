@@ -560,9 +560,9 @@ public class Pickup {
 
             while (catIterator.hasNext()) {
                 item = catIterator.next();
-                double nett = item.getPrice() * item.getUserQuantity();
-                double subtotal = nett - ((nett * item.getDiscountRate()) / 100);
-                System.out.println(item.getName() + "\t\t\t" + item.getUserQuantity() + "\t  " + String.format("%.2f", item.getPrice()) + "\t\t\t" + item.getDiscountRate() + "\t\t\t" + String.format("%.2f", subtotal));
+//                double nett = item.getPrice() * item.getUserQuantity();
+//                double subtotal = nett - ((nett * item.getDiscountRate()) / 100);
+//                System.out.println(item.getName() + "\t\t\t" + item.getUserQuantity() + "\t  " + String.format("%.2f", item.getPrice()) + "\t\t\t" + item.getDiscountRate() + "\t\t\t" + String.format("%.2f", subtotal));
             }
 
             System.out.println("\n-------------------------------------------------------------------------------------------------");
