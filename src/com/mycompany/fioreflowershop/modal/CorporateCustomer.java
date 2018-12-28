@@ -25,16 +25,16 @@ public class CorporateCustomer extends User{
     
     public CorporateCustomer(String username, String email, String phone, String address, int monthLimit, double creditSpent, boolean paymentStat){
         super(username, email, phone, address);
-        this.monthlyLimit = monthLimit;
-        this.creditSpent = creditSpent;
-        this.paymentStatus = paymentStat;
+        setMonthlyLimit(monthLimit);
+        setCreditSpent(creditSpent);
+        setPaymentStatus(paymentStat);
     }
     
     public CorporateCustomer(String username, String email, String phone, String address, String password, String company, int monthLimit, boolean paymentStat){
         super(username, email, phone, address, password);
-        this.company = company;
-        this.monthlyLimit = monthLimit;
-        this.paymentStatus = paymentStat;
+        setCompany(company);
+        setMonthlyLimit(monthLimit);
+        setPaymentStatus(paymentStat);
     }
     
     public void setPaymentStatus(boolean paymentStat){

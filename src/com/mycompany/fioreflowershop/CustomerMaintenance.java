@@ -23,7 +23,7 @@ public class CustomerMaintenance {
     static Scanner s = new Scanner(System.in);
     private static Consumer customerLoggedIn;
     private static CorporateCustomer corporateLoggedIn;
-    private static Calendar dateStack = Calendar.getInstance();
+    private static Calendar dateLogin = Calendar.getInstance();
     private static Calendar currentDate;
     private static Calendar presetDate;
     private static CorporateCustomer corpEdit;
@@ -61,53 +61,61 @@ public class CustomerMaintenance {
         }
     }
 
+    public static void checkDate(){
+        while(true){
+            double reminderRange = 0; //Declared for assigning reminder range
+            reminderRange = corporateLoggedIn.getMonthlyLimit() * .9; //Get the monthly limit of customer, then multiplies it with 90%
+            try {
+                //Set Preset Date
+                presetDate = Calendar.getInstance();
+                presetDate.set(presetDate.get(Calendar.YEAR), presetDate.get(Calendar.MONTH), 7, 0, 0, 0);
+
+                //Get Current Date
+                currentDate = Calendar.getInstance();
+                currentDate.set(currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH),
+                        currentDate.get(Calendar.DAY_OF_MONTH), currentDate.get(Calendar.HOUR_OF_DAY),
+                        currentDate.get(Calendar.MINUTE));
+
+                //Set the payment status back to false when a new month have passed
+                if (!dateLogin.equals(null) && corporateLoggedIn.getCreditSpent() != 0) {
+                    if (dateLogin.get(Calendar.MONTH) + 2 == currentDate.get(Calendar.MONTH) + 1
+                            || dateLogin.get(Calendar.YEAR) + 1 == currentDate.get(Calendar.YEAR)) {
+                        //New Month, New Invoice Payment
+                        corporateLoggedIn.setPaymentStatus(false);
+                        //If the customer have not paid after the 7th of the following month, restrict it
+                        if (currentDate.after(presetDate) && corporateLoggedIn.getCreditSpent() != 0 && !corporateLoggedIn.getPaymentStatus()) {//
+                            System.out.println("\n" + RED + "Sorry, It seems like you have not paid for last month." + RESET);
+                            //Redirect back to the main menu, restrict access to making order.
+                            System.out.println("\n" + BLUE + "Thanks For Your Patronage ! :D" + RESET);
+                            corporateLoggedIn = null;
+                            break;
+                        }
+                    }
+                } else {
+    //                    dateLogin.push(currentDate);
+                    dateLogin = currentDate;
+                }
+            } catch (Exception e) {
+                //When exception is found, print out the exception error message to customer.
+                System.out.println(e.toString()); break;
+            }
+            if (corporateLoggedIn.getCreditSpent() >= reminderRange) {
+                System.out.println(RED_BOLD + "\nYour Credit Spent For this Month is close to reaching the limit" + RESET);
+                System.out.println(RED_BOLD + "Your Credit Spent : " + String.format("%.0f", corporateLoggedIn.getCreditSpent()) + RESET);
+                System.out.println(RED_BOLD + "Your Maximum Limit : " + corporateLoggedIn.getMonthlyLimit() + RESET); 
+            }
+            break;
+        }
+    }
+    
     public static void customerMenu() {
-        System.out.println("\nWelcome Customers! Fiore Flowershop is at your service!"); double reminderRange = 0; //Declared for assigning reminder range
+        System.out.println("\nWelcome Customers! Fiore Flowershop is at your service!"); 
         while (true) {
             try{
                 if(corporateLoggedIn != null){
-                    reminderRange = corporateLoggedIn.getMonthlyLimit() * .9; //Get the monthly limit of customer, then multiplies it with 90%
-                    try {
-                        //Set Preset Date
-                        presetDate = Calendar.getInstance();
-                        presetDate.set(presetDate.get(Calendar.YEAR), presetDate.get(Calendar.MONTH), 7, 0, 0, 0);
-
-                        //Get Current Date
-                        currentDate = Calendar.getInstance();
-                        currentDate.set(currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH),
-                                currentDate.get(Calendar.DAY_OF_MONTH), currentDate.get(Calendar.HOUR_OF_DAY),
-                                currentDate.get(Calendar.MINUTE));
-
-                        //Set the payment status back to false when a new month have passed
-                        if (!dateStack.equals(null) && corporateLoggedIn.getCreditSpent() != 0) {
-                            if (dateStack.get(Calendar.MONTH) + 2 == currentDate.get(Calendar.MONTH) + 1
-                                    || dateStack.get(Calendar.YEAR) + 1 == currentDate.get(Calendar.YEAR)) {
-                                //New Month, New Invoice Payment
-                                corporateLoggedIn.setPaymentStatus(false);
-                                //If the customer have not paid after the 7th of the following month, restrict it
-                                if (currentDate.after(presetDate) && corporateLoggedIn.getCreditSpent() != 0 && !corporateLoggedIn.getPaymentStatus()) {//
-                                    System.out.println("\n" + RED + "Sorry, It seems like you have not paid for last month." + RESET);
-                                    //Redirect back to the main menu, restrict access to making order.
-                                    System.out.println("\n" + BLUE + "Thanks For Your Patronage ! :D" + RESET);
-                                    corporateLoggedIn = null;
-                                    break;
-                                }
-                            }
-                        } else {
-    //                    dateStack.push(currentDate);
-                            dateStack = currentDate;
-                        }
-                    } catch (Exception e) {
-                        //When exception is found, print out the exception error message to customer.
-                        System.out.println(e.toString()); break;
-                    }
-                    if (corporateLoggedIn.getCreditSpent() >= reminderRange) {
-                        System.out.println(RED_BOLD + "Your Credit Spent For this Month is close to reaching the limit" + RESET);
-                        System.out.println(RED_BOLD + "Your Credit Spent : " + String.format("%.0f", corporateLoggedIn.getCreditSpent()) + RESET);
-                        System.out.println(RED_BOLD + "Your Maximum Limit : " + corporateLoggedIn.getMonthlyLimit() + RESET); customerLoggedIn = null; corporateLoggedIn = null; break;
-                    }
+                    checkDate();
                 }
-                System.out.println("Please Select One Of The Options Below:");
+                System.out.println("\nPlease Select One Of The Options Below:");
                 System.out.println(GREEN + "[1] " + RESET + "Make Flower Order");
                 System.out.println(GREEN + "[2] " + RESET + "View Ordered Items");
                 System.out.println(GREEN + "[3] " + RESET + "Log Out");
@@ -359,7 +367,7 @@ public class CustomerMaintenance {
     public static void staffEditCust(int custEditChoice){
         while (true) {
             try{
-                String edit = "";
+                String edit = ""; 
                 System.out.println("\nPlease enter which field to edit");
                 System.out.println("[1] Username");
                 System.out.println("[2] Email");
@@ -374,11 +382,14 @@ public class CustomerMaintenance {
                     System.out.print("Please Enter The New Username : ");
                     try {
                         edit = s.nextLine();
+                        if(!edit.matches("^[a-zA-Z0-9]+")){
+                            System.out.println("\n"+RED+"Invalid Format For Username, Only Alphanumeric is Allowed."+RESET); break;
+                        }
                         cust.getConsumer(custEditChoice).setUsername(edit);
                         System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
                         custEdit = null; break;
                     } catch (Exception e) {
-                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
+                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET); s.next();
                     }
                 } else if (custOptionChoice == 2) {
                     System.out.println("Old Email : " + cust.getConsumer(custEditChoice).getEmail());
@@ -393,7 +404,7 @@ public class CustomerMaintenance {
                         System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
                         custEdit = null; break;
                     } catch (Exception e) {
-                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
+                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET); s.next();
                     }
                 } else if (custOptionChoice == 3) {
                     System.out.println("Old Contact Number : " + cust.getConsumer(custEditChoice).getPhone());
@@ -408,7 +419,7 @@ public class CustomerMaintenance {
                         System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET); 
                         custEdit = null; break;
                     } catch (Exception e) {
-                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET); 
+                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET); s.next();
                     }
                 } else if (custOptionChoice == 4) {
                     System.out.println("Old Address : " + cust.getConsumer(custEditChoice).getAddress());
@@ -419,7 +430,7 @@ public class CustomerMaintenance {
                         System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
                         custEdit = null; break;
                     } catch (Exception e) {
-                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
+                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET); s.next();
                     }
 
                 } else if (custOptionChoice == 5) {
@@ -434,7 +445,7 @@ public class CustomerMaintenance {
                         System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
                         custEdit = null; break;
                     } catch (Exception e) {
-                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
+                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET); s.next();
                     }
                 } else {
                     custEdit = null;
@@ -515,18 +526,21 @@ public class CustomerMaintenance {
                     System.out.print("Please Enter The New Username : ");
                     try {
                         edit = s.nextLine();
+                        if(!edit.matches("^[a-zA-Z0-9]+")){
+                            System.out.println("\n"+RED+"Invalid Format For Username, Please Only Enter Alphabet/Number/Alphanumeric."+RESET); break;
+                        }
                         corpC.getCorporate(corpEditChoice).setUsername(edit);
                         System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
                         corpEdit = null; break;
                     } catch (Exception e) {
-                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
+                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET); s.next();
                     }
                 } else if (corpOptionChoice == 2) {
                     System.out.println("Old Email : " + corpC.getCorporate(corpEditChoice).getEmail());
                     System.out.print("Please Enter The New Email : ");
                     try {
                         edit = s.nextLine();
-                        if (!edit.contains("@")) {
+                        if (!edit.matches("^(.+)@(.+)$")) {
                             System.out.println("\n" + RED + "Invalid Email Entered. Please Retry." + RESET);
                             break;
                         }
@@ -534,7 +548,7 @@ public class CustomerMaintenance {
                         System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
                         corpEdit = null; break;
                     } catch (Exception e) {
-                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET); 
+                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET); s.next();
                     }
 
                 } else if (corpOptionChoice == 3) {
@@ -549,7 +563,7 @@ public class CustomerMaintenance {
                         System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
                         corpEdit = null; break;
                     } catch (Exception e) {
-                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
+                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET); s.next();
                     }
 
                 } else if (corpOptionChoice == 4) {
@@ -561,7 +575,7 @@ public class CustomerMaintenance {
                         System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
                         corpEdit = null; break;
                     } catch (Exception e) {
-                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
+                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET); s.next();
                     }
 
                 } else if (corpOptionChoice == 5) {
@@ -577,7 +591,7 @@ public class CustomerMaintenance {
                         System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
                         corpEdit = null; break;
                     } catch (Exception e) {
-                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
+                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET); s.next();
                     }
 
                 } else if (corpOptionChoice == 6) {
@@ -593,19 +607,18 @@ public class CustomerMaintenance {
                         System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
                         corpEdit = null; break;
                     } catch (Exception e) {
-                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
+                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET); s.next();
                     }
                 } else if (corpOptionChoice == 7) {
                     System.out.println("Old Credit Limit : " + corpC.getCorporate(corpEditChoice).getMonthlyLimit());
                     System.out.print("Please Enter The New Credit Limit : ");
                     try {
-                        editLimit = s.nextInt();
-                        s.nextLine();
+                        editLimit = s.nextInt(); s.nextLine();
                         corpC.getCorporate(corpEditChoice).setMonthlyLimit(editLimit);
                         System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
                         corpEdit = null; break;
                     } catch (Exception e) {
-                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
+                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET); s.next();
                     }
                 } else {
                     corpEdit = null;
@@ -618,55 +631,51 @@ public class CustomerMaintenance {
     }
 
     public static void staffCreateCorporate() {
-        boolean passwCheck = false;
-        boolean exist = false;
-        String passw = "";
-        System.out.println("Please Fill In The Fields As Prompted.");
-        System.out.print("Username : ");
-        String usern = s.nextLine();
-        System.out.print("Email : ");
-        String email = s.nextLine();
-        System.out.print("Contact Number : ");
-        String number = s.nextLine();
-        System.out.print("Address (For Delivery Services) : ");
-        String address = s.nextLine();
-        System.out.print("Company : ");
-        String company = s.nextLine();
-        System.out.print("Credit Limit : ");
-        int creditLimit = s.nextInt();
-        do {
-            s.nextLine();
-            System.out.print("Password : ");
-            passw = s.nextLine();
-            System.out.print("Retype Password : ");
-            String repassw = s.nextLine();
-            if (repassw.equals(passw)) {
-                passwCheck = true;
-            } else {
-                System.out.println("\n" + RED_BOLD + "Password Mismatched, Please Try Again.\n" + RESET);
+        while(true){
+            boolean passwCheck = false; boolean exist = false; String passw = "";
+            System.out.println("Please Fill In The Fields As Prompted.");
+            try{
+                System.out.print("Username : ");
+                String usern = s.nextLine();
+                if(!usern.matches("^[a-zA-Z0-9]+")){
+                    System.out.println("\n"+RED+"Please only Enter Alphanumeric Characters for Username."+RESET); break;
+                }
+                System.out.print("Email : ");
+                String email = s.nextLine();
+                if(!email.matches("^(.+)@(.+)$")){
+                    System.out.println("\n"+RED+"Please Enter The Valid Email Address."+RESET); break;
+                }
+                System.out.print("Contact Number : ");
+                String number = s.nextLine();
+                if(!number.matches("^[0-9]")){
+                    System.out.println("\n"+RED+"Please Enter Valid Contact Number."+RESET); break;
+                }
+                System.out.print("Address (For Delivery Services) : ");
+                String address = s.nextLine();
+                System.out.print("Company : ");
+                String company = s.nextLine();
+                if(!company.matches("^[a-zA-Z]+")){
+                    System.out.println("\n"+RED+"Invalid Format For Company Name. Please Try Again."+RESET); break;
+                }
+                System.out.print("Credit Limit : ");
+                int creditLimit = s.nextInt();
+                do {
+                    s.nextLine();
+                    System.out.print("Password : ");
+                    passw = s.nextLine();
+                    System.out.print("Retype Password : ");
+                    String repassw = s.nextLine();
+                    if (repassw.equals(passw)) {
+                        passwCheck = true;
+                    } else {
+                        System.out.println("\n" + RED_BOLD + "Password Mismatched, Please Try Again.\n" + RESET);
+                    }
+                } while (passwCheck == false);
+                checkDuplicate(usern, passw, email, number, address, company, creditLimit, "Corporate"); 
+                break;
+            }catch(Exception e){
+                System.out.println("\n"+RED+"An Error Occured. Please Try Again."+RESET); s.next();
             }
-        } while (passwCheck == false);
-        checkDuplicate(usern, passw, email, number, address, company, creditLimit, "Corporate");
-    }
-
-    public static void staffNextOption() {
-        System.out.println("\nPlease Enter What Would You like to do.");
-        System.out.println("[1] Edit Another Customer Account");
-        System.out.println("[2] Go Back to Main Menu");
-        try {
-            int staffNextOpt = s.nextInt();
-            s.nextLine();
-            switch (staffNextOpt) {
-                case 1:
-                    staffEditType();
-                    break;
-                case 2:
-                    FioreFlowershop.userTypeSelection();
-                    break;
-            }
-        } catch (Exception e) {
-            System.out.println("\n" + RED + "Please only Enter Number Listed. Please Try Again." + RESET);
-            staffNextOption();
         }
     }
 }
