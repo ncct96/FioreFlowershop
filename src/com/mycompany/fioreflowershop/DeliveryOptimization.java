@@ -36,7 +36,6 @@ public class DeliveryOptimization {
 
         String[] origin = new String[destinations.getTotalEntries() + 1];
         String[] dest = new String[destinations.getTotalEntries() + 1];
-        String add = "";
 
         // Add origin address to first row & column of matrix
         origin[0] = shopAddress;
@@ -61,15 +60,18 @@ public class DeliveryOptimization {
         DistanceMatrix t = req.origins(origin).destinations(dest).mode(TravelMode.DRIVING).await();
 
         double[][] array = new double[origin.length][dest.length];
+        double[][] arrayDuration = new double[origin.length][dest.length];
         for (int i = 0; i < origin.length; i++) {
             for (int j = 0; j < dest.length; j++) {
                 array[i][j] = t.rows[i].elements[j].distance.inMeters;
+                //arrayDuration[i][j] = t.rows[i].elements[j].duration.inSeconds;
                 //System.out.println(array[i][j]);
             }
         }
 
         int startNode = 0;
-        TSPSolver solver = new TSPSolver(startNode, array);
+        // Pass to Dynamic Programming algorithm to solve
+        TSPSolver solver = new TSPSolver(startNode, array, arrayDuration);
 
         // Prints: [0, 3, 2, 4, 1, 5, 0]
         //System.out.println("Tour: " + solver.getTour());
