@@ -109,6 +109,10 @@ public class CustomizedPackage extends Order {
         return orderID;
     }
 
+    public int getOrderNumber() {
+        return Integer.parseInt(orderID.substring(2));
+    }
+    
     public void setOrderID(String orderID) {
         this.orderID = orderID;
     }
