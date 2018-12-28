@@ -152,7 +152,7 @@ public class InvoicePayment {
         }
         if(FioreFlowershop.getShoppingCart() != null){
             System.out.println("\n====================================================");
-            System.out.println("\tAvailable Customer For Invoice Generation");
+            System.out.println("\tAvailable Customer For Invoice Payment");
             System.out.println("====================================================");
             for(int i = 1; i <= FioreFlowershop.getShoppingCart().getTotalEntries(); i++){
             //If the shopping cart is not null and status is false
