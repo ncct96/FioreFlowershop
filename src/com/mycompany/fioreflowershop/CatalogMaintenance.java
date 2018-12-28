@@ -161,8 +161,8 @@ public class CatalogMaintenance {
     //Create catalog(normal/ monthly promotion)
     public static void createCatalog(String navigationTitle, int productTypes, CatalogPackageInterface<CatalogPackage> normalPackage, CatalogPackageInterface<CatalogPackage> discountedPackage, ItemCatalogue itemCatalogue) {
         char nextProduct = 'n', confirmationOption;
-        String name, productTypesString = "", promoMonth = "";
-        int style = 0, size = 0, flower = 0, accessory = 0, season = 0, flowerPot = 0;
+        String name, productTypesString = "", promoMonth = "", flowerNeeded = "";
+        int style = 0, size = 0, flower = 0, accessory = 0, season = 0, flowerPot = 0, numberNeeded;
         int discountRate = 0, promoYear = 0, month = 0, floralArrangementType = 0, flowerPotType = 0, existNameChecker = 0;
         boolean validInput, isDouble;
         double price = 0;
@@ -296,6 +296,19 @@ public class CatalogMaintenance {
                         System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter a valid number" + FioreFlowershop.ConsoleColors.RESET);
                         scan.next();
                     }
+                    
+                    do {
+                        System.out.println("\nPlease enter the flower needed for this package: ");
+                        if (scan.hasNextInt()) {
+                            numberNeeded = scan.nextInt();
+                            isInteger = true;
+                            flowerNeeded += numberNeeded + " ";
+                        } else {
+                            isInteger = false;
+                            System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter a valid number" + FioreFlowershop.ConsoleColors.RESET);
+                            scan.next();
+                        }
+                    } while (!isInteger);
                 } while (!(isInteger) || flower < 1 || flower > displayFlowers.getTotalEntries());
 
                 selectedFlowers.add(displayFlowers.getItem(flower));
@@ -311,6 +324,7 @@ public class CatalogMaintenance {
                 System.out.println();
             } while (selection != 'Y' && selection != 'N' || selection == 'Y');
 
+            System.out.println(flowerNeeded);
             do {
                 System.out.println("\nSelect the accessory to be added");
                 for (int i = 1; i <= itemCatalogue.getAccessories().getSize(); i++) {
@@ -414,7 +428,7 @@ public class CatalogMaintenance {
                 }
                 price = itemCatalogue.getSizes().getItem(size).getPrice() * (itemCatalogue.getStyles().getItem(style).getPrice() + itemCatalogue.getAccessories().getItem(accessory).getPrice() + flowerPrice);
 
-                catalogPackage = new CatalogPackage(name, itemCatalogue.getStyles().getItem(style), itemCatalogue.getSizes().getItem(size), itemCatalogue.getAccessories().getItem(accessory), productTypesString, promoMonth, promoYear, price, discountRate, "Active");
+                catalogPackage = new CatalogPackage(name, itemCatalogue.getStyles().getItem(style), itemCatalogue.getSizes().getItem(size), itemCatalogue.getAccessories().getItem(accessory), productTypesString, promoMonth, promoYear, price, discountRate, "Active", flowerNeeded);
                 while (!selectedFlowers.isEmpty()) {
                     catalogPackage.getFlowerList().add(selectedFlowers.getItem(1));
                     selectedFlowers.remove(1);
@@ -427,7 +441,7 @@ public class CatalogMaintenance {
                 }
                 price = itemCatalogue.getSizes().getItem(size).getPrice() * (itemCatalogue.getStyles().getItem(style).getPrice() + itemCatalogue.getFlowerPot().getItem(flowerPot).getPrice() + itemCatalogue.getAccessories().getItem(accessory).getPrice() + flowerPrice);
 
-                catalogPackage = new CatalogPackage(name, itemCatalogue.getStyles().getItem(style), itemCatalogue.getSizes().getItem(size), itemCatalogue.getSeason().getItem(season), itemCatalogue.getFlowerPot().getItem(flowerPot), itemCatalogue.getAccessories().getItem(accessory), productTypesString, promoMonth, promoYear, price, discountRate, "Active");
+                catalogPackage = new CatalogPackage(name, itemCatalogue.getStyles().getItem(style), itemCatalogue.getSizes().getItem(size), itemCatalogue.getSeason().getItem(season), itemCatalogue.getFlowerPot().getItem(flowerPot), itemCatalogue.getAccessories().getItem(accessory), productTypesString, promoMonth, promoYear, price, discountRate, "Active", flowerNeeded);
                 while (!selectedFlowers.isEmpty()) {
                     catalogPackage.getFlowerList().add(selectedFlowers.getItem(1));
                     selectedFlowers.remove(1);
@@ -500,7 +514,7 @@ public class CatalogMaintenance {
             System.out.println("\nDisplay catalog - Monthly promotion catalog" + "( " + year + " - " + curentMonthString + " )");
             System.out.println("==============================================================");
         }
-        
+
         if (temporalyPackage.getTotalEntries() != 0) {
             String normalFreshFlowerList = "";
             String discountFreshFlowerList = "";
@@ -562,7 +576,7 @@ public class CatalogMaintenance {
                 } else if (catalogPackage.getProductType().equals("Bouquets") && catalogPackage.getPromoMonth().equals(curentMonthString) && catalogPackage.getPromoYear() == year && catalogPackage.getStatus().equals("Active") && catalogTypes == 2) {
                     for (int j = 1; j < catalogPackage.getFlowerList().getTotalEntries() + 1; j++) {
                         discountBouquetsList += catalogPackage.getFlowerList().getItem(j).getName() + " ";
-                    }                    
+                    }
                     double discountRate = (double) ((100 - catalogPackage.getDiscountRate()) * catalogPackage.getPrice() / 100);
                     System.out.printf(FioreFlowershop.ConsoleColors.GREEN + " [%d]" + FioreFlowershop.ConsoleColors.RESET, i);
                     System.out.printf("\t %-10s", catalogPackage.getName());
@@ -591,7 +605,7 @@ public class CatalogMaintenance {
                     }
                     System.out.printf(FioreFlowershop.ConsoleColors.GREEN + " [%d]" + FioreFlowershop.ConsoleColors.RESET, i);
                     System.out.printf(" %-10s", catalogPackage.getName());
-                    System.out.printf("\t  %s,%s,%s,%s,%s,%s %-30s RM%.2f %20s - %14s %s\n", catalogPackage.getStyle().getName(), catalogPackage.getSize().getName(), normalflowerArrangementList, catalogPackage.getSeason(),catalogPackage.getFlowerPot().getName(),catalogPackage.getAccessory().getName(), " ", catalogPackage.getPrice(), " ", " ", catalogPackage.getStatus());
+                    System.out.printf("\t  %s,%s,%s,%s,%s,%s %-30s RM%.2f %20s - %14s %s\n", catalogPackage.getStyle().getName(), catalogPackage.getSize().getName(), normalflowerArrangementList, catalogPackage.getSeason(), catalogPackage.getFlowerPot().getName(), catalogPackage.getAccessory().getName(), " ", catalogPackage.getPrice(), " ", " ", catalogPackage.getStatus());
                     flowerArrangementCounter++;
                 } else if (catalogPackage.getProductType().equals("Flower arrangement") && catalogPackage.getPromoMonth().equals(curentMonthString) && catalogPackage.getPromoYear() == year && catalogPackage.getStatus().equals("Active") && catalogTypes == 2) {
                     for (int j = 1; j < catalogPackage.getFlowerList().getTotalEntries() + 1; j++) {
@@ -600,7 +614,7 @@ public class CatalogMaintenance {
                     double discountRate = (double) ((100 - catalogPackage.getDiscountRate()) * catalogPackage.getPrice() / 100);
                     System.out.printf(FioreFlowershop.ConsoleColors.GREEN + " [%d]" + FioreFlowershop.ConsoleColors.RESET, i);
                     System.out.printf(" %s", catalogPackage.getName());
-                    System.out.printf("\t  %s,%s,%s,%s,%s,%s %-30s RM%.2f %20s RM%.2f %14s %s\n", catalogPackage.getStyle().getName(), catalogPackage.getSize().getName(), discountflowerArrangementList, catalogPackage.getSeason(),catalogPackage.getFlowerPot().getName(), catalogPackage.getAccessory().getName(), " ", catalogPackage.getPrice(), " ", discountRate, " ", catalogPackage.getStatus());
+                    System.out.printf("\t  %s,%s,%s,%s,%s,%s %-30s RM%.2f %20s RM%.2f %14s %s\n", catalogPackage.getStyle().getName(), catalogPackage.getSize().getName(), discountflowerArrangementList, catalogPackage.getSeason(), catalogPackage.getFlowerPot().getName(), catalogPackage.getAccessory().getName(), " ", catalogPackage.getPrice(), " ", discountRate, " ", catalogPackage.getStatus());
                     discountFlowerArrangementCounter++;
                 }
             }

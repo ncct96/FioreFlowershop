@@ -25,28 +25,13 @@ public class CatalogPackage implements Comparable<CatalogPackage> {
     private int discountRate;
     private String status;
     private int userQuantity;
+    private String flowerNeeded;
     private ListIteratorInterface<Item> flowerList = new LinkedList<Item>();
 
     public CatalogPackage() {
     }
 
-    public CatalogPackage(String name, Item style, Item size, Item flower, String season, Item flowerPot, Item accessory, String productType, String promoMonth, int promoYear, double price, int discountRate, String status) {
-        this.name = name;
-        this.style = style;
-        this.size = size;
-        this.flower = flower;
-        this.season = season;
-        this.flowerPot = flowerPot;
-        this.accessory = accessory;
-        this.productType = productType;
-        this.promoMonth = promoMonth;
-        this.promoYear = promoYear;
-        this.price = price;
-        this.discountRate = discountRate;
-        this.status = status;
-    }
-
-    public CatalogPackage(String name, Item style, Item size, Item accessory, String productType, String promoMonth, int promoYear, double price, int discountRate, String status) {
+    public CatalogPackage(String name, Item style, Item size, Item accessory, String productType, String promoMonth, int promoYear, double price, int discountRate, String status, String flowerNeeded) {
         this.name = name;
         this.style = style;
         this.size = size;
@@ -57,9 +42,10 @@ public class CatalogPackage implements Comparable<CatalogPackage> {
         this.price = price;
         this.discountRate = discountRate;
         this.status = status;
+        this.flowerNeeded = flowerNeeded;
     }
 
-    public CatalogPackage(String name, Item style, Item size, String season, Item flowerPot, Item accessory, String productType, String promoMonth, int promoYear, double price, int discountRate, String status) {
+    public CatalogPackage(String name, Item style, Item size, String season, Item flowerPot, Item accessory, String productType, String promoMonth, int promoYear, double price, int discountRate, String status, String flowerNeeded) {
         this.name = name;
         this.style = style;
         this.size = size;
@@ -72,9 +58,10 @@ public class CatalogPackage implements Comparable<CatalogPackage> {
         this.price = price;
         this.discountRate = discountRate;
         this.status = status;
+        this.flowerNeeded = flowerNeeded;
     }
 
-    public CatalogPackage(String name, Item style, Item size, String season, Item flowerPot, Item accessory, Item priority, Item deliveryType, String productType, String promoMonth, int promoYear, double price, int discountRate, String status, int userQuantity) {
+    public CatalogPackage(String name, Item style, Item size, String season, Item flowerPot, Item accessory, Item priority, Item deliveryType, String productType, String promoMonth, int promoYear, double price, int discountRate, String status, int userQuantity, String flowerNeeded) {
         this.name = name;
         this.style = style;
         this.size = size;
@@ -90,7 +77,8 @@ public class CatalogPackage implements Comparable<CatalogPackage> {
         this.discountRate = discountRate;
         this.status = status;
         this.userQuantity = userQuantity;
-    }
+        this.flowerNeeded = flowerNeeded;
+    }    
 
     public String getName() {
         return name;
@@ -236,9 +224,17 @@ public class CatalogPackage implements Comparable<CatalogPackage> {
         this.flowerList = flowerList;
     }
 
+    public String getFlowerNeeded() {
+        return flowerNeeded;
+    }
+
+    public void setFlowerNeeded(String flowerNeeded) {
+        this.flowerNeeded = flowerNeeded;
+    }
+
     @Override
     public String toString() {
-        return "name=" + name + ", style=" + style + ", size=" + size + ", flower=" + flower + ", season=" + season + ", flowerPot=" + flowerPot + ", accessory=" + accessory + ", priority=" + priority + ", deliveryType=" + deliveryType + ", productType=" + productType + ", promoMonth=" + promoMonth + ", promoYear=" + promoYear + ", price=" + price + ", discountRate=" + discountRate + ", status=" + status + ", userQuantity=" + userQuantity;
+        return "name=" + name + ", style=" + style + ", size=" + size + ", flower=" + flower + ", season=" + season + ", flowerPot=" + flowerPot + ", accessory=" + accessory + ", priority=" + priority + ", deliveryType=" + deliveryType + ", productType=" + productType + ", promoMonth=" + promoMonth + ", promoYear=" + promoYear + ", price=" + price + ", discountRate=" + discountRate + ", status=" + status + ", userQuantity=" + userQuantity + ", flowerNeeded=" + flowerNeeded + ", flowerList=" + flowerList;
     }
 
     @Override
