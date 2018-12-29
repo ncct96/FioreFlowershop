@@ -179,11 +179,11 @@ public class FioreFlowershop {
         season.addItem("Visit patient");
         season.addItem("Funeral");
         
-        flowerPot.addItem(new Item("Drinking glass", 10.00));
-        flowerPot.addItem(new Item("Glass bottle", 10.00));
-        flowerPot.addItem(new Item("Woolden box", 10.00));
-        flowerPot.addItem(new Item("Jar", 10.00));
-        flowerPot.addItem(new Item("Bud vase", 10.00));
+        flowerPot.addItem(new Item("Drinking glass", 10.00, 10));
+        flowerPot.addItem(new Item("Glass bottle", 10.00, 9));
+        flowerPot.addItem(new Item("Woolden box", 10.00, 15));
+        flowerPot.addItem(new Item("Jar", 10.00, 9));
+        flowerPot.addItem(new Item("Bud vase", 10.00, 12));
 
         itemCatalogue.setStyles(styles);
         itemCatalogue.setSizes(sizes);
