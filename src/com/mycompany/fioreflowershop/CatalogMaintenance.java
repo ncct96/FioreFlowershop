@@ -1404,7 +1404,7 @@ public class CatalogMaintenance {
             catalogMaintenance(normalPackage, discountedPackage, itemCatalogue);
         }
     }
-    
+
     //deactive product in Catalog / Monthly promotion Catalog
     public static void deactiveCatalogItem(String navigationTitle, CatalogPackageInterface<CatalogPackage> normalPackage, CatalogPackageInterface<CatalogPackage> discountedPackage, int catalogTypes, ItemCatalogue itemCatalogue) {
         int productNumber = 0, catalogSize = 0;
@@ -1452,168 +1452,180 @@ public class CatalogMaintenance {
         }
     }
 
-    //    //Display stock
-    //    public static void displayStockAvailability(String navigationTitle, CatalogPackageInterface<CatalogPackage> normalPackage, CatalogPackageInterface<CatalogPackage> discountedPackage, int catalogTypes) {
-    //        CatalogPackageInterface<CatalogPackage> temporalyPackage = new CatalogPackageList<>();
-    //        String catalogType = "";
-    //        if (catalogTypes == 1) {
-    //            temporalyPackage = normalPackage;
-    //            catalogType = "normal catalog";
-    //        } else if (catalogTypes == 2) {
-    //            temporalyPackage = discountedPackage;
-    //            catalogType = "Monthly promotion catalog";
-    //        }
+    //Display stock
+    public static void displayStockAvailability(String navigationTitle, ItemCatalogue itemCatalogue) {
+        System.out.println("\n" + navigationTitle);
+        System.out.println("====================================================");
+        if (itemCatalogue != null) {
+            System.out.println("------------------------------------------------");
+            System.out.println("-------------------- Flower --------------------");
+            System.out.println("------------------------------------------------");
+            System.out.println("No\tCatalogue item\t\t\tQuantity");
+            for (int i = 1; i < itemCatalogue.getFlowers().getSize() + 1; i++) {
+                if (itemCatalogue.getFlowers().getItem(i).getQuantity() < 50) {
+                    System.out.printf(FioreFlowershop.ConsoleColors.GREEN + "[%d]\t" + FioreFlowershop.ConsoleColors.RESET + FioreFlowershop.ConsoleColors.RED + "%s\t\t\t%d\n" + FioreFlowershop.ConsoleColors.RESET, i, itemCatalogue.getFlowers().getItem(i).getName(), itemCatalogue.getFlowers().getItem(i).getQuantity());
+                }
+                if (itemCatalogue.getFlowers().getItem(i).getQuantity() >= 50) {
+                    System.out.printf(FioreFlowershop.ConsoleColors.GREEN + "[%d]\t" + FioreFlowershop.ConsoleColors.RESET + "%s\t\t\t%d\n", i, itemCatalogue.getFlowers().getItem(i).getName(), itemCatalogue.getFlowers().getItem(i).getQuantity());
+                }
+            }
+
+            System.out.println("------------------------------------------------");
+            System.out.println("------------------ Accessories -----------------");
+            System.out.println("------------------------------------------------");
+            System.out.println("No\tCatalogue item\t\t\tQuantity");
+            for (int j = 1; j < itemCatalogue.getAccessories().getSize() + 1; j++) {
+                if (itemCatalogue.getAccessories().getItem(j).getQuantity() < 15 && !itemCatalogue.getAccessories().getItem(j).getName().equals("None")) {
+                    System.out.printf(FioreFlowershop.ConsoleColors.GREEN + "[%d]\t" + FioreFlowershop.ConsoleColors.RESET + FioreFlowershop.ConsoleColors.RED + "%s\t\t\t%d\n" + FioreFlowershop.ConsoleColors.RESET, j, itemCatalogue.getAccessories().getItem(j).getName(), itemCatalogue.getAccessories().getItem(j).getQuantity());
+                }
+                if (itemCatalogue.getAccessories().getItem(j).getQuantity() >= 15 && !itemCatalogue.getAccessories().getItem(j).getName().equals("None")) {
+                    System.out.printf(FioreFlowershop.ConsoleColors.GREEN + "[%d]\t" + FioreFlowershop.ConsoleColors.RESET + "%s\t\t\t%d\n", j, itemCatalogue.getAccessories().getItem(j).getName(), itemCatalogue.getAccessories().getItem(j).getQuantity());
+                }
+            }
+
+            System.out.println("\n----------------------------------------------");
+            System.out.println("------------------ Flower Pot ------------------");
+            System.out.println("------------------------------------------------");
+            System.out.println("No\tCatalogue item\t\t\tQuantity");
+            for (int k = 1; k < itemCatalogue.getFlowerPot().getSize() + 1; k++) {
+                if (itemCatalogue.getFlowerPot().getItem(k).getQuantity() < 15) {
+                    System.out.printf(FioreFlowershop.ConsoleColors.GREEN + "[%d]\t" + FioreFlowershop.ConsoleColors.RESET + FioreFlowershop.ConsoleColors.RED + "%s\t\t\t%d\n" + FioreFlowershop.ConsoleColors.RESET, k, itemCatalogue.getFlowerPot().getItem(k).getName(), itemCatalogue.getFlowerPot().getItem(k).getQuantity());
+                }
+                if (itemCatalogue.getFlowerPot().getItem(k).getQuantity() >= 15) {
+                    System.out.printf(FioreFlowershop.ConsoleColors.GREEN + "[%d]\t" + FioreFlowershop.ConsoleColors.RESET + "%s\t\t\t%d\n", k, itemCatalogue.getFlowerPot().getItem(k).getName(), itemCatalogue.getFlowerPot().getItem(k).getQuantity());
+                }
+            }
+        } else {
+            System.out.println(FioreFlowershop.ConsoleColors.RED + "There are no record found\n" + FioreFlowershop.ConsoleColors.RESET);
+            FioreFlowershop.inventoryClerk();
+        }
+    }
+
     //
-    //        int freshFlowerCounter = 0, bouquetsCounter = 0, flowerArrangementCounter = 0;
-    //        CatalogPackage catalogPackage = new CatalogPackage();
-    //        System.out.println("\n" + navigationTitle + " - " + catalogType);
-    //        System.out.println("========================================");
-    //        System.out.println("Product types\t\t\tQuantity");
-    //        if (temporalyPackage.getTotalEntries() != 0) {
-    //            System.out.println("Fresh Flower");
-    //            System.out.println("==================");
-    //            for (int i = 1; i < temporalyPackage.getTotalEntries() + 1; i++) {
-    //                catalogPackage = temporalyPackage.getProduct(i);
-    //                if (catalogPackage.getProductType().equals("Fresh flower") && catalogPackage.getStatus().equals("Active")) {
-    //                    if (catalogPackage.getQuantity() < 10) {
-    //                        System.out.printf(FioreFlowershop.ConsoleColors.RED + "[%d] %s\t \t\t%d\n" + FioreFlowershop.ConsoleColors.RESET, i, catalogPackage.getName(), catalogPackage.getQuantity());
-    //                    } else {
-    //                        System.out.printf("[%d] %s\t \t\t%d\n", i, catalogPackage.getName(), catalogPackage.getQuantity());
-    //                    }
-    //                    freshFlowerCounter++;
-    //                }
-    //            }
-    //
-    //            if (freshFlowerCounter == 0) {
-    //                System.out.println(FioreFlowershop.ConsoleColors.RED + "There are no record found\n" + FioreFlowershop.ConsoleColors.RESET);
-    //            }
-    //
-    //            System.out.println("\nBouquets");
-    //            System.out.println("==================");
-    //            for (int i = 1; i < temporalyPackage.getTotalEntries() + 1; i++) {
-    //                catalogPackage = temporalyPackage.getProduct(i);
-    //                if (catalogPackage.getProductType().equals("Bouquets") && catalogPackage.getStatus().equals("Active")) {
-    //                    if (catalogPackage.getQuantity() < 10) {
-    //                        System.out.printf(FioreFlowershop.ConsoleColors.RED + "[%d] %s\t \t\t%d\n" + FioreFlowershop.ConsoleColors.RESET, i, catalogPackage.getName(), catalogPackage.getQuantity());
-    //                    } else {
-    //                        System.out.printf("[%d] %s\t \t\t%d\n", i, catalogPackage.getName(), catalogPackage.getQuantity());
-    //                    }
-    //                    bouquetsCounter++;
-    //                }
-    //            }
-    //
-    //            if (bouquetsCounter == 0) {
-    //                System.out.println(FioreFlowershop.ConsoleColors.RED + "There are no record found\n" + FioreFlowershop.ConsoleColors.RESET);
-    //            }
-    //
-    //            System.out.println("\nFlower Arrangement");
-    //            System.out.println("==================");
-    //            for (int i = 1; i < temporalyPackage.getTotalEntries() + 1; i++) {
-    //                catalogPackage = temporalyPackage.getProduct(i);
-    //                if (catalogPackage.getProductType().equals("Flower arrangement") && catalogPackage.getStatus().equals("Active")) {
-    //                    if (catalogPackage.getQuantity() < 10) {
-    //                        System.out.printf(FioreFlowershop.ConsoleColors.RED + "[%d] %s\t \t\t%d\n" + FioreFlowershop.ConsoleColors.RESET, i, catalogPackage.getName(), catalogPackage.getQuantity());
-    //                    } else {
-    //                        System.out.printf("[%d] %s\t \t\t%d\n", i, catalogPackage.getName(), catalogPackage.getQuantity());
-    //                    }
-    //                    flowerArrangementCounter++;
-    //                }
-    //            }
-    //
-    //            if (flowerArrangementCounter == 0) {
-    //                System.out.println(FioreFlowershop.ConsoleColors.RED + "There are no record found\n" + FioreFlowershop.ConsoleColors.RESET);
-    //            }
-    //        } else {
-    //            System.out.println(FioreFlowershop.ConsoleColors.RED + "There are no record found\n" + FioreFlowershop.ConsoleColors.RESET);
-    //            FioreFlowershop.inventoryClerk();
-    //        }
-    //    }
-    //
-    //    //
-    //    public static void restockQuantity(CatalogPackageInterface<CatalogPackage> normalPackage, CatalogPackageInterface<CatalogPackage> discountedPackage, int catalogTypes) {
-    //        CatalogPackageInterface<CatalogPackage> temporalyPackage = new CatalogPackageList<>();
-    //        if (catalogTypes == 1) {
-    //            temporalyPackage = normalPackage;
-    //        } else if (catalogTypes == 2) {
-    //            temporalyPackage = discountedPackage;
-    //        }
-    //        int packageNumber = 0, packageQuantity = 0;
-    //        CatalogPackage catalogPackage = new CatalogPackage();
-    //        //Ask user to restock the package quantity ?
-    //        do {
-    //            System.out.println("\nPlease enter the number of package to update the stock amount.");
-    //            System.out.print("Enter 0 to cancel: ");
-    //            if (scan.hasNextInt()) {
-    //                packageNumber = scan.nextInt();
-    //                isInteger = true;
-    //            } else {
-    //                isInteger = false;
-    //                System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter the number only." + FioreFlowershop.ConsoleColors.RESET);
-    //                scan.next();
-    //            }
-    //        } while (!(isInteger) || packageNumber < 0 || packageNumber > temporalyPackage.getTotalEntries());
-    //
-    //        if (packageNumber > 0) {
-    //            do {
-    //                System.out.print("Enter the quantity for the package that you wish to add: ");
-    //                if (scan.hasNextInt()) {
-    //                    packageQuantity = scan.nextInt();
-    //                    isInteger = true;
-    //                } else {
-    //                    isInteger = false;
-    //                    System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter the number only." + FioreFlowershop.ConsoleColors.RESET);
-    //                    scan.next();
-    //                }
-    //            } while (!(isInteger));
-    //
-    //            if (catalogTypes == 1) {
-    //                catalogPackage = normalPackage.getProduct(packageNumber);
-    //                catalogPackage.setQuantity(catalogPackage.getQuantity() + packageQuantity);
-    //                System.out.println(FioreFlowershop.ConsoleColors.GREEN + "\nThe " + catalogPackage.getName() + " has successfully update the stock amount into catalog..." + FioreFlowershop.ConsoleColors.RESET);
-    //                FioreFlowershop.inventoryClerk();
-    //            } else if (catalogTypes == 2) {
-    //                catalogPackage = discountedPackage.getProduct(packageNumber);
-    //                catalogPackage.setQuantity(catalogPackage.getQuantity() + packageQuantity);
-    //                System.out.println(FioreFlowershop.ConsoleColors.GREEN + "\nThe " + catalogPackage.getName() + " has successfully update the stock amount into monthly promotion catalog..." + FioreFlowershop.ConsoleColors.RESET);
-    //                FioreFlowershop.inventoryClerk();
-    //            }
-    //        } else {
-    //            FioreFlowershop.inventoryClerk();
-    //        }
-    //    }
-    //
-    //    //Stock Availability Checking for the notification
-    //    public static void stockNotification(CatalogPackageInterface<CatalogPackage> normalPackage, CatalogPackageInterface<CatalogPackage> discountedPackage) {
-    //        int normalInsufficient = 0, discountInsufficient = 0;
-    //        CatalogPackage catalogPackage = new CatalogPackage();
-    //        if (normalPackage.getTotalEntries() != 0) {
-    //            for (int i = 1; i < normalPackage.getTotalEntries() + 1; i++) {
-    //                catalogPackage = normalPackage.getProduct(i);
-    //                if (catalogPackage.getQuantity() < 10 && catalogPackage.getStatus().equals("Active")) {
-    //                    normalInsufficient++;
-    //                }
-    //            }
-    //        }
-    //        if (discountedPackage.getTotalEntries() != 0) {
-    //            for (int i = 1; i < discountedPackage.getTotalEntries() + 1; i++) {
-    //                catalogPackage = discountedPackage.getProduct(i);
-    //                if (catalogPackage.getQuantity() < 10 && catalogPackage.getStatus().equals("Active")) {
-    //                    discountInsufficient++;
-    //                }
-    //            }
-    //        }
-    //
-    //        if (normalInsufficient > 0 && discountInsufficient == 0) {
-    //            System.out.println(FioreFlowershop.ConsoleColors.RED + "\nThe NORMAL catalog product quantity insufficient." + FioreFlowershop.ConsoleColors.RESET);
-    //        } else if (discountInsufficient > 0 && normalInsufficient == 0) {
-    //            System.out.println(FioreFlowershop.ConsoleColors.RED + "\nThe MONTHLY promotion catalog product quantity insufficient." + FioreFlowershop.ConsoleColors.RESET);
-    //        } else if (normalInsufficient > 0 && discountInsufficient > 0) {
-    //            System.out.println(FioreFlowershop.ConsoleColors.RED + "\nThe NORMAL catalog & MONTHLY promotion catalog product quantity insufficient." + FioreFlowershop.ConsoleColors.RESET);
-    //        } else {
-    //            System.out.println("");
-    //        }
-    //    }
-    //
+    public static void restockQuantity(ItemCatalogue itemCatalogue) {
+        int itemNewQuantity = 0, itemType = 0, itemIndex = 0, minRange = 0, maxRange = 0;
+        String itemTypeString = "";
+        if (itemCatalogue != null) {
+            do {
+                System.out.println("\nWhich item type do you wish to edit?");
+                System.out.println(FioreFlowershop.ConsoleColors.GREEN + "[1]" + FioreFlowershop.ConsoleColors.RESET + " Flower");
+                System.out.println(FioreFlowershop.ConsoleColors.GREEN + "[2]" + FioreFlowershop.ConsoleColors.RESET + " Accessories");
+                System.out.println(FioreFlowershop.ConsoleColors.GREEN + "[3]" + FioreFlowershop.ConsoleColors.RESET + " Flower Pot");
+                System.out.println(FioreFlowershop.ConsoleColors.GREEN + "[4]" + FioreFlowershop.ConsoleColors.RESET + " Back");
+                System.out.print("Enter the item type (1 - 4) only: ");
+                if (scan.hasNextInt()) {
+                    itemType = scan.nextInt();
+                    isInteger = true;
+                } else {
+                    isInteger = false;
+                    System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter the number only." + FioreFlowershop.ConsoleColors.RESET);
+                    scan.next();
+                }
+                if (itemType == 4) {
+                    FioreFlowershop.inventoryClerk();
+                }
+            } while (!(isInteger) || itemType < 1 || itemType > 4);
+
+            do {
+                if (itemType == 1) {
+                    itemTypeString = "Flower";
+                    minRange = 1;
+                    maxRange = itemCatalogue.getFlowers().getSize();
+                } else if (itemType == 2) {
+                    itemTypeString = "Accessories";
+                    minRange = 2;
+                    maxRange = itemCatalogue.getAccessories().getSize();
+                } else if (itemType == 3) {
+                    itemTypeString = "Flower Pot";
+                    minRange = 1;
+                    maxRange = itemCatalogue.getFlowerPot().getSize();
+                }
+                System.out.printf("\nPlease enter the " + FioreFlowershop.ConsoleColors.BLUE + itemTypeString + FioreFlowershop.ConsoleColors.RESET + " number (1-" + maxRange + "): ");
+                if (scan.hasNextInt()) {
+                    itemIndex = scan.nextInt();
+                    isInteger = true;
+                } else {
+                    isInteger = false;
+                    System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter the number only." + FioreFlowershop.ConsoleColors.RESET);
+                    scan.next();
+                }
+            } while (!(isInteger) || itemIndex < minRange || itemIndex > maxRange);
+
+            do {
+                if (itemType == 1) {
+                    System.out.printf("\nPlease enter the new quantity for add into the " + FioreFlowershop.ConsoleColors.BLUE + itemCatalogue.getFlowers().getItem(itemIndex).getName() + FioreFlowershop.ConsoleColors.RESET + " stock: ");
+                } else if (itemType == 2) {
+                    System.out.printf("\nPlease enter the new quantity for add into the " + FioreFlowershop.ConsoleColors.BLUE + itemCatalogue.getAccessories().getItem(itemIndex).getName() + FioreFlowershop.ConsoleColors.RESET + " stock: ");
+                } else if (itemType == 3) {
+                    System.out.printf("\nPlease enter the new quantity for add into the " + FioreFlowershop.ConsoleColors.BLUE + itemCatalogue.getFlowerPot().getItem(itemIndex).getName() + FioreFlowershop.ConsoleColors.RESET + " stock: ");
+                }
+
+                if (scan.hasNextInt()) {
+                    itemNewQuantity = scan.nextInt();
+                    isInteger = true;
+                } else {
+                    isInteger = false;
+                    System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter the number only." + FioreFlowershop.ConsoleColors.RESET);
+                    scan.next();
+                }
+            } while (!(isInteger));
+
+            if (itemType == 1) {
+                itemCatalogue.getFlowers().getItem(itemIndex).setQuantity(itemCatalogue.getFlowers().getItem(itemIndex).getQuantity() + itemNewQuantity);
+                System.out.println(FioreFlowershop.ConsoleColors.GREEN + "\nThe quantity of the " + itemCatalogue.getFlowers().getItem(itemIndex).getName() + " has been updated ..." + FioreFlowershop.ConsoleColors.RESET);
+            } else if (itemType == 2) {
+                itemCatalogue.getAccessories().getItem(itemIndex).setQuantity(itemCatalogue.getAccessories().getItem(itemIndex).getQuantity() + itemNewQuantity);
+                System.out.println(FioreFlowershop.ConsoleColors.GREEN + "\nThe quantity of the " + itemCatalogue.getAccessories().getItem(itemIndex).getName() + " has been updated ..." + FioreFlowershop.ConsoleColors.RESET);
+            } else if (itemType == 3) {
+                itemCatalogue.getFlowerPot().getItem(itemIndex).setQuantity(itemCatalogue.getFlowerPot().getItem(itemIndex).getQuantity() + itemNewQuantity);
+                System.out.println(FioreFlowershop.ConsoleColors.GREEN + "\nThe quantity of the " + itemCatalogue.getFlowerPot().getItem(itemIndex).getName() + " has been updated ..." + FioreFlowershop.ConsoleColors.RESET);
+            }
+        } else {
+            System.out.println(FioreFlowershop.ConsoleColors.RED + "There are no records found ... " + FioreFlowershop.ConsoleColors.RESET);
+            FioreFlowershop.inventoryClerk();
+        }
+
+    }
+
+    //Stock Availability Checking for the notification
+    public static void stockNotification(ItemCatalogue itemCatalogue) {
+        int flowerInsufficient = 0, accessoriesInsufficient = 0, flowerPotInsufficient = 0;
+        String notificationMsg = "\nThe stock quantity of ( ";
+        if (itemCatalogue != null) {
+            for (int i = 1; i < itemCatalogue.getFlowers().getSize() + 1; i++) {
+                if (itemCatalogue.getFlowers().getItem(i).getQuantity() < 50) {                    
+                    flowerInsufficient++;
+                }
+            }
+
+            for (int j = 1; j < itemCatalogue.getAccessories().getSize() + 1; j++) {
+                if (itemCatalogue.getAccessories().getItem(j).getQuantity() < 15 && !itemCatalogue.getAccessories().getItem(j).getName().equals("None")) {                    
+                    accessoriesInsufficient++;
+                }
+            }
+
+            for (int k = 1; k < itemCatalogue.getFlowerPot().getSize() + 1; k++) {
+                if (itemCatalogue.getFlowerPot().getItem(k).getQuantity() < 15) {               
+                    flowerPotInsufficient++;
+                }
+            }
+
+            if (flowerInsufficient > 0) {
+                notificationMsg += "Flower ";
+            }
+            if (accessoriesInsufficient > 0) {
+                notificationMsg += "Accessories ";
+            }
+            if (flowerPotInsufficient > 0) {
+                notificationMsg += "Flower Pot ";
+            }
+
+            if (flowerInsufficient > 0 || accessoriesInsufficient > 0 || flowerPotInsufficient > 0) {
+                System.out.println(FioreFlowershop.ConsoleColors.RED + notificationMsg + ")are insufficient ..." + FioreFlowershop.ConsoleColors.RESET);
+            }
+        }
+    }
+
     //Back to catalogMaintenance()
     public static void backToCatalogMenu(CatalogPackageInterface<CatalogPackage> normalPackage, CatalogPackageInterface<CatalogPackage> discountedPackage, ItemCatalogue itemCatalogue) {
         System.out.println("\n====================================================");
@@ -1628,22 +1640,22 @@ public class CatalogMaintenance {
             catalogMaintenance(normalPackage, discountedPackage, itemCatalogue);
         }
     }
-//
-//    //Back to iventory clerk menu
-//    public static void backToInventoryClerkMenu(String navigationTitle) {
-//        if (navigationTitle.equals("Current stock")) {
-//            System.out.println("\n====================================================");
-//            char userOption;
-//            do {
-//                System.out.print("Please enter 'Y/y' to Inventory clerk menu: ");
-//                userOption = scan.next().charAt(0);
-//                System.out.println(userOption);
-//
-//            } while (userOption != 'y' && userOption != 'Y');
-//
-//            if (userOption == 'y' || userOption == 'Y') {
-//                FioreFlowershop.inventoryClerk();
-//            }
-//        }
-//    }
+
+    //Back to iventory clerk menu
+    public static void backToInventoryClerkMenu(String navigationTitle) {
+        if (navigationTitle.equals("Current stock")) {
+            System.out.println("\n====================================================");
+            char userOption;
+            do {
+                System.out.print("Please enter 'Y/y' to Inventory clerk menu: ");
+                userOption = scan.next().charAt(0);
+                System.out.println(userOption);
+
+            } while (userOption != 'y' && userOption != 'Y');
+
+            if (userOption == 'y' || userOption == 'Y') {
+                FioreFlowershop.inventoryClerk();
+            }
+        }
+    }
 }

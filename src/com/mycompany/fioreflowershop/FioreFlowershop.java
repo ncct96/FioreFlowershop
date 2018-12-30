@@ -378,7 +378,7 @@ public class FioreFlowershop {
     public static void inventoryClerk() {
         while (true) {
             String navigationMsg;
-//            CatalogMaintenance.stockNotification(normalPackage, discountedPackage);
+            CatalogMaintenance.stockNotification(itemCatalogue);
             System.out.println("\nPlease Select One Of The Options Below.");            
             System.out.println(GREEN + "[1] " + RESET + "Check stock quantity.");
             System.out.println(GREEN + "[2] " + RESET + "Restock product quantity.");
@@ -389,17 +389,17 @@ public class FioreFlowershop {
             s.nextLine();
             if (inventoryClerkChoice == 1) {
                 navigationMsg = "Current stock";
-                CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage, "Inverntory clerk", itemCatalogue);
-//                CatalogMaintenance.backToInventoryClerkMenu(navigationMsg); //Seperate for JUnit testing purpose
+                CatalogMaintenance.displayStockAvailability(navigationMsg, itemCatalogue);
+                CatalogMaintenance.backToInventoryClerkMenu(navigationMsg); //Seperate for JUnit testing purpose
             } else if (inventoryClerkChoice == 2) {
                 navigationMsg = "Restock quantity";
-                CatalogMaintenance.displayCatalogType(navigationMsg, normalPackage, discountedPackage, "Inverntory clerk", itemCatalogue);
+                CatalogMaintenance.displayStockAvailability(navigationMsg, itemCatalogue);
+                CatalogMaintenance.restockQuantity(itemCatalogue);
             } else if (inventoryClerkChoice == 3) {
                 CustomizePackageMaintenance.itemsMenu(itemCatalogue, customizedPackages);
             } else {
                 break;
             }
-
         }
     }
 
