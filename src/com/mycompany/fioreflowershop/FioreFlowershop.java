@@ -120,21 +120,21 @@ public class FioreFlowershop {
 //        catalogPack2.addProduct(cp2);
 //        catalogPack2.addProduct(cp3);
 
-        CatalogOrders ct1 = new CatalogOrders("C1", catalogPack1, "Pick Up", todayDate, cc1, "Order Status", 308, false, todayDate, todayDate);
-        CatalogOrders ct2 = new CatalogOrders("C2", catalogPack2, "Pick Up", todayDate, cc2, "Order Status", 200, false, todayDate, todayDate);
-        CatalogOrders ct3 = new CatalogOrders("C3", catalogPack1, "Delivery", todayDate, c3, "Order Status", 308, false, todayDate, todayDate);
-        CatalogOrders ct4 = new CatalogOrders("C4", catalogPack1, "Delivery", todayDate, c4, "Order Status", 308, false, todayDate, todayDate);
-        CatalogOrders ct5 = new CatalogOrders("C5", catalogPack1, "Delivery", todayDate, c3, "Order Status", 308, false, todayDate, todayDate);
-        CatalogOrders ct6 = new CatalogOrders("C6", catalogPack1, "Delivery", todayDate, c2, "Order Status", 308, false, todayDate, todayDate);
-        CatalogOrders ct7 = new CatalogOrders("C7", catalogPack1, "Delivery", todayDate, c1, "Order Status", 308, false, todayDate, todayDate);
-
-        catalogOrder.addOrder(ct1);
-        catalogOrder.addOrder(ct2);
-        catalogOrder.addOrder(ct3);
-        catalogOrder.addOrder(ct4);
-        catalogOrder.addOrder(ct5);
-        catalogOrder.addOrder(ct6);
-        catalogOrder.addOrder(ct7);
+//        CatalogOrders ct1 = new CatalogOrders("C1", catalogPack1, "Pick Up", todayDate, cc1, "Order Status", 308, false, todayDate, todayDate);
+//        CatalogOrders ct2 = new CatalogOrders("C2", catalogPack2, "Pick Up", todayDate, cc2, "Order Status", 200, false, todayDate, todayDate);
+//        CatalogOrders ct3 = new CatalogOrders("C3", catalogPack1, "Delivery", todayDate, c3, "Order Status", 308, false, todayDate, todayDate);
+//        CatalogOrders ct4 = new CatalogOrders("C4", catalogPack1, "Delivery", todayDate, c4, "Order Status", 308, false, todayDate, todayDate);
+//        CatalogOrders ct5 = new CatalogOrders("C5", catalogPack1, "Delivery", todayDate, c3, "Order Status", 308, false, todayDate, todayDate);
+//        CatalogOrders ct6 = new CatalogOrders("C6", catalogPack1, "Delivery", todayDate, c2, "Order Status", 308, false, todayDate, todayDate);
+//        CatalogOrders ct7 = new CatalogOrders("C7", catalogPack1, "Delivery", todayDate, c1, "Order Status", 308, false, todayDate, todayDate);
+//
+//        catalogOrder.addOrder(ct1);
+//        catalogOrder.addOrder(ct2);
+//        catalogOrder.addOrder(ct3);
+//        catalogOrder.addOrder(ct4);
+//        catalogOrder.addOrder(ct5);
+//        catalogOrder.addOrder(ct6);
+//        catalogOrder.addOrder(ct7);
 
         ItemListInterface<Item> styles = new ItemList<>();
         ItemListInterface<Item> sizes = new ItemList<>();
@@ -263,11 +263,11 @@ public class FioreFlowershop {
     public static void gotoCatalogOrders(Consumer customerLoggedIn, CorporateCustomer corporateLoggedIn) {
         //Zion part need change since tutor told me use one array so my multiple array is gone
 
-//        if (corporateLoggedIn == null) {
-//            CatalogOrder.CustomerOrderMain(shoppingCart, catalogOrder, customerLoggedIn, normalPackage, discountedPackage);
-//        } else if (customerLoggedIn == null) {
-//            CatalogOrder.CorporateOrderMain(shoppingCart, catalogOrder, corporateLoggedIn, normalPackage, discountedPackage);
-//        }
+        if (corporateLoggedIn == null) {
+            CatalogOrder.CustomerOrderMain(catalogOrder, customerLoggedIn, normalPackage, discountedPackage, itemCatalogue);
+        } else if (customerLoggedIn == null) {
+            CatalogOrder.CorporateOrderMain(catalogOrder, corporateLoggedIn, normalPackage, discountedPackage, itemCatalogue);
+        }
     }
 
     //Dummy data - woo for display purpose

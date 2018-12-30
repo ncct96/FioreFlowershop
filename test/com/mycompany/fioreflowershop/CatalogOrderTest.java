@@ -100,7 +100,7 @@ public class CatalogOrderTest {
 //        cartItem.addProduct(new CatalogPackage("FlowerSmall", "Simple", "Medium", "Jar", "Graduation", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10, 5));
 //        cartItem.addProduct(new CatalogPackage("FlowerMedium", "Elegant", "Large", "Wooden box", "Grand Opening", "Sunflower", "Belt", "Product Type", "11", 2018, 15, 40, 5, 2));
         System.out.println("testShowSoppingCart");
-        CatalogOrder.showShoppingCart(cartItem);
+//        CatalogOrder.showShoppingCart(cartItem);
     }
 
     /**
@@ -127,7 +127,7 @@ public class CatalogOrderTest {
         System.out.println("\n\ntestSalesOrder");      
 
         corporate = new CorporateCustomer("Noice", "noice@example.com", "0123456789", "Petaling Jaya", "abcdef", "Not your business", 5000, true);
-        catalogOrder.addOrder(new CatalogOrders(orderID, cartItem, orderType, orderDate, corporate, orderStatus, orderAmt, paymentStatus, retrieveDate, retrieveTime));
+//        catalogOrder.addOrder(new CatalogOrders(orderID, cartItem, orderType, orderDate, corporate, orderStatus, orderAmt, paymentStatus, retrieveDate, retrieveTime));
 
         System.out.println("\n=================================================================================================");
         System.out.println("\nFiore Flowershop SDN.BHD \t\t\t\t\t\t" + FioreFlowershop.ConsoleColors.BLACK_BOLD + " SALES ORDER");

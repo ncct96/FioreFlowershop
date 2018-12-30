@@ -16,17 +16,20 @@ import java.util.Date;
 public class CatalogOrders extends Order {
     private String orderID;
     private CatalogPackageInterface<CatalogPackage> catalogPack = new CatalogPackageList<>();
-    private Date retrieveTime;
+    private Date orderTime,retrieveTime;
+    private Item priority;
 
     public CatalogOrders() {
     }
 
-    public CatalogOrders(String orderID, CatalogPackageInterface<CatalogPackage> catalogPack,
-            String orderType, Date orderDate, User user, String orderStatus, double orderAmt,
+    public CatalogOrders(String orderID, CatalogPackageInterface<CatalogPackage> catalogPack, Item priority,
+            String orderType, Date orderDate, Date orderTime, User user, String orderStatus, double orderAmt,
             boolean paymentStatus, Date retrieveDate, Date retrieveTime) {
         super(orderType, orderDate, user, orderStatus, orderAmt, paymentStatus, retrieveDate);
         this.orderID = orderID;
-        this.catalogPack = catalogPack;     
+        this.catalogPack = catalogPack;    
+        this.priority = priority;
+        this.orderTime = orderTime;
         this.retrieveTime = retrieveTime;
     }
 

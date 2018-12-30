@@ -48,7 +48,7 @@ public class CatalogOrdersTest {
         
         corporate = new CorporateCustomer("Noice", "noice@example.com", "0123456789", "Petaling Jaya", "abcdef", "Not your business", 5000, true);
         
-        CO1 = new CatalogOrders(orderID, catalogPackage,orderType, orderDate, corporate, orderStatus, orderAmt, paymentStatus, retrieveDate, retrieveTime);
+//        CO1 = new CatalogOrders(orderID, catalogPackage,orderType, orderDate, corporate, orderStatus, orderAmt, paymentStatus, retrieveDate, retrieveTime);
     }
 
     /**
