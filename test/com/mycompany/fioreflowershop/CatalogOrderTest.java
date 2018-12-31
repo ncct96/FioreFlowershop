@@ -165,7 +165,7 @@ public class CatalogOrderTest {
         System.out.println(FioreFlowershop.ConsoleColors.BLACK + "\n\n\t\t\t\t\t\t\t Subtotal :\t\t\t " + FioreFlowershop.ConsoleColors.GREEN + "RM " + orderAmt 
                 + FioreFlowershop.ConsoleColors.BLACK);
         System.out.println("\n\t\t\t\t\t\t\tOrder Type :\t\t\t " + catalogOrder.getOrder(1).getOrderType());
-        System.out.println("\n\t\t\t\t\t\t Delivery/Pickup Date :\t\t\t " + dateFormat.format(catalogOrder.getOrder(1).getRetrieveDate()));
+        System.out.println("\n\t\t\t\t\t\t Delivery/Pickup Date :\t\t\t " + dateFormat.format(catalogOrder.getOrder(1).getDeliveryDate()));
     }
 
     /**

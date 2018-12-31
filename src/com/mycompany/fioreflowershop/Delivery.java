@@ -86,7 +86,7 @@ public class Delivery {
 
         for (int i = 1; i <= unOrderList.getTotalEntries(); i++) {
 
-            listCal.setTime(unOrderList.getOrder(i).getRetrieveDate());
+            listCal.setTime(unOrderList.getOrder(i).getDeliveryDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
@@ -103,7 +103,7 @@ public class Delivery {
 
         for (int i = 1; i <= customOrder.getTotalEntries(); i++) {
 
-            listCal.setTime(customOrder.getOrder(i).getRetrieveDate());
+            listCal.setTime(customOrder.getOrder(i).getDeliveryDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
@@ -121,7 +121,7 @@ public class Delivery {
         for (int i = 1; i < matchedList.getTotalEntries() - 1; i++) {
             int index = i;
             for (int j = i; j <= matchedList.getTotalEntries(); j++) {
-                if (matchedList.getOrder(j).getRetrieveDate().before(matchedList.getOrder(index).getRetrieveDate())) {
+                if (matchedList.getOrder(j).getDeliveryDate().before(matchedList.getOrder(index).getDeliveryDate())) {
                     index = j; //searching for lowest index  
                 }
             }
@@ -179,7 +179,7 @@ public class Delivery {
         userYear = cal.get(Calendar.YEAR);
 
         for (int j = 1; j <= unOrderList.getTotalEntries(); j++) {
-            listCal.setTime(unOrderList.getOrder(j).getRetrieveDate());
+            listCal.setTime(unOrderList.getOrder(j).getDeliveryDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
@@ -191,7 +191,7 @@ public class Delivery {
         }
 
         for (int j = 1; j <= customOrder.getTotalEntries(); j++) {
-            listCal.setTime(customOrder.getOrder(j).getRetrieveDate());
+            listCal.setTime(customOrder.getOrder(j).getDeliveryDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
@@ -205,7 +205,7 @@ public class Delivery {
         for (int i = 1; i < sortedList.getTotalEntries() - 1; i++) {
             int index = i;
             for (int j = i; j <= sortedList.getTotalEntries(); j++) {
-                if (sortedList.getOrder(j).getRetrieveDate().before(sortedList.getOrder(index).getRetrieveDate())) {
+                if (sortedList.getOrder(j).getDeliveryDate().before(sortedList.getOrder(index).getDeliveryDate())) {
                     index = j; //searching for lowest index  
                 }
             }
@@ -251,7 +251,7 @@ public class Delivery {
 
                 System.out.println("Company Name: " + corp.getCompany());
                 System.out.println("Contact: " + corp.getPhone());
-                String date = df.format(catalogOrder.getItem(k).getRetrieveDate());
+                String date = df.format(catalogOrder.getItem(k).getDeliveryDate());
                 System.out.println("Delivery Date: " + date + "\n");
             } else {
 
@@ -261,7 +261,7 @@ public class Delivery {
 
                 System.out.println("Name: " + con.getUsername());
                 System.out.println("Contact: " + con.getPhone());
-                String date = df.format(catalogOrder.getItem(k).getRetrieveDate());
+                String date = df.format(catalogOrder.getItem(k).getDeliveryDate());
                 System.out.println("Delivery Date: " + date + "\n");
             }
         }
@@ -285,7 +285,7 @@ public class Delivery {
 
                 System.out.println("Company Name: " + corp.getCompany());
                 System.out.println("Contact: " + corp.getPhone());
-                String date = df.format(customOrder.getItem(k).getRetrieveDate());
+                String date = df.format(customOrder.getItem(k).getDeliveryDate());
                 System.out.println("Delivery Date: " + date + "\n");
             } else {
 
@@ -295,7 +295,7 @@ public class Delivery {
 
                 System.out.println("Name: " + con.getUsername());
                 System.out.println("Contact: " + con.getPhone());
-                String date = df.format(customOrder.getItem(k).getRetrieveDate());
+                String date = df.format(customOrder.getItem(k).getDeliveryDate());
                 System.out.println("Delivery Date: " + date + "\n");
             }
         }
@@ -346,7 +346,7 @@ public class Delivery {
         userYear = cal.get(Calendar.YEAR);
 
         for (int j = 1; j <= unOrderList.getTotalEntries(); j++) {
-            listCal.setTime(unOrderList.getOrder(j).getRetrieveDate());
+            listCal.setTime(unOrderList.getOrder(j).getDeliveryDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
@@ -358,7 +358,7 @@ public class Delivery {
         }
 
         for (int j = 1; j <= customOrder.getTotalEntries(); j++) {
-            listCal.setTime(customOrder.getOrder(j).getRetrieveDate());
+            listCal.setTime(customOrder.getOrder(j).getDeliveryDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
@@ -412,7 +412,7 @@ public class Delivery {
         userYear = cal.get(Calendar.YEAR);
 
         for (int j = 1; j <= unOrderList.getTotalEntries(); j++) {
-            listCal.setTime(unOrderList.getOrder(j).getRetrieveDate());
+            listCal.setTime(unOrderList.getOrder(j).getDeliveryDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
@@ -424,7 +424,7 @@ public class Delivery {
         }
 
         for (int j = 1; j <= customOrder.getTotalEntries(); j++) {
-            listCal.setTime(customOrder.getOrder(j).getRetrieveDate());
+            listCal.setTime(customOrder.getOrder(j).getDeliveryDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
@@ -497,7 +497,7 @@ public class Delivery {
                         System.out.println("Company Name: " + corp.getCompany());
                         System.out.println("Name: " + dest.getOrder(tourCount).getUser().getUsername());
                         System.out.println("Contact: " + dest.getOrder(tourCount).getUser().getPhone());
-                        System.out.println("Delivery Date: " + dateFormat.format(dest.getOrder(tourCount).getRetrieveDate()));
+                        System.out.println("Delivery Date: " + dateFormat.format(dest.getOrder(tourCount).getDeliveryDate()));
                         System.out.println("Order type: " + dest.getOrder(tourCount).getOrderType());
                         System.out.println("Payment: RM" + String.format("%.2f", dest.getOrder(tourCount).getOrderAmt()) + "\n");
 
@@ -507,7 +507,7 @@ public class Delivery {
                         System.out.println("Company Name: " + corp.getCompany());
                         System.out.println("Name: " + dest.getOrder(tourCount).getUser().getUsername());
                         System.out.println("Contact: " + dest.getOrder(tourCount).getUser().getPhone());
-                        System.out.println("Delivery Date: " + dateFormat.format(dest.getOrder(tourCount).getRetrieveDate()));
+                        System.out.println("Delivery Date: " + dateFormat.format(dest.getOrder(tourCount).getDeliveryDate()));
                         System.out.println("Order type: " + ((CustomizedPackage) order).getDeliveryType().getName());
                         System.out.println("Payment: RM" + String.format("%.2f", ((CustomizedPackage) order).CalculateOrder()) + "\n");
 
@@ -523,7 +523,7 @@ public class Delivery {
                         System.out.println("Order ID: " + ((CatalogOrders) order).getOrderID());
                         System.out.println("Name: " + dest.getOrder(tourCount).getUser().getUsername());
                         System.out.println("Contact: " + dest.getOrder(tourCount).getUser().getPhone());
-                        System.out.println("Delivery Date: " + dateFormat.format(dest.getOrder(tourCount).getRetrieveDate()));
+                        System.out.println("Delivery Date: " + dateFormat.format(dest.getOrder(tourCount).getDeliveryDate()));
                         System.out.println("Order type: " + dest.getOrder(tourCount).getOrderType());
                         System.out.println("Payment: RM" + String.format("%.2f", order.getOrderAmt()) + "\n");
 
@@ -533,7 +533,7 @@ public class Delivery {
                         System.out.println("Order ID: " + ((CustomizedPackage) order).getOrderID());
                         System.out.println("Name: " + dest.getOrder(tourCount).getUser().getUsername());
                         System.out.println("Contact: " + dest.getOrder(tourCount).getUser().getPhone());
-                        System.out.println("Delivery Date: " + dateFormat.format(dest.getOrder(tourCount).getRetrieveDate()));
+                        System.out.println("Delivery Date: " + dateFormat.format(dest.getOrder(tourCount).getDeliveryDate()));
                         System.out.println("Order type: " + ((CustomizedPackage) order).getDeliveryType().getName());
                         System.out.println("Payment: RM" + String.format("%.2f", ((CustomizedPackage) order).CalculateOrder()) + "\n");
 

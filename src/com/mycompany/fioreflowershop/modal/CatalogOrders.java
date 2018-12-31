@@ -31,6 +31,10 @@ public class CatalogOrders extends Order {
         this.priority = priority;
         this.orderTime = orderTime;
         this.retrieveTime = retrieveTime;
+        
+        super.setDeliveryDate(retrieveDate);
+        super.setPriority(priority);
+        super.setID(orderID);
     }
 
     public String getOrderID() {
