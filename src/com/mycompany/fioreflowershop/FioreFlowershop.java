@@ -472,7 +472,7 @@ public class FioreFlowershop {
 
                 if (deliveryChoice == 1) {
                     try {
-                        Delivery.sortRouteDelivery(catalogOrder, readyOrders, shopAddress);
+                        Delivery.sortRouteDelivery(readyOrders, shopAddress);
                     } catch (ApiException | InterruptedException | IOException ex) {
                         Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -486,14 +486,14 @@ public class FioreFlowershop {
 
                         Date date = dateformat.parse(dateStr);
 
-                        Delivery.searchSortRouteDelivery(catalogOrder, readyOrders, shopAddress, date);
+                        Delivery.searchSortRouteDelivery(readyOrders, shopAddress, date);
                     } catch (ParseException ex) {
                         Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             } else if (deliveryStaffChoice == 2) {
                 try {
-                    Delivery.sortRouteDelivery(catalogOrder, readyOrders, shopAddress);
+                    Delivery.sortRouteDelivery(readyOrders, shopAddress);
 
                 } catch (ApiException | InterruptedException | IOException ex) {
                     Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
@@ -531,7 +531,7 @@ public class FioreFlowershop {
                 int pickupChoice = s.nextInt();
 
                 if (pickupChoice == 1) {
-                    Pickup.sortPickupOrder(catalogOrder, readyOrders);
+                    Pickup.sortPickupOrder(readyOrders);
                 } else if (pickupChoice == 2) {
 
                     try {
@@ -545,7 +545,7 @@ public class FioreFlowershop {
 
                         Date date = dateformat.parse(dateStr);
 
-                        Pickup.searchPickUp(catalogOrder, date, readyOrders);
+                        Pickup.searchPickUp(date, readyOrders);
 
                     } catch (ParseException ex) {
                         Logger.getLogger(FioreFlowershop.class
@@ -559,7 +559,7 @@ public class FioreFlowershop {
 
                     String userID = s.nextLine();
 
-                    Pickup.searchUserPickUp(userID, catalogOrder, readyOrders, paidOrder);
+                    Pickup.searchUserPickUp(userID, readyOrders, paidOrder);
                 }
             } else if (choice == 2) {
                 while (true) {
@@ -572,7 +572,7 @@ public class FioreFlowershop {
                     int deliveryChoice = s.nextInt();
 
                     if (deliveryChoice == 1) {
-                        Delivery.sortDeliveryOrder(catalogOrder, readyOrders);
+                        Delivery.sortDeliveryOrder(readyOrders);
                     } else if (deliveryChoice == 2) {
                         try {
                             s.nextLine();
@@ -585,7 +585,7 @@ public class FioreFlowershop {
 
                             Date date = dateformat.parse(dateStr);
 
-                            Delivery.searchDelivery(catalogOrder, date, readyOrders);
+                            Delivery.searchDelivery(date, readyOrders);
 
                         } catch (ParseException ex) {
                             Logger.getLogger(FioreFlowershop.class
@@ -612,7 +612,7 @@ public class FioreFlowershop {
             int deliveryChoice = s.nextInt();
 
             if (deliveryChoice == 1) {
-                Delivery.sortDeliveryOrder(catalogOrder, readyOrders);
+                Delivery.sortDeliveryOrder(readyOrders);
                 try {
                     deliveryStaff();
 
@@ -631,7 +631,7 @@ public class FioreFlowershop {
 
                     Date date = dateformat.parse(dateStr);
 
-                    Delivery.searchDelivery(catalogOrder, date, readyOrders);
+                    Delivery.searchDelivery(date, readyOrders);
 
                 } catch (ParseException ex) {
                     Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
@@ -668,7 +668,7 @@ public class FioreFlowershop {
         return catalogOrder;
     }
 
-    public static OrderListInterface<CustomizedPackage> getReadyOrder() {
+    public static OrderListInterface<Order> getReadyOrder() {
         return readyOrders;
     }
 

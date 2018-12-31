@@ -43,6 +43,7 @@ public class CustomizedPackage extends Order {
         super.setDeliveryDate(addDate);
         super.setPriority(priority);
         super.setID(orderID);
+        super.setOrderType(deliveryType.getName());
         deliveryDate = df.format(addDate);
         orderDate = df.format(todayDate);
 
@@ -93,6 +94,7 @@ public class CustomizedPackage extends Order {
     }
 
     public void setDeliveryType(Item deliveryType) {
+        super.setOrderType(deliveryType.getName());
         this.deliveryType = deliveryType;
     }
 
@@ -116,7 +118,7 @@ public class CustomizedPackage extends Order {
     public int getOrderNumber() {
         return Integer.parseInt(orderID.substring(2));
     }
-    
+
     public void setOrderID(String orderID) {
         this.orderID = orderID;
     }

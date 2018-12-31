@@ -43,29 +43,19 @@ public class Pickup {
 
     OrderListInterface<CustomizedPackage> customPackageList = new OrderList<>();
 
-    public static void searchPickUp(OrderListInterface<CatalogOrders> catalogOrder, Date date, OrderListInterface<CustomizedPackage> customizeOrder) {
-        OrderListInterface<CatalogOrders> unOrderList = new OrderList<CatalogOrders>();
-        OrderListInterface<CustomizedPackage> customOrder = new OrderList<CustomizedPackage>();
-        OrderListInterface<Order> matchedList = new OrderList<>();
+    public static void searchPickUp(Date date, OrderListInterface<Order> readyOrder) {
+        
+        OrderListInterface<Order> unSortedList = new OrderList<>();
+        OrderListInterface<Order> sortedList = new OrderList<>();
 
-        Iterator<CatalogOrders> catalogIterator = catalogOrder.getIterator();
-        Iterator<CustomizedPackage> CustomIterator = customizeOrder.getIterator();
+        Iterator<Order> orderIterator = readyOrder.getIterator();
 
         // Get all delivery order for Catalog Order
-        while (catalogIterator.hasNext()) {
-            CatalogOrders order = catalogIterator.next();
+        while (orderIterator.hasNext()) {
+            Order order = orderIterator.next();
 
             if (order.getOrderType().equals("Pick Up")) {
-                unOrderList.addOrder(order);
-            }
-        }
-
-        // Get all delivery order for Customize Package
-        while (CustomIterator.hasNext()) {
-            CustomizedPackage order = CustomIterator.next();
-
-            if (order.getDeliveryType().getName().equals("Pick Up")) {
-                customOrder.addOrder(order);
+                unSortedList.addOrder(order);
             }
         }
 
@@ -81,33 +71,16 @@ public class Pickup {
         userMonth = cal.get(Calendar.MONTH) + 1;
         userYear = cal.get(Calendar.YEAR);
 
-        for (int i = 1; i <= unOrderList.getTotalEntries(); i++) {
+        for (int i = 1; i <= unSortedList.getTotalEntries(); i++) {
 
-            listCal.setTime(unOrderList.getOrder(i).getOrderDate());
+            listCal.setTime(unSortedList.getOrder(i).getOrderDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
             year = listCal.get(Calendar.YEAR);
 
             if (day == userDay && month == userMonth && year == userYear) {
-                matchedList.addOrder(unOrderList.getOrder(i));
-            }
-        }
-
-        for (int i = 1; i <= customOrder.getTotalEntries(); i++) {
-
-            listCal.setTime(customOrder.getOrder(i).getOrderDate());
-
-            day = listCal.get(Calendar.DAY_OF_MONTH);
-            month = listCal.get(Calendar.MONTH) + 1;
-            year = listCal.get(Calendar.YEAR);
-
-            userDay = cal.get(Calendar.DAY_OF_MONTH);
-            userMonth = cal.get(Calendar.MONTH) + 1;
-            userYear = cal.get(Calendar.YEAR);
-
-            if (day == userDay && month == userMonth && year == userYear) {
-                matchedList.addOrder(customOrder.getOrder(i));
+                sortedList.addOrder(unSortedList.getOrder(i));
             }
         }
 
@@ -126,48 +99,35 @@ public class Pickup {
 //                }
 //            }
 //        }
-        for (int i = 1; i < matchedList.getTotalEntries() - 1; i++) {
+        for (int i = 1; i < sortedList.getTotalEntries() - 1; i++) {
             int index = i;
-            for (int j = i; j <= matchedList.getTotalEntries(); j++) {
-                if (matchedList.getOrder(j).getOrderDate().before(matchedList.getOrder(index).getOrderDate())) {
+            for (int j = i; j <= sortedList.getTotalEntries(); j++) {
+                if (sortedList.getOrder(j).getOrderDate().before(sortedList.getOrder(index).getOrderDate())) {
                     index = j; //searching for lowest index  
                 }
             }
-            Order smallerOrder = matchedList.getOrder(index);
-            matchedList.replaceOrder(index, matchedList.getOrder(i));
-            matchedList.replaceOrder(i, smallerOrder);
+            Order smallerOrder = sortedList.getOrder(index);
+            sortedList.replaceOrder(index, sortedList.getOrder(i));
+            sortedList.replaceOrder(i, smallerOrder);
 
         }
 
-        displaySortedPickup(matchedList);
+        displaySortedPickup(sortedList);
     }
 
-    public static void sortPickupOrder(OrderListInterface<CatalogOrders> catalogOrder, OrderListInterface<CustomizedPackage> customizeOrder) {
+    public static void sortPickupOrder(OrderListInterface<Order> readyOrder) {
 
+        OrderListInterface<Order> unSortedList = new OrderList<>();
         OrderListInterface<Order> sortedList = new OrderList<>();
 
-        OrderListInterface<CatalogOrders> unOrderList = new OrderList<CatalogOrders>();
-        OrderListInterface<CustomizedPackage> customOrder = new OrderList<CustomizedPackage>();
-        OrderListInterface<Order> matchedList = new OrderList<>();
-
-        Iterator<CatalogOrders> catalogIterator = catalogOrder.getIterator();
-        Iterator<CustomizedPackage> CustomIterator = customizeOrder.getIterator();
-
+        Iterator<Order> orderIterator = readyOrder.getIterator();
+        
         // Get all delivery order for Catalog Order
-        while (catalogIterator.hasNext()) {
-            CatalogOrders order = catalogIterator.next();
+        while (orderIterator.hasNext()) {
+            Order order = orderIterator.next();
 
             if (order.getOrderType().equals("Pick Up")) {
-                unOrderList.addOrder(order);
-            }
-        }
-
-        // Get all delivery order for Customize Package
-        while (CustomIterator.hasNext()) {
-            CustomizedPackage order = CustomIterator.next();
-
-            if (order.getDeliveryType().getName().equals("Pick Up")) {
-                customOrder.addOrder(order);
+                unSortedList.addOrder(order);
             }
         }
 
@@ -183,27 +143,15 @@ public class Pickup {
         userMonth = cal.get(Calendar.MONTH) + 1;
         userYear = cal.get(Calendar.YEAR);
 
-        for (int j = 1; j <= unOrderList.getTotalEntries(); j++) {
-            listCal.setTime(unOrderList.getOrder(j).getDeliveryDate());
+        for (int j = 1; j <= unSortedList.getTotalEntries(); j++) {
+            listCal.setTime(unSortedList.getOrder(j).getDeliveryDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
             year = listCal.get(Calendar.YEAR);
 
             if (day == userDay && month == userMonth && year == userYear) {
-                sortedList.addOrder(unOrderList.getOrder(j));
-            }
-        }
-
-        for (int j = 1; j <= customOrder.getTotalEntries(); j++) {
-            listCal.setTime(customOrder.getOrder(j).getDeliveryDate());
-
-            day = listCal.get(Calendar.DAY_OF_MONTH);
-            month = listCal.get(Calendar.MONTH) + 1;
-            year = listCal.get(Calendar.YEAR);
-
-            if (day == userDay && month == userMonth && year == userYear) {
-                sortedList.addOrder(customOrder.getOrder(j));
+                sortedList.addOrder(unSortedList.getOrder(j));
             }
         }
 
@@ -341,9 +289,8 @@ public class Pickup {
 //        }
     }
 
-    public static void searchUserPickUp(String userID, OrderListInterface<CatalogOrders> catalogOrder, OrderListInterface<CustomizedPackage> customOrder, OrderListInterface<Order> paidOrder) {
+    public static void searchUserPickUp(String userID, OrderListInterface<Order> readyOrder, OrderListInterface<Order> paidOrder) {
 
-        OrderListInterface<CatalogOrders> pickuporder = catalogOrder;
         OrderListInterface<Order> matchOrder = new OrderList<>();
         User user = null;
 
@@ -353,23 +300,12 @@ public class Pickup {
         DateFormat dfdt = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
         // Get all CatalogOrder with Pick Up type
-        Iterator<CatalogOrders> iterator = catalogOrder.getIterator();
+        Iterator<Order> orderIterator = readyOrder.getIterator();
 
-        while (iterator.hasNext()) {
-            CatalogOrders order = iterator.next();
+        while (orderIterator.hasNext()) {
+            Order order = orderIterator.next();
 
             if (order.getUser().getUsername().equals(userID) && order.getOrderType().equals("Pick Up") && (order.getUser() instanceof Consumer)) {
-                user = order.getUser();
-                matchOrder.addOrder(order);
-            }
-        }
-
-        Iterator<CustomizedPackage> customIterator = customOrder.getIterator();
-
-        while (customIterator.hasNext()) {
-            CustomizedPackage order = customIterator.next();
-
-            if (order.getUser().getUsername().equals(userID) && order.getDeliveryType().getName().equals("Pick Up") && (order.getUser() instanceof Consumer)) {
                 user = order.getUser();
                 matchOrder.addOrder(order);
             }
