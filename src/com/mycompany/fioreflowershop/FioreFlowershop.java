@@ -40,7 +40,7 @@ public class FioreFlowershop {
 
     private static ItemCatalogue itemCatalogue = new ItemCatalogue();
     private static CustomizePackageQueueInterface<CustomizedPackage> customizedPackages = new CustomizePackageQueue<>();
-    private static OrderListInterface<CustomizedPackage> readyOrders = new OrderList<>();
+    private static OrderListInterface<Order> readyOrders = new OrderList<>();
 
     //Catalog Maintenance part
     private static CatalogPackageInterface<CatalogPackage> normalPackage = new CatalogPackageList<>();
@@ -264,9 +264,9 @@ public class FioreFlowershop {
         //Zion part need change since tutor told me use one array so my multiple array is gone
 
         if (corporateLoggedIn == null) {
-            CatalogOrder.CustomerOrderMain(catalogOrder, customerLoggedIn, normalPackage, discountedPackage, itemCatalogue);
+            CatalogOrder.CustomerOrderMain(catalogOrder, readyOrders, customerLoggedIn, normalPackage, discountedPackage, itemCatalogue);
         } else if (customerLoggedIn == null) {
-            CatalogOrder.CorporateOrderMain(catalogOrder, corporateLoggedIn, normalPackage, discountedPackage, itemCatalogue);
+            CatalogOrder.CorporateOrderMain(catalogOrder, readyOrders, corporateLoggedIn, normalPackage, discountedPackage, itemCatalogue);
         }
     }
 

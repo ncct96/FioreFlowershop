@@ -186,7 +186,7 @@ public class OrderTest {
     public void testGetRetrieveDate() {
         System.out.println("getRetrieveDate");
         Date expResult = retrieveDate;
-        Date result = order.getRetrieveDate();
+        Date result = order.getDeliveryDate();
         assertEquals(expResult, result);
     }
 
@@ -200,7 +200,7 @@ public class OrderTest {
         validRetrieveDate.setTime(new Date()); // Now use today date.
         validRetrieveDate.add(Calendar.DATE, 2); // Adding 5 days
         Date retrieveDate = validRetrieveDate.getTime();
-        order.setRetrieveDate(retrieveDate);
+        order.setDeliveryDate(retrieveDate);
         // TODO review the generated test code and remove the default call to fail.
     }
     

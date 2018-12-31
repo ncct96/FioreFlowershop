@@ -52,7 +52,7 @@ public class CatalogOrder {
     private static CatalogPackageInterface<CatalogPackage> freshFlower = new CatalogPackageList<>();
     private static CatalogPackageInterface<CatalogPackage> bouquets = new CatalogPackageList<>();
     private static CatalogPackageInterface<CatalogPackage> flowerArrangement = new CatalogPackageList<>();
-
+    private static OrderListInterface<Order> readyOrders = new OrderList<>();
     //Define shopping cart queue of CatalogOrder
     private static Consumer customer;
     private static CorporateCustomer corporate;
@@ -68,7 +68,7 @@ public class CatalogOrder {
     private static boolean isInteger;
     private static boolean haveStock = true;
     private static boolean quantityCheck;
-    private static int order = 1000;
+    private static int order = 0;
     private static String orderID;
     private static Item priority;
     private static String orderType;
@@ -85,30 +85,29 @@ public class CatalogOrder {
     private static ItemListInterface<Item> priorities = new ItemList<>();
     private static ItemCatalogue itemCatalog = new ItemCatalogue();
 
-    public static void CustomerOrderMain(OrderListInterface<CatalogOrders> catalogOrder, Consumer customerLoggedIn, CatalogPackageInterface<CatalogPackage> normalPackage, CatalogPackageInterface<CatalogPackage> discountedPackage, ItemCatalogue itemCatalogue) {
+    public static void CustomerOrderMain(OrderListInterface<CatalogOrders> catalogOrder, OrderListInterface<Order> readyOrders, Consumer customerLoggedIn, CatalogPackageInterface<CatalogPackage> normalPackage, CatalogPackageInterface<CatalogPackage> discountedPackage, ItemCatalogue itemCatalogue) {
         customer = customerLoggedIn;
 
+        CatalogOrder.readyOrders = readyOrders;
         freshFlower.clearCatalogList();
         bouquets.clearCatalogList();
         flowerArrangement.clearCatalogList();
         itemCatalog = itemCatalogue;
         //initialize items into catalog
         initializeCatalog(normalPackage, discountedPackage);
-
         displayCatalog(normalPackage, discountedPackage);
-
     }
 
-    public static void CorporateOrderMain(OrderListInterface<CatalogOrders> catalogOrder, CorporateCustomer customerLoggedIn, CatalogPackageInterface<CatalogPackage> normalPackage, CatalogPackageInterface<CatalogPackage> discountedPackage, ItemCatalogue itemCatalogue) {
+    public static void CorporateOrderMain(OrderListInterface<CatalogOrders> catalogOrder, OrderListInterface<Order> readyOrders, CorporateCustomer customerLoggedIn, CatalogPackageInterface<CatalogPackage> normalPackage, CatalogPackageInterface<CatalogPackage> discountedPackage, ItemCatalogue itemCatalogue) {
         corporate = customerLoggedIn;
 
+        CatalogOrder.readyOrders = readyOrders;
         freshFlower.clearCatalogList();
         bouquets.clearCatalogList();
         flowerArrangement.clearCatalogList();
         itemCatalog = itemCatalogue;
         //initialize items into catalog
         initializeCatalog(normalPackage, discountedPackage);
-
         displayCatalog(normalPackage, discountedPackage);
     }
 
@@ -562,6 +561,8 @@ public class CatalogOrder {
             }
 
             catalogOrder.addOrder(new CatalogOrders(orderID, custItem, priority, orderType, currentDate, orderTime, shoppingCart.getItem(1).getUser(), orderStatus, orderAmt, paymentStatus, retrieveDate2, retrieveDate2));
+            readyOrders.addOrder(catalogOrder.getOrder(catalogOrder.getTotalEntries()));
+            SortOrders.doSelectionSort(readyOrders);
 
         } catch (ParseException ex) {
             Logger.getLogger(CatalogOrder.class
@@ -617,7 +618,7 @@ public class CatalogOrder {
 
         System.out.println(FioreFlowershop.ConsoleColors.BLACK + "\n\n\t\t\t\t\t\t\t Subtotal :\t\t\t " + FioreFlowershop.ConsoleColors.GREEN + "RM " + totalPrice + FioreFlowershop.ConsoleColors.BLACK);
         System.out.println("\n\n\t\t\t\t\t\t\tOrder Type :\t\t\t " + shopping.getOrderType());
-        System.out.println("\n\n\t\t\t\t\t\t Delivery/Pickup Date :\t\t\t " + dateFormat.format(shopping.getRetrieveDate()));
+        System.out.println("\n\n\t\t\t\t\t\t Delivery/Pickup Date :\t\t\t " + dateFormat.format(shopping.getDeliveryDate()));
         catalogPack.clearCatalogList();
     }
 

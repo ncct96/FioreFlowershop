@@ -184,7 +184,7 @@ public class Pickup {
         userYear = cal.get(Calendar.YEAR);
 
         for (int j = 1; j <= unOrderList.getTotalEntries(); j++) {
-            listCal.setTime(unOrderList.getOrder(j).getRetrieveDate());
+            listCal.setTime(unOrderList.getOrder(j).getDeliveryDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
@@ -196,7 +196,7 @@ public class Pickup {
         }
 
         for (int j = 1; j <= customOrder.getTotalEntries(); j++) {
-            listCal.setTime(customOrder.getOrder(j).getRetrieveDate());
+            listCal.setTime(customOrder.getOrder(j).getDeliveryDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
@@ -223,7 +223,7 @@ public class Pickup {
         for (int i = 1; i < sortedList.getTotalEntries() - 1; i++) {
             int index = i;
             for (int j = i; j <= sortedList.getTotalEntries(); j++) {
-                if (sortedList.getOrder(j).getRetrieveDate().before(sortedList.getOrder(index).getRetrieveDate())) {
+                if (sortedList.getOrder(j).getDeliveryDate().before(sortedList.getOrder(index).getDeliveryDate())) {
                     index = j; //searching for lowest index  
                 }
             }

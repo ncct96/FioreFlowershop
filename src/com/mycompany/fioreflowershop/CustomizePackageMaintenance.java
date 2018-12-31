@@ -75,7 +75,7 @@ public class CustomizePackageMaintenance {
         }
     }
 
-    public static void updateOrders(CustomizePackageQueueInterface<CustomizedPackage> customizedPackages, OrderListInterface<CustomizedPackage> readyOrders) {
+    public static void updateOrders(CustomizePackageQueueInterface<CustomizedPackage> customizedPackages, OrderListInterface<Order> readyOrders) {
         while (true) {
             Scanner scan = new Scanner(System.in);
             char selection;
@@ -97,6 +97,7 @@ public class CustomizePackageMaintenance {
                     System.out.println("Order marked as ready to deliver!");
 
                     readyOrders.addOrder(customizedPackages.dequeuePackage());
+                    SortOrders.doSelectionSort(readyOrders);
 
                     if (customizedPackages.isEmpty()) {
                         System.out.println("No more orders is queue!\n");

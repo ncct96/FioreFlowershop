@@ -14,11 +14,13 @@ import java.util.Date;
 public class Order {
 
     private String orderType;
+    private String orderID;
     private Date orderDate;
-    private Date retrieveDate; // For pickup/delivery date
+    private Date deliveryDate; // For pickup/delivery date
     private Date paymentTime; // For pickup/delivery date
     private User user;
-    private Date dateOfReceive;
+    private Date receiveDate;
+    private Item priority;
     private String orderStatus;
     private boolean paymentStatus = false;
     private double orderAmt;
@@ -33,7 +35,7 @@ public class Order {
         this.orderStatus = orderStatus;
         this.orderAmt = orderAmt;
         this.paymentStatus = paymentStatus;
-        this.retrieveDate = retrieveDate;
+        this.deliveryDate = retrieveDate;
     }
 
     public Order(String orderType, Date orderDate, User user) {
@@ -45,7 +47,7 @@ public class Order {
     public Order(boolean paymentStatus, User user, Date retrieveDate) {
         this.paymentStatus = paymentStatus;
         this.user = user;
-        this.retrieveDate = retrieveDate;
+        this.deliveryDate = retrieveDate;
     }
 
     public Order(boolean paymentStatus, User user) {
@@ -101,8 +103,8 @@ public class Order {
         this.paymentStatus = paymentStatus;
     }
 
-    public Date getRetrieveDate() {
-        return retrieveDate;
+    public Date getDeliveryDate() {
+        return deliveryDate;
     }
 
     public Date getPaymentTime() {
@@ -113,16 +115,37 @@ public class Order {
         this.paymentTime = paymentTime;
     }
 
-    public void setRetrieveDate(Date retrieveDate) {
-        this.retrieveDate = retrieveDate;
+    public void setDeliveryDate(Date retrieveDate) {
+        this.deliveryDate = retrieveDate;
+    }
+
+    public String getID() {
+        return orderID;
+    }
+
+    public void setID(String ID) {
+        this.orderID = ID;
+    }
+    
+    public int getOrderNumber(){
+        return Integer.parseInt(orderID.substring(2));
     }
 
     public Date getDateOfReceive() {
-        return dateOfReceive;
+        return receiveDate;
     }
 
     public void setDateOfReceive(Date dateOfReceive) {
-        this.dateOfReceive = dateOfReceive;
+        this.receiveDate = dateOfReceive;
     }
 
+    public Item getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Item priority) {
+        this.priority = priority;
+    }
+
+    
 }

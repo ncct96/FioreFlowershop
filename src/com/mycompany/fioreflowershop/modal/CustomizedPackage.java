@@ -8,6 +8,7 @@ package com.mycompany.fioreflowershop.modal;
 import com.mycompany.fioreflowershop.adt.LinkedList;
 import com.mycompany.fioreflowershop.adt.ListIteratorInterface;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -39,7 +40,9 @@ public class CustomizedPackage extends Order {
         cal.add(Calendar.DATE, priority.getQuantity());
         Date addDate = cal.getTime();
 
-        super.setRetrieveDate(addDate);
+        super.setDeliveryDate(addDate);
+        super.setPriority(priority);
+        super.setID(orderID);
         deliveryDate = df.format(addDate);
         orderDate = df.format(todayDate);
 
@@ -109,6 +112,7 @@ public class CustomizedPackage extends Order {
         return orderID;
     }
 
+    @Override
     public int getOrderNumber() {
         return Integer.parseInt(orderID.substring(2));
     }
@@ -131,12 +135,14 @@ public class CustomizedPackage extends Order {
         return deliveryDate;
     }
 
-    public void setDeliveryDateString(String deliveryDate) {
+    public void setDeliveryDateString(String deliveryDate) throws ParseException {
         this.deliveryDate = deliveryDate;
+        super.setDeliveryDate(df.parse(deliveryDate));
     }
 
     public void setDeliveryDate(Date deliveryDate) {
         this.deliveryDate = df.format(deliveryDate);
+        super.setDeliveryDate(deliveryDate);
     }
 
     public void setStyle(Item style) {
@@ -173,6 +179,7 @@ public class CustomizedPackage extends Order {
 
     public void setPriority(Item priority) {
         this.priority = priority;
+        super.setPriority(priority);
     }
 
     public double CalculateOrder() {
