@@ -43,31 +43,20 @@ public class Delivery {
     public static final String RED = "\033[0;31m";     // RED
     public static final String GREEN = "\033[0;32m";   // GREEN
 
-    public static OrderListInterface<Order> searchDelivery(OrderListInterface<CatalogOrders> catalogOrder, Date date, OrderListInterface<CustomizedPackage> customizeOrder) {
-        OrderListInterface<CatalogOrders> unOrderList = new OrderList<CatalogOrders>();
-        OrderListInterface<CustomizedPackage> customOrder = new OrderList<CustomizedPackage>();
+    public static OrderListInterface<Order> searchDelivery(Date date, OrderListInterface<Order> readyOrder) {
+        
+        OrderListInterface<Order> unSortedList = new OrderList<Order>();
         OrderListInterface<Order> matchedList = new OrderList<>();
 
-        Iterator<CatalogOrders> catalogIterator = catalogOrder.getIterator();
-        Iterator<CustomizedPackage> CustomIterator = customizeOrder.getIterator();
+        Iterator<Order> orderIterator = readyOrder.getIterator();
 
         // Get all delivery order for Catalog Order
-        while (catalogIterator.hasNext()) {
+        while (orderIterator.hasNext()) {
 
-            CatalogOrders order = catalogIterator.next();
+            Order order = orderIterator.next();
 
             if (order.getOrderType().equals("Delivery")) {
-                unOrderList.addOrder(order);
-            }
-        }
-
-        // Get all delivery order for Customize Package
-        while (CustomIterator.hasNext()) {
-
-            CustomizedPackage order = CustomIterator.next();
-
-            if (order.getDeliveryType().getName().equals("Delivery")) {
-                customOrder.addOrder(order);
+                unSortedList.addOrder(order);
             }
         }
 
@@ -84,26 +73,9 @@ public class Delivery {
         userMonth = cal.get(Calendar.MONTH) + 1;
         userYear = cal.get(Calendar.YEAR);
 
-        for (int i = 1; i <= unOrderList.getTotalEntries(); i++) {
+        for (int i = 1; i <= unSortedList.getTotalEntries(); i++) {
 
-            listCal.setTime(unOrderList.getOrder(i).getDeliveryDate());
-
-            day = listCal.get(Calendar.DAY_OF_MONTH);
-            month = listCal.get(Calendar.MONTH) + 1;
-            year = listCal.get(Calendar.YEAR);
-
-            userDay = cal.get(Calendar.DAY_OF_MONTH);
-            userMonth = cal.get(Calendar.MONTH) + 1;
-            userYear = cal.get(Calendar.YEAR);
-
-            if (day == userDay && month == userMonth && year == userYear) {
-                matchedList.addOrder(unOrderList.getOrder(i));
-            }
-        }
-
-        for (int i = 1; i <= customOrder.getTotalEntries(); i++) {
-
-            listCal.setTime(customOrder.getOrder(i).getDeliveryDate());
+            listCal.setTime(unSortedList.getOrder(i).getDeliveryDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
@@ -114,7 +86,7 @@ public class Delivery {
             userYear = cal.get(Calendar.YEAR);
 
             if (day == userDay && month == userMonth && year == userYear) {
-                matchedList.addOrder(customOrder.getOrder(i));
+                matchedList.addOrder(unSortedList.getOrder(i));
             }
         }
 
@@ -136,32 +108,20 @@ public class Delivery {
         return matchedList;
     }
 
-    public static void sortDeliveryOrder(OrderListInterface<CatalogOrders> catalogOrder, OrderListInterface<CustomizedPackage> customizeOrder) {
+    public static void sortDeliveryOrder(OrderListInterface<Order> readyOrder) {
 
+        OrderListInterface<Order> unSortedList = new OrderList<>();
         OrderListInterface<Order> sortedList = new OrderList<>();
 
-        OrderListInterface<CatalogOrders> unOrderList = new OrderList<CatalogOrders>();
-        OrderListInterface<CustomizedPackage> customOrder = customizeOrder;
-
         //int count = customOrder.getBackIndex();
-        Iterator<CatalogOrders> catalogIterator = catalogOrder.getIterator();
-        Iterator<CustomizedPackage> CustomIterator = customizeOrder.getIterator();
+        Iterator<Order> orderIterator = readyOrder.getIterator();
 
         // Get all delivery order for Catalog Order
-        while (catalogIterator.hasNext()) {
-            CatalogOrders order = catalogIterator.next();
+        while (orderIterator.hasNext()) {
+            Order order = orderIterator.next();
 
             if (order.getOrderType().equals("Delivery")) {
-                unOrderList.addOrder(order);
-            }
-        }
-
-        // Get all delivery order for Customize Package
-        while (CustomIterator.hasNext()) {
-            CustomizedPackage order = CustomIterator.next();
-
-            if (order.getDeliveryType().getName().equals("Delivery")) {
-                customOrder.addOrder(order);
+                unSortedList.addOrder(order);
             }
         }
 
@@ -178,27 +138,15 @@ public class Delivery {
         userMonth = cal.get(Calendar.MONTH) + 1;
         userYear = cal.get(Calendar.YEAR);
 
-        for (int j = 1; j <= unOrderList.getTotalEntries(); j++) {
-            listCal.setTime(unOrderList.getOrder(j).getDeliveryDate());
+        for (int j = 1; j <= unSortedList.getTotalEntries(); j++) {
+            listCal.setTime(unSortedList.getOrder(j).getDeliveryDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
             year = listCal.get(Calendar.YEAR);
 
             if (day == userDay && month == userMonth && year == userYear) {
-                sortedList.addOrder(unOrderList.getOrder(j));
-            }
-        }
-
-        for (int j = 1; j <= customOrder.getTotalEntries(); j++) {
-            listCal.setTime(customOrder.getOrder(j).getDeliveryDate());
-
-            day = listCal.get(Calendar.DAY_OF_MONTH);
-            month = listCal.get(Calendar.MONTH) + 1;
-            year = listCal.get(Calendar.YEAR);
-
-            if (day == userDay && month == userMonth && year == userYear) {
-                sortedList.addOrder(customOrder.getOrder(j));
+                sortedList.addOrder(unSortedList.getOrder(j));
             }
         }
 
@@ -305,31 +253,19 @@ public class Delivery {
         }
     }
 
-    public static void sortRouteDelivery(OrderListInterface<CatalogOrders> catalogOrder, OrderListInterface<CustomizedPackage> customizeOrder, String shopAddress) throws ApiException, InterruptedException, IOException {
+    public static void sortRouteDelivery(OrderListInterface<Order> readyOrder, String shopAddress) throws ApiException, InterruptedException, IOException {
+        OrderListInterface<Order> unSortedList = new OrderList<>();
         OrderListInterface<Order> sortedList = new OrderList<>();
 
-        OrderListInterface<CatalogOrders> unOrderList = new OrderList<CatalogOrders>();
-        OrderListInterface<CustomizedPackage> customOrder = new OrderList<CustomizedPackage>();
-
         //int count = customOrder.getBackIndex();
-        Iterator<CatalogOrders> catalogIterator = catalogOrder.getIterator();
-        Iterator<CustomizedPackage> CustomIterator = customizeOrder.getIterator();
+        Iterator<Order> orderIterator = readyOrder.getIterator();
 
         // Get all delivery order for Catalog Order
-        while (catalogIterator.hasNext()) {
-            CatalogOrders order = catalogIterator.next();
+        while (orderIterator.hasNext()) {
+            Order order = orderIterator.next();
 
             if (order.getOrderType().equals("Delivery")) {
-                unOrderList.addOrder(order);
-            }
-        }
-
-        // Get all delivery order for Customize Package
-        while (CustomIterator.hasNext()) {
-            CustomizedPackage order = CustomIterator.next();
-
-            if (order.getDeliveryType().getName().equals("Delivery")) {
-                customOrder.addOrder(order);
+                unSortedList.addOrder(order);
             }
         }
 
@@ -345,57 +281,35 @@ public class Delivery {
         userMonth = cal.get(Calendar.MONTH) + 1;
         userYear = cal.get(Calendar.YEAR);
 
-        for (int j = 1; j <= unOrderList.getTotalEntries(); j++) {
-            listCal.setTime(unOrderList.getOrder(j).getDeliveryDate());
+        for (int j = 1; j <= unSortedList.getTotalEntries(); j++) {
+            listCal.setTime(unSortedList.getOrder(j).getDeliveryDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
             year = listCal.get(Calendar.YEAR);
 
             if (day == userDay && month == userMonth && year == userYear) {
-                sortedList.addOrder(unOrderList.getOrder(j));
+                sortedList.addOrder(unSortedList.getOrder(j));
             }
         }
 
-        for (int j = 1; j <= customOrder.getTotalEntries(); j++) {
-            listCal.setTime(customOrder.getOrder(j).getDeliveryDate());
-
-            day = listCal.get(Calendar.DAY_OF_MONTH);
-            month = listCal.get(Calendar.MONTH) + 1;
-            year = listCal.get(Calendar.YEAR);
-
-            if (day == userDay && month == userMonth && year == userYear) {
-                sortedList.addOrder(customOrder.getOrder(j));
-            }
-        }
         sortRoute(sortedList, shopAddress);
     }
 
-    public static void searchSortRouteDelivery(OrderListInterface<CatalogOrders> catalogOrder, OrderListInterface<CustomizedPackage> customizeOrder, String shopAddress, Date date) throws ApiException, InterruptedException, IOException {
+    public static void searchSortRouteDelivery(OrderListInterface<Order> readyOrder, String shopAddress, Date date) throws ApiException, InterruptedException, IOException {
+        OrderListInterface<Order> unSortedList = new OrderList<>();
         OrderListInterface<Order> sortedList = new OrderList<>();
 
-        OrderListInterface<CatalogOrders> unOrderList = new OrderList<CatalogOrders>();
-        OrderListInterface<CustomizedPackage> customOrder = new OrderList<CustomizedPackage>();
 
         //int count = customOrder.getBackIndex();
-        Iterator<CatalogOrders> catalogIterator = catalogOrder.getIterator();
-        Iterator<CustomizedPackage> CustomIterator = customizeOrder.getIterator();
+        Iterator<Order> orderIterator = readyOrder.getIterator();
 
         // Get all delivery order for Catalog Order
-        while (catalogIterator.hasNext()) {
-            CatalogOrders order = catalogIterator.next();
+        while (orderIterator.hasNext()) {
+            Order order = orderIterator.next();
 
             if (order.getOrderType().equals("Delivery")) {
-                unOrderList.addOrder(order);
-            }
-        }
-
-        // Get all delivery order for Customize Package
-        while (CustomIterator.hasNext()) {
-            CustomizedPackage order = CustomIterator.next();
-
-            if (order.getDeliveryType().getName().equals("Delivery")) {
-                customOrder.addOrder(order);
+                unSortedList.addOrder(order);
             }
         }
 
@@ -411,27 +325,15 @@ public class Delivery {
         userMonth = cal.get(Calendar.MONTH) + 1;
         userYear = cal.get(Calendar.YEAR);
 
-        for (int j = 1; j <= unOrderList.getTotalEntries(); j++) {
-            listCal.setTime(unOrderList.getOrder(j).getDeliveryDate());
+        for (int j = 1; j <= unSortedList.getTotalEntries(); j++) {
+            listCal.setTime(unSortedList.getOrder(j).getDeliveryDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
             year = listCal.get(Calendar.YEAR);
 
             if (day == userDay && month == userMonth && year == userYear) {
-                sortedList.addOrder(unOrderList.getOrder(j));
-            }
-        }
-
-        for (int j = 1; j <= customOrder.getTotalEntries(); j++) {
-            listCal.setTime(customOrder.getOrder(j).getDeliveryDate());
-
-            day = listCal.get(Calendar.DAY_OF_MONTH);
-            month = listCal.get(Calendar.MONTH) + 1;
-            year = listCal.get(Calendar.YEAR);
-
-            if (day == userDay && month == userMonth && year == userYear) {
-                sortedList.addOrder(customOrder.getOrder(j));
+                sortedList.addOrder(unSortedList.getOrder(j));
             }
         }
 
@@ -558,21 +460,19 @@ public class Delivery {
             System.out.println("Enter Order ID to make payment :");
             String orderID = s.nextLine();
 
-            OrderListInterface<CatalogOrders> catalogOrder = FioreFlowershop.getCatalogOrder();
-            OrderListInterface<CustomizedPackage> customOrder = FioreFlowershop.getReadyOrder();
+            OrderListInterface<Order> readyOrder = FioreFlowershop.getReadyOrder();
 
-            Iterator<CatalogOrders> catIterator = catalogOrder.getIterator();
-            Iterator<CustomizedPackage> cusIterator = customOrder.getIterator();
+            Iterator<Order> orderIterator = readyOrder.getIterator();
 
             System.out.println("These are your orders with pending payment\n");
             System.out.println("|Order ID|\t|Order Type|\t|Order Date|\t\t|Payment Amount (RM)|\t|Payment Status|\t|Pickup Date|");
             System.out.println("=============================================================================================================================================================");
 
-            while (catIterator.hasNext()) {
+            while (orderIterator.hasNext()) {
 
-                CatalogOrders order = catIterator.next();
+                Order order = orderIterator.next();
 
-                if (order.getOrderID().equals(orderID) && order.isPaymentStatus() == false) {
+                if (order.getID().equals(orderID) && order.isPaymentStatus() == false) {
                     System.out.print(((CatalogOrders) order).getOrderID() + "\t\t");
                     System.out.print(order.getOrderType() + "\t");
                     System.out.print(df.format(order.getOrderDate()) + "\t\t");
@@ -595,37 +495,37 @@ public class Delivery {
                 }
             }
 
-            while (cusIterator.hasNext()) {
-
-                CustomizedPackage order = cusIterator.next();
-
-                if (order.getOrderID().equals(orderID) && order.isPaymentStatus() == false) {
-
-                    if (order.getUser() instanceof Consumer) {
-                        if (order instanceof CustomizedPackage) {
-                            System.out.print(((CustomizedPackage) order).getOrderID() + "\t\t");
-                            System.out.print(((CustomizedPackage) order).getDeliveryType().getName() + "\t");
-                            System.out.print(df.format(order.getOrderDate()) + "\t\t");
-                            //System.out.print(order.getUser().getUsername() + "\t");
-                            //System.out.print(order.getUser().getPhone() + "\t");
-                            // System.out.print(((CustomizedPackage) order).getFlower() + "\t");
-                            System.out.print(((CustomizedPackage) order).CalculateOrder() + "\t\t\t");
-                            //System.out.print(((CatalogOrders) order).getCatalogPack().getItem(i).getUserQuantity() + "\t");
-                            if (order.isPaymentStatus()) {
-                                System.out.print("Paid \t\t");
-                            } else {
-                                System.out.print("Pending \t\t");
-                            }
-                            if (order.getDateOfReceive() == null) {
-                                System.out.print("Pending \n");
-                            } else {
-                                System.out.print(dfdt.format(order.getDateOfReceive()) + "\n");
-                            }
-                            matchOrder = order;
-                        }
-                    }
-                }
-            }
+//            while (cusIterator.hasNext()) {
+//
+//                CustomizedPackage order = cusIterator.next();
+//
+//                if (order.getOrderID().equals(orderID) && order.isPaymentStatus() == false) {
+//
+//                    if (order.getUser() instanceof Consumer) {
+//                        if (order instanceof CustomizedPackage) {
+//                            System.out.print(((CustomizedPackage) order).getOrderID() + "\t\t");
+//                            System.out.print(((CustomizedPackage) order).getDeliveryType().getName() + "\t");
+//                            System.out.print(df.format(order.getOrderDate()) + "\t\t");
+//                            //System.out.print(order.getUser().getUsername() + "\t");
+//                            //System.out.print(order.getUser().getPhone() + "\t");
+//                            // System.out.print(((CustomizedPackage) order).getFlower() + "\t");
+//                            System.out.print(((CustomizedPackage) order).CalculateOrder() + "\t\t\t");
+//                            //System.out.print(((CatalogOrders) order).getCatalogPack().getItem(i).getUserQuantity() + "\t");
+//                            if (order.isPaymentStatus()) {
+//                                System.out.print("Paid \t\t");
+//                            } else {
+//                                System.out.print("Pending \t\t");
+//                            }
+//                            if (order.getDateOfReceive() == null) {
+//                                System.out.print("Pending \n");
+//                            } else {
+//                                System.out.print(dfdt.format(order.getDateOfReceive()) + "\n");
+//                            }
+//                            matchOrder = order;
+//                        }
+//                    }
+//                }
+//            }
 
             do {
 
