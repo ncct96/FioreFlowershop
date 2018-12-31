@@ -26,7 +26,8 @@ public class FioreFlowershop {
 
     public static final String RESET = "\033[0m";
     public static final String GREEN = "\033[0;32m";
-
+    static DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+    
     // Lines 95 - 98, 154-158
     private static ConsumerInterface<Consumer> consumer = new ConsumerADT<>();
     private static CorporateInterface<CorporateCustomer> corporate = new CorporateADT<>();
@@ -214,8 +215,6 @@ public class FioreFlowershop {
             package6.getFlowerList().add(testFlowers.getItem(i));
         }
 
-        Consumer customer = new Consumer("Johan", "abcdef", "ncct66@gmail.com", "0165919413", "Gelanggang Squash IAB Genting Highlands, Genting Highlands, 69000 Genting Highlands, Pahang");
-        Consumer customer1 = new Consumer("Baba", "abcdef", "ncct66@gmail.com", "0165919413", "7, Jalan Legoland, Medini, 79250 Nusajaya, Johor");
         customizedPackages.enqueuePackage(package1);
         customizedPackages.enqueuePackage(package2);
         customizedPackages.enqueuePackage(package3);
@@ -223,36 +222,66 @@ public class FioreFlowershop {
         customizedPackages.enqueuePackage(package5);
         customizedPackages.enqueuePackage(package6);
 
-        readyOrders.addOrder(customizedPackages.dequeuePackage());
-        readyOrders.addOrder(customizedPackages.dequeuePackage());
+        //readyOrders.addOrder(customizedPackages.dequeuePackage());
+        //readyOrders.addOrder(customizedPackages.dequeuePackage());
 
 
-//        CustomizedPackage specialPackage = new CustomizedPackage(styles.getItem(1), sizes.getItem(2), flowers.getItem(5), accessories.getItem(2), priorities.getItem(1), deliveryTypes.getItem(2), customer);
-//        specialPackage.setDeliveryDate(Calendar.getInstance().getTime());
-//        Calendar cal = Calendar.getInstance();
-//        cal.add(Calendar.DAY_OF_MONTH, -2);
-//        specialPackage.setOrderDate(cal.getTime());
-        //customizedPackages.enqueue(specialPackage);
-        Calendar retrieveDate = Calendar.getInstance();
-        retrieveDate.setTime(new Date()); // Now use today date.
-        retrieveDate.add(Calendar.DATE, 2); // Adding 2 days
+        Item style = new Item("Elliptical", 10);
+        Item size = new Item("Small", 1);
+        Item flower = new Item("Sunflowers", 250, 10);
+        Item accessory = new Item("None", 0, 1);
 
-        //Initialize shopping cart
-//        LinkedList<CatalogPackage> catalogPack = new LinkedList<>();
-//        catalogPack.add(new CatalogPackage("FlowerStrong", "Stylish", "Small", "Vase", "Valentine", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20, 5));
-//        catalogPack.add(new CatalogPackage("FlowerWeak", "Colourful", "Medium", "Jar", "Graduation", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10, 5));
-//        catalogPack.add(new CatalogPackage("FlowerMedium", "Elegant", "Large", "Wooden box", "Grand Opening", "Sunflower", "Belt", "Product Type", "11", 2018, 15, 40, 5, 2));
+        Item flexi = new Item("Flexi", 1, 6);
+        Item normal = new Item("Normal", 1.5, 4);
+        Item express = new Item("Express", 3, 2);
+        
+        Item delivery = new Item("Pick Up", 0);
 
-        //CatalogOrders ct1 = new CatalogOrders("CO1001", catalogPack, "Delivery", todayDate, cc1, "Order Status", 411, false, retrieveDate.getTime(), retrieveDate.getTime());
-        //CatalogOrders ct2 = new CatalogOrders("CO1002", catalogPack, "Delivery", todayDate, cc1, "Order Status", 411, false, retrieveDate.getTime(), retrieveDate.getTime());
-        //CatalogOrders ct3 = new CatalogOrders("CO1003", catalogPack, "Delivery", todayDate, cc2, "Order Status", 411, false, retrieveDate.getTime(), retrieveDate.getTime());
+        readyOrders.addOrder(new CustomizedPackage(style, size, accessory, express, delivery, new User(), false));
+        readyOrders.addOrder(new CustomizedPackage(style, size, accessory, flexi, delivery, new User(), false));
+
+        CustomizedPackage specialPackage1 = new CustomizedPackage(style, size, accessory, express, delivery, new User(), false);
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_MONTH, 6);
+        specialPackage1.setDeliveryDate(cal.getTime());
+
+        readyOrders.addOrder(specialPackage1);
+
+        readyOrders.addOrder(new CustomizedPackage(style, size, accessory, normal, delivery, new User(), false));
+        readyOrders.addOrder(new CustomizedPackage(style, size, accessory, normal, delivery, new User(), false));
+        readyOrders.addOrder(new CustomizedPackage(style, size, accessory, flexi, delivery, new User(), false));
+        readyOrders.addOrder(new CustomizedPackage(style, size, accessory, express, delivery, new User(), false));
+
+//        CustomizedPackage specialPackage2 = new CustomizedPackage(style, size, accessory, express, delivery, new User(), false);
+//        Calendar cal2 = Calendar.getInstance();
+//        cal2.add(Calendar.DAY_OF_MONTH, 6);
+//        specialPackage2.setDeliveryDate(cal2.getTime());
+//
+//        readyOrders.addOrder(specialPackage2);
+
+        Calendar calExpress = Calendar.getInstance();
+        calExpress.add(Calendar.DAY_OF_MONTH, 2);
+        Calendar calNormal = Calendar.getInstance();
+        calExpress.add(Calendar.DAY_OF_MONTH, 4);
+        Calendar calFlexi = Calendar.getInstance();
+        calExpress.add(Calendar.DAY_OF_MONTH, 6);
+        try{
+            readyOrders.addOrder(new CatalogOrders("CO1", express, df.parse("2019-01-02")));
+            readyOrders.addOrder(new CatalogOrders("CO2", normal, df.parse("2019-01-04")));
+            readyOrders.addOrder(new CatalogOrders("CO3", flexi, df.parse("2019-01-06")));
+            readyOrders.addOrder(new CatalogOrders("CO4", flexi, df.parse("2019-01-06")));
+            readyOrders.addOrder(new CatalogOrders("CO5", express, df.parse("2019-01-02")));
+        }catch(Exception e){
+            
+        }
+        
+        SortOrders.doSelectionSort(readyOrders);
+        for(int i = 1; i <= readyOrders.getTotalEntries(); i++){
+            System.out.println(readyOrders.getOrder(i).getID() + " " + readyOrders.getOrder(i).getPriority().getName() + " " + readyOrders.getOrder(i).getDeliveryDate());
+        }
     }
 
     public static void gotoCustomizePackage(Consumer customerLoggedIn, int selection) {
-        /////// CHIUPEENG DEBUG LOOP //////
-//        for (int i = 0; i < 3; i++) {
-//            CustomizePackage.CustomizePackageControl(styles, sizes, flowers, accessories, priorities, deliveryTypes, customer, customizedPackages);
-//        }
         if (selection == 1) {
             CustomizePackage.customizePackageControl(itemCatalogue, customerLoggedIn, customizedPackages);
         } else if (selection == 2) {

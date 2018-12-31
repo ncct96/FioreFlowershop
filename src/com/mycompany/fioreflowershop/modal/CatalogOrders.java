@@ -36,11 +36,17 @@ public class CatalogOrders extends Order {
         super.setPriority(priority);
         super.setID(orderID);
     }
+    
+    public CatalogOrders(String orderID, Item priority, Date deliveryDate){
+        super.setDeliveryDate(deliveryDate);
+        super.setPriority(priority);
+        super.setID(orderID);
+    }
 
     public String getOrderID() {
         return orderID;
     }
-
+    
     public void setOrderID(String orderID) {
         this.orderID = orderID;
     }
