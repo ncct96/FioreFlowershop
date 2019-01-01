@@ -659,14 +659,13 @@ public class CatalogOrder {
                 }
             }
         }
-        System.out.println(catalogPackage2.getFlowerList().getTotalEntries());
+        
         totalItem += catalogPackage2.getFlowerList().getTotalEntries();
         if (catalogPackage2.getProductType().equals("Flower arrangement")) {
             totalItem += 1;
         }
         int[] itemStock = new int[totalItem];
         int[] flowerNeededQ = new int[catalogPackage2.getFlowerList().getTotalEntries()];
-//        int[] flowerQuantity = new int[catalogPackage2.getFlowerList().getTotalEntries()];
         ArrayList<Integer> flowerQuantity = new ArrayList<>();
 
         for (int i = 1; i < itemCatalog.getAccessories().getSize() + 1; i++) {
@@ -674,7 +673,7 @@ public class CatalogOrder {
                 accessory = itemCatalog.getAccessories().getItem(i).getQuantity();
             }
         }
-        System.out.println(accessory);
+        
         if (catalogPackage2.getProductType().equals("Flower arrangement")) {
             for (int i = 1; i < itemCatalog.getFlowerPot().getSize() + 1; i++) {
                 if (itemCatalog.getFlowerPot().getItem(i).getName().equals(catalogPackage2.getFlowerPot().getName())) {
@@ -683,16 +682,14 @@ public class CatalogOrder {
             }
         }
 
-//        System.out.println(flower[0] + " " + flower[1]);
+
         for (int i = 0; i < catalogPackage2.getFlowerList().getTotalEntries(); i++) {
             flowerNeededQ[i] = Integer.parseInt(flower[i]);
         }
-//        System.out.println(flowerNeededQ[0] + " " + flowerNeededQ[1]);
+
         int j = 0;
-        for (int k = 1; k < itemCatalog.getFlowers().getSize() + 1; k++) {
-            System.out.println(j);
+        for (int k = 1; k < itemCatalog.getFlowers().getSize() + 1; k++) {         
             if (itemCatalog.getFlowers().getItem(k).getName().equals(catalogPackage2.getFlowerList().getItem(j + 1).getName())) {
-//                flowerQuantity[j] = itemCatalog.getFlowers().getItem(k).getQuantity();
                 flowerQuantity.add(itemCatalog.getFlowers().getItem(k).getQuantity());
                 j++;
                 k = 0;
@@ -700,8 +697,7 @@ public class CatalogOrder {
                     break;
                 }
             }
-        }
-//        System.out.println(flowerQuantity.get(0) + " " + flowerQuantity.get(1));
+        }     
 
         for (int i = 0; i < catalogPackage2.getFlowerList().getTotalEntries(); i++) {
             if (flowerQuantity.get(i) < flowerNeededQ[i]) {
@@ -712,8 +708,7 @@ public class CatalogOrder {
                 stock = (int) (flowerQuantity.get(i) / flowerNeededQ[i]);
                 itemStock[i] = stock;
             }
-        }
-        System.out.println(noStock);
+        }        
         itemStock[catalogPackage2.getFlowerList().getTotalEntries()] = accessory;
         if (catalogPackage2.getProductType().equals("Flower arrangement")) {
             itemStock[catalogPackage2.getFlowerList().getTotalEntries() + 1] = flowerPot;
