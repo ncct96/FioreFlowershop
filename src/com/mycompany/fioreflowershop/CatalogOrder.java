@@ -7,6 +7,7 @@ package com.mycompany.fioreflowershop;
 
 import com.mycompany.fioreflowershop.adt.*;
 import com.mycompany.fioreflowershop.modal.*;
+import static java.lang.Character.isDigit;
 import java.util.Scanner;
 import java.util.Calendar;
 import java.util.Date;
@@ -349,7 +350,7 @@ public class CatalogOrder {
                         String pickDate;
                         Calendar validPickupDate = Calendar.getInstance();
                         validPickupDate.setTime(new Date()); // Now use today date.
-                        validPickupDate.add(Calendar.DATE, 2); // Adding 5 days
+                        validPickupDate.add(Calendar.DATE, 2); // Adding 2 days
 
                         boolean checkDate = false;
                         do {
@@ -659,7 +660,7 @@ public class CatalogOrder {
                 }
             }
         }
-        
+
         totalItem += catalogPackage2.getFlowerList().getTotalEntries();
         if (catalogPackage2.getProductType().equals("Flower arrangement")) {
             totalItem += 1;
@@ -668,12 +669,16 @@ public class CatalogOrder {
         int[] flowerNeededQ = new int[catalogPackage2.getFlowerList().getTotalEntries()];
         ArrayList<Integer> flowerQuantity = new ArrayList<>();
 
-        for (int i = 1; i < itemCatalog.getAccessories().getSize() + 1; i++) {
-            if (itemCatalog.getAccessories().getItem(i).getName().equals(catalogPackage2.getAccessory().getName())) {
-                accessory = itemCatalog.getAccessories().getItem(i).getQuantity();
+        if (!catalogPackage2.getAccessory().getName().equalsIgnoreCase("None")) {
+            for (int i = 1; i < itemCatalog.getAccessories().getSize() + 1; i++) {
+                if (itemCatalog.getAccessories().getItem(i).getName().equals(catalogPackage2.getAccessory().getName())) {
+                    accessory = itemCatalog.getAccessories().getItem(i).getQuantity();
+                }
             }
+        } else if (catalogPackage2.getAccessory().getName().equals("None")) {
+            accessory = 1;
         }
-        
+
         if (catalogPackage2.getProductType().equals("Flower arrangement")) {
             for (int i = 1; i < itemCatalog.getFlowerPot().getSize() + 1; i++) {
                 if (itemCatalog.getFlowerPot().getItem(i).getName().equals(catalogPackage2.getFlowerPot().getName())) {
@@ -682,13 +687,12 @@ public class CatalogOrder {
             }
         }
 
-
         for (int i = 0; i < catalogPackage2.getFlowerList().getTotalEntries(); i++) {
             flowerNeededQ[i] = Integer.parseInt(flower[i]);
         }
 
         int j = 0;
-        for (int k = 1; k < itemCatalog.getFlowers().getSize() + 1; k++) {         
+        for (int k = 1; k < itemCatalog.getFlowers().getSize() + 1; k++) {
             if (itemCatalog.getFlowers().getItem(k).getName().equals(catalogPackage2.getFlowerList().getItem(j + 1).getName())) {
                 flowerQuantity.add(itemCatalog.getFlowers().getItem(k).getQuantity());
                 j++;
@@ -697,7 +701,7 @@ public class CatalogOrder {
                     break;
                 }
             }
-        }     
+        }
 
         for (int i = 0; i < catalogPackage2.getFlowerList().getTotalEntries(); i++) {
             if (flowerQuantity.get(i) < flowerNeededQ[i]) {
@@ -708,7 +712,8 @@ public class CatalogOrder {
                 stock = (int) (flowerQuantity.get(i) / flowerNeededQ[i]);
                 itemStock[i] = stock;
             }
-        }        
+        }
+
         itemStock[catalogPackage2.getFlowerList().getTotalEntries()] = accessory;
         if (catalogPackage2.getProductType().equals("Flower arrangement")) {
             itemStock[catalogPackage2.getFlowerList().getTotalEntries() + 1] = flowerPot;
@@ -773,7 +778,7 @@ public class CatalogOrder {
     //Display the normal catalog
     public static void freshFlowerCatalog(CatalogPackageInterface<CatalogPackage> normalPackage, CatalogPackageInterface<CatalogPackage> discountedPackage) {
         String flowerList = "";
-        System.out.println("\nDisplay catalog - normal catalog");
+        System.out.println("\nDisplay catalog");
         System.out.println("========================================================================================================");
         System.out.println("Product types\t\t\t\t\tPrice\t\t\tDiscounted price");
         System.out.println("Fresh Flower");
@@ -797,13 +802,17 @@ public class CatalogOrder {
 
         do {
             haveStock = true;
-            System.out.print("Please enter your choice in number:");
-            if (scan.hasNextInt()) {
+            System.out.print("Please enter your choice in number (Enter 0 to previous page):");
+            if (scan.hasNext()) {
                 itemSelection = scan.nextInt();
+
                 isInteger = true;
+                if (itemSelection == 0) {
+                    typeSelection(normalPackage, discountedPackage);
+                }
             } else {
                 isInteger = false;
-                System.err.println("Please enter your choice in number only.");
+                System.err.println("Please enter your choice the number within the range only.");
                 scan.nextInt();
             }
             if (checkQuantity(freshFlower.getProduct(itemSelection), normalPackage, discountedPackage) == 0) {
@@ -1015,7 +1024,7 @@ public class CatalogOrder {
 
     public static void bouquetsCatalog(CatalogPackageInterface<CatalogPackage> normalPackage, CatalogPackageInterface<CatalogPackage> discountedPackage) {
         String flowerList = "";
-        System.out.println("\nDisplay catalog - normal catalog");
+        System.out.println("\nDisplay catalog");
         System.out.println("========================================================================================================");
         System.out.println("Product types\t\t\t\t\t\tPrice\t\t\tDiscounted price");
 
@@ -1039,11 +1048,15 @@ public class CatalogOrder {
         }
         do {
             haveStock = true;
-            System.out.print("Please enter your choice in number:");
 
-            if (scan.hasNextInt()) {
+            System.out.print("Please enter your choice in number (Enter 0 to previous page):");
+            if (scan.hasNext()) {
                 itemSelection = scan.nextInt();
                 isInteger = true;
+                if (itemSelection == 0) {
+                    typeSelection(normalPackage, discountedPackage);
+                }
+
             } else {
                 isInteger = false;
                 System.err.println("Please enter your choice number only.");
@@ -1263,7 +1276,7 @@ public class CatalogOrder {
 
     public static void flowerArrangementCatalog(CatalogPackageInterface<CatalogPackage> normalPackage, CatalogPackageInterface<CatalogPackage> discountedPackage) {
         String flowerList = "";
-        System.out.println("\nDisplay catalog - normal catalog");
+        System.out.println("\nDisplay catalog");
         System.out.println("========================================================================================================");
         System.out.println("Product types\t\t\t\t\tPrice\t\t\tDiscounted price");
 
@@ -1287,11 +1300,16 @@ public class CatalogOrder {
         }
         do {
             haveStock = true;
-            System.out.print("Please enter your choice in number:");
 
-            if (scan.hasNextInt()) {
+            System.out.print("Please enter your choice in number (Enter 0 to previous page):");
+
+            if (scan.hasNext()) {
                 itemSelection = scan.nextInt();
+
                 isInteger = true;
+                if (itemSelection == 0) {
+                    typeSelection(normalPackage, discountedPackage);
+                }
             } else {
                 isInteger = false;
                 System.err.println("Please enter your choice in number only.");

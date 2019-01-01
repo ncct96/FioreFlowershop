@@ -27,7 +27,8 @@ public class FioreFlowershop {
     public static final String RESET = "\033[0m";
     public static final String GREEN = "\033[0;32m";
     static DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-    
+    private static DateFormat timeFormat = new SimpleDateFormat("HH:mm");
+
     // Lines 95 - 98, 154-158
     private static ConsumerInterface<Consumer> consumer = new ConsumerADT<>();
     private static CorporateInterface<CorporateCustomer> corporate = new CorporateADT<>();
@@ -68,7 +69,7 @@ public class FioreFlowershop {
 //            CatalogOrder.initializeData(catalogOrder, readyOrders);
             initializePackages();
         }
-        testing();
+
         userTypeSelection();
     }
 
@@ -90,21 +91,21 @@ public class FioreFlowershop {
         Consumer c2 = new Consumer("testing", "testing", "testing@example.com", "0125566922", "Penang");
         Consumer c3 = new Consumer("testing1", "testing", "testing1@example.com", "0125566922", "Cheras");
         Consumer c4 = new Consumer("testing2", "testing", "testing2@example.com", "0125566922", "Pahang");
-        Consumer c5 = new Consumer("manager", "abc" ,"manager@example.com", "012","lmao");
-        Consumer c6 = new Consumer("manager1", "abc" ,"manager1@example.com", "012","lmao");
-        
+        Consumer c5 = new Consumer("manager", "abc", "manager@example.com", "012", "lmao");
+        Consumer c6 = new Consumer("manager1", "abc", "manager1@example.com", "012", "lmao");
+
         user.addUser(cc2);
         user.addUser(cc1);
         user.addUser(c1);
         user.addUser(c2);
         user.addUser(c5);
         user.addUser(c3);
-        
+
         consumer.addConsumer(c1);
         consumer.addConsumer(c2);
         consumer.addConsumer(c3);
         consumer.addConsumer(c4);
-        
+
         corporate.addCorporate(cc1);
         corporate.addCorporate(cc2);
         corporate.getCorporate(1).setCreditSpent(4500);
@@ -114,13 +115,11 @@ public class FioreFlowershop {
 //        CatalogPackage cp1 = new CatalogPackage("FlowerStrong", "Stylish", "Small", "", "", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20, 5);
 //        CatalogPackage cp2 = new CatalogPackage("FlowerWeak", "Colourful", "Medium", "", "", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10, 4);
 //        CatalogPackage cp3 = new CatalogPackage("FlowerMedium", "Elegant", "Large", "", "", "Sunflower", "Belt", "Product Type", "11", 2018, 15, 40, 5, 6);
-
 //        catalogPack1.addProduct(cp1);
 //        catalogPack1.addProduct(cp2);
 //        catalogPack2.addProduct(cp1);
 //        catalogPack2.addProduct(cp2);
 //        catalogPack2.addProduct(cp3);
-
 //        CatalogOrders ct1 = new CatalogOrders("C1", catalogPack1, "Pick Up", todayDate, cc1, "Order Status", 308, false, todayDate, todayDate);
 //        CatalogOrders ct2 = new CatalogOrders("C2", catalogPack2, "Pick Up", todayDate, cc2, "Order Status", 200, false, todayDate, todayDate);
 //        CatalogOrders ct3 = new CatalogOrders("C3", catalogPack1, "Delivery", todayDate, c3, "Order Status", 308, false, todayDate, todayDate);
@@ -136,7 +135,6 @@ public class FioreFlowershop {
 //        catalogOrder.addOrder(ct5);
 //        catalogOrder.addOrder(ct6);
 //        catalogOrder.addOrder(ct7);
-
         ItemListInterface<Item> styles = new ItemList<>();
         ItemListInterface<Item> sizes = new ItemList<>();
         ItemListInterface<Item> flowers = new ItemList<>();
@@ -173,13 +171,13 @@ public class FioreFlowershop {
 
         deliveryTypes.addItem(new Item("Pick Up", 0));
         deliveryTypes.addItem(new Item("Delivery", 10));
-        
+
         season.addItem("Valentine");
         season.addItem("Graduation");
         season.addItem("Grand opening");
         season.addItem("Visit patient");
         season.addItem("Funeral");
-        
+
         flowerPot.addItem(new Item("Drinking glass", 10.00, 10));
         flowerPot.addItem(new Item("Glass bottle", 10.00, 9));
         flowerPot.addItem(new Item("Woolden box", 10.00, 15));
@@ -193,12 +191,118 @@ public class FioreFlowershop {
         itemCatalogue.setPriorities(priorities);
         itemCatalogue.setDeliveryTypes(deliveryTypes);
         itemCatalogue.setFlowerPot(flowerPot);
-        itemCatalogue.setSeason(season);        
+        itemCatalogue.setSeason(season);
 
         ListIteratorInterface<Item> testFlowers = new LinkedList<>();
         testFlowers.add(flowers.getItem(1));
         testFlowers.add(flowers.getItem(3));
         testFlowers.add(flowers.getItem(5));
+
+        //Initialization of Catalog Package
+        //Normal catalog
+        CatalogPackage normalPackage1 = new CatalogPackage("Package1", styles.getItem(1), sizes.getItem(1), accessories.getItem(1), "Fresh flower", "", 0, 100.00, 0, "Active", "10 10 10");
+        CatalogPackage normalPackage2 = new CatalogPackage("Package2", styles.getItem(2), sizes.getItem(2), accessories.getItem(2), "Fresh flower", "", 0, 150.00, 0, "Active", "5 5 5");
+        CatalogPackage normalPackage3 = new CatalogPackage("Package3", styles.getItem(3), sizes.getItem(3), accessories.getItem(3), "Bouquets", "", 0, 120.00, 0, "Active", "1 1 1");
+        CatalogPackage normalPackage4 = new CatalogPackage("Package4", styles.getItem(4), sizes.getItem(1), accessories.getItem(4), "Bouquets", "", 0, 150.00, 0, "Active", "4 4 4");
+        CatalogPackage normalPackage5 = new CatalogPackage("Package5", styles.getItem(2), sizes.getItem(2), season.getItem(1), flowerPot.getItem(1), accessories.getItem(1), "Flower arrangement", "", 0, 200.00, 0, "Active", "3 3 3");
+        CatalogPackage normalPackage6 = new CatalogPackage("Package6", styles.getItem(3), sizes.getItem(3), season.getItem(1), flowerPot.getItem(1), accessories.getItem(2), "Flower arrangement", "", 0, 250.00, 0, "Active", "9 9 9");
+
+        //Discounted catalog
+        CatalogPackage discountPackage1 = new CatalogPackage("Package1", styles.getItem(1), sizes.getItem(1), accessories.getItem(1), "Fresh flower", "January", 2019, 100.00, 20, "Active", "10 10 10");
+        CatalogPackage discountPackage2 = new CatalogPackage("Package2", styles.getItem(2), sizes.getItem(2), accessories.getItem(2), "Fresh flower", "January", 2019, 150.00, 50, "Active", "5 5 5");
+        CatalogPackage discountPackage3 = new CatalogPackage("Package3", styles.getItem(3), sizes.getItem(3), accessories.getItem(3), "Bouquets", "January", 2019, 120.00, 70, "Active", "1 1 1");
+        CatalogPackage discountPackage4 = new CatalogPackage("Package4", styles.getItem(4), sizes.getItem(1), accessories.getItem(4), "Bouquets", "January", 2019, 150.00, 10, "Active", "4 4 4");
+        CatalogPackage discountPackage5 = new CatalogPackage("Package5", styles.getItem(2), sizes.getItem(2), season.getItem(1), flowerPot.getItem(1), accessories.getItem(1), "Flower arrangement", "January", 2019, 200.00, 30, "Active", "3 3 3");
+        CatalogPackage discountPackage6 = new CatalogPackage("Package6", styles.getItem(3), sizes.getItem(3), season.getItem(1), flowerPot.getItem(1), accessories.getItem(2), "Flower arrangement", "January", 2019, 250.00, 40, "Active", "9 9 9");
+
+        for (int i = 1; i <= testFlowers.getTotalEntries(); i++) {
+            normalPackage1.getFlowerList().add(testFlowers.getItem(i));
+            normalPackage2.getFlowerList().add(testFlowers.getItem(i));
+            normalPackage3.getFlowerList().add(testFlowers.getItem(i));
+            normalPackage4.getFlowerList().add(testFlowers.getItem(i));
+            normalPackage5.getFlowerList().add(testFlowers.getItem(i));
+            normalPackage6.getFlowerList().add(testFlowers.getItem(i));
+            discountPackage1.getFlowerList().add(testFlowers.getItem(i));
+            discountPackage2.getFlowerList().add(testFlowers.getItem(i));
+            discountPackage3.getFlowerList().add(testFlowers.getItem(i));
+            discountPackage4.getFlowerList().add(testFlowers.getItem(i));
+            discountPackage5.getFlowerList().add(testFlowers.getItem(i));
+            discountPackage6.getFlowerList().add(testFlowers.getItem(i));
+        }
+
+        normalPackage.addProduct(normalPackage1);
+        normalPackage.addProduct(normalPackage2);
+        normalPackage.addProduct(normalPackage3);
+        normalPackage.addProduct(normalPackage4);
+        normalPackage.addProduct(normalPackage5);
+        normalPackage.addProduct(normalPackage6);
+
+        discountedPackage.addProduct(discountPackage1);
+        discountedPackage.addProduct(discountPackage2);
+        discountedPackage.addProduct(discountPackage3);
+        discountedPackage.addProduct(discountPackage4);
+        discountedPackage.addProduct(discountPackage5);
+        discountedPackage.addProduct(discountPackage6);
+
+        //Initialize Catalog Order      
+        catalogPack1.addProduct(normalPackage2);
+        catalogPack1.addProduct(discountPackage4);
+        catalogPack2.addProduct(normalPackage3);
+        catalogPack2.addProduct(discountPackage2);
+        catalogPack2.addProduct(discountPackage6);
+        //String orderID, CatalogPackageInterface<CatalogPackage> catalogPack, Item priority,
+        //String orderType, Date orderDate, Date orderTime, User user, String orderStatus, double orderAmt,
+        //boolean paymentStatus, Date retrieveDate, Date retrieveTime      
+        Date orderTime1 = new Date();
+        Date orderTime2 = new Date();
+        Date orderTime3 = new Date();
+        Date orderTime4 = new Date();
+        Date orderTime5 = new Date();
+        Calendar orderTime_2 = Calendar.getInstance();
+        Calendar orderTime_1 = Calendar.getInstance();
+       
+        orderTime_1.setTime(new Date()); // Now use today date.
+        orderTime_1.add(Calendar.DATE, 1); // Adding 1 days
+        Date orderDate = orderTime_1.getTime();
+        
+        orderTime_1.add(Calendar.DATE, 3); // Adding 3 days
+        Date retrieveDate = orderTime_1.getTime();             
+                
+        orderTime_2.setTime(new Date()); // Now use today date.       
+        orderTime_2.add(Calendar.HOUR_OF_DAY, 1); // adds one hour       
+        String timeOrder = timeFormat.format(orderTime_2.getTime());
+         
+        orderTime_2.add(Calendar.HOUR_OF_DAY, 2); // adds 2 hour    
+        String timeOrder2 = timeFormat.format(orderTime_2.getTime());
+        
+        orderTime_2.add(Calendar.HOUR_OF_DAY, 1); // adds 1 hour 
+        String timeOrder3 = timeFormat.format(orderTime_2.getTime());
+        
+        orderTime_2.add(Calendar.HOUR_OF_DAY, 1); // adds 1 hour 
+        String timeOrder4 = timeFormat.format(orderTime_2.getTime());
+        
+        orderTime_2.add(Calendar.HOUR_OF_DAY, 5); // adds 5 hour 
+        String timeOrder5 = timeFormat.format(orderTime_2.getTime());
+        try {
+            orderTime1 = timeFormat.parse(timeOrder);
+            orderTime2 = timeFormat.parse(timeOrder2);
+            orderTime3 = timeFormat.parse(timeOrder3);
+            orderTime4 = timeFormat.parse(timeOrder4);
+            orderTime5 = timeFormat.parse(timeOrder5);
+        } catch (ParseException ex) {
+            Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        CatalogOrders C01 = new CatalogOrders("CO1001", catalogPack1, priorities.getItem(1), "Pick Up", todayDate, orderTime1, cc1, "Order Status", 560, false, todayDate, todayDate);
+        CatalogOrders CO2 = new CatalogOrders("CO1002", catalogPack2, priorities.getItem(1), "Pick Up", todayDate, orderTime2, cc2, "Order Status", 200, false, todayDate, todayDate);
+        CatalogOrders CO3 = new CatalogOrders("CO1003", catalogPack1, priorities.getItem(1), "Delivery", todayDate, orderTime3, c3, "Order Status", 360, false, retrieveDate, todayDate);
+        CatalogOrders CO4 = new CatalogOrders("CO1004", catalogPack1, priorities.getItem(2), "Delivery", orderDate, orderTime4, c4, "Order Status", 380, false, retrieveDate, todayDate);
+        CatalogOrders CO5 = new CatalogOrders("CO1005", catalogPack1, priorities.getItem(3), "Delivery", orderDate, orderTime5, c3, "Order Status", 320, false, retrieveDate, todayDate);
+
+        catalogOrder.addOrder(C01);
+        catalogOrder.addOrder(CO2);
+        catalogOrder.addOrder(CO3);
+        catalogOrder.addOrder(CO4);
+        catalogOrder.addOrder(CO5);
 
         CustomizedPackage package1 = new CustomizedPackage(styles.getItem(2), sizes.getItem(3), accessories.getItem(4), priorities.getItem(1), deliveryTypes.getItem(1), c1, false);
         CustomizedPackage package2 = new CustomizedPackage(styles.getItem(1), sizes.getItem(2), accessories.getItem(3), priorities.getItem(1), deliveryTypes.getItem(2), c2, false);
@@ -224,8 +328,6 @@ public class FioreFlowershop {
 
         //readyOrders.addOrder(customizedPackages.dequeuePackage());
         //readyOrders.addOrder(customizedPackages.dequeuePackage());
-
-
         Item style = new Item("Elliptical", 10);
         Item size = new Item("Small", 1);
         Item flower = new Item("Sunflowers", 250, 10);
@@ -234,7 +336,7 @@ public class FioreFlowershop {
         Item flexi = new Item("Flexi", 1, 6);
         Item normal = new Item("Normal", 1.5, 4);
         Item express = new Item("Express", 3, 2);
-        
+
         Item delivery = new Item("Pick Up", 0);
 
         readyOrders.addOrder(new CustomizedPackage(style, size, accessory, express, delivery, new User(), false));
@@ -258,25 +360,24 @@ public class FioreFlowershop {
 //        specialPackage2.setDeliveryDate(cal2.getTime());
 //
 //        readyOrders.addOrder(specialPackage2);
-
         Calendar calExpress = Calendar.getInstance();
         calExpress.add(Calendar.DAY_OF_MONTH, 2);
         Calendar calNormal = Calendar.getInstance();
         calExpress.add(Calendar.DAY_OF_MONTH, 4);
         Calendar calFlexi = Calendar.getInstance();
         calExpress.add(Calendar.DAY_OF_MONTH, 6);
-        try{
+        try {
             readyOrders.addOrder(new CatalogOrders("CO1", express, df.parse("2019-01-02")));
             readyOrders.addOrder(new CatalogOrders("CO2", normal, df.parse("2019-01-04")));
             readyOrders.addOrder(new CatalogOrders("CO3", flexi, df.parse("2019-01-06")));
             readyOrders.addOrder(new CatalogOrders("CO4", flexi, df.parse("2019-01-06")));
             readyOrders.addOrder(new CatalogOrders("CO5", express, df.parse("2019-01-02")));
-        }catch(Exception e){
-            
+        } catch (Exception e) {
+
         }
-        
+
         SortOrders.doSelectionSort(readyOrders);
-        for(int i = 1; i <= readyOrders.getTotalEntries(); i++){
+        for (int i = 1; i <= readyOrders.getTotalEntries(); i++) {
             System.out.println(readyOrders.getOrder(i).getID() + " " + readyOrders.getOrder(i).getPriority().getName() + " " + readyOrders.getOrder(i).getDeliveryDate());
         }
     }
@@ -299,30 +400,6 @@ public class FioreFlowershop {
         }
     }
 
-    //Dummy data - woo for display purpose
-    public static void testing() {
-        //testing purpose need to be update
-//        normalPackage.addProduct(new CatalogPackage("Package 2.0", "Style 2.0", "Small", "", "", "Flower 2.0", "Bear 2.0", "Fresh flower", "", 0, 10, 77.00, 0, "Active"));
-//        normalPackage.addProduct(new CatalogPackage("Package 3.0", "Style 1.0", "Small", "", "", "Flower 1.0", "Bear 1.0", "Bouquets", "", 0, 10, 80.00, 0, "Active"));
-//        normalPackage.addProduct(new CatalogPackage("Package 4.0", "Style 2.0", "Small", "", "", "Flower 2.0", "Bear 2.0", "Bouquets", "", 0, 10, 60.00, 0, "Active"));
-//        normalPackage.addProduct(new CatalogPackage("Package 1.00", "Style 1.0", "Small", "Woolden toolbox", "Valentine", "Flower 1.0", "Bear 1.0", "Flower arrangement", "", 0, 10, 120.00, 0, "Active"));
-//        normalPackage.addProduct(new CatalogPackage("Package 2.00", "Style 2.0", "Small", "Woolden toolbox", "Grand opening", "Flower 2.0", "Bear 2.0", "Flower arrangement", "", 0, 10, 90.00, 0, "Active"));
-//
-//        normalPackage.addProduct(new CatalogPackage("Package 3.00", "Style 1.0", "Small", "Drinking glass", "Valentine", "Flower 1.0", "Bear 1.0", "Flower arrangement", "", 0, 10, 120.00, 0, "Active"));
-//        normalPackage.addProduct(new CatalogPackage("Package 4.00", "Style 2.0", "Small", "Glass bottle", "Graduation", "Flower 2.0", "Bear 2.0", "Flower arrangement", "", 0, 10, 90.00, 0, "Active"));
-//        normalPackage.addProduct(new CatalogPackage("Package 5.00", "Style 1.0", "Small", "Wooden box", "Grand opening", "Flower 1.0", "Bear 1.0", "Flower arrangement", "", 0, 10, 120.00, 0, "Active"));
-//        normalPackage.addProduct(new CatalogPackage("Package 6.00", "Style 2.0", "Small", "Jar", "Graduation", "Flower 2.0", "Bear 2.0", "Flower arrangement", "", 0, 10, 90.00, 0, "Active"));
-//        normalPackage.addProduct(new CatalogPackage("Package 7.00", "Style 1.0", "Small", "Bud vase", "Valentine", "Flower 1.0", "Bear 1.0", "Flower arrangement", "", 0, 10, 120.00, 0, "Active"));
-//        
-//
-//        discountedPackage.addProduct(new CatalogPackage("Package 1", "Style 1", "Small", "Jar", "Visit patient", "Flower 1", "Bear 1", "Flower arrangement", "December", 2018, 10, 90.00, 10, "Active"));
-//        discountedPackage.addProduct(new CatalogPackage("Package 2", "Style 2", "Small", "Jar", "Visit patient", "Flower 2", "Bear 2", "Flower arrangement", "December", 2018, 9, 90.00, 10, "Active"));
-//        discountedPackage.addProduct(new CatalogPackage("Package 3", "Style 3", "Small", "", "", "Flower 3", "Bear 3", "Bouquets", "December", 2018, 10, 90.00, 10, "Active"));
-//        discountedPackage.addProduct(new CatalogPackage("Package 4", "Style 4", "Small", "", "", "Flower 4", "Bear 4", "Bouquets", "December", 2018, 9, 90.00, 10, "Active"));
-//        discountedPackage.addProduct(new CatalogPackage("Package 5", "Style 5", "Small", "", "", "Flower 5", "Bear 5", "Fresh flower", "December", 2018, 10, 90.00, 10, "Active"));
-//        discountedPackage.addProduct(new CatalogPackage("Package 6", "Style 6", "Small", "", "", "Flower 6", "Bear 6", "Fresh flower", "December", 2018, 10, 90.00, 10, "Active"));
-    }
-
     public static void userTypeSelection() {
         while (true) {
             System.out.println("\nWELCOME TO FIORE FLOWERSHOP SDN BHD !");
@@ -331,7 +408,8 @@ public class FioreFlowershop {
             System.out.println(GREEN + "[2] " + RESET + "Staff");
             System.out.println(GREEN + "[3] " + RESET + "Exit System");
             System.out.print("Selection: ");
-            int userTypeChoice = s.nextInt(); s.nextLine();
+            int userTypeChoice = s.nextInt();
+            s.nextLine();
             if (userTypeChoice == 1) {
                 CustomerMaintenance.customerOptions();
             } else if (userTypeChoice == 2) {
@@ -394,7 +472,7 @@ public class FioreFlowershop {
                 CustomerMaintenance.staffEditType();
             } else if (managerChoice == 2) {
                 CustomerMaintenance.staffCreateCorporate();
-            } else if(managerChoice == 3){
+            } else if (managerChoice == 3) {
                 CustomerMaintenance.staffRemoveCust();
             } else if (managerChoice == 4) {
                 CatalogMaintenance.catalogMaintenance(normalPackage, discountedPackage, itemCatalogue);
@@ -408,7 +486,7 @@ public class FioreFlowershop {
         while (true) {
             String navigationMsg;
             CatalogMaintenance.stockNotification(itemCatalogue);
-            System.out.println("\nPlease Select One Of The Options Below.");            
+            System.out.println("\nPlease Select One Of The Options Below.");
             System.out.println(GREEN + "[1] " + RESET + "Check stock quantity.");
             System.out.println(GREEN + "[2] " + RESET + "Restock product quantity.");
             System.out.println(GREEN + "[3] " + RESET + "Edit customize floral arrangement customization options");
