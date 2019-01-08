@@ -19,7 +19,7 @@ public interface OrderListInterface<T> {
 
     public T removeOrder(int existPosition);
 
-    public boolean replaceOrder(int givenPosition, T newEntry);
+    public boolean replaceOrder(int position, T order);
 
     public void clearOrderList();
 

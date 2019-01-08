@@ -18,14 +18,9 @@ import java.util.Scanner;
 public class CustomizePackage {
 
     private static final String ANSI_RESET = "\u001B[0m";
-    private static final String ANSI_BLACK = "\u001B[30m";
     private static final String ANSI_RED = "\u001B[31m";
     private static final String ANSI_GREEN = "\u001B[32m";
-    private static final String ANSI_YELLOW = "\u001B[33m";
     private static final String ANSI_BLUE = "\u001B[34m";
-    private static final String ANSI_PURPLE = "\u001B[35m";
-    private static final String ANSI_CYAN = "\u001B[36m";
-    private static final String ANSI_WHITE = "\u001B[37m";
 
     public static void customizePackageControl(ItemCatalogue itemCatalogue, Consumer customer, CustomizePackageQueueInterface<CustomizedPackage> customizedPackages) {
         if (customer == null) {
@@ -102,11 +97,15 @@ public class CustomizePackage {
 
             while (true) {
                 try {
-                    do {
+                    while (true) {
                         System.out.println("\nSelect the flowers for the arrangement");
                         for (int i = 1; i <= displayFlowers.getTotalEntries(); i++) {
-                            System.out.print(ANSI_GREEN + "[" + i + "]" + ANSI_RESET);
-                            System.out.printf(" %s: RM%.2f\n", displayFlowers.getItem(i).getName(), displayFlowers.getItem(i).getPrice());
+                            if (displayFlowers.getItem(i).getQuantity() <= 0) {
+                                System.out.print(ANSI_RED + "[ NO STOCK AVAILABLE ] " + displayFlowers.getItem(i).getName() + ANSI_RESET);
+                            } else {
+                                System.out.print(ANSI_GREEN + "[" + i + "]" + ANSI_RESET);
+                                System.out.printf(" %s: RM%.2f\n", displayFlowers.getItem(i).getName(), displayFlowers.getItem(i).getPrice());
+                            }
                         }
                         flower = scan.nextInt();
 
@@ -114,10 +113,15 @@ public class CustomizePackage {
                             cancel = true;
                             break;
                         }
+
                         if (flower < 1 || flower > displayFlowers.getTotalEntries()) {
                             System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
+                        } else if (displayFlowers.getItem(flower).getQuantity() <= 0) {
+                            System.out.println(ANSI_RED + "Selected flower is out of stock" + ANSI_RESET);
+                        } else {
+                            break;
                         }
-                    } while (flower < 1 || flower > displayFlowers.getTotalEntries());
+                    }
 
                     selectedFlowers.add(displayFlowers.getItem(flower));
                     displayFlowers.remove(flower);
@@ -147,11 +151,15 @@ public class CustomizePackage {
         if (!cancel) {
             while (true) {
                 try {
-                    do {
+                    while (true) {
                         System.out.println("\nSelect the accessory to be added");
                         for (int i = 1; i <= itemCatalogue.getAccessories().getSize(); i++) {
-                            System.out.print(ANSI_GREEN + "[" + i + "]" + ANSI_RESET);
-                            System.out.printf(" %s: RM%.2f\n", itemCatalogue.getAccessories().getItem(i).getName(), itemCatalogue.getAccessories().getItem(i).getPrice());
+                            if (itemCatalogue.getAccessories().getItem(i).getQuantity() <= 0) {
+                                System.out.print(ANSI_RED + "[ NO STOCK AVAILABLE ] " + itemCatalogue.getAccessories().getItem(i).getName() + ANSI_RESET);
+                            } else {
+                                System.out.print(ANSI_GREEN + "[" + i + "]" + ANSI_RESET);
+                                System.out.printf(" %s: RM%.2f\n", itemCatalogue.getAccessories().getItem(i).getName(), itemCatalogue.getAccessories().getItem(i).getPrice());
+                            }
                         }
                         accessory = scan.nextInt();
 
@@ -161,8 +169,12 @@ public class CustomizePackage {
                         }
                         if (accessory < 1 || accessory > itemCatalogue.getAccessories().getSize()) {
                             System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
+                        } else if (itemCatalogue.getAccessories().getItem(accessory).getQuantity() <= 0) {
+                            System.out.println(ANSI_RED + "Selected accessory is out of stock" + ANSI_RESET);
+                        } else {
+                            break;
                         }
-                    } while (accessory < 1 || accessory > itemCatalogue.getAccessories().getSize());
+                    }
                     break;
                 } catch (InputMismatchException e) {
                     System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
@@ -236,22 +248,23 @@ public class CustomizePackage {
 
             displayItemizedBill(order);
 
-            CustomizePackageQueueInterface<CustomizedPackage> sortingQueue = new CustomizePackageQueue<>();
-
-            sortingQueue.enqueuePackage(customizedPackages.dequeuePackage());
-            while (customizedPackages.getSize() > 0) {
-                CustomizedPackage next = customizedPackages.dequeuePackage();
-                for (int i = 0; i < sortingQueue.getSize(); ++i) {
-                    if (sortingQueue.getFirstPackage().getDeliveryDate().before(next.getDeliveryDate())) {
-                        sortingQueue.enqueuePackage(sortingQueue.dequeuePackage());
-                    } else {
-                        sortingQueue.enqueuePackage(next);
-                        next = sortingQueue.dequeuePackage();
-                    }
-                }
-                sortingQueue.enqueuePackage(next);
-            }
-            customizedPackages.merge(sortingQueue);
+            SortOrders.sortCustomizedOrders(customizedPackages);
+//            CustomizePackageQueueInterface<CustomizedPackage> sortingQueue = new CustomizePackageQueue<>();
+//
+//            sortingQueue.enqueuePackage(customizedPackages.dequeuePackage());
+//            while (customizedPackages.getSize() > 0) {
+//                CustomizedPackage next = customizedPackages.dequeuePackage();
+//                for (int i = 0; i < sortingQueue.getSize(); ++i) {
+//                    if (sortingQueue.getFirstPackage().getDeliveryDate().before(next.getDeliveryDate())) {
+//                        sortingQueue.enqueuePackage(sortingQueue.dequeuePackage());
+//                    } else {
+//                        sortingQueue.enqueuePackage(next);
+//                        next = sortingQueue.dequeuePackage();
+//                    }
+//                }
+//                sortingQueue.enqueuePackage(next);
+//            }
+//            customizedPackages.merge(sortingQueue);
         }
     }
 

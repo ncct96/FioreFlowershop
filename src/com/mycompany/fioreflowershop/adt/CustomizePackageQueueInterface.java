@@ -26,4 +26,8 @@ public interface CustomizePackageQueueInterface<T> {
     public boolean contains(T item);
 
     public boolean merge(CustomizePackageQueueInterface<T> queue);
+    
+    public T getOrder(int position);
+    
+    public boolean replaceOrder(int position, T order);
 }

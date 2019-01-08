@@ -103,6 +103,40 @@ public class CustomizePackageQueue<T> implements CustomizePackageQueueInterface<
         return true;
     }
 
+    public boolean replaceOrder(int givenPosition, T newEntry) {
+        boolean isSuccessful = true;
+
+        if ((givenPosition >= 1) && (givenPosition <= size)) {
+            Node<T> desiredNode = getNodeAt(givenPosition);
+            desiredNode.setData(newEntry);
+        } else {
+            isSuccessful = false;
+        }
+
+        return isSuccessful;
+    }
+    
+    public T getOrder(int givenPosition) {
+        T result = null;
+
+        if ((givenPosition >= 1) && (givenPosition <= size)) {
+            result = getNodeAt(givenPosition).getData();
+        }
+
+        return result;
+    }
+    
+    private Node<T> getNodeAt(int givenPosition) {
+        Node<T> currentNode = head;
+
+        // traverse the list to locate the desired node
+        for (int counter = 1; counter < givenPosition; counter++) {
+            currentNode = currentNode.getNext();
+        }
+
+        return currentNode;
+    }
+    
     private class Node<T> {
 
         private T data;

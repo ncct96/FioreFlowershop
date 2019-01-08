@@ -545,7 +545,7 @@ public class CatalogOrder {
 
             catalogOrder.addOrder(new CatalogOrders(orderID, custItem, priority, orderType, currentDate, orderTime, shoppingCart.getItem(1).getUser(), orderStatus, orderAmt, paymentStatus, retrieveDate2, retrieveDate2));
             readyOrders.addOrder(catalogOrder.getOrder(catalogOrder.getTotalEntries()));
-            SortOrders.doSelectionSort(readyOrders);
+            SortOrders.sortAllOrders(readyOrders);
 
         } catch (ParseException ex) {
             Logger.getLogger(CatalogOrder.class

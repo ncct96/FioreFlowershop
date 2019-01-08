@@ -97,7 +97,7 @@ public class CustomizePackageMaintenance {
                     System.out.println("Order marked as ready to deliver!");
 
                     readyOrders.addOrder(customizedPackages.dequeuePackage());
-                    SortOrders.doSelectionSort(readyOrders);
+                    SortOrders.sortAllOrders(readyOrders);
 
                     if (customizedPackages.isEmpty()) {
                         System.out.println("No more orders is queue!\n");
