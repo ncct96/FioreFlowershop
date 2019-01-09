@@ -10,53 +10,53 @@ import java.util.NoSuchElementException;
 
 /**
  *
- * @author Nicholas
+ * @author Chiu Peeng
  */
 public class OrderList<T> implements OrderListInterface<T> {
 
-    private Node<T> firstNode;
-    private int numberOfEntries;
+    private Node<T> firstOrder;
+    private int size;
 
     public OrderList() {
         clearOrderList();
     }
 
     public final void clearOrderList() {
-        firstNode = null;
-        numberOfEntries = 0;
+        firstOrder = null;
+        size = 0;
     }
 
     public boolean addOrder(T newEntry) {
         Node<T> newNode = new Node<>(newEntry);
 
         if (isEmpty()) {
-            firstNode = newNode;
+            firstOrder = newNode;
         } else {
-            Node<T> lastNode = getNodeAt(numberOfEntries);
+            Node<T> lastNode = getNodeAt(size);
             lastNode.setNext(newNode);
         }
 
-        numberOfEntries++;
+        size++;
         return true;
     }
 
     public boolean addOrder(int newPosition, T newEntry) {
         boolean isSuccessful = true;
 
-        if ((newPosition >= 1) && (newPosition <= numberOfEntries + 1)) {
+        if ((newPosition >= 1) && (newPosition <= size + 1)) {
             Node<T> newNode = new Node<T>(newEntry);
 
-            if (isEmpty() || (newPosition == 1)) {     // case 1: add to beginning of list
-                newNode.setNext(firstNode);
-                firstNode = newNode;
-            } else {			// case 2: list is not empty and newPosition > 1
+            if (isEmpty() || (newPosition == 1)) {
+                newNode.setNext(firstOrder);
+                firstOrder = newNode;
+            } else {
                 Node nodeBefore = getNodeAt(newPosition - 1);
                 Node nodeAfter = nodeBefore.getNext();
                 newNode.setNext(nodeAfter);
                 nodeBefore.setNext(newNode);
             }
 
-            numberOfEntries++;
+            size++;
         } else {
             isSuccessful = false;
         }
@@ -67,19 +67,19 @@ public class OrderList<T> implements OrderListInterface<T> {
     public T removeOrder(int givenPosition) {
         T result = null;
 
-        if ((givenPosition >= 1) && (givenPosition <= numberOfEntries)) {
-            if (givenPosition == 1) {      // case 1: remove first entry
-                result = firstNode.getData();     // save entry to be removed 
-                firstNode = firstNode.getNext();
-            } else {                         // case 2: givenPosition > 1
+        if ((givenPosition >= 1) && (givenPosition <= size)) {
+            if (givenPosition == 1) {
+                result = firstOrder.getData();
+                firstOrder = firstOrder.getNext();
+            } else {
                 Node<T> nodeBefore = getNodeAt(givenPosition - 1);
                 Node<T> nodeToRemove = nodeBefore.getNext();
                 Node<T> nodeAfter = nodeToRemove.getNext();
-                nodeBefore.setNext(nodeAfter); // disconnect the node to be removed
-                result = nodeToRemove.getData();  // save entry to be removed
+                nodeBefore.setNext(nodeAfter);
+                result = nodeToRemove.getData();
             }
 
-            numberOfEntries--;
+            size--;
         }
 
         return result;
@@ -88,7 +88,7 @@ public class OrderList<T> implements OrderListInterface<T> {
     public boolean replaceOrder(int givenPosition, T newEntry) {
         boolean isSuccessful = true;
 
-        if ((givenPosition >= 1) && (givenPosition <= numberOfEntries)) {
+        if ((givenPosition >= 1) && (givenPosition <= size)) {
             Node<T> desiredNode = getNodeAt(givenPosition);
             desiredNode.setData(newEntry);
         } else {
@@ -101,7 +101,7 @@ public class OrderList<T> implements OrderListInterface<T> {
     public T getOrder(int givenPosition) {
         T result = null;
 
-        if ((givenPosition >= 1) && (givenPosition <= numberOfEntries)) {
+        if ((givenPosition >= 1) && (givenPosition <= size)) {
             result = getNodeAt(givenPosition).getData();
         }
 
@@ -110,7 +110,7 @@ public class OrderList<T> implements OrderListInterface<T> {
 
     public boolean contains(T anEntry) {
         boolean found = false;
-        Node<T> currentNode = firstNode;
+        Node<T> currentNode = firstOrder;
 
         while (!found && (currentNode != null)) {
             if (anEntry.equals(currentNode.getData())) {
@@ -123,14 +123,14 @@ public class OrderList<T> implements OrderListInterface<T> {
         return found;
     }
 
-    public int getTotalEntries() {
-        return numberOfEntries;
+    public int getSize() {
+        return size;
     }
 
     public boolean isEmpty() {
         boolean result;
 
-        if (numberOfEntries == 0) {
+        if (size == 0) {
             result = true;
         } else {
             result = false;
@@ -141,7 +141,7 @@ public class OrderList<T> implements OrderListInterface<T> {
 
     public String toString() {
         String outputStr = "";
-        Node<T> currentNode = firstNode;
+        Node<T> currentNode = firstOrder;
         while (currentNode != null) {
             outputStr += currentNode.getData() + "\n";;
             currentNode = currentNode.getNext();
@@ -155,15 +155,10 @@ public class OrderList<T> implements OrderListInterface<T> {
             displayChain(nodeOne.getNext());
         }
     }
-
-    /**
-     * Task: Returns a reference to the node at a given position. Precondition:
-     * List is not empty; 1 <= givenPosition <= numberOfEntries.
-     */
+    
     private Node<T> getNodeAt(int givenPosition) {
-        Node<T> currentNode = firstNode;
+        Node<T> currentNode = firstOrder;
 
-        // traverse the list to locate the desired node
         for (int counter = 1; counter < givenPosition; counter++) {
             currentNode = currentNode.getNext();
         }
@@ -181,7 +176,7 @@ public class OrderList<T> implements OrderListInterface<T> {
         private Node currentNode;
 
         public LinkedListIterator() {
-            currentNode = firstNode;
+            currentNode = firstOrder;
         }
 
         @Override
@@ -198,11 +193,6 @@ public class OrderList<T> implements OrderListInterface<T> {
             } else {
                 throw new NoSuchElementException("Illegal call to next(); iterator is after end of list.");
             }
-        }
-
-        @Override
-        public void remove() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
     }
 }

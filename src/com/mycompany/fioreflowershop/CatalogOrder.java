@@ -544,8 +544,8 @@ public class CatalogOrder {
             }
 
             catalogOrder.addOrder(new CatalogOrders(orderID, custItem, priority, orderType, currentDate, orderTime, shoppingCart.getItem(1).getUser(), orderStatus, orderAmt, paymentStatus, retrieveDate2, retrieveDate2));
-            readyOrders.addOrder(catalogOrder.getOrder(catalogOrder.getTotalEntries()));
-            SortOrders.doSelectionSort(readyOrders);
+            readyOrders.addOrder(catalogOrder.getOrder(catalogOrder.getSize()));
+            SortOrders.sortAllOrders(readyOrders);
 
         } catch (ParseException ex) {
             Logger.getLogger(CatalogOrder.class
@@ -553,7 +553,7 @@ public class CatalogOrder {
         }
 
         shoppingCart.clearShoppingCartList();
-        int c = catalogOrder.getTotalEntries();
+        int c = catalogOrder.getSize();
         CatalogOrders shopping = catalogOrder.getOrder(c);
 
         double totalPrice = 0;
@@ -579,7 +579,7 @@ public class CatalogOrder {
         System.out.println("=================================================================================================");
         System.out.println("Description \t\t\t  | Quantity  |  Discount Rate(%) | Unit Price(RM) |  Total(RM)");
 
-        if (catalogOrder.getTotalEntries() > 1) {
+        if (catalogOrder.getSize() > 1) {
             int startIndex = catalogOrder.getOrder(c).getCatalogPack().getTotalEntries() - index;
             for (int i = startIndex + 1; i < catalogOrder.getOrder(c).getCatalogPack().getTotalEntries() + 1; i++) {
 
@@ -587,7 +587,7 @@ public class CatalogOrder {
                 System.out.printf("%s  \t\t\t  | \t  %d  |\t         %d\t|\t   %7.2f |   %7.2f\n", catalogOrder.getOrder(c).getCatalogPack().getProduct(i).getName(), catalogOrder.getOrder(c).getCatalogPack().getProduct(i).getUserQuantity(), catalogOrder.getOrder(c).getCatalogPack().getProduct(i).getDiscountRate(), catalogOrder.getOrder(c).getCatalogPack().getProduct(i).getPrice(), total);
             }
             System.out.println("=================================================================================================");
-        } else if (catalogOrder.getTotalEntries() == 1) {
+        } else if (catalogOrder.getSize() == 1) {
 
             for (int i = 1; i < catalogPack.getTotalEntries() + 1; i++) {
 

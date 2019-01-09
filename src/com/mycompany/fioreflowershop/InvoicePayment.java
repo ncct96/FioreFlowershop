@@ -183,11 +183,11 @@ public class InvoicePayment {
                 System.out.println(BLUE+"\nRedirecting Back to Invoice Maintenance Menu......" + RESET);
                 break;
             }
-            if(order.getTotalEntries() != 0){
+            if(order.getSize() != 0){
             System.out.println("\n====================================================");
             System.out.println("\tAvailable Customer For Invoice Generation");
             System.out.println("====================================================");
-            for(int i = 1; i <= order.getTotalEntries(); i++){
+            for(int i = 1; i <= order.getSize(); i++){
                 //If the shopping cart is not null and status is false
                 if(order.getOrder(i).getUser()!= null && !order.getOrder(i).isPaymentStatus()){
                     //If the entered month and the order month is the same
@@ -278,7 +278,7 @@ public class InvoicePayment {
     public static void generateInvoiceP2(User user){
         double totalPrice = 0; double discountPrice = 0;
         invoiceMenu(user);
-        for(int i = 1; i <= order.getTotalEntries() ;i++){
+        for(int i = 1; i <= order.getSize() ;i++){
             if(order.getOrder(i).getUser().getEmail().equals(user.getEmail()) && !order.getOrder(i).isPaymentStatus()){
                 for(int k = 1; k <= order.getOrder(i).getCatalogPack().getTotalEntries(); k++){
                     if(order.getOrder(k).getCatalogPack() != null){
@@ -323,7 +323,7 @@ public class InvoicePayment {
                 System.out.println("\tAvailable Customer For Invoice Payment");
                 System.out.println("====================================================");
                 boolean status = true;
-                for(int i = 1; i <= order.getTotalEntries(); i++){
+                for(int i = 1; i <= order.getSize(); i++){
                     if(order.getOrder(i).getUser()!= null && !order.getOrder(i).isPaymentStatus()){
                         if((order.getOrder(i).getOrderDate().getMonth()+1) == monthEntered &&(order.getOrder(i).getOrderDate().getYear()+1900) == yearEntered){
                             if(userEmail.getTotalEntries() != 0){
@@ -381,7 +381,7 @@ public class InvoicePayment {
     public static void invoicePaymentP2(User user){//Part 2 of invoice payment
         double affordable = 0; double totalPrice = 0; double discountPrice = 0; int credit = 0;
         invoiceMenu(user);
-        for(int i = 1; i <= order.getTotalEntries(); i++){
+        for(int i = 1; i <= order.getSize(); i++){
             if(order.getOrder(i)!= null){
                 if(order.getOrder(i).getUser().getEmail().equals(user.getEmail()) && !order.getOrder(i).isPaymentStatus()){
                     if(order.getOrder(i).getCatalogPack() != null){
@@ -440,13 +440,13 @@ public class InvoicePayment {
                     }
                 }
                     //Set shopping cart payment status to true
-                for(int k = 1; k <= order.getTotalEntries(); k++){
+                for(int k = 1; k <= order.getSize(); k++){
                     if(order.getOrder(k).getUser().equals(user)){
                         order.getOrder(k).setPaymentStatus(true);
                     }
                 }
                 //Store paid invoice into an invoice link list
-                for(int l = 1;l <= order.getTotalEntries(); l++){
+                for(int l = 1;l <= order.getSize(); l++){
                     if(order.getOrder(l).getUser().equals(user)){
                         for(int m = 1; m <= userEmail.getTotalEntries(); m++){
                             if(userEmail.getItem(m).equals(order.getOrder(l).getUser().getEmail())){
