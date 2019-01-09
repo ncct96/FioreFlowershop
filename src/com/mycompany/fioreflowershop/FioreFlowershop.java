@@ -259,21 +259,21 @@ public class FioreFlowershop {
 //
 //        readyOrders.addOrder(specialPackage2);
 
-        Calendar calExpress = Calendar.getInstance();
-        calExpress.add(Calendar.DAY_OF_MONTH, 2);
-        Calendar calNormal = Calendar.getInstance();
-        calExpress.add(Calendar.DAY_OF_MONTH, 4);
-        Calendar calFlexi = Calendar.getInstance();
-        calExpress.add(Calendar.DAY_OF_MONTH, 6);
-        try{
-            readyOrders.addOrder(new CatalogOrders("CO1", express, df.parse("2019-01-02")));
-            readyOrders.addOrder(new CatalogOrders("CO2", normal, df.parse("2019-01-04")));
-            readyOrders.addOrder(new CatalogOrders("CO3", flexi, df.parse("2019-01-06")));
-            readyOrders.addOrder(new CatalogOrders("CO4", flexi, df.parse("2019-01-06")));
-            readyOrders.addOrder(new CatalogOrders("CO5", express, df.parse("2019-01-02")));
-        }catch(Exception e){
-            
-        }
+//        Calendar calExpress = Calendar.getInstance();
+//        calExpress.add(Calendar.DAY_OF_MONTH, 2);
+//        Calendar calNormal = Calendar.getInstance();
+//        calExpress.add(Calendar.DAY_OF_MONTH, 4);
+//        Calendar calFlexi = Calendar.getInstance();
+//        calExpress.add(Calendar.DAY_OF_MONTH, 6);
+//        try{
+//            readyOrders.addOrder(new CatalogOrders("CO1", express, df.parse("2019-01-02")));
+//            readyOrders.addOrder(new CatalogOrders("CO2", normal, df.parse("2019-01-04")));
+//            readyOrders.addOrder(new CatalogOrders("CO3", flexi, df.parse("2019-01-06")));
+//            readyOrders.addOrder(new CatalogOrders("CO4", flexi, df.parse("2019-01-06")));
+//            readyOrders.addOrder(new CatalogOrders("CO5", express, df.parse("2019-01-02")));
+//        }catch(Exception e){
+//            
+//        }
         
         SortOrders.sortAllOrders(readyOrders);
         for(int i = 1; i <= readyOrders.getSize(); i++){
