@@ -19,13 +19,13 @@ public interface OrderListInterface<T> {
 
     public T removeOrder(int existPosition);
 
-    public boolean replaceOrder(int givenPosition, T newEntry);
+    public boolean replaceOrder(int position, T order);
 
     public void clearOrderList();
 
     public T getOrder(int position);
 
-    public int getTotalEntries();
+    public int getSize();
 
     public boolean isEmpty();
 

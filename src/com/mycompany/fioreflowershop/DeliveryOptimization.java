@@ -35,15 +35,15 @@ public class DeliveryOptimization {
 
         DistanceMatrixApiRequest req = DistanceMatrixApi.newRequest(context);
 
-        String[] origin = new String[destinations.getTotalEntries() + 1];
-        String[] dest = new String[destinations.getTotalEntries() + 1];
+        String[] origin = new String[destinations.getSize() + 1];
+        String[] dest = new String[destinations.getSize() + 1];
 
         // Add origin address to first row & column of matrix
         origin[0] = shopAddress;
         dest[0] = shopAddress;
 
         // Loop address list to origin & destination string array
-        for (int j = 1; j <= destinations.getTotalEntries(); j++) {
+        for (int j = 1; j <= destinations.getSize(); j++) {
 
             User user = destinations.getOrder(j).getUser();
 

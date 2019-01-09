@@ -71,7 +71,7 @@ public class Pickup {
         userMonth = cal.get(Calendar.MONTH) + 1;
         userYear = cal.get(Calendar.YEAR);
 
-        for (int i = 1; i <= unSortedList.getTotalEntries(); i++) {
+        for (int i = 1; i <= unSortedList.getSize(); i++) {
 
             listCal.setTime(unSortedList.getOrder(i).getOrderDate());
 
@@ -99,9 +99,9 @@ public class Pickup {
 //                }
 //            }
 //        }
-        for (int i = 1; i < sortedList.getTotalEntries() - 1; i++) {
+        for (int i = 1; i < sortedList.getSize() - 1; i++) {
             int index = i;
-            for (int j = i; j <= sortedList.getTotalEntries(); j++) {
+            for (int j = i; j <= sortedList.getSize(); j++) {
                 if (sortedList.getOrder(j).getOrderDate().before(sortedList.getOrder(index).getOrderDate())) {
                     index = j; //searching for lowest index  
                 }
@@ -143,7 +143,7 @@ public class Pickup {
         userMonth = cal.get(Calendar.MONTH) + 1;
         userYear = cal.get(Calendar.YEAR);
 
-        for (int j = 1; j <= unSortedList.getTotalEntries(); j++) {
+        for (int j = 1; j <= unSortedList.getSize(); j++) {
             listCal.setTime(unSortedList.getOrder(j).getDeliveryDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
@@ -168,9 +168,9 @@ public class Pickup {
 //                searchQueue.enqueue(tempCustomOrder);
 //            }
 //        }
-        for (int i = 1; i < sortedList.getTotalEntries() - 1; i++) {
+        for (int i = 1; i < sortedList.getSize() - 1; i++) {
             int index = i;
-            for (int j = i; j <= sortedList.getTotalEntries(); j++) {
+            for (int j = i; j <= sortedList.getSize(); j++) {
                 if (sortedList.getOrder(j).getDeliveryDate().before(sortedList.getOrder(index).getDeliveryDate())) {
                     index = j; //searching for lowest index  
                 }
@@ -192,7 +192,7 @@ public class Pickup {
         LinkedList<CatalogOrders> catalogOrder = new LinkedList<CatalogOrders>();
         LinkedList<CustomizedPackage> customOrder = new LinkedList<CustomizedPackage>();
 
-        for (int i = 1; i <= orderedList.getTotalEntries(); i++) {
+        for (int i = 1; i <= orderedList.getSize(); i++) {
             Order order = orderedList.getOrder(i);
             if (order instanceof CatalogOrders) {
                 catalogOrder.add((CatalogOrders) order);
@@ -326,7 +326,7 @@ public class Pickup {
             System.out.println("|No.|\t|Order ID|\t|Order Type|\t|Order Date|\t\t|Payment Amount (RM)|\t|Payment Status|\t|Pickup Date|");
             System.out.println("=============================================================================================================================================================");
 
-            for (int i = 1; i <= matchOrder.getTotalEntries(); i++) {
+            for (int i = 1; i <= matchOrder.getSize(); i++) {
                 Order order = matchOrder.getOrder(i);
 
                 if (user instanceof Consumer) {
