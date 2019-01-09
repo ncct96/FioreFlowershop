@@ -25,7 +25,7 @@ public interface OrderListInterface<T> {
 
     public T getOrder(int position);
 
-    public int getTotalEntries();
+    public int getSize();
 
     public boolean isEmpty();
 

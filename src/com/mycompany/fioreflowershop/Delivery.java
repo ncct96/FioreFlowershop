@@ -73,7 +73,7 @@ public class Delivery {
         userMonth = cal.get(Calendar.MONTH) + 1;
         userYear = cal.get(Calendar.YEAR);
 
-        for (int i = 1; i <= unSortedList.getTotalEntries(); i++) {
+        for (int i = 1; i <= unSortedList.getSize(); i++) {
 
             listCal.setTime(unSortedList.getOrder(i).getDeliveryDate());
 
@@ -90,9 +90,9 @@ public class Delivery {
             }
         }
 
-        for (int i = 1; i < matchedList.getTotalEntries() - 1; i++) {
+        for (int i = 1; i < matchedList.getSize() - 1; i++) {
             int index = i;
-            for (int j = i; j <= matchedList.getTotalEntries(); j++) {
+            for (int j = i; j <= matchedList.getSize(); j++) {
                 if (matchedList.getOrder(j).getDeliveryDate().before(matchedList.getOrder(index).getDeliveryDate())) {
                     index = j; //searching for lowest index  
                 }
@@ -138,7 +138,7 @@ public class Delivery {
         userMonth = cal.get(Calendar.MONTH) + 1;
         userYear = cal.get(Calendar.YEAR);
 
-        for (int j = 1; j <= unSortedList.getTotalEntries(); j++) {
+        for (int j = 1; j <= unSortedList.getSize(); j++) {
             listCal.setTime(unSortedList.getOrder(j).getDeliveryDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
@@ -150,9 +150,9 @@ public class Delivery {
             }
         }
 
-        for (int i = 1; i < sortedList.getTotalEntries() - 1; i++) {
+        for (int i = 1; i < sortedList.getSize() - 1; i++) {
             int index = i;
-            for (int j = i; j <= sortedList.getTotalEntries(); j++) {
+            for (int j = i; j <= sortedList.getSize(); j++) {
                 if (sortedList.getOrder(j).getDeliveryDate().before(sortedList.getOrder(index).getDeliveryDate())) {
                     index = j; //searching for lowest index  
                 }
@@ -174,7 +174,7 @@ public class Delivery {
         LinkedList<CatalogOrders> catalogOrder = new LinkedList<CatalogOrders>();
         LinkedList<CustomizedPackage> customOrder = new LinkedList<CustomizedPackage>();
 
-        for (int i = 1; i <= orderedList.getTotalEntries(); i++) {
+        for (int i = 1; i <= orderedList.getSize(); i++) {
             Order order = orderedList.getOrder(i);
             if (order instanceof CatalogOrders) {
                 catalogOrder.add((CatalogOrders) order);
@@ -281,7 +281,7 @@ public class Delivery {
         userMonth = cal.get(Calendar.MONTH) + 1;
         userYear = cal.get(Calendar.YEAR);
 
-        for (int j = 1; j <= unSortedList.getTotalEntries(); j++) {
+        for (int j = 1; j <= unSortedList.getSize(); j++) {
             listCal.setTime(unSortedList.getOrder(j).getDeliveryDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
@@ -325,7 +325,7 @@ public class Delivery {
         userMonth = cal.get(Calendar.MONTH) + 1;
         userYear = cal.get(Calendar.YEAR);
 
-        for (int j = 1; j <= unSortedList.getTotalEntries(); j++) {
+        for (int j = 1; j <= unSortedList.getSize(); j++) {
             listCal.setTime(unSortedList.getOrder(j).getDeliveryDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
@@ -347,7 +347,7 @@ public class Delivery {
 
         OrderListInterface<Order> dest = new OrderList<>();
 
-        for (int i = 1; i <= sortedList.getTotalEntries(); i++) {
+        for (int i = 1; i <= sortedList.getSize(); i++) {
             dest.addOrder(sortedList.getOrder(i));
         }
 

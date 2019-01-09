@@ -85,9 +85,12 @@ public class CustomizePackageMaintenance {
                 System.out.println("==================================");
                 System.out.println("Job ID: " + customizedPackages.getFirstPackage().getOrderID());
                 System.out.println("Delivery Date: " + customizedPackages.getFirstPackage().getDeliveryDateString());
-                System.out.println("Priority: " + customizedPackages.getFirstPackage().getPriority());
-                System.out.println("Arrangement: " + customizedPackages.getFirstPackage().getSize() + " " + customizedPackages.getFirstPackage().getStyle() + " " + customizedPackages.getFirstPackage().getFlower());
-                System.out.println("Accessories: " + customizedPackages.getFirstPackage().getAccessory());
+                System.out.println("Priority: " + customizedPackages.getFirstPackage().getPriority().getName());
+                System.out.println("Arrangement: " + customizedPackages.getFirstPackage().getSize().getName() + " " + customizedPackages.getFirstPackage().getStyle().getName());
+                for (int i = 1; i <= customizedPackages.getFirstPackage().getFlowerList().getTotalEntries(); i++) {
+                    System.out.println(" [" + i + "]: " + customizedPackages.getFirstPackage().getFlowerList().getItem(i).getName());
+                }
+                System.out.println("Accessories: " + customizedPackages.getFirstPackage().getAccessory().getName());
                 System.out.println("==================================");
                 do {
                     System.out.print("Complete order?" + ANSI_GREEN + "[Y/N]" + ANSI_RESET + " ");
@@ -414,9 +417,10 @@ public class CustomizePackageMaintenance {
                 }
             }
 
-            if(position == 0)
+            if (position == 0) {
                 break;
-            
+            }
+
             if (selection == 1) {
                 item = itemCatalogue.getStyles().getItem(position);
                 itemCatalogue.getStyles().removeItem(position);
@@ -462,7 +466,7 @@ public class CustomizePackageMaintenance {
                 item = itemCatalogue.getAccessories().getItem(position);
                 itemCatalogue.getAccessories().addItem(position, item);
             }
-            
+
             do {
                 System.out.print("Continue modifying the catalogue?" + ANSI_GREEN + "[Y/N]" + ANSI_RESET + " ");
                 selection = Character.toUpperCase(scan.next().charAt(0));

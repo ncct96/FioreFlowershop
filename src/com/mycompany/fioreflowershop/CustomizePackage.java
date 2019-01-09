@@ -35,7 +35,7 @@ public class CustomizePackage {
         ListIteratorInterface<Item> selectedFlowers = new LinkedList<Item>();
 
         System.out.println("Customizing flower package");
-        System.out.println(ANSI_BLUE + "Enter [0] at any step to cancel and return to main menu\n" + ANSI_RESET);
+        System.out.println(ANSI_BLUE + "Enter [0] at any step to cancel and return to main menu" + ANSI_RESET);
 
         while (true) {
             try {
@@ -135,7 +135,6 @@ public class CustomizePackage {
                         System.out.print("Add Another Flower?" + ANSI_GREEN + "[Y/N]" + ANSI_RESET + " ");
                         selection = Character.toUpperCase(scan.next().charAt(0));
                         scan.nextLine();
-                        System.out.println();
                     } while (selection != 'Y' && selection != 'N');
 
                     if (selection == 'N') {
@@ -273,8 +272,9 @@ public class CustomizePackage {
         System.out.println("Fiore Flowershop");
         System.out.println("=====================================================");
         System.out.println("Item Type: Customized Package\n");
+        System.out.println("Flowers");
         for (int i = 1; i <= order.getFlowerList().getTotalEntries(); i++) {
-            System.out.println("Flower" + "[" + i + "]: " + order.getFlowerList().getItem(i).getName() + " - RM " + order.getFlowerList().getItem(i).getPrice());
+            System.out.println(" [" + i + "]: " + order.getFlowerList().getItem(i).getName() + " - RM " + order.getFlowerList().getItem(i).getPrice());
         }
         System.out.println("Size: " + order.getSize().getName() + " - Flower x " + order.getSize().getPrice());
         System.out.println("Arrangement Style: " + order.getStyle().getName() + " - RM " + order.getStyle().getPrice());
@@ -290,18 +290,19 @@ public class CustomizePackage {
 
     public static void displayOrderHistory(Consumer customer, CustomizePackageQueueInterface<CustomizedPackage> customizedPackages) {
         if (customer == null) {
-            System.out.println(ANSI_RED + "You are not allowed to access this part of the system.\n" + ANSI_RESET);
+            System.out.println(ANSI_RED + "\nYou are not allowed to access this part of the system.\n" + ANSI_RESET);
         } else {
-            CustomizePackageQueueInterface<CustomizedPackage> displayQueue = customizedPackages;
+
             Boolean found = false;
-            System.out.println("Your Order History:");
+            System.out.println("\nYour Order History:");
             System.out.println("================================================");
-            while (!displayQueue.isEmpty()) {
-                CustomizedPackage order = displayQueue.dequeuePackage();
+            for (int i = 1; i <= customizedPackages.getSize(); i++) {
+                CustomizedPackage order = customizedPackages.getOrder(i);
                 if (order.getUser().getUsername() == customer.getUsername() && order.getUser().getPassword() == customer.getPassword()) {
                     System.out.println(order.getOrderDateString() + " " + order.getOrderID());
-                    for (int i = 1; i <= order.getFlowerList().getTotalEntries(); i++) {
-                        System.out.println("Flower" + "[" + i + "]: " + order.getFlowerList().getItem(i).getName() + " - RM " + order.getFlowerList().getItem(i).getPrice());
+                    System.out.println("Flowers:");
+                    for (int j = 1; j <= order.getFlowerList().getTotalEntries(); j++) {
+                        System.out.println(" [" + j + "]: " + order.getFlowerList().getItem(j).getName() + " - RM " + order.getFlowerList().getItem(j).getPrice());
                     }
                     System.out.println("Arrangement: " + order.getSize().getName() + " " + order.getStyle().getName());
                     System.out.println("Price: RM" + order.CalculateOrder() + "\n");
@@ -311,7 +312,7 @@ public class CustomizePackage {
             if (!found) {
                 System.out.println("No order history found");
             }
-            System.out.println("================================================");
+            System.out.println("==============END OF ORDER HISTORY==============");
         }
     }
 }

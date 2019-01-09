@@ -210,10 +210,6 @@ public class ItemList<T> implements ItemListInterface<T> {
         return outputStr;
     }
 
-    /**
-     * Task: Returns a reference to the node at a given position. Precondition:
-     * List is not empty; 1 <= givenPosition <= numberOfEntries.
-     */
     private Node<T> getNodeAt(int givenPosition) {
         Node<T> currentNode = head;
         for (int counter = 1; counter < givenPosition; counter++) {

@@ -11,25 +11,25 @@ package com.mycompany.fioreflowershop.adt;
  */
 public class CustomizePackageQueue<T> implements CustomizePackageQueueInterface<T> {
 
-    private Node<T> head;
-    private Node<T> tail;
+    private Node<T> firstOrder;
+    private Node<T> lastOrder;
     private int size = 0;
 
     public CustomizePackageQueue() {
-        head = null;
-        tail = null;
+        firstOrder = null;
+        lastOrder = null;
     }
 
     public void enqueuePackage(T newPackage) {
         Node newNode = new Node(newPackage, null);
 
         if (isEmpty()) {
-            head = newNode;
+            firstOrder = newNode;
         } else {
-            tail.next = newNode;
+            lastOrder.next = newNode;
         }
 
-        tail = newNode;
+        lastOrder = newNode;
         ++size;
     }
 
@@ -37,12 +37,12 @@ public class CustomizePackageQueue<T> implements CustomizePackageQueueInterface<
         T front = null;
 
         if (size == 1) {
-            front = head.getData();
-            head = null;
-            tail = null;
+            front = firstOrder.getData();
+            firstOrder = null;
+            lastOrder = null;
         } else if (size > 0) {
-            front = head.getData();
-            head = head.getNext();
+            front = firstOrder.getData();
+            firstOrder = firstOrder.getNext();
         } else {
             size = 1;
         }
@@ -55,19 +55,19 @@ public class CustomizePackageQueue<T> implements CustomizePackageQueueInterface<
         T front = null;
 
         if (!isEmpty()) {
-            front = head.getData();
+            front = firstOrder.getData();
         }
 
         return front;
     }
 
     public boolean isEmpty() {
-        return (head == null) && (tail == null);
+        return (firstOrder == null) && (lastOrder == null);
     }
 
     public void clear() {
-        head = null;
-        tail = null;
+        firstOrder = null;
+        lastOrder = null;
         size = 0;
     }
 
@@ -77,7 +77,7 @@ public class CustomizePackageQueue<T> implements CustomizePackageQueueInterface<
 
     @Override
     public boolean contains(T item) {
-        Node<T> currentNode = head;
+        Node<T> currentNode = firstOrder;
 
         while (currentNode.getNext() != null) {
             if (item.equals(currentNode.getData())) {
@@ -115,7 +115,7 @@ public class CustomizePackageQueue<T> implements CustomizePackageQueueInterface<
 
         return isSuccessful;
     }
-    
+
     public T getOrder(int givenPosition) {
         T result = null;
 
@@ -125,9 +125,9 @@ public class CustomizePackageQueue<T> implements CustomizePackageQueueInterface<
 
         return result;
     }
-    
+
     private Node<T> getNodeAt(int givenPosition) {
-        Node<T> currentNode = head;
+        Node<T> currentNode = firstOrder;
 
         // traverse the list to locate the desired node
         for (int counter = 1; counter < givenPosition; counter++) {
@@ -136,7 +136,7 @@ public class CustomizePackageQueue<T> implements CustomizePackageQueueInterface<
 
         return currentNode;
     }
-    
+
     private class Node<T> {
 
         private T data;

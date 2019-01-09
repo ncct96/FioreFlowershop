@@ -16,9 +16,9 @@ public class SortOrders {
     
     public static OrderListInterface<Order> sortAllOrders(OrderListInterface<Order> orderList) {
 
-        for (int i = 1; i < orderList.getTotalEntries(); i++) {
+        for (int i = 1; i < orderList.getSize(); i++) {
             int index = i;
-            for (int j = i + 1; j <= orderList.getTotalEntries(); j++) {
+            for (int j = i + 1; j <= orderList.getSize(); j++) {
                 // SORT BY DATE
                 if (orderList.getOrder(j).getDeliveryDate().before(orderList.getOrder(index).getDeliveryDate())) {
                     index = j;
