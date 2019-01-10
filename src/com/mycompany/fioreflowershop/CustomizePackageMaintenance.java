@@ -143,6 +143,10 @@ public class CustomizePackageMaintenance {
             }
         }
         if (selection == 1) {
+            if (itemCatalogue.getFlowers().isEmpty()) {
+                System.out.println(ANSI_BLUE + "No Flower Records found" + ANSI_RESET);
+                return;
+            }
             for (int i = 1; i <= itemCatalogue.getFlowers().getSize(); i++) {
                 System.out.print(ANSI_GREEN + "[" + i + "]" + ANSI_RESET);
                 System.out.printf(" %s: %d\n", itemCatalogue.getFlowers().getItem(i).getName(), itemCatalogue.getFlowers().getItem(i).getQuantity());
@@ -174,6 +178,10 @@ public class CustomizePackageMaintenance {
                 itemCatalogue.getFlowers().getItem(selection).setQuantity(newQuantity);
             }
         } else if (selection == 2) {
+            if (itemCatalogue.getAccessories().isEmpty()) {
+                System.out.println(ANSI_BLUE + "No Accessory Records found" + ANSI_RESET);
+                return;
+            }
             for (int i = 2; i <= itemCatalogue.getAccessories().getSize(); i++) {
                 System.out.print(ANSI_GREEN + "[" + (i - 1) + "]" + ANSI_RESET);
                 System.out.printf(" %s: %d\n", itemCatalogue.getAccessories().getItem(i).getName(), itemCatalogue.getAccessories().getItem(i).getQuantity());
@@ -289,7 +297,7 @@ public class CustomizePackageMaintenance {
                             newItem.setQuantity(scan.nextInt());
                         } while (newItem.getQuantity() < 0);
                         break;
-                    } catch (InputMismatchException e) {
+                    } catch (Exception e) {
                         System.out.println(ANSI_RED + "Please enter a valid number" + ANSI_RESET);
                         scan.next();
                     }
@@ -344,12 +352,28 @@ public class CustomizePackageMaintenance {
         int position = 0;
         selection = CustomizePackageMaintenance.selectItem();
         if (selection == 1) {
+            if (itemCatalogue.getStyles().isEmpty()) {
+                System.out.println(ANSI_BLUE + "Style catalogue is empty" + ANSI_RESET);
+                return;
+            }
             maxSize = itemCatalogue.getStyles().getSize();
         } else if (selection == 2) {
+            if (itemCatalogue.getSizes().isEmpty()) {
+                System.out.println(ANSI_BLUE + "Size catalogue is empty" + ANSI_RESET);
+                return;
+            }
             maxSize = itemCatalogue.getSizes().getSize();
         } else if (selection == 3) {
+            if (itemCatalogue.getFlowers().isEmpty()) {
+                System.out.println(ANSI_BLUE + "Flower catalogue is empty" + ANSI_RESET);
+                return;
+            }
             maxSize = itemCatalogue.getFlowers().getSize();
         } else if (selection == 4) {
+            if (itemCatalogue.getAccessories().isEmpty()) {
+                System.out.println(ANSI_BLUE + "Accessory catalogue is empty" + ANSI_RESET);
+                return;
+            }
             maxSize = itemCatalogue.getAccessories().getSize();
         } else {
             return;
@@ -394,15 +418,31 @@ public class CustomizePackageMaintenance {
             System.out.println("\nSelect the catalogue to modify");
             selection = CustomizePackageMaintenance.selectItem();
             if (selection == 1) {
+                if (itemCatalogue.getStyles().isEmpty()) {
+                    System.out.println(ANSI_BLUE + "Styles catalogue is empty" + ANSI_RESET);
+                    return;
+                }
                 type = "arrangement style: ";
                 maxSize = itemCatalogue.getStyles().getSize();
             } else if (selection == 2) {
+                if (itemCatalogue.getSizes().isEmpty()) {
+                    System.out.println(ANSI_BLUE + "Size catalogue is empty" + ANSI_RESET);
+                    return;
+                }
                 type = "arrangement size: ";
                 maxSize = itemCatalogue.getSizes().getSize();
             } else if (selection == 3) {
+                if (itemCatalogue.getFlowers().isEmpty()) {
+                    System.out.println(ANSI_BLUE + "Flowers catalogue is empty" + ANSI_RESET);
+                    return;
+                }
                 type = "flower: ";
                 maxSize = itemCatalogue.getFlowers().getSize();
             } else if (selection == 4) {
+                if (itemCatalogue.getAccessories().isEmpty()) {
+                    System.out.println(ANSI_BLUE + "Accessory catalogue is empty" + ANSI_RESET);
+                    return;
+                }
                 type = "accessory: ";
                 maxSize = itemCatalogue.getAccessories().getSize();
             } else {
