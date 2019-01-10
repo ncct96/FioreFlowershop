@@ -377,7 +377,7 @@ public class FioreFlowershop {
         }
 
         SortOrders.doSelectionSort(readyOrders);
-        for (int i = 1; i <= readyOrders.getTotalEntries(); i++) {
+        for (int i = 1; i <= readyOrders.getSize(); i++) {
             System.out.println(readyOrders.getOrder(i).getID() + " " + readyOrders.getOrder(i).getPriority().getName() + " " + readyOrders.getOrder(i).getDeliveryDate());
         }
     }
