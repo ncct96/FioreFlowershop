@@ -332,15 +332,6 @@ public class FioreFlowershop {
         customizedPackages.enqueuePackage(package6);
         customizedPackages.enqueuePackage(package7);
         customizedPackages.enqueuePackage(package8);
-        Item style = new Item("Elliptical", 10);
-        Item size = new Item("Small", 1);
-        Item flower = new Item("Sunflowers", 250, 10);
-        Item accessory = new Item("None", 0, 1);
-
-        Item flexi = new Item("Flexi", 1, 6);
-        Item normal = new Item("Normal", 1.5, 4);
-        Item express = new Item("Express", 3, 2);
-        Item delivery = new Item("Pick Up", 0);
         
         SortOrders.sortCustomizedOrders(customizedPackages);
         
@@ -348,7 +339,7 @@ public class FioreFlowershop {
         readyOrders.addOrder(customizedPackages.dequeuePackage());
         readyOrders.addOrder(customizedPackages.dequeuePackage());
         readyOrders.addOrder(customizedPackages.dequeuePackage());
-        
+   
         SortOrders.sortAllOrders(readyOrders);
         /*<------ End CP's Part -------->*/
     }
