@@ -75,6 +75,10 @@ public class CustomizePackageMaintenance {
     }
 
     public static void updateOrders(CustomizePackageQueueInterface<CustomizedPackage> customizedPackages, OrderListInterface<Order> readyOrders) {
+        if (customizedPackages.isEmpty()) {
+            System.out.println(ANSI_BLUE + "No new orders" + ANSI_RESET);
+            return;
+        }
         while (true) {
             Scanner scan = new Scanner(System.in);
             char selection;
