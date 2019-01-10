@@ -329,7 +329,7 @@ public class CustomizePackage {
                         }
                         System.out.println("Arrangement: " + order.getSize().getName() + " " + order.getStyle().getName());
                         System.out.println("Price: RM" + order.CalculateOrder() + "\n");
-                        found = true;
+                        found = true; 
                     }
                 }
             }
