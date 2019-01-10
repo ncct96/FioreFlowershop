@@ -332,24 +332,23 @@ public class FioreFlowershop {
         customizedPackages.enqueuePackage(package6);
         customizedPackages.enqueuePackage(package7);
         customizedPackages.enqueuePackage(package8);
-        Item style = new Item("Elliptical", 10);
-        Item size = new Item("Small", 1);
-        Item flower = new Item("Sunflowers", 250, 10);
-        Item accessory = new Item("None", 0, 1);
-
-        Item flexi = new Item("Flexi", 1, 6);
-        Item normal = new Item("Normal", 1.5, 4);
-        Item express = new Item("Express", 3, 2);
-        Item delivery = new Item("Pick Up", 0);
         
         SortOrders.sortCustomizedOrders(customizedPackages);
         
-        readyOrders.addOrder(customizedPackages.dequeuePackage());
-        readyOrders.addOrder(customizedPackages.dequeuePackage());
-        readyOrders.addOrder(customizedPackages.dequeuePackage());
-        readyOrders.addOrder(customizedPackages.dequeuePackage());
+        for(int i = 1; i <= customizedPackages.getSize(); i++){
+            System.out.println(customizedPackages.getOrder(i).getOrderID() + " " + customizedPackages.getOrder(i).getDeliveryDateString());
+        }
         
+        readyOrders.addOrder(customizedPackages.dequeuePackage());
+        readyOrders.addOrder(customizedPackages.dequeuePackage());
+        readyOrders.addOrder(customizedPackages.dequeuePackage());
+        readyOrders.addOrder(customizedPackages.dequeuePackage());
+   
         SortOrders.sortAllOrders(readyOrders);
+        
+        for(int i = 1; i <= readyOrders.getSize(); i++){
+            System.out.println(readyOrders.getOrder(i).getID() + " " + readyOrders.getOrder(i).getDeliveryDate());
+        }
         /*<------ End CP's Part -------->*/
     }
 
