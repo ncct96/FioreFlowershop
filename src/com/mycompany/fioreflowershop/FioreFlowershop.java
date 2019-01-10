@@ -335,20 +335,12 @@ public class FioreFlowershop {
         
         SortOrders.sortCustomizedOrders(customizedPackages);
         
-        for(int i = 1; i <= customizedPackages.getSize(); i++){
-            System.out.println(customizedPackages.getOrder(i).getOrderID() + " " + customizedPackages.getOrder(i).getDeliveryDateString());
-        }
-        
         readyOrders.addOrder(customizedPackages.dequeuePackage());
         readyOrders.addOrder(customizedPackages.dequeuePackage());
         readyOrders.addOrder(customizedPackages.dequeuePackage());
         readyOrders.addOrder(customizedPackages.dequeuePackage());
    
         SortOrders.sortAllOrders(readyOrders);
-        
-        for(int i = 1; i <= readyOrders.getSize(); i++){
-            System.out.println(readyOrders.getOrder(i).getID() + " " + readyOrders.getOrder(i).getDeliveryDate());
-        }
         /*<------ End CP's Part -------->*/
     }
 
