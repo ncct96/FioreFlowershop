@@ -387,7 +387,7 @@ public class FioreFlowershop {
         if (selection == 1) {
             CustomizePackage.customizePackageControl(itemCatalogue, customerLoggedIn, customizedPackages);
         } else if (selection == 2) {
-            CustomizePackage.displayOrderHistory(customerLoggedIn, customizedPackages);
+            CustomizePackage.viewOrderHistory(customerLoggedIn, customizedPackages, readyOrders);
         }
     }
 

@@ -17,14 +17,9 @@ import java.util.Scanner;
 public class CustomizePackageMaintenance {
 
     private static final String ANSI_RESET = "\u001B[0m";
-    private static final String ANSI_BLACK = "\u001B[30m";
     private static final String ANSI_RED = "\u001B[31m";
     private static final String ANSI_GREEN = "\u001B[32m";
-    private static final String ANSI_YELLOW = "\u001B[33m";
     private static final String ANSI_BLUE = "\u001B[34m";
-    private static final String ANSI_PURPLE = "\u001B[35m";
-    private static final String ANSI_CYAN = "\u001B[36m";
-    private static final String ANSI_WHITE = "\u001B[37m";
 
     public static void printItem(ItemCatalogue itemCatalogue, int type) {
         if (type == 1) {
@@ -52,25 +47,29 @@ public class CustomizePackageMaintenance {
 
     public static void itemsMenu(ItemCatalogue itemCatalogue, CustomizePackageQueueInterface<CustomizedPackage> customizedPackages) {
         while (true) {
-            System.out.println("\nWhat do you wish to do?");
-            System.out.println(ANSI_GREEN + "[1] " + ANSI_RESET + "Update Stock Quantity");
-            System.out.println(ANSI_GREEN + "[2] " + ANSI_RESET + "Add New Items");
-            System.out.println(ANSI_GREEN + "[3] " + ANSI_RESET + "Delete Items");
-            System.out.println(ANSI_GREEN + "[4] " + ANSI_RESET + "Rearrange/View Catalogue");
-            System.out.println(ANSI_GREEN + "[5] " + ANSI_RESET + "Return to previous menu");
-            System.out.print("Selection: ");
-            Scanner scan = new Scanner(System.in);
-            int selection = scan.nextInt();
-            if (selection == 1) {
-                updateStock(itemCatalogue);
-            } else if (selection == 2) {
-                addItems(itemCatalogue);
-            } else if (selection == 3) {
-                deleteItems(itemCatalogue);
-            } else if (selection == 4) {
-                rearrangeCatalogue(itemCatalogue);
-            } else {
-                break;
+            try {
+                System.out.println("\nWhat do you wish to do?");
+                System.out.println(ANSI_GREEN + "[1] " + ANSI_RESET + "Update Stock Quantity");
+                System.out.println(ANSI_GREEN + "[2] " + ANSI_RESET + "Add New Items");
+                System.out.println(ANSI_GREEN + "[3] " + ANSI_RESET + "Delete Items");
+                System.out.println(ANSI_GREEN + "[4] " + ANSI_RESET + "Rearrange/View Catalogue");
+                System.out.println(ANSI_GREEN + "[5] " + ANSI_RESET + "Return to previous menu");
+                System.out.print("Selection: ");
+                Scanner scan = new Scanner(System.in);
+                int selection = scan.nextInt();
+                if (selection == 1) {
+                    updateStock(itemCatalogue);
+                } else if (selection == 2) {
+                    addItems(itemCatalogue);
+                } else if (selection == 3) {
+                    deleteItems(itemCatalogue);
+                } else if (selection == 4) {
+                    rearrangeCatalogue(itemCatalogue);
+                } else {
+                    break;
+                }
+            } catch (Exception e) {
+                System.out.println(ANSI_RED + "Please select one of the above options" + ANSI_RESET);
             }
         }
     }
@@ -214,7 +213,7 @@ public class CustomizePackageMaintenance {
                     System.out.println(ANSI_GREEN + "[2] " + ANSI_RESET + "Arrangement Sizes");
                     System.out.println(ANSI_GREEN + "[3] " + ANSI_RESET + "Flowers");
                     System.out.println(ANSI_GREEN + "[4] " + ANSI_RESET + "Accessories");
-                    System.out.println(ANSI_GREEN + "[5] " + ANSI_RESET + "Return to previous menu");
+                    System.out.println(ANSI_GREEN + "[0] " + ANSI_RESET + "Return to previous menu");
                     System.out.print("Selection: ");
                     selection = scan.nextInt();
                 } while (selection < 1 || selection > 5);
@@ -250,6 +249,8 @@ public class CustomizePackageMaintenance {
             } else if (selection == 4) {
                 type = "accessory: ";
                 maxSize = itemCatalogue.getAccessories().getSize();
+            } else {
+                return;
             }
             System.out.print("Enter the name of the new " + type);
             newItem.setName(scan.nextLine());
@@ -346,6 +347,8 @@ public class CustomizePackageMaintenance {
             maxSize = itemCatalogue.getFlowers().getSize();
         } else if (selection == 4) {
             maxSize = itemCatalogue.getAccessories().getSize();
+        } else {
+            return;
         }
         System.out.println("Select the item to be deleted");
         CustomizePackageMaintenance.printItem(itemCatalogue, selection);
@@ -398,6 +401,8 @@ public class CustomizePackageMaintenance {
             } else if (selection == 4) {
                 type = "accessory: ";
                 maxSize = itemCatalogue.getAccessories().getSize();
+            } else {
+                return;
             }
 
             System.out.println("Select the item to be moved");
