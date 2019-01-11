@@ -31,42 +31,47 @@ public class CatalogMaintenance {
 
     //Catalog Maintenance Main Menu
     public static void catalogMaintenance(CatalogPackageInterface<CatalogPackage> normalPackage, CatalogPackageInterface<CatalogPackage> discountedPackage, ItemCatalogue itemCatalogue) {
-        System.out.println("\nPlease Select The Options Below.");
-        System.out.println(FioreFlowershop.ConsoleColors.GREEN + "[1]" + FioreFlowershop.ConsoleColors.RESET + " Add a product to catalog");
-        System.out.println(FioreFlowershop.ConsoleColors.GREEN + "[2]" + FioreFlowershop.ConsoleColors.RESET + " Remove a product from catalog");
-        System.out.println(FioreFlowershop.ConsoleColors.GREEN + "[3]" + FioreFlowershop.ConsoleColors.RESET + " Edit the details of product in catalog");
-        System.out.println(FioreFlowershop.ConsoleColors.GREEN + "[4]" + FioreFlowershop.ConsoleColors.RESET + " Display created catalog");
-        System.out.println(FioreFlowershop.ConsoleColors.GREEN + "[5]" + FioreFlowershop.ConsoleColors.RESET + " Back");
-        System.out.print("Selection: ");
-
-        try {
-            int managerChoice = scan.nextInt();
-            scan.nextLine();
-            String navigationMsg;
-            switch (managerChoice) {
-                case 1:
-                    navigationMsg = "Create catalog";
-                    productType(navigationMsg, normalPackage, discountedPackage, itemCatalogue);
-                    break;//Add product
-                case 2:
-                    navigationMsg = "Delete catalog";
-                    displayCatalogType(navigationMsg, normalPackage, discountedPackage, "Manager", itemCatalogue);
-                    break;//Delete product
-                case 3:
-                    navigationMsg = "Edit catalog";
-                    displayCatalogType(navigationMsg, normalPackage, discountedPackage, "Manager", itemCatalogue);
-                    break;//Edit Product
-                case 4:
-                    navigationMsg = "Display catalog";
-                    displayCatalogType(navigationMsg, normalPackage, discountedPackage, "Manager", itemCatalogue);
-                    break;//Display product  
-                case 5:
-                    FioreFlowershop.manager();
-                    break;
+        int managerChoice = 0;
+        String navigationMsg;
+        
+        do {
+            System.out.println("\nPlease Select The Options Below.");
+            System.out.println(FioreFlowershop.ConsoleColors.GREEN + "[1]" + FioreFlowershop.ConsoleColors.RESET + " Add a product to catalog");
+            System.out.println(FioreFlowershop.ConsoleColors.GREEN + "[2]" + FioreFlowershop.ConsoleColors.RESET + " Remove a product from catalog");
+            System.out.println(FioreFlowershop.ConsoleColors.GREEN + "[3]" + FioreFlowershop.ConsoleColors.RESET + " Edit the details of product in catalog");
+            System.out.println(FioreFlowershop.ConsoleColors.GREEN + "[4]" + FioreFlowershop.ConsoleColors.RESET + " Display created catalog");
+            System.out.println(FioreFlowershop.ConsoleColors.GREEN + "[5]" + FioreFlowershop.ConsoleColors.RESET + " Back");
+            System.out.print("Selection: ");
+            if (scan.hasNextInt()) {
+                managerChoice = scan.nextInt();
+                isInteger = true;
+            } else {
+                isInteger = false;
+                System.out.println(FioreFlowershop.ConsoleColors.RED + "An Error Occured. Please Only Enter Number Only." + FioreFlowershop.ConsoleColors.RESET);
+                scan.next();
             }
-        } catch (Exception e) {
-            System.out.println("\n" + FioreFlowershop.ConsoleColors.RED + " An Error Occured. Please Only Enter Number Only." + FioreFlowershop.ConsoleColors.RESET);
-            catalogMaintenance(normalPackage, discountedPackage, itemCatalogue);
+        } while (!(isInteger) || managerChoice < 1 || managerChoice > 5);
+        
+        switch (managerChoice) {
+            case 1:
+                navigationMsg = "Create catalog";
+                productType(navigationMsg, normalPackage, discountedPackage, itemCatalogue);
+                break;//Add product
+            case 2:
+                navigationMsg = "Delete catalog";
+                displayCatalogType(navigationMsg, normalPackage, discountedPackage, "Manager", itemCatalogue);
+                break;//Delete product
+            case 3:
+                navigationMsg = "Edit catalog";
+                displayCatalogType(navigationMsg, normalPackage, discountedPackage, "Manager", itemCatalogue);
+                break;//Edit Product
+            case 4:
+                navigationMsg = "Display catalog";
+                displayCatalogType(navigationMsg, normalPackage, discountedPackage, "Manager", itemCatalogue);
+                break;//Display product  
+            case 5:
+                FioreFlowershop.manager();
+                break;
         }
     }
 
@@ -83,13 +88,15 @@ public class CatalogMaintenance {
             if (productTypes < 0 || productTypes > 4) {
                 System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter the number within the range of 1 - 4." + FioreFlowershop.ConsoleColors.RESET);
             }
+            if(isInteger == false){
+                System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter the number only." + FioreFlowershop.ConsoleColors.RESET);
+            }
             System.out.print("Please enter the product type(1-4): ");
             if (scan.hasNextInt()) {
                 productTypes = scan.nextInt();
                 isInteger = true;
             } else {
                 isInteger = false;
-                System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter the number only." + FioreFlowershop.ConsoleColors.RESET);
                 scan.next();
             }
         } while (!(isInteger) || productTypes < 1 || productTypes > 4);
@@ -295,7 +302,7 @@ public class CatalogMaintenance {
 
                     if (flower > 0 && flower < displayFlowers.getTotalEntries() + 1) {
                         do {
-                            System.out.println("\nPlease enter the flower needed for this package: ");
+                            System.out.println("\nPlease enter the flower quantity needed for this package: ");
                             if (scan.hasNextInt()) {
                                 numberNeeded = scan.nextInt();
                                 isInteger = true;
@@ -704,7 +711,7 @@ public class CatalogMaintenance {
         ListIteratorInterface<Item> selectedFlowers = new LinkedList<Item>();
         CatalogPackage catalogSizeChecking = new CatalogPackage();
         CatalogPackage catalogCheckingPackage = new CatalogPackage();
-        
+
         //Get current month & year
         Calendar c = Calendar.getInstance();
         int currentYear = c.get(Calendar.YEAR);
@@ -751,7 +758,7 @@ public class CatalogMaintenance {
                 if (normalPackage.getProduct(i).getStatus().equals("Active")) {
                     maxNumber = i;
                 }
-            }            
+            }
             for (int i = 1; i < normalPackage.getTotalEntries() + 1; i++) {
                 if (normalPackage.getProduct(i).getStatus().equals("Active")) {
                     minRange = i;
@@ -771,7 +778,7 @@ public class CatalogMaintenance {
                 if (discountedPackage.getProduct(i).getStatus().equals("Active") && discountedPackage.getProduct(i).getPromoMonth().equals(curentMonthString) && discountedPackage.getProduct(i).getPromoYear() == currentYear) {
                     maxNumber = i;
                 }
-            }            
+            }
             for (int i = 1; i < discountedPackage.getTotalEntries() + 1; i++) {
                 if (discountedPackage.getProduct(i).getStatus().equals("Active") && discountedPackage.getProduct(i).getPromoMonth().equals(curentMonthString) && discountedPackage.getProduct(i).getPromoYear() == currentYear) {
                     minRange = i;
@@ -790,8 +797,8 @@ public class CatalogMaintenance {
                 if (scan.hasNextInt()) {
                     productNumber = scan.nextInt();
                     isInteger = true;
-                    
-                    for(int i = 1; i < validNumberList.getTotalEntries()+1; i++){
+
+                    for (int i = 1; i < validNumberList.getTotalEntries() + 1; i++) {
                         if (productNumber == validNumberList.getItem(i)) {
                             validNumber = true;
                         }
@@ -806,12 +813,12 @@ public class CatalogMaintenance {
             //Edit each of the product field(Normal Catalog Editor)
             do {
                 if (catalogTypes == 1) {
-                    System.out.print("\nWhich part of the product you wish to edit?\n" + FioreFlowershop.ConsoleColors.BLUE + "Note 1: if want to edit the flower needed quantity, please select Flower[4]\n"+ FioreFlowershop.ConsoleColors.RESET + FioreFlowershop.ConsoleColors.BLUE + "Note 2: if want to edit the season & flower pot, select the flower arrangement in the product type[6]\n" + FioreFlowershop.ConsoleColors.RESET
+                    System.out.print("\nWhich part of the product you wish to edit?\n" + FioreFlowershop.ConsoleColors.BLUE + "Note 1: if want to edit the flower needed quantity, please select Flower[4]\n" + FioreFlowershop.ConsoleColors.RESET + FioreFlowershop.ConsoleColors.BLUE + "Note 2: if want to edit the season & flower pot, select the flower arrangement in the product type[6]\n" + FioreFlowershop.ConsoleColors.RESET
                             + FioreFlowershop.ConsoleColors.GREEN + "[1]" + FioreFlowershop.ConsoleColors.RESET + " Name\n" + FioreFlowershop.ConsoleColors.GREEN + "[2]" + FioreFlowershop.ConsoleColors.RESET + " Style\n" + FioreFlowershop.ConsoleColors.GREEN + "[3]" + FioreFlowershop.ConsoleColors.RESET + " Size\n"
                             + FioreFlowershop.ConsoleColors.GREEN + "[4]" + FioreFlowershop.ConsoleColors.RESET + " Flower\n" + FioreFlowershop.ConsoleColors.GREEN + "[5]" + FioreFlowershop.ConsoleColors.RESET + " Accessory\n" + FioreFlowershop.ConsoleColors.GREEN + "[6]" + FioreFlowershop.ConsoleColors.RESET + " Product type\n"
                             + FioreFlowershop.ConsoleColors.GREEN + "[7]" + FioreFlowershop.ConsoleColors.RESET + " All\n" + FioreFlowershop.ConsoleColors.GREEN + "[8]" + FioreFlowershop.ConsoleColors.RESET + " Cancel\n");
                 } else if (catalogTypes == 2) {
-                    System.out.print("\nWhich part of the product you wish to edit?\n" + FioreFlowershop.ConsoleColors.BLUE + "Note 1: if want to edit the flower needed quantity, please select Flower[4]\n"+ FioreFlowershop.ConsoleColors.RESET + FioreFlowershop.ConsoleColors.BLUE + "Note 2: if want to edit the season & flower pot, select the flower arrangement in the product type[6]\n" + FioreFlowershop.ConsoleColors.RESET
+                    System.out.print("\nWhich part of the product you wish to edit?\n" + FioreFlowershop.ConsoleColors.BLUE + "Note 1: if want to edit the flower needed quantity, please select Flower[4]\n" + FioreFlowershop.ConsoleColors.RESET + FioreFlowershop.ConsoleColors.BLUE + "Note 2: if want to edit the season & flower pot, select the flower arrangement in the product type[6]\n" + FioreFlowershop.ConsoleColors.RESET
                             + FioreFlowershop.ConsoleColors.GREEN + "[1]" + FioreFlowershop.ConsoleColors.RESET + " Name\n" + FioreFlowershop.ConsoleColors.GREEN + "[2]" + FioreFlowershop.ConsoleColors.RESET + " Style\n" + FioreFlowershop.ConsoleColors.GREEN + "[3]" + FioreFlowershop.ConsoleColors.RESET + " Size\n"
                             + FioreFlowershop.ConsoleColors.GREEN + "[4]" + FioreFlowershop.ConsoleColors.RESET + " Flower\n" + FioreFlowershop.ConsoleColors.GREEN + "[5]" + FioreFlowershop.ConsoleColors.RESET + " Accessory\n" + FioreFlowershop.ConsoleColors.GREEN + "[6]" + FioreFlowershop.ConsoleColors.RESET + " Product type\n" + FioreFlowershop.ConsoleColors.GREEN
                             + "[7]" + FioreFlowershop.ConsoleColors.RESET + " Promotion month\n" + FioreFlowershop.ConsoleColors.GREEN + "[8]" + FioreFlowershop.ConsoleColors.RESET + " Promotion year\n" + FioreFlowershop.ConsoleColors.GREEN + "[9]" + FioreFlowershop.ConsoleColors.RESET + " Discount rate\n" + FioreFlowershop.ConsoleColors.GREEN + "[10]"
@@ -1015,7 +1022,7 @@ public class CatalogMaintenance {
 
                         if (flower > 0 && flower < displayFlowers.getTotalEntries() + 1) {
                             do {
-                                System.out.println("\nPlease enter the flower needed for this package: ");
+                                System.out.println("\nPlease enter the flower quantity needed for this package: ");
                                 if (scan.hasNextInt()) {
                                     numberNeeded = scan.nextInt();
                                     isInteger = true;
@@ -1570,7 +1577,7 @@ public class CatalogMaintenance {
         } else if (catalogTypes == 2) {
             validNumberList.clear();
             for (int i = 1; i < discountedPackage.getTotalEntries() + 1; i++) {
-                if (discountedPackage.getProduct(i).getStatus().equals("Active")&& discountedPackage.getProduct(i).getPromoMonth().equals(curentMonthString) && discountedPackage.getProduct(i).getPromoYear() == currentYear) {
+                if (discountedPackage.getProduct(i).getStatus().equals("Active") && discountedPackage.getProduct(i).getPromoMonth().equals(curentMonthString) && discountedPackage.getProduct(i).getPromoYear() == currentYear) {
                     validNumberList.add(i);
                     catalogSize++;
                 }
@@ -1584,8 +1591,8 @@ public class CatalogMaintenance {
                 if (scan.hasNextInt()) {
                     productNumber = scan.nextInt();
                     isInteger = true;
-                    
-                    for(int i = 1; i < validNumberList.getTotalEntries()+1; i++){
+
+                    for (int i = 1; i < validNumberList.getTotalEntries() + 1; i++) {
                         if (productNumber == validNumberList.getItem(i)) {
                             validNumber = true;
                         }
