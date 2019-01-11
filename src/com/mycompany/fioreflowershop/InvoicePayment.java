@@ -148,10 +148,10 @@ public class InvoicePayment {
         System.out.println("==================================================================================================================");
         for(int i = 1; i <= paymentHistory.getTotalInvoice(); i++){
             if(paymentHistory.getInvoice(i).getInvoiceNumber().equals(invoiceID)){
-//                for(int k = 1; k <= paymentHistory.getInvoice(i).getCatalogOrder().getSize(); k++){
-                    for(int p = 1; p <= paymentHistory.getInvoice(i).getCatalogOrder().getOrder(i).getCatalogPack().getTotalEntries(); p++){
-                        Date orderDate = paymentHistory.getInvoice(i).getCatalogOrder().getOrder(i).getOrderDate();
-                        CatalogPackage orderInstance = paymentHistory.getInvoice(i).getCatalogOrder().getOrder(i).getCatalogPack().getProduct(p);
+                for(int k = 1; k <= paymentHistory.getInvoice(i).getCatalogOrder().getSize(); k++){
+//                    for(int p = 1; p <= paymentHistory.getInvoice(i).getCatalogOrder().getOrder(k).getCatalogPack().getTotalEntries(); p++){
+                        Date orderDate = paymentHistory.getInvoice(i).getCatalogOrder().getOrder(k).getOrderDate();
+                        CatalogPackage orderInstance = paymentHistory.getInvoice(i).getCatalogOrder().getOrder(k).getCatalogPack().getProduct(k);
                         System.out.println(sdf.format(orderDate)+"   | "+ orderInstance.getName()+ "\t\t\t  | \t" 
                         + orderInstance.getUserQuantity()+ "\t|\t" + orderInstance.getDiscountRate()+ "\t    |\t" 
                         + orderInstance.getPrice() + " \t     |   " + orderInstance.getPrice() *orderInstance.getUserQuantity());
@@ -159,8 +159,8 @@ public class InvoicePayment {
                         if(orderInstance.getDiscountRate() != 0){
                             discountPrice += discountPrice(orderInstance.getPrice(), orderInstance.getUserQuantity(), orderInstance.getDiscountRate());
                         }
-                    }
-//                }
+//                    }
+                }
             }
         }
         invoiceMenuFooter(totalPrice, discountPrice);
@@ -413,7 +413,7 @@ public class InvoicePayment {
                 }
                     //Set shopping cart payment status to true
                 for(int k = 1; k <= order.getSize(); k++){
-                    if(order.getOrder(k).getUser().equals(user)){
+                    if(order.getOrder(k).getUser().getEmail().equals(user.getEmail())){
                         order.getOrder(k).setPaymentStatus(true);
                     }
                 }
