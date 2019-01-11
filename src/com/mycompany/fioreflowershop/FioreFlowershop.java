@@ -272,11 +272,11 @@ public class FioreFlowershop {
         }
 
         //Adding of order to Catalog Order for Delivery & Pickup Testing
-        CatalogOrders C01 = new CatalogOrders("CO1", catalogPack1, priorities.getItem(1), new Item("Pick Up", 0), todayDate, orderTime1, cc1, "Order Status", 560, false, todayDate, todayDate);
-        CatalogOrders CO2 = new CatalogOrders("CO2", catalogPack2, priorities.getItem(1), new Item("Pick Up", 0), todayDate, orderTime2, cc2, "Order Status", 200, false, todayDate, todayDate);
-        CatalogOrders CO3 = new CatalogOrders("CO3", catalogPack1, priorities.getItem(1), new Item("Delivery", 10), todayDate, orderTime3, c3, "Order Status", 360, false, retrieveDate, todayDate);
-        CatalogOrders CO4 = new CatalogOrders("CO4", catalogPack1, priorities.getItem(2), new Item("Delivery", 10), orderDate, orderTime4, c4, "Order Status", 380, false, retrieveDate, todayDate);
-        CatalogOrders CO5 = new CatalogOrders("CO5", catalogPack1, priorities.getItem(3), new Item("Delivery", 10), orderDate, orderTime5, c3, "Order Status", 320, false, retrieveDate, todayDate);
+        CatalogOrders C01 = new CatalogOrders("CO1", catalogPack1, priorities.getItem(1), new Item("Pick Up", 0), todayDate, orderTime1, cc1, "Pending", 560, false, todayDate, todayDate);
+        CatalogOrders CO2 = new CatalogOrders("CO2", catalogPack2, priorities.getItem(1), new Item("Pick Up", 0), todayDate, orderTime2, cc2, "Pending", 200, false, todayDate, todayDate);
+        CatalogOrders CO3 = new CatalogOrders("CO3", catalogPack1, priorities.getItem(1), new Item("Delivery", 10), todayDate, orderTime3, c3, "Pending", 360, false, retrieveDate, todayDate);
+        CatalogOrders CO4 = new CatalogOrders("CO4", catalogPack1, priorities.getItem(2), new Item("Delivery", 10), orderDate, orderTime4, c4, "Pending", 380, false, retrieveDate, todayDate);
+        CatalogOrders CO5 = new CatalogOrders("CO5", catalogPack1, priorities.getItem(3), new Item("Delivery", 10), orderDate, orderTime5, c3, "Pending", 320, false, retrieveDate, todayDate);
 
         readyOrders.addOrder(C01);
         readyOrders.addOrder(CO2);
