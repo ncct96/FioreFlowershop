@@ -121,14 +121,14 @@ public class FioreFlowershop {
         styles.addItem(new Item("Triangular", 10));
 
         sizes.addItem(new Item("Small", 1));
-        sizes.addItem(new Item("Medium", 2));
-        sizes.addItem(new Item("Large", 4));
+        sizes.addItem(new Item("Medium", 1.5));
+        sizes.addItem(new Item("Large", 2.5));
 
-        flowers.addItem(new Item("Sunflowers", 250, 10));
-        flowers.addItem(new Item("Red Roses", 300, 20));
-        flowers.addItem(new Item("White Roses", 250, 10));
-        flowers.addItem(new Item("Tulips", 450, 50));
-        flowers.addItem(new Item("Daffodils", 200, 20));
+        flowers.addItem(new Item("Sunflowers", 30, 60));
+        flowers.addItem(new Item("Red Roses", 50, 60));
+        flowers.addItem(new Item("White Roses", 60, 60));
+        flowers.addItem(new Item("Tulips", 40, 60));
+        flowers.addItem(new Item("Daffodils", 35, 60));
 
         accessories.addItem(new Item("None", 0, 1));
         accessories.addItem(new Item("Name Card", 5, 20));
@@ -137,7 +137,7 @@ public class FioreFlowershop {
 
         priorities.addItem(new Item("Flexi", 1, 6));
         priorities.addItem(new Item("Normal", 1.5, 3));
-        priorities.addItem(new Item("Express", 3, 1));
+        priorities.addItem(new Item("Express", 2, 1));
 
         deliveryTypes.addItem(new Item("Pick Up", 0));
         deliveryTypes.addItem(new Item("Delivery", 10));
@@ -148,11 +148,11 @@ public class FioreFlowershop {
         season.addItem(new Item("Visit patient", 0));
         season.addItem(new Item("Funeral", 0));
 
-        flowerPot.addItem(new Item("Drinking glass", 10.00, 10));
-        flowerPot.addItem(new Item("Glass bottle", 10.00, 9));
-        flowerPot.addItem(new Item("Woolden box", 10.00, 15));
-        flowerPot.addItem(new Item("Jar", 10.00, 9));
-        flowerPot.addItem(new Item("Bud vase", 10.00, 12));
+        flowerPot.addItem(new Item("Drinking glass", 10.00, 60));
+        flowerPot.addItem(new Item("Glass bottle", 10.00, 60));
+        flowerPot.addItem(new Item("Woolden box", 10.00, 60));
+        flowerPot.addItem(new Item("Jar", 10.00, 60));
+        flowerPot.addItem(new Item("Bud vase", 10.00, 20));
 
         itemCatalogue.setStyles(styles);
         itemCatalogue.setSizes(sizes);
@@ -219,7 +219,7 @@ public class FioreFlowershop {
         discountedPackage.addProduct(discountPackage6);
         /*<------ End Woo Part -------->*/
 
-        /*<---- Begin Zion's part ---->*/   
+ /*<---- Begin Zion's part ---->*/
         Date orderTime1 = new Date();
         Date orderTime2 = new Date();
         Date orderTime3 = new Date();
@@ -266,6 +266,8 @@ public class FioreFlowershop {
         CatalogOrders CO3 = new CatalogOrders(priorities.getItem(1), new Item("Delivery", 10), todayDate, orderTime3, c3, "Pending", 360, false, retrieveDate, todayDate);
         CatalogOrders CO4 = new CatalogOrders(priorities.getItem(2), new Item("Delivery", 10), orderDate, orderTime4, c4, "Pending", 380, false, retrieveDate, todayDate);
         CatalogOrders CO5 = new CatalogOrders(priorities.getItem(3), new Item("Delivery", 10), orderDate, orderTime5, c3, "Pending", 320, false, retrieveDate, todayDate);
+        CatalogOrders CO6 = new CatalogOrders(priorities.getItem(1), new Item("Pick Up", 0), todayDate, orderTime2, c3, "Pending", 200, false, todayDate, todayDate);
+
 
         CO1.getCatalogPack().addProduct(new CatalogPackage("Valentine_1", styles.getItem(2), sizes.getItem(2), season.getItem(1), flowerPot.getItem(1), accessories.getItem(1), "Flower arrangement", "", 0, 200.00, 0, "Active", 1, "3 3 3"));
         CO1.getCatalogPack().addProduct(new CatalogPackage("BearFestival", styles.getItem(3), sizes.getItem(3), new Item(), new Item(), accessories.getItem(3), "Bouquets", "January", 2019, 120.00, 70, "Active", 5, "1 1 1"));
@@ -277,19 +279,20 @@ public class FioreFlowershop {
         CO4.getCatalogPack().addProduct(new CatalogPackage("BearFestival", styles.getItem(3), sizes.getItem(3), new Item(), new Item(), accessories.getItem(3), "Bouquets", "January", 2019, 120.00, 70, "Active", 5, "1 1 1"));
         CO5.getCatalogPack().addProduct(new CatalogPackage("Valentine_1", styles.getItem(2), sizes.getItem(2), season.getItem(1), flowerPot.getItem(1), accessories.getItem(1), "Flower arrangement", "", 0, 200.00, 0, "Active", 1, "3 3 3"));
         CO5.getCatalogPack().addProduct(new CatalogPackage("BearFestival", styles.getItem(3), sizes.getItem(3), new Item(), new Item(), accessories.getItem(3), "Bouquets", "January", 2019, 120.00, 70, "Active", 5, "1 1 1"));
-        
-        
+
         readyOrders.addOrder(CO1);
         readyOrders.addOrder(CO2);
         readyOrders.addOrder(CO3);
         readyOrders.addOrder(CO4);
         readyOrders.addOrder(CO5);
+        readyOrders.addOrder(CO6);
 
         catalogOrder.addOrder(CO1);
         catalogOrder.addOrder(CO2);
         catalogOrder.addOrder(CO3);
         catalogOrder.addOrder(CO4);
         catalogOrder.addOrder(CO5);
+        catalogOrder.addOrder(CO6);
         /*<------ End of Zion's Part ------>*/
 
         /*<------ Begin CP's Part -------->*/
@@ -378,20 +381,25 @@ public class FioreFlowershop {
 
     public static void userTypeSelection() {
         while (true) {
-            System.out.println("\nWELCOME TO FIORE FLOWERSHOP SDN BHD !");
-            System.out.println("\nPlease SELECT The Type Of User.");
-            System.out.println(GREEN + "[1] " + RESET + "Customer");
-            System.out.println(GREEN + "[2] " + RESET + "Staff");
-            System.out.println(GREEN + "[3] " + RESET + "Exit System");
-            System.out.print("Selection: ");
-            int userTypeChoice = s.nextInt();
-            s.nextLine();
-            if (userTypeChoice == 1) {
-                CustomerMaintenance.customerOptions();
-            } else if (userTypeChoice == 2) {
-                staffTypeSelection();
-            } else {
-                System.exit(0);
+            try {
+                System.out.println("\nWELCOME TO FIORE FLOWERSHOP SDN BHD !");
+                System.out.println("\nPlease SELECT The Type Of User.");
+                System.out.println(GREEN + "[1] " + RESET + "Customer");
+                System.out.println(GREEN + "[2] " + RESET + "Staff");
+                System.out.println(GREEN + "[3] " + RESET + "Exit System");
+                System.out.print("Selection: ");
+                int userTypeChoice = s.nextInt();
+                s.nextLine();
+                if (userTypeChoice == 1) {
+                    CustomerMaintenance.customerOptions();
+                } else if (userTypeChoice == 2) {
+                    staffTypeSelection();
+                } else {
+                    System.exit(0);
+                }
+            } catch (Exception e) {
+                System.out.println(ConsoleColors.RED + "Please enter a valid number\n" + ConsoleColors.RESET);
+                s.nextLine();
             }
         }
     }
@@ -546,47 +554,57 @@ public class FioreFlowershop {
             System.out.println(GREEN + "[5] " + RESET + "Back");
             System.out.print("Selection: ");
             int deliveryStaffChoice = s.nextInt();
-            s.nextLine();
+
             if (deliveryStaffChoice == 1) {
 
                 System.out.println(GREEN + "[1]" + RESET + "Today's Sorted Delivery Order List");
                 System.out.println(GREEN + "[2]" + RESET + "Search Sorted Delivery Order List by Date");
+                System.out.println(GREEN + "[3]" + RESET + "Back");
                 int deliveryChoice = s.nextInt();
-                s.nextLine();
 
                 if (deliveryChoice == 1) {
                     try {
                         Delivery.sortRouteDelivery(readyOrders, shopAddress);
+                        break;
+
                     } catch (ApiException | InterruptedException | IOException ex) {
                         Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } else if (deliveryChoice == 2) {
-                    try {
-                        System.out.print("Please enter date to search (yyyy-MM-dd): ");
+                    while (true) {
+                        try {
+                            System.out.print("Please enter date to search (yyyy-MM-dd): ");
 
-                        String dateStr = s.nextLine();
+                            String dateStr = s.next();
 
-                        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+                            SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 
-                        Date date = dateformat.parse(dateStr);
+                            Date date = dateformat.parse(dateStr);
 
-                        Delivery.searchSortRouteDelivery(readyOrders, shopAddress, date);
-                    } catch (ParseException ex) {
-                        Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+                            Delivery.searchSortRouteDelivery(readyOrders, shopAddress, date);
+
+                            break;
+
+                        } catch (Exception ex) {
+                            System.out.println(ConsoleColors.RED + "Please enter a valid date\n" + ConsoleColors.RESET);
+                        }
                     }
+                } else {
+                    break;
                 }
             } else if (deliveryStaffChoice == 2) {
                 try {
                     Delivery.sortRouteDelivery(readyOrders, shopAddress);
+                    break;
 
                 } catch (ApiException | InterruptedException | IOException ex) {
                     Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else if (deliveryStaffChoice == 3) {
                 DeliveryOptimization.distanceMatrix(shopAddress, deliveryOrder);
+                break;
             } else if (deliveryStaffChoice == 4) {
                 Delivery.searchPaidDelivery(paidOrder);
-            } else if (deliveryStaffChoice == 5) {
                 break;
             } else {
                 break;
@@ -603,7 +621,6 @@ public class FioreFlowershop {
             System.out.print("Selection: ");
 
             int choice = s.nextInt();
-            s.nextLine();
 
             if (choice == 1) {
                 System.out.println("\nPlease Select One Of The Options Below.");
@@ -619,22 +636,23 @@ public class FioreFlowershop {
                     Pickup.sortPickupOrder(readyOrders);
                 } else if (pickupChoice == 2) {
 
-                    try {
-                        s.nextLine();
+                    while (true) {
+                        try {
 
-                        System.out.print("Please enter date to search (yyyy-MM-dd): ");
+                            System.out.print("Please enter date to search (yyyy-MM-dd): ");
 
-                        String dateStr = s.nextLine();
+                            String dateStr = s.nextLine();
 
-                        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+                            SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 
-                        Date date = dateformat.parse(dateStr);
+                            Date date = dateformat.parse(dateStr);
 
-                        Pickup.searchPickUp(date, readyOrders);
+                            Pickup.searchPickUp(date, readyOrders);
 
-                    } catch (ParseException ex) {
-                        Logger.getLogger(FioreFlowershop.class
-                                .getName()).log(Level.SEVERE, null, ex);
+                            break;
+                        } catch (Exception ex) {
+                            System.out.println(ConsoleColors.RED + "Please enter a valid date\n" + ConsoleColors.RESET);
+                        }
                     }
 
                 } else if (pickupChoice == 3) {
@@ -645,6 +663,8 @@ public class FioreFlowershop {
                     String userID = s.nextLine();
 
                     Pickup.searchUserPickUp(userID, readyOrders, paidOrder);
+
+                    break;
                 } else if (pickupChoice == 4) {
 
                     s.nextLine();
@@ -655,6 +675,7 @@ public class FioreFlowershop {
 
                     Pickup.searchCorpPickUp(userID, readyOrders, paidOrder);
 
+                    break;
                 } else {
                     break;
                 }
@@ -671,22 +692,24 @@ public class FioreFlowershop {
                     if (deliveryChoice == 1) {
                         Delivery.sortDeliveryOrder(readyOrders);
                     } else if (deliveryChoice == 2) {
-                        try {
-                            s.nextLine();
+                        while (true) {
+                            try {
+                                s.nextLine();
 
-                            System.out.print("Please enter date to search (yyyy-MM-dd): ");
+                                System.out.print("Please enter date to search (yyyy-MM-dd): ");
 
-                            String dateStr = s.nextLine();
+                                String dateStr = s.nextLine();
 
-                            SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+                                SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 
-                            Date date = dateformat.parse(dateStr);
+                                Date date = dateformat.parse(dateStr);
 
-                            Delivery.searchDelivery(date, readyOrders);
+                                Delivery.searchDelivery(date, readyOrders);
 
-                        } catch (ParseException ex) {
-                            Logger.getLogger(FioreFlowershop.class
-                                    .getName()).log(Level.SEVERE, null, ex);
+                                break;
+                            } catch (Exception ex) {
+                                System.out.println(ConsoleColors.RED + "Please enter a valid date\n" + ConsoleColors.RESET);
+                            }
                         }
                     } else {
                         break;
@@ -695,6 +718,7 @@ public class FioreFlowershop {
             } else {
                 break;
             }
+            break;
         }
     }
 

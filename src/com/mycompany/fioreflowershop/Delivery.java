@@ -451,7 +451,7 @@ public class Delivery {
 
         System.out.println("Back to Origin: " + shopAddress);
         System.out.println("\nTotal Payment Amount: RM" + String.format("%.2f", totalPayment) + "\n");
-        System.out.println("\nTotal Distance: "  +  String.format("%.2f",(solver.getTourCost() / 1000)) + "km \n");
+        System.out.println("\nTotal Distance: " + String.format("%.2f", (solver.getTourCost() / 1000)) + "km \n");
 
         System.out.println("1. Record Payment");
         System.out.println("2. Back");
@@ -497,38 +497,7 @@ public class Delivery {
                     matchOrder = order;
                 }
             }
-
-//            while (cusIterator.hasNext()) {
-//
-//                CustomizedPackage order = cusIterator.next();
-//
-//                if (order.getOrderID().equals(orderID) && order.isPaymentStatus() == false) {
-//
-//                    if (order.getUser() instanceof Consumer) {
-//                        if (order instanceof CustomizedPackage) {
-//                            System.out.print(((CustomizedPackage) order).getOrderID() + "\t\t");
-//                            System.out.print(((CustomizedPackage) order).getDeliveryType().getName() + "\t");
-//                            System.out.print(df.format(order.getOrderDate()) + "\t\t");
-//                            //System.out.print(order.getUser().getUsername() + "\t");
-//                            //System.out.print(order.getUser().getPhone() + "\t");
-//                            // System.out.print(((CustomizedPackage) order).getFlower() + "\t");
-//                            System.out.print(((CustomizedPackage) order).CalculateOrder() + "\t\t\t");
-//                            //System.out.print(((CatalogOrders) order).getCatalogPack().getItem(i).getUserQuantity() + "\t");
-//                            if (order.isPaymentStatus()) {
-//                                System.out.print("Paid \t\t");
-//                            } else {
-//                                System.out.print("Pending \t\t");
-//                            }
-//                            if (order.getDateOfReceive() == null) {
-//                                System.out.print("Pending \n");
-//                            } else {
-//                                System.out.print(dfdt.format(order.getDateOfReceive()) + "\n");
-//                            }
-//                            matchOrder = order;
-//                        }
-//                    }
-//                }
-//            }
+            
             do {
 
                 System.out.println("1. Pay");
@@ -560,23 +529,39 @@ public class Delivery {
                             matchOrder.setPaymentTime(new Date());
                             matchOrder.setDateOfReceive(new Date());
                             genReceipt(matchOrder, payAmt, change);
+//                            try {
+//                                //FioreFlowershop.deliveryStaff();
+//                            } catch (ApiException ex) {
+//                                Logger.getLogger(Delivery.class.getName()).log(Level.SEVERE, null, ex);
+//                            } catch (InterruptedException ex) {
+//                                Logger.getLogger(Delivery.class.getName()).log(Level.SEVERE, null, ex);
+//                            } catch (IOException ex) {
+//                                Logger.getLogger(Delivery.class.getName()).log(Level.SEVERE, null, ex);
+//                            }
                         }
                     } while (payAmt < matchOrder.getOrderAmt());
                 } else if (payChoice == 2) {
-                    try {
-                        FioreFlowershop.deliveryStaff();
-                    } catch (ApiException ex) {
-                        Logger.getLogger(Delivery.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(Delivery.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (IOException ex) {
-                        Logger.getLogger(Delivery.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    break;
+//                    try {
+//                        FioreFlowershop.deliveryStaff();
+//                    } catch (ApiException ex) {
+//                        Logger.getLogger(Delivery.class.getName()).log(Level.SEVERE, null, ex);
+//                    } catch (InterruptedException ex) {
+//                        Logger.getLogger(Delivery.class.getName()).log(Level.SEVERE, null, ex);
+//                    } catch (IOException ex) {
+//                        Logger.getLogger(Delivery.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
                 } else {
                     System.out.println("Invalid input, please try again!");
                 }
 
             } while (payChoice != 1 || payChoice != 2);
+        } else {
+            try {
+                FioreFlowershop.deliveryStaff();
+            } catch (ApiException | InterruptedException | IOException ex) {
+                Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
@@ -753,9 +738,9 @@ public class Delivery {
 
             while (catIterator.hasNext()) {
                 item = catIterator.next();
-//                double nett = item.getPrice() * item.getUserQuantity();
-//                double subtotal = nett - ((nett * item.getDiscountRate()) / 100);
-//                System.out.println(item.getName() + "\t\t\t" + item.getUserQuantity() + "\t  " + String.format("%.2f", item.getPrice()) + "\t\t\t" + item.getDiscountRate() + "\t\t\t" + String.format("%.2f", subtotal));
+                double nett = item.getPrice() * item.getUserQuantity();
+                double subtotal = nett - ((nett * item.getDiscountRate()) / 100);
+                System.out.println(item.getName() + "\t\t\t" + item.getUserQuantity() + "\t  " + String.format("%.2f", item.getPrice()) + "\t\t\t" + item.getDiscountRate() + "\t\t\t" + String.format("%.2f", subtotal));
             }
 
             System.out.println("\n-------------------------------------------------------------------------------------------------");
@@ -769,14 +754,6 @@ public class Delivery {
             System.out.println("====================================================================================================");
         } else {
 
-//            ListIteratorInterface<Item> cus = ((CustomizedPackage) order).getFlowerList();
-//            CatalogPackage item;
-//            Iterator<CatalogPackage> catIterator = cat.getIterator();
-//
-//            while (catIterator.hasNext()) {
-//                item = catIterator.next();
-//                System.out.println(item.getName() + item.getFlower() + "\t\t\t" + item.getUserQuantity() + "\t\t" + item.getPrice() + "\t\t");
-//            }
             System.out.println("\n\t\t\t\t   Fiore Flowershop SDN.NHD ");
             System.out.println("\t\t\t\t    178, Jalan Sehala, ");
             System.out.println("\t\t\t\t 2404 No U Turn, 53300 Kuala Lumpur");
@@ -788,6 +765,10 @@ public class Delivery {
             System.out.println("==================================================================================================");
             System.out.println("ITEM \t\t\t QUANTITY \t PRICE (RM) \t\tDISCOUNT (%)\t\t AMOUNT (RM)");
             System.out.println("==================================================================================================");
+
+            for (int i = 1; i <= ((CustomizedPackage) order).getFlowerList().getTotalEntries(); i++) {
+                System.out.println(((CustomizedPackage) order).getFlowerList().getItem(i).getName() + ((CustomizedPackage) order).getFlowerList().getItem(i).getPrice());
+            }
 
             System.out.println("\n-------------------------------------------------------------------------------------------------");
             System.out.println("\tTOTAL (RM) : \t     \t\t\t\t\t\t\t\t" + String.format("%.2f", ((CustomizedPackage) order).CalculateOrder()));

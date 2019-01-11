@@ -332,13 +332,16 @@ public class Pickup {
         }
 
         if (user == null && !matchOrder.isEmpty()) {
-            System.out.println("\nUser ID does not exist in system!");
+            System.out.println("\nUser are not a Consumer!");
             FioreFlowershop.orderMenu();
 
         } else if (user != null && matchOrder.isEmpty()) {
             System.out.println(ANSI_RED + "User don't have any order with pending payment! Please try again!" + ANSI_RESET);
             FioreFlowershop.orderMenu();
 
+        } else if (user == null && matchOrder.isEmpty()) {
+            System.out.println("\nUser ID does not exist in system!");
+            FioreFlowershop.orderMenu();
         } else {
 
             System.out.println("Hi " + user.getUsername() + ",");
@@ -657,9 +660,9 @@ public class Pickup {
 
             while (catIterator.hasNext()) {
                 item = catIterator.next();
-//                double nett = item.getPrice() * item.getUserQuantity();
-//                double subtotal = nett - ((nett * item.getDiscountRate()) / 100);
-//                System.out.println(item.getName() + "\t\t\t" + item.getUserQuantity() + "\t  " + String.format("%.2f", item.getPrice()) + "\t\t\t" + item.getDiscountRate() + "\t\t\t" + String.format("%.2f", subtotal));
+                double nett = item.getPrice() * item.getUserQuantity();
+                double subtotal = nett - ((nett * item.getDiscountRate()) / 100);
+                System.out.println(item.getName() + "\t\t\t" + item.getUserQuantity() + "\t  " + String.format("%.2f", item.getPrice()) + "\t\t\t" + item.getDiscountRate() + "\t\t\t" + String.format("%.2f", subtotal));
             }
 
             System.out.println("\n-------------------------------------------------------------------------------------------------");
@@ -682,19 +685,18 @@ public class Pickup {
             System.out.println("Cashier : Admin");
             System.out.println("Payment Time : " + dt.format(order.getPaymentTime()));
             System.out.println("==================================================================================================");
-            System.out.println("ITEM \t\t\t QUANTITY \t PRICE (RM) \t\tDISCOUNT %\t\t AMOUNT (RM)");
+            System.out.println("ITEM \t\t\t\t PRICE (RM) \t\t\t\t AMOUNT (RM)");
             System.out.println("==================================================================================================");
 
-            ListIteratorInterface<Item> flowerList = ((CustomizedPackage) order).getFlowerList();
-
-            Iterator<Item> flowerIterator = flowerList.getIterator();
-
-            Item item;
-
-            while (flowerIterator.hasNext()) {
-                item = flowerIterator.next();
-                System.out.println(item.getName() + "\t\t\t" + item.getQuantity() + "\t\t" + item.getPrice() + "\t\t");
+            for (int i = 1; i <= ((CustomizedPackage) order).getFlowerList().getTotalEntries(); i++) {
+                System.out.println(((CustomizedPackage) order).getFlowerList().getItem(i).getName() + ((CustomizedPackage) order).getFlowerList().getItem(i).getPrice());
             }
+
+            System.out.println("Size: " + ((CustomizedPackage) order).getSize().getName() + "" + ((CustomizedPackage) order).getSize().getPrice());
+            System.out.println("Arrangement Style: " + ((CustomizedPackage) order).getStyle().getName() + "" + ((CustomizedPackage) order).getStyle().getPrice());
+            System.out.println("Accesscories: " + ((CustomizedPackage) order).getAccessory().getName() + "" + ((CustomizedPackage) order).getAccessory().getPrice());
+            System.out.println("Delivery Type: " + ((CustomizedPackage) order).getDeliveryType().getName() + " - RM " + ((CustomizedPackage) order).getDeliveryType().getPrice());
+            System.out.println("Order Priority: " + order.getPriority().getName() + " - Price x " + +((CustomizedPackage) order).getPriority().getPrice());
 
             System.out.println("\n-------------------------------------------------------------------------------------------------");
             System.out.println("\tTOTAL (RM) : \t     \t\t\t\t\t\t\t\t" + String.format("%.2f", ((CustomizedPackage) order).CalculateOrder()));

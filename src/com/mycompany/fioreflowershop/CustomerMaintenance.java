@@ -58,7 +58,7 @@ public class CustomerMaintenance {
                 } else {
                     break;
                 }
-            }else{
+            } else {
                 customerMenu();
             }
         }
@@ -140,8 +140,6 @@ public class CustomerMaintenance {
                             FioreFlowershop.gotoCatalogOrders(customerLoggedIn, corporateLoggedIn);
                         } else if (orderChoice == 2) {
                             FioreFlowershop.gotoCustomizePackage(customerLoggedIn, 1);
-                        } else if (orderChoice == 3) {
-                            
                         } else {
                             break;
                         }
