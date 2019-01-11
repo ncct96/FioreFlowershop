@@ -53,6 +53,7 @@ public class FioreFlowershop {
 
     private static CatalogPackageInterface<CatalogPackage> catalogPack1 = new CatalogPackageList<>();
     private static CatalogPackageInterface<CatalogPackage> catalogPack2 = new CatalogPackageList<>();
+    private static CatalogPackageInterface<CatalogPackage> catalogPack3 = new CatalogPackageList<>();
 
     private static String[] origin = {"Taiping", "Penang", "Cheras", "Johor"};
     private static String[] dest = {"Taiping", "Penang", "Cheras", "Johor"};
@@ -220,6 +221,13 @@ public class FioreFlowershop {
         catalogPack2.addProduct(normalPackage3);
         catalogPack2.addProduct(discountPackage2);
         catalogPack2.addProduct(discountPackage6);
+        
+        //CK own catalog discount package
+        CatalogPackage discountPackageNoice = new CatalogPackage("nPackage", styles.getItem(2), sizes.getItem(2), "Autumn", flowerPot.getItem(2), accessories.getItem(2), "Fresh flower", "January", 2019, 170, 10, "Active", 5, "2 2 2");
+        CatalogPackage discountPackageNotNoice = new CatalogPackage("NPackage", styles.getItem(3), sizes.getItem(3), "Winter", flowerPot.getItem(3), accessories.getItem(3), "Bouquets", "January", 2019, 120, 10, "Active", 7, "3 3 3");
+        catalogPack3.addProduct(discountPackageNoice);
+        catalogPack3.addProduct(discountPackageNotNoice);
+        
         //String orderID, CatalogPackageInterface<CatalogPackage> catalogPack, Item priority,
         //String orderType, Date orderDate, Date orderTime, User user, String orderStatus, double orderAmt,
         //boolean paymentStatus, Date retrieveDate, Date retrieveTime      
@@ -262,8 +270,8 @@ public class FioreFlowershop {
         } catch (ParseException ex) {
             Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
         }
-        CatalogOrders C01 = new CatalogOrders("CO1001", catalogPack1, priorities.getItem(1), "Pick Up", todayDate, orderTime1, cc1, "Order Status", 560, false, todayDate, todayDate);
-        CatalogOrders CO2 = new CatalogOrders("CO1002", catalogPack2, priorities.getItem(1), "Pick Up", todayDate, orderTime2, cc2, "Order Status", 200, false, todayDate, todayDate);
+        CatalogOrders C01 = new CatalogOrders("CO1001", catalogPack3, priorities.getItem(1), "Pick Up", todayDate, orderTime1, cc1, "Order Status", 560, false, todayDate, todayDate);
+        CatalogOrders CO2 = new CatalogOrders("CO1002", catalogPack3, priorities.getItem(1), "Pick Up", todayDate, orderTime2, cc2, "Order Status", 200, false, todayDate, todayDate);
         CatalogOrders CO3 = new CatalogOrders("CO1003", catalogPack1, priorities.getItem(1), "Delivery", todayDate, orderTime3, c3, "Order Status", 360, false, retrieveDate, todayDate);
         CatalogOrders CO4 = new CatalogOrders("CO1004", catalogPack1, priorities.getItem(2), "Delivery", orderDate, orderTime4, c4, "Order Status", 380, false, retrieveDate, todayDate);
         CatalogOrders CO5 = new CatalogOrders("CO1005", catalogPack1, priorities.getItem(3), "Delivery", orderDate, orderTime5, c3, "Order Status", 320, false, retrieveDate, todayDate);
