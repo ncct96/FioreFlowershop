@@ -166,8 +166,8 @@ public class FioreFlowershop {
         accessories.addItem(new Item("Woven Basket", 35, 10));
 
         priorities.addItem(new Item("Flexi", 1, 6));
-        priorities.addItem(new Item("Normal", 1.5, 4));
-        priorities.addItem(new Item("Express", 3, 2));
+        priorities.addItem(new Item("Normal", 1.5, 3));
+        priorities.addItem(new Item("Express", 3, 1));
 
         deliveryTypes.addItem(new Item("Pick Up", 0));
         deliveryTypes.addItem(new Item("Delivery", 10));
@@ -298,6 +298,12 @@ public class FioreFlowershop {
         CatalogOrders CO4 = new CatalogOrders("CO1004", catalogPack1, priorities.getItem(2), "Delivery", orderDate, orderTime4, c4, "Order Status", 380, false, retrieveDate, todayDate);
         CatalogOrders CO5 = new CatalogOrders("CO1005", catalogPack1, priorities.getItem(3), "Delivery", orderDate, orderTime5, c3, "Order Status", 320, false, retrieveDate, todayDate);
 
+        readyOrders.addOrder(C01);
+        readyOrders.addOrder(CO2);
+        readyOrders.addOrder(CO3);
+        readyOrders.addOrder(CO4);
+        readyOrders.addOrder(CO5);
+        
         catalogOrder.addOrder(C01);
         catalogOrder.addOrder(CO2);
         catalogOrder.addOrder(CO3);
@@ -364,6 +370,10 @@ public class FioreFlowershop {
         readyOrders.addOrder(customizedPackages.dequeuePackage());
    
         SortOrders.sortAllOrders(readyOrders);
+        
+        for(int i = 1; i <= readyOrders.getSize(); i++){
+            System.out.println(readyOrders.getOrder(i).getID() + " " + readyOrders.getOrder(i).getPriority().getName() + " " + readyOrders.getOrder(i).getDeliveryDate());
+        }
         /*<------ End CP's Part -------->*/
     }
 
