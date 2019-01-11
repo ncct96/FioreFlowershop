@@ -15,23 +15,24 @@ import java.util.Date;
  */
 public class CatalogOrders extends Order {
     private String orderID;
+    private static int id = 1;
     private CatalogPackageInterface<CatalogPackage> catalogPack = new CatalogPackageList<>();
     private Date orderTime,retrieveTime;
     private Item priority, deliveryType;
 
     public CatalogOrders() {
+        
     }
 
-    public CatalogOrders(String orderID, CatalogPackageInterface<CatalogPackage> catalogPack, Item priority,
-            Item deliveryType, Date orderDate, Date orderTime, User user, String orderStatus, double orderAmt,
-            boolean paymentStatus, Date retrieveDate, Date retrieveTime) {
+    public CatalogOrders(Item priority,Item deliveryType, Date orderDate, Date orderTime, 
+            User user, String orderStatus, double orderAmt,boolean paymentStatus, Date retrieveDate, Date retrieveTime) {
         super(deliveryType.getName(), orderDate, user, orderStatus, orderAmt, paymentStatus, retrieveDate);
+        orderID = "CO" + id;
         this.orderID = orderID;
-        this.catalogPack = catalogPack;    
+        ++id;  
         this.priority = priority;
         this.orderTime = orderTime;
-        this.retrieveTime = retrieveTime;
-        
+        this.retrieveTime = retrieveTime;   
         super.setDeliveryDate(retrieveDate);
         super.setPriority(priority);
         super.setID(orderID);
