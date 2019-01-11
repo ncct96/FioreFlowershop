@@ -268,6 +268,7 @@ public class FioreFlowershop {
         CatalogOrders CO5 = new CatalogOrders(priorities.getItem(3), new Item("Delivery", 10), orderDate, orderTime5, c3, "Pending", 320, false, retrieveDate, todayDate);
         CatalogOrders CO6 = new CatalogOrders(priorities.getItem(1), new Item("Pick Up", 0), todayDate, orderTime2, c3, "Pending", 200, false, todayDate, todayDate);
 
+
         CO1.getCatalogPack().addProduct(new CatalogPackage("Valentine_1", styles.getItem(2), sizes.getItem(2), season.getItem(1), flowerPot.getItem(1), accessories.getItem(1), "Flower arrangement", "", 0, 200.00, 0, "Active", 1, "3 3 3"));
         CO1.getCatalogPack().addProduct(new CatalogPackage("BearFestival", styles.getItem(3), sizes.getItem(3), new Item(), new Item(), accessories.getItem(3), "Bouquets", "January", 2019, 120.00, 70, "Active", 5, "1 1 1"));
         CO2.getCatalogPack().addProduct(new CatalogPackage("Valentine_1", styles.getItem(2), sizes.getItem(2), season.getItem(1), flowerPot.getItem(1), accessories.getItem(1), "Flower arrangement", "", 0, 200.00, 0, "Active", 1, "3 3 3"));
@@ -292,6 +293,7 @@ public class FioreFlowershop {
         catalogOrder.addOrder(CO4);
         catalogOrder.addOrder(CO5);
         catalogOrder.addOrder(CO6);
+        /*<------ End of Zion's Part ------>*/
 
         /*<------ Begin CP's Part -------->*/
         Calendar cal = Calendar.getInstance();
@@ -486,8 +488,8 @@ public class FioreFlowershop {
                 CatalogMaintenance.restockQuantity(itemCatalogue);
             } else if (inventoryClerkChoice == 3) {
                 CustomizePackageMaintenance.itemsMenu(itemCatalogue, customizedPackages);
-            } else {
-                //staffTypeSelection();
+            } else if(inventoryClerkChoice == 4){
+                staffTypeSelection();
                 break;
             }
         }
