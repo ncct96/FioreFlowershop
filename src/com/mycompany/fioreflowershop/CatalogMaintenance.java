@@ -88,13 +88,15 @@ public class CatalogMaintenance {
             if (productTypes < 0 || productTypes > 4) {
                 System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter the number within the range of 1 - 4." + FioreFlowershop.ConsoleColors.RESET);
             }
+            if(isInteger == false){
+                System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter the number only." + FioreFlowershop.ConsoleColors.RESET);
+            }
             System.out.print("Please enter the product type(1-4): ");
             if (scan.hasNextInt()) {
                 productTypes = scan.nextInt();
                 isInteger = true;
             } else {
                 isInteger = false;
-                System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter the number only." + FioreFlowershop.ConsoleColors.RESET);
                 scan.next();
             }
         } while (!(isInteger) || productTypes < 1 || productTypes > 4);
