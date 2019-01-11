@@ -14,6 +14,7 @@ import com.mycompany.fioreflowershop.modal.InvoiceHistory;
 import com.mycompany.fioreflowershop.modal.User;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -31,7 +32,7 @@ public class InvoicePayment {
     private static InvoiceHistory ih;
     private static InvoiceInterface<InvoiceHistory> paymentHistory = new InvoiceADT<>();
     private static OrderListInterface<CatalogOrders> tempCatalog = new OrderList<>();
-    private static ListInterface<String> userEmail = new LinkedList<>();
+    private static ArrayList<String> userEmail = new ArrayList<>();
     private static OrderListInterface<CatalogOrders> order = FioreFlowershop.getCatalogOrder();
     private static Iterator<CatalogOrders> catIterator = order.getIterator();
     private static int invoiceNumber = 100;
@@ -97,7 +98,7 @@ public class InvoicePayment {
                 }
                 try{//For user to enter their desired invoice number
                     System.out.print("\n" + "Please Enter The Invoice Number ID : ");
-                    String enteredID = s.nextLine();
+                    String enteredID = s.nextLine(); 
                     for(int a = 1; a <= paymentHistory.getTotalInvoice(); a++){
                         if(paymentHistory.getInvoice(a).getInvoiceNumber().equals(enteredID)){
                             ih =  paymentHistory.getInvoice(a);
@@ -147,7 +148,7 @@ public class InvoicePayment {
         System.out.println("==================================================================================================================");
         for(int i = 1; i <= paymentHistory.getTotalInvoice(); i++){
             if(paymentHistory.getInvoice(i).getInvoiceNumber().equals(invoiceID)){
-                for(int k = 1; k <= paymentHistory.getInvoice(i).getCatalogOrder().getSize(); k++){
+//                for(int k = 1; k <= paymentHistory.getInvoice(i).getCatalogOrder().getSize(); k++){
                     for(int p = 1; p <= paymentHistory.getInvoice(i).getCatalogOrder().getOrder(i).getCatalogPack().getTotalEntries(); p++){
                         Date orderDate = paymentHistory.getInvoice(i).getCatalogOrder().getOrder(i).getOrderDate();
                         CatalogPackage orderInstance = paymentHistory.getInvoice(i).getCatalogOrder().getOrder(i).getCatalogPack().getProduct(p);
@@ -159,16 +160,54 @@ public class InvoicePayment {
                             discountPrice += discountPrice(orderInstance.getPrice(), orderInstance.getUserQuantity(), orderInstance.getDiscountRate());
                         }
                     }
-                }
+//                }
             }
         }
         invoiceMenuFooter(totalPrice, discountPrice);
         System.out.println("\n");
-        invoiceMaintenance();
+    }
+    
+    public static int usernameCheck(int yearEntered, int monthEntered){
+        int count = 0; boolean status = true;
+        for(int i = 1; i <= order.getSize(); i++){
+                //If the shopping cart is not null and status is false
+                if((order.getOrder(i).getUser()!= null && order.getOrder(i).getUser() instanceof CorporateCustomer) && !order.getOrder(i).isPaymentStatus()){
+                    //If the entered month and the order month is the same
+                    if((order.getOrder(i).getOrderDate().getMonth()+1) == monthEntered &&
+                            (order.getOrder(i).getOrderDate().getYear()+1900) == yearEntered){
+                        if(userEmail.size() != 0){
+                                for(int k = 0; k < userEmail.size(); k++){
+                                    if(userEmail.get(k).equals(order.getOrder(i).getUser().getEmail())){
+                                        status = false;
+                                        break;
+                                    }else {
+                                        status = true;
+                                    }
+                                }
+                                if(status){
+                                    if(order.getOrder(i).getUser() instanceof CorporateCustomer){
+                                        String email = order.getOrder(i).getUser().getEmail();
+                                        userEmail.add(email);
+                                    }
+                                }
+                            }else if(order.getOrder(i).getUser() instanceof CorporateCustomer && userEmail.size() == 0){
+                                String email = order.getOrder(i).getUser().getEmail();
+                                userEmail.add(email);
+                            }
+                    }
+                }
+            }
+            for(int j = 0; j < userEmail.size(); j++){
+                int num = j+1;
+                System.out.println(BLUE + "[" + num + "] " + RESET
+                + userEmail.get(j));
+                count++;
+            }
+            return count;
     }
     
     public static void generateInvoiceP1(){
-        int yearEntered = 0; int monthEntered = 0; int count = 0; boolean status = true;
+        int yearEntered = 0; int monthEntered = 0; int count = 0;
         while (true){  
             System.out.println("\n====================================================");
             System.out.println("\t Invoice Generation");
@@ -184,47 +223,14 @@ public class InvoicePayment {
                 break;
             }
             if(order.getSize() != 0){
-            System.out.println("\n====================================================");
-            System.out.println("\tAvailable Customer For Invoice Generation");
-            System.out.println("====================================================");
-            for(int i = 1; i <= order.getSize(); i++){
-                //If the shopping cart is not null and status is false
-                if(order.getOrder(i).getUser()!= null && !order.getOrder(i).isPaymentStatus()){
-                    //If the entered month and the order month is the same
-                    if((order.getOrder(i).getOrderDate().getMonth()+1) == monthEntered &&
-                            (order.getOrder(i).getOrderDate().getYear()+1900) == yearEntered){
-                        if(userEmail.getTotalEntries() != 0){
-                                for(int k = 1; k <= userEmail.getTotalEntries(); k++){
-                                    if(userEmail.getItem(k).equals(order.getOrder(i).getUser().getEmail())){
-                                        status = false;
-                                        break;
-                                    }else {
-                                        status = true;
-                                    }
-                                }
-                                if(status){
-                                    if(order.getOrder(i).getUser() instanceof CorporateCustomer){
-                                        String email = order.getOrder(i).getUser().getEmail();
-                                        userEmail.add(email);
-                                    }
-                                }
-                            }else{
-                                String email = order.getOrder(i).getUser().getEmail();
-                                userEmail.add(email);
-                            }
-                    }
-                }
+                System.out.println("\n====================================================");
+                System.out.println("\tAvailable Customer For Invoice Generation");
+                System.out.println("====================================================");
+                count = usernameCheck(yearEntered, monthEntered);
             }
-            for(int j = 1; j <= userEmail.getTotalEntries(); j++){
-                    System.out.println(BLUE + "[" + j + "] " + RESET
-                    + userEmail.getItem(j));
-                    count++;
-                }
-        }
             if(count <= 0){
                     System.out.println(RED+"\nSorry, No Records Found !"+RESET);
                     break;
-//                    invoiceMaintenance();
             }else{
                 try{
                     int choiceCorp = 0; 
@@ -240,10 +246,8 @@ public class InvoicePayment {
                 }catch(Exception e){
                     System.out.println("\n"+RED+"\nAn Error had occurred. Please Enter The Number of the Corporate Customer."+RESET);
                     System.out.println(BLUE+"\nRedirecting Back to Invoice Maintenance Menu......" + RESET);
-//                    invoiceMaintenance();
                     break;
                 }
-
             }
         }
     }
@@ -263,16 +267,16 @@ public class InvoicePayment {
             System.out.println("["+ cc.getAddress() +"]");
             System.out.println("[City, ST ZIP Code]");
             System.out.println("[" + cc.getPhone() + "]");
-            System.out.println("===============================================================================================================");
-            System.out.println("Date Ordered | Description \t\t  | Quantity    |  Discount Rate(%) | Unit Price(RM) |  Total(RM)");
+            System.out.println("================================================================================================================");
+            System.out.println("Date Ordered | Description \t\t\t  | Quantity    |  Discount Rate(%) | Unit Price(RM) |  Total(RM)");
         }
     }
     
     public static void invoiceMenuFooter(double totalPrice, double discountPrice){
-        System.out.println("\n\n\t\t\t\t\t\t\t\t Subtotal : \t\t\t " + totalPrice);
-        System.out.println("\t\t\t\t\t\t\t\t Total Discount :\t\t  " + discountPrice);
-        System.out.println("\t\t\t\t\t\t\t\t =========================================");
-        System.out.println("\t\t\t\t\t\t\t\t BALANCE DUE : \t\t\t "+ (totalPrice-discountPrice));
+        System.out.println("\n\n\t\t\t\t\t\t\t\t\t Subtotal : \t\t\t  " + totalPrice);
+        System.out.println("\t\t\t\t\t\t\t\t\t Total Discount :\t\t  " + discountPrice);
+        System.out.println("\t\t\t\t\t\t\t\t\t =========================================");
+        System.out.println("\t\t\t\t\t\t\t\t\t BALANCE DUE : \t\t\t  "+ (totalPrice-discountPrice));
         totalPrice = 0; discountPrice = 0;
     }
     
@@ -281,8 +285,8 @@ public class InvoicePayment {
         invoiceMenu(user);
         for(int i = 1; i <= order.getSize() ;i++){
             if(order.getOrder(i).getUser().getEmail().equals(user.getEmail()) && !order.getOrder(i).isPaymentStatus()){
-                for(int k = 1; k <= order.getOrder(i).getCatalogPack().getTotalEntries(); k++){
-                    if(order.getOrder(k).getCatalogPack() != null){
+                if(order.getOrder(i).getCatalogPack() != null){
+                    for(int k = 1; k <= order.getOrder(i).getCatalogPack().getTotalEntries(); k++){
                         CatalogPackage orderInstance = order.getOrder(i).getCatalogPack().getProduct(k);
                         Date orderDate = order.getOrder(k).getOrderDate();
                         System.out.println(sdf.format(orderDate)+"   | "
@@ -323,37 +327,7 @@ public class InvoicePayment {
                 System.out.println("\n====================================================");
                 System.out.println("\tAvailable Customer For Invoice Payment");
                 System.out.println("====================================================");
-                boolean status = true;
-                for(int i = 1; i <= order.getSize(); i++){
-                    if(order.getOrder(i).getUser()!= null && !order.getOrder(i).isPaymentStatus()){
-                        if((order.getOrder(i).getOrderDate().getMonth()+1) == monthEntered &&(order.getOrder(i).getOrderDate().getYear()+1900) == yearEntered){
-                            if(userEmail.getTotalEntries() != 0){
-                                for(int k = 1; k <= userEmail.getTotalEntries(); k++){
-                                    if(userEmail.getItem(k).equals(order.getOrder(i).getUser().getEmail())){
-                                        /*DO NOTHING*/
-                                        status = false;
-                                        break;
-                                    }else {
-                                        status = true;
-                                    }
-                                }
-                                if(status){
-                                    if(order.getOrder(i).getUser() instanceof CorporateCustomer){
-                                       userEmail.add(order.getOrder(i).getUser().getEmail()); 
-                                    }
-                                }
-                            }else{
-                                userEmail.add(order.getOrder(i).getUser().getEmail());
-                            }
-                        }
-                    }
-                }
-                for(int j = 1; j <= userEmail.getTotalEntries(); j++){
-                    System.out.println(BLUE + "[" + j + "] " + RESET
-                    + userEmail.getItem(j));
-                    count++;
-                }
-
+                count = usernameCheck(yearEntered, monthEntered);
             if(count <= 0){
                     System.out.println(RED+"\nSorry, No Records Found !"+RESET);
                     invoiceMaintenance();
@@ -367,7 +341,7 @@ public class InvoicePayment {
                             break;
                         }
                     }
-                    invoicePaymentP2(FioreFlowershop.getUserList().getUser(choiceCorp));
+                    invoicePaymentP2(FioreFlowershop.getUserList().getUser(choiceCorp)); break;
                 }catch(Exception e){
                     System.out.println("\n"+RED+"\nAn Error had occurred. Please Enter The Number of the Corporate Customer."+RESET);
                     break;
@@ -382,10 +356,9 @@ public class InvoicePayment {
         double affordable = 0; double totalPrice = 0; double discountPrice = 0; int credit = 0;
         invoiceMenu(user);
         for(int i = 1; i <= order.getSize(); i++){
-            if(order.getOrder(i)!= null){
-                if(order.getOrder(i).getUser().getEmail().equals(user.getEmail()) && !order.getOrder(i).isPaymentStatus()){
-                    if(order.getOrder(i).getCatalogPack() != null){
-                        for(int k = 1; k <= order.getOrder(i).getCatalogPack().getTotalEntries(); k++){
+            if(order.getOrder(i).getUser().getEmail().equals(user.getEmail()) && !order.getOrder(i).isPaymentStatus()){ 
+                if(order.getOrder(i).getCatalogPack() != null){
+                    for(int k = 1; k <= order.getOrder(i).getCatalogPack().getTotalEntries(); k++){
                         CatalogPackage orderInstance = order.getOrder(i).getCatalogPack().getProduct(k);
                         Date orderDate = order.getOrder(k).getOrderDate();
                         System.out.println(sdf.format(orderDate)+"   | "
@@ -396,11 +369,10 @@ public class InvoicePayment {
                         +orderInstance.getPrice()
                         *orderInstance.getUserQuantity());
                         totalPrice += totalPrice(orderInstance.getPrice(),orderInstance.getUserQuantity());
-                            if(order.getOrder(i).getCatalogPack().getProduct(k).getDiscountRate() != 0){
-                                discountPrice += discountPrice(orderInstance.getPrice(),orderInstance.getUserQuantity(), orderInstance.getDiscountRate());
-                            }
-                            tempCatalog.addOrder(order.getOrder(i));
+                        if(order.getOrder(i).getCatalogPack().getProduct(k).getDiscountRate() != 0){
+                            discountPrice += discountPrice(orderInstance.getPrice(),orderInstance.getUserQuantity(), orderInstance.getDiscountRate());
                         }
+                        tempCatalog.addOrder(order.getOrder(i));
                     }
                 }
             }
@@ -432,7 +404,7 @@ public class InvoicePayment {
             if(enter.isEmpty()){
                 //Set corporate customer's payment status to true
                 for(int i = 1; i <= FioreFlowershop.getCorporateList().getTotalCorporate(); i++){
-                    if(FioreFlowershop.getCorporateList().getCorporate(i).equals(user)){
+                    if(FioreFlowershop.getCorporateList().getCorporate(i).getEmail().equals(user.getEmail())){
                         FioreFlowershop.getCorporateList().getCorporate(i).setPaymentStatus(true);
                         //Set corporate customer's credit spent back to 0
                         FioreFlowershop.getCorporateList().getCorporate(i).setCreditSpent(0);
@@ -445,25 +417,21 @@ public class InvoicePayment {
                         order.getOrder(k).setPaymentStatus(true);
                     }
                 }
-                //Store paid invoice into an invoice link list
-                for(int l = 1;l <= order.getSize(); l++){
-                    if(order.getOrder(l).getUser().equals(user)){
-                        for(int m = 1; m <= userEmail.getTotalEntries(); m++){
-                            if(userEmail.getItem(m).equals(order.getOrder(l).getUser().getEmail())){
-                                userEmail.remove(m);
-                            }
-                        }
-                        paymentHistory.addInvoice(new InvoiceHistory(invoiceNumber,tempCatalog, cc, today));
+                //Remove Paid User from the String link list
+                for(int m = 0; m < userEmail.size(); m++){
+                    if(userEmail.get(m).equals(user.getEmail())){
+                        userEmail.remove(m); 
                     }
                 }
-                    ++invoiceNumber; 
-                    System.out.println(GREEN+"\nPayment Success, Thanks for the Patronage :D "+ RESET);
-                    System.out.println(BLUE+"Redirecting Back to User Selection Menu......" + RESET);
-                    FioreFlowershop.userTypeSelection();
+                //Store paid invoice into an invoice link list
+                paymentHistory.addInvoice(new InvoiceHistory(invoiceNumber, tempCatalog, cc, today));
+                ++invoiceNumber; 
+                System.out.println(GREEN+"\nPayment Success, Thanks for the Patronage :D "+ RESET);
+                System.out.println(BLUE+"Redirecting Back to User Selection Menu......" + RESET);
             }else {//Payment Cancel by user
                 System.out.println(RED+"\nPayment Cancelled, Redirecting back to Main Menu."+RESET);
-                FioreFlowershop.counterStaff();
             }
         }
+        tempCatalog = new OrderList<>();
     }
 }

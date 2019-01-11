@@ -1142,7 +1142,6 @@ public class CatalogOrder {
         } else if (!con.trim().equalsIgnoreCase("Y")) {
             typeSelection(normalPackage, discountedPackage);
         }
-
     }
 
     public static void bouquetsCatalog(CatalogPackageInterface<CatalogPackage> normalPackage, CatalogPackageInterface<CatalogPackage> discountedPackage) {
