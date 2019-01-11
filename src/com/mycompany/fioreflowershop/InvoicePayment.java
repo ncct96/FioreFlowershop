@@ -14,6 +14,7 @@ import com.mycompany.fioreflowershop.modal.InvoiceHistory;
 import com.mycompany.fioreflowershop.modal.User;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -31,7 +32,7 @@ public class InvoicePayment {
     private static InvoiceHistory ih;
     private static InvoiceInterface<InvoiceHistory> paymentHistory = new InvoiceADT<>();
     private static OrderListInterface<CatalogOrders> tempCatalog = new OrderList<>();
-    private static ListInterface<String> userEmail = new LinkedList<>();
+    private static ArrayList<String> userEmail = new ArrayList<>();
     private static OrderListInterface<CatalogOrders> order = FioreFlowershop.getCatalogOrder();
     private static Iterator<CatalogOrders> catIterator = order.getIterator();
     private static int invoiceNumber = 100;
@@ -166,8 +167,47 @@ public class InvoicePayment {
         System.out.println("\n");
     }
     
+    public static int usernameCheck(int yearEntered, int monthEntered){
+        int count = 0; boolean status = true;
+        for(int i = 1; i <= order.getSize(); i++){
+                //If the shopping cart is not null and status is false
+                if((order.getOrder(i).getUser()!= null && order.getOrder(i).getUser() instanceof CorporateCustomer) && !order.getOrder(i).isPaymentStatus()){
+                    //If the entered month and the order month is the same
+                    if((order.getOrder(i).getOrderDate().getMonth()+1) == monthEntered &&
+                            (order.getOrder(i).getOrderDate().getYear()+1900) == yearEntered){
+                        if(userEmail.size() != 0){
+                                for(int k = 0; k < userEmail.size(); k++){
+                                    if(userEmail.get(k).equals(order.getOrder(i).getUser().getEmail())){
+                                        status = false;
+                                        break;
+                                    }else {
+                                        status = true;
+                                    }
+                                }
+                                if(status){
+                                    if(order.getOrder(i).getUser() instanceof CorporateCustomer){
+                                        String email = order.getOrder(i).getUser().getEmail();
+                                        userEmail.add(email);
+                                    }
+                                }
+                            }else if(order.getOrder(i).getUser() instanceof CorporateCustomer && userEmail.size() == 0){
+                                String email = order.getOrder(i).getUser().getEmail();
+                                userEmail.add(email);
+                            }
+                    }
+                }
+            }
+            for(int j = 0; j < userEmail.size(); j++){
+                int num = j+1;
+                System.out.println(BLUE + "[" + num + "] " + RESET
+                + userEmail.get(j));
+                count++;
+            }
+            return count;
+    }
+    
     public static void generateInvoiceP1(){
-        int yearEntered = 0; int monthEntered = 0; int count = 0; boolean status = true;
+        int yearEntered = 0; int monthEntered = 0; int count = 0;
         while (true){  
             System.out.println("\n====================================================");
             System.out.println("\t Invoice Generation");
@@ -183,47 +223,14 @@ public class InvoicePayment {
                 break;
             }
             if(order.getSize() != 0){
-            System.out.println("\n====================================================");
-            System.out.println("\tAvailable Customer For Invoice Generation");
-            System.out.println("====================================================");
-            for(int i = 1; i <= order.getSize(); i++){
-                //If the shopping cart is not null and status is false
-                if((order.getOrder(i).getUser()!= null && order.getOrder(i).getUser() instanceof CorporateCustomer) && !order.getOrder(i).isPaymentStatus()){
-                    //If the entered month and the order month is the same
-                    if((order.getOrder(i).getOrderDate().getMonth()+1) == monthEntered &&
-                            (order.getOrder(i).getOrderDate().getYear()+1900) == yearEntered){
-                        if(userEmail.getTotalEntries() != 0){
-                                for(int k = 1; k <= userEmail.getTotalEntries(); k++){
-                                    if(userEmail.getItem(k).equals(order.getOrder(i).getUser().getEmail())){
-                                        status = false;
-                                        break;
-                                    }else {
-                                        status = true;
-                                    }
-                                }
-                                if(status){
-                                    if(order.getOrder(i).getUser() instanceof CorporateCustomer){
-                                        String email = order.getOrder(i).getUser().getEmail();
-                                        userEmail.add(email);
-                                    }
-                                }
-                            }else if(order.getOrder(i).getUser() instanceof CorporateCustomer && userEmail.getTotalEntries() == 0){
-                                String email = order.getOrder(i).getUser().getEmail();
-                                userEmail.add(email);
-                            }
-                    }
-                }
+                System.out.println("\n====================================================");
+                System.out.println("\tAvailable Customer For Invoice Generation");
+                System.out.println("====================================================");
+                count = usernameCheck(yearEntered, monthEntered);
             }
-            for(int j = 1; j <= userEmail.getTotalEntries(); j++){
-                    System.out.println(BLUE + "[" + j + "] " + RESET
-                    + userEmail.getItem(j));
-                    count++;
-                }
-        }
             if(count <= 0){
                     System.out.println(RED+"\nSorry, No Records Found !"+RESET);
                     break;
-//                    invoiceMaintenance();
             }else{
                 try{
                     int choiceCorp = 0; 
@@ -239,10 +246,8 @@ public class InvoicePayment {
                 }catch(Exception e){
                     System.out.println("\n"+RED+"\nAn Error had occurred. Please Enter The Number of the Corporate Customer."+RESET);
                     System.out.println(BLUE+"\nRedirecting Back to Invoice Maintenance Menu......" + RESET);
-//                    invoiceMaintenance();
                     break;
                 }
-
             }
         }
     }
@@ -322,37 +327,7 @@ public class InvoicePayment {
                 System.out.println("\n====================================================");
                 System.out.println("\tAvailable Customer For Invoice Payment");
                 System.out.println("====================================================");
-                boolean status = true;
-                for(int i = 1; i <= order.getSize(); i++){
-                    if((order.getOrder(i).getUser()!= null && order.getOrder(i).getUser() instanceof CorporateCustomer) && !order.getOrder(i).isPaymentStatus()){
-                        if((order.getOrder(i).getOrderDate().getMonth()+1) == monthEntered &&(order.getOrder(i).getOrderDate().getYear()+1900) == yearEntered){
-                            if(userEmail.getTotalEntries() != 0){
-                                for(int k = 1; k <= userEmail.getTotalEntries(); k++){
-                                    if(userEmail.getItem(k).equals(order.getOrder(i).getUser().getEmail())){
-                                        /*DO NOTHING*/
-                                        status = false;
-                                        break;
-                                    }else {
-                                        status = true;
-                                    }
-                                }
-                                if(status){
-                                    if(order.getOrder(i).getUser() instanceof CorporateCustomer){
-                                       userEmail.add(order.getOrder(i).getUser().getEmail()); 
-                                    }
-                                }
-                            }else if(order.getOrder(i).getUser() instanceof CorporateCustomer && userEmail.getTotalEntries() == 0){
-                                userEmail.add(order.getOrder(i).getUser().getEmail());
-                            }
-                        }
-                    }
-                }
-                for(int j = 1; j <= userEmail.getTotalEntries(); j++){
-                    System.out.println(BLUE + "[" + j + "] " + RESET
-                    + userEmail.getItem(j));
-                    count++;
-                }
-
+                count = usernameCheck(yearEntered, monthEntered);
             if(count <= 0){
                     System.out.println(RED+"\nSorry, No Records Found !"+RESET);
                     invoiceMaintenance();
@@ -443,14 +418,13 @@ public class InvoicePayment {
                     }
                 }
                 //Remove Paid User from the String link list
-                for(int m = 1; m <= userEmail.getTotalEntries(); m++){
-                    if(userEmail.getItem(m).equals(user.getEmail())){
+                for(int m = 0; m < userEmail.size(); m++){
+                    if(userEmail.get(m).equals(user.getEmail())){
                         userEmail.remove(m); 
                     }
                 }
                 //Store paid invoice into an invoice link list
                 paymentHistory.addInvoice(new InvoiceHistory(invoiceNumber, tempCatalog, cc, today));
-                tempCatalog = new OrderList<>();
                 ++invoiceNumber; 
                 System.out.println(GREEN+"\nPayment Success, Thanks for the Patronage :D "+ RESET);
                 System.out.println(BLUE+"Redirecting Back to User Selection Menu......" + RESET);
@@ -458,5 +432,6 @@ public class InvoicePayment {
                 System.out.println(RED+"\nPayment Cancelled, Redirecting back to Main Menu."+RESET);
             }
         }
+        tempCatalog = new OrderList<>();
     }
 }

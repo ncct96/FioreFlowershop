@@ -100,7 +100,7 @@ public class FioreFlowershop {
 
         corporate.addCorporate(cc1);
         corporate.addCorporate(cc2);
-        corporate.getCorporate(1).setCreditSpent(2500);
+        corporate.getCorporate(1).setCreditSpent(4500);
         corporate.getCorporate(2).setCreditSpent(1500);
         /*<------ End Ck Part -------->*/
 
