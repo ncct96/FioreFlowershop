@@ -33,8 +33,6 @@ public class FioreFlowershop {
     private static ConsumerInterface<Consumer> consumer = new ConsumerADT<>();
     private static CorporateInterface<CorporateCustomer> corporate = new CorporateADT<>();
     private static UserInterface<User> user = new UserADT<>();
-//    private static SortedListInterface<User> testSort = new SortedLinkList<>();
-    private static SortedListInterface<User> testSort = new SortedLinkList<>();
     private static OrderListInterface<Order> pickupOrder = new OrderList<Order>();
     private static OrderListInterface<Order> deliveryOrder = new OrderList<Order>();
     private static OrderListInterface<Order> paidOrder = new OrderList<Order>();
@@ -272,19 +270,19 @@ public class FioreFlowershop {
         }
 
         //Adding of order to Catalog Order for Delivery & Pickup Testing
-        CatalogOrders C01 = new CatalogOrders("CO1", catalogPack1, priorities.getItem(1), new Item("Pick Up", 0), todayDate, orderTime1, cc1, "Order Status", 560, false, todayDate, todayDate);
+        CatalogOrders CO1 = new CatalogOrders("CO1", catalogPack1, priorities.getItem(1), new Item("Pick Up", 0), todayDate, orderTime1, cc1, "Order Status", 560, false, todayDate, todayDate);
         CatalogOrders CO2 = new CatalogOrders("CO2", catalogPack2, priorities.getItem(1), new Item("Pick Up", 0), todayDate, orderTime2, cc2, "Order Status", 200, false, todayDate, todayDate);
         CatalogOrders CO3 = new CatalogOrders("CO3", catalogPack1, priorities.getItem(1), new Item("Delivery", 10), todayDate, orderTime3, c3, "Order Status", 360, false, retrieveDate, todayDate);
         CatalogOrders CO4 = new CatalogOrders("CO4", catalogPack1, priorities.getItem(2), new Item("Delivery", 10), orderDate, orderTime4, c4, "Order Status", 380, false, retrieveDate, todayDate);
         CatalogOrders CO5 = new CatalogOrders("CO5", catalogPack1, priorities.getItem(3), new Item("Delivery", 10), orderDate, orderTime5, c3, "Order Status", 320, false, retrieveDate, todayDate);
 
-        readyOrders.addOrder(C01);
+        readyOrders.addOrder(CO1);
         readyOrders.addOrder(CO2);
         readyOrders.addOrder(CO3);
         readyOrders.addOrder(CO4);
         readyOrders.addOrder(CO5);
 
-        catalogOrder.addOrder(C01);
+        catalogOrder.addOrder(CO1);
         catalogOrder.addOrder(CO2);
         catalogOrder.addOrder(CO3);
         catalogOrder.addOrder(CO4);
