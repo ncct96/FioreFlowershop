@@ -17,7 +17,7 @@ public class CatalogPackage implements Comparable<CatalogPackage> {
     //Data field
     private String name;
     private Item style, size, flower;
-    private String season;
+    private Item season;
     private Item flowerPot, accessory, priority, deliveryType;
     private String productType, promoMonth;
     private int promoYear;
@@ -45,7 +45,7 @@ public class CatalogPackage implements Comparable<CatalogPackage> {
         this.flowerNeeded = flowerNeeded;
     }
 
-    public CatalogPackage(String name, Item style, Item size, String season, Item flowerPot, Item accessory, String productType, String promoMonth, int promoYear, double price, int discountRate, String status, String flowerNeeded) {
+    public CatalogPackage(String name, Item style, Item size, Item season, Item flowerPot, Item accessory, String productType, String promoMonth, int promoYear, double price, int discountRate, String status, String flowerNeeded) {
         this.name = name;
         this.style = style;
         this.size = size;
@@ -61,7 +61,7 @@ public class CatalogPackage implements Comparable<CatalogPackage> {
         this.flowerNeeded = flowerNeeded;
     }
 
-    public CatalogPackage(String name, Item style, Item size, String season, Item flowerPot, Item accessory, String productType, String promoMonth, int promoYear, double price, int discountRate, String status, int userQuantity, String flowerNeeded) {
+    public CatalogPackage(String name, Item style, Item size, Item season, Item flowerPot, Item accessory, String productType, String promoMonth, int promoYear, double price, int discountRate, String status, int userQuantity, String flowerNeeded) {
         this.name = name;
         this.style = style;
         this.size = size;
@@ -112,11 +112,11 @@ public class CatalogPackage implements Comparable<CatalogPackage> {
         this.flower = flower;
     }
 
-    public String getSeason() {
+    public Item getSeason() {
         return season;
     }
 
-    public void setSeason(String season) {
+    public void setSeason(Item season) {
         this.season = season;
     }
 
