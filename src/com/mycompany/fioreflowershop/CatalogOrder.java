@@ -797,6 +797,7 @@ public class CatalogOrder {
             }
         } while (!(isInteger) || userMenuOption < 1 || userMenuOption > 4);
         if (userMenuOption == 4) {
+            scan.nextLine();
             displayCatalog(normalPackage, discountedPackage);
         } else if (userMenuOption == 1) {
             freshFlowerCatalog(normalPackage, discountedPackage);
@@ -1735,3 +1736,4 @@ public class CatalogOrder {
         }
     }
 }
+
