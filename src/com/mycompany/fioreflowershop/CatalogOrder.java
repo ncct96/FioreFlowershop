@@ -1056,7 +1056,7 @@ public class CatalogOrder {
             if (sameItem) {
                 catalogPack.getProduct(sameIndex).setUserQuantity(quantity + catalogPack.getProduct(sameIndex).getUserQuantity());
             } else if (!sameItem) {
-                catalogPack.addProduct(new CatalogPackage(freshFlower.getProduct(itemSelection).getName(), freshFlower.getProduct(itemSelection).getStyle(), freshFlower.getProduct(itemSelection).getSize(), "", freshFlower.getProduct(itemSelection).getFlowerPot(), freshFlower.getProduct(itemSelection).getAccessory(), freshFlower.getProduct(itemSelection).getProductType(), freshFlower.getProduct(itemSelection).getPromoMonth(), freshFlower.getProduct(itemSelection).getPromoYear(), freshFlower.getProduct(itemSelection).getPrice(), freshFlower.getProduct(itemSelection).getDiscountRate(), freshFlower.getProduct(itemSelection).getStatus(), quantity, freshFlower.getProduct(itemSelection).getFlowerNeeded()));
+//                catalogPack.addProduct(new CatalogPackage(freshFlower.getProduct(itemSelection).getName(), freshFlower.getProduct(itemSelection).getStyle(), freshFlower.getProduct(itemSelection).getSize(), "", freshFlower.getProduct(itemSelection).getFlowerPot(), freshFlower.getProduct(itemSelection).getAccessory(), freshFlower.getProduct(itemSelection).getProductType(), freshFlower.getProduct(itemSelection).getPromoMonth(), freshFlower.getProduct(itemSelection).getPromoYear(), freshFlower.getProduct(itemSelection).getPrice(), freshFlower.getProduct(itemSelection).getDiscountRate(), freshFlower.getProduct(itemSelection).getStatus(), quantity, freshFlower.getProduct(itemSelection).getFlowerNeeded()));
             }
         } else if (customer == null && corporate != null) {
             //calculate credit spent by corporate customer          
@@ -1129,7 +1129,7 @@ public class CatalogOrder {
                 if (sameItem) {
                     catalogPack.getProduct(sameIndex).setUserQuantity(quantity + catalogPack.getProduct(sameIndex).getUserQuantity());
                 } else if (!sameItem) {
-                    catalogPack.addProduct(new CatalogPackage(freshFlower.getProduct(itemSelection).getName(), freshFlower.getProduct(itemSelection).getStyle(), freshFlower.getProduct(itemSelection).getSize(), "", freshFlower.getProduct(itemSelection).getFlowerPot(), freshFlower.getProduct(itemSelection).getAccessory(), freshFlower.getProduct(itemSelection).getProductType(), freshFlower.getProduct(itemSelection).getPromoMonth(), freshFlower.getProduct(itemSelection).getPromoYear(), freshFlower.getProduct(itemSelection).getPrice(), freshFlower.getProduct(itemSelection).getDiscountRate(), freshFlower.getProduct(itemSelection).getStatus(), quantity, freshFlower.getProduct(itemSelection).getFlowerNeeded()));
+//                    catalogPack.addProduct(new CatalogPackage(freshFlower.getProduct(itemSelection).getName(), freshFlower.getProduct(itemSelection).getStyle(), freshFlower.getProduct(itemSelection).getSize(), "", freshFlower.getProduct(itemSelection).getFlowerPot(), freshFlower.getProduct(itemSelection).getAccessory(), freshFlower.getProduct(itemSelection).getProductType(), freshFlower.getProduct(itemSelection).getPromoMonth(), freshFlower.getProduct(itemSelection).getPromoYear(), freshFlower.getProduct(itemSelection).getPrice(), freshFlower.getProduct(itemSelection).getDiscountRate(), freshFlower.getProduct(itemSelection).getStatus(), quantity, freshFlower.getProduct(itemSelection).getFlowerNeeded()));
                 }
             }
         }
@@ -1334,7 +1334,7 @@ public class CatalogOrder {
             if (sameItem) {
                 catalogPack.getProduct(sameIndex).setUserQuantity(quantity + catalogPack.getProduct(sameIndex).getUserQuantity());
             } else if (!sameItem) {
-                catalogPack.addProduct(new CatalogPackage(bouquets.getProduct(itemSelection).getName(), bouquets.getProduct(itemSelection).getStyle(), bouquets.getProduct(itemSelection).getSize(), "", bouquets.getProduct(itemSelection).getFlowerPot(), bouquets.getProduct(itemSelection).getAccessory(), bouquets.getProduct(itemSelection).getProductType(), bouquets.getProduct(itemSelection).getPromoMonth(), bouquets.getProduct(itemSelection).getPromoYear(), bouquets.getProduct(itemSelection).getPrice(), bouquets.getProduct(itemSelection).getDiscountRate(), bouquets.getProduct(itemSelection).getStatus(), quantity, bouquets.getProduct(itemSelection).getFlowerNeeded()));
+//                catalogPack.addProduct(new CatalogPackage(bouquets.getProduct(itemSelection).getName(), bouquets.getProduct(itemSelection).getStyle(), bouquets.getProduct(itemSelection).getSize(), "", bouquets.getProduct(itemSelection).getFlowerPot(), bouquets.getProduct(itemSelection).getAccessory(), bouquets.getProduct(itemSelection).getProductType(), bouquets.getProduct(itemSelection).getPromoMonth(), bouquets.getProduct(itemSelection).getPromoYear(), bouquets.getProduct(itemSelection).getPrice(), bouquets.getProduct(itemSelection).getDiscountRate(), bouquets.getProduct(itemSelection).getStatus(), quantity, bouquets.getProduct(itemSelection).getFlowerNeeded()));
             }
         } else if (customer == null && corporate != null) {
             //adding credit spent by corporate customer for selected item
@@ -1407,7 +1407,7 @@ public class CatalogOrder {
                 if (sameItem) {
                     catalogPack.getProduct(sameIndex).setUserQuantity(quantity + catalogPack.getProduct(sameIndex).getUserQuantity());
                 } else if (!sameItem) {
-                    catalogPack.addProduct(new CatalogPackage(bouquets.getProduct(itemSelection).getName(), bouquets.getProduct(itemSelection).getStyle(), bouquets.getProduct(itemSelection).getSize(), "", bouquets.getProduct(itemSelection).getFlowerPot(), bouquets.getProduct(itemSelection).getAccessory(), bouquets.getProduct(itemSelection).getProductType(), bouquets.getProduct(itemSelection).getPromoMonth(), bouquets.getProduct(itemSelection).getPromoYear(), bouquets.getProduct(itemSelection).getPrice(), bouquets.getProduct(itemSelection).getDiscountRate(), bouquets.getProduct(itemSelection).getStatus(), quantity, bouquets.getProduct(itemSelection).getFlowerNeeded()));
+//                    catalogPack.addProduct(new CatalogPackage(bouquets.getProduct(itemSelection).getName(), bouquets.getProduct(itemSelection).getStyle(), bouquets.getProduct(itemSelection).getSize(), "", bouquets.getProduct(itemSelection).getFlowerPot(), bouquets.getProduct(itemSelection).getAccessory(), bouquets.getProduct(itemSelection).getProductType(), bouquets.getProduct(itemSelection).getPromoMonth(), bouquets.getProduct(itemSelection).getPromoYear(), bouquets.getProduct(itemSelection).getPrice(), bouquets.getProduct(itemSelection).getDiscountRate(), bouquets.getProduct(itemSelection).getStatus(), quantity, bouquets.getProduct(itemSelection).getFlowerNeeded()));
                 }
             }
         }

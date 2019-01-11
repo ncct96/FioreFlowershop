@@ -19,12 +19,12 @@ public class ItemCatalogue {
     private ItemListInterface<Item> priorities = new ItemList<>();
     private ItemListInterface<Item> deliveryTypes = new ItemList<>();
     private ItemListInterface<Item> flowerPot = new ItemList<>();
-    private ItemListInterface<String> season = new ItemList<>();
+    private ItemListInterface<Item> season = new ItemList<>();
 
     public ItemCatalogue() {
     }
     
-    public ItemCatalogue(ItemListInterface<Item> styles, ItemListInterface<Item> sizes, ItemListInterface<Item> flowers, ItemListInterface<Item> accessories, ItemListInterface<Item> priorities, ItemListInterface<Item> deliveryTypes , ItemListInterface<Item> flowerPot, ItemListInterface<String> season) {
+    public ItemCatalogue(ItemListInterface<Item> styles, ItemListInterface<Item> sizes, ItemListInterface<Item> flowers, ItemListInterface<Item> accessories, ItemListInterface<Item> priorities, ItemListInterface<Item> deliveryTypes , ItemListInterface<Item> flowerPot, ItemListInterface<Item> season) {
         this.styles = styles;
         this.sizes = sizes;
         this.flowers = flowers;
@@ -100,11 +100,11 @@ public class ItemCatalogue {
         this.flowerPot = flowerPot;
     }
 
-    public ItemListInterface<String> getSeason() {
+    public ItemListInterface<Item> getSeason() {
         return season;
     }
 
-    public void setSeason(ItemListInterface<String> season) {
+    public void setSeason(ItemListInterface<Item> season) {
         this.season = season;
     }
     
