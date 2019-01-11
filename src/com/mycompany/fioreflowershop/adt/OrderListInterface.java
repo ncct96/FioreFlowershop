@@ -21,11 +21,13 @@ public interface OrderListInterface<T> {
 
     public boolean replaceOrder(int position, T order);
 
-    public void clearOrderList();
+    public void clear();
 
     public T getOrder(int position);
 
     public int getSize();
+    
+    public boolean contains(T order);
 
     public boolean isEmpty();
 
