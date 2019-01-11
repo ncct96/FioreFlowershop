@@ -696,18 +696,54 @@ public class CatalogMaintenance {
         int productNumber = 0, catalogSize = 0, productField = 0, sizeOption = 0, productTypes = 0, quantity = 0, discountRate = 0, promoYear = 0, month = 0, minRange = 0, maxRange = 0,
                 season = 0, flowerPot = 0, existNameChecker = 0, style = 0, size = 0, acessories = 0, numberNeeded, flower = 0, accessory = 0, maxNumber = 0;
         String name = "", promoMonth = "", flowerNeeded = "";
-        boolean validInput, isDouble, editAllCatalog = false, editAllMonthlyCatalog = false;
+        boolean validInput, isDouble, editAllCatalog = false, editAllMonthlyCatalog = false, validNumber = false;
         double price = 0;
+        ListIteratorInterface<Integer> validNumberList = new LinkedList<Integer>();
 
         ListIteratorInterface<Item> displayFlowers = new LinkedList<Item>();
         ListIteratorInterface<Item> selectedFlowers = new LinkedList<Item>();
         CatalogPackage catalogSizeChecking = new CatalogPackage();
         CatalogPackage catalogCheckingPackage = new CatalogPackage();
+        
+        //Get current month & year
+        Calendar c = Calendar.getInstance();
+        int currentYear = c.get(Calendar.YEAR);
+        int currentMonth = c.get(Calendar.MONTH);
+        String curentMonthString = "";
+
+        //Convert the month integer to String
+        if (currentMonth + 1 == 1) {
+            curentMonthString = "January";
+        } else if (currentMonth + 1 == 2) {
+            curentMonthString = "February";
+        } else if (currentMonth + 1 == 3) {
+            curentMonthString = "March";
+        } else if (currentMonth + 1 == 4) {
+            curentMonthString = "April";
+        } else if (currentMonth + 1 == 5) {
+            curentMonthString = "May";
+        } else if (currentMonth + 1 == 6) {
+            curentMonthString = "June";
+        } else if (currentMonth + 1 == 7) {
+            curentMonthString = "July";
+        } else if (currentMonth + 1 == 8) {
+            curentMonthString = "August";
+        } else if (currentMonth + 1 == 9) {
+            curentMonthString = "September";
+        } else if (currentMonth + 1 == 10) {
+            curentMonthString = "October";
+        } else if (currentMonth + 1 == 11) {
+            curentMonthString = "November";
+        } else if (currentMonth + 1 == 12) {
+            curentMonthString = "December";
+        }
 
         //Check for normal catalog size or promotion catalog size
         if (catalogTypes == 1) {
+            validNumberList.clear();
             for (int i = 1; i < normalPackage.getTotalEntries() + 1; i++) {
                 if (normalPackage.getProduct(i).getStatus().equals("Active")) {
+                    validNumberList.add(i);
                     catalogSize++;
                 }
             }
@@ -724,18 +760,20 @@ public class CatalogMaintenance {
             }
             maxRange = 8;
         } else if (catalogTypes == 2) {
+            validNumberList.clear();
             for (int i = 1; i < discountedPackage.getTotalEntries() + 1; i++) {
-                if (discountedPackage.getProduct(i).getStatus().equals("Active")) {
+                if (discountedPackage.getProduct(i).getStatus().equals("Active") && discountedPackage.getProduct(i).getPromoMonth().equals(curentMonthString) && discountedPackage.getProduct(i).getPromoYear() == currentYear) {
+                    validNumberList.add(i);
                     catalogSize++;
                 }
             }
             for (int i = 1; i < discountedPackage.getTotalEntries() + 1; i++) {
-                if (discountedPackage.getProduct(i).getStatus().equals("Active")) {
+                if (discountedPackage.getProduct(i).getStatus().equals("Active") && discountedPackage.getProduct(i).getPromoMonth().equals(curentMonthString) && discountedPackage.getProduct(i).getPromoYear() == currentYear) {
                     maxNumber = i;
                 }
             }            
             for (int i = 1; i < discountedPackage.getTotalEntries() + 1; i++) {
-                if (discountedPackage.getProduct(i).getStatus().equals("Active")) {
+                if (discountedPackage.getProduct(i).getStatus().equals("Active") && discountedPackage.getProduct(i).getPromoMonth().equals(curentMonthString) && discountedPackage.getProduct(i).getPromoYear() == currentYear) {
                     minRange = i;
                     break;
                 }
@@ -752,22 +790,28 @@ public class CatalogMaintenance {
                 if (scan.hasNextInt()) {
                     productNumber = scan.nextInt();
                     isInteger = true;
+                    
+                    for(int i = 1; i < validNumberList.getTotalEntries()+1; i++){
+                        if (productNumber == validNumberList.getItem(i)) {
+                            validNumber = true;
+                        }
+                    }
                 } else {
                     isInteger = false;
                     System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter the number only.\n" + FioreFlowershop.ConsoleColors.RESET);
                     scan.next();
                 }
-            } while (!(isInteger) || productNumber < minRange || productNumber > maxNumber);
+            } while (!(isInteger) || validNumber == false);
 
             //Edit each of the product field(Normal Catalog Editor)
             do {
                 if (catalogTypes == 1) {
-                    System.out.print("\nWhich part of the product you wish to edit?\n" + FioreFlowershop.ConsoleColors.BLUE + "Note 1: if want to edit the flower needed quantity, please select Flower[4]\nNote 2: if want to edit the season & flower pot, select the flower arrangement in the product type[6]\n" + FioreFlowershop.ConsoleColors.RESET
+                    System.out.print("\nWhich part of the product you wish to edit?\n" + FioreFlowershop.ConsoleColors.BLUE + "Note 1: if want to edit the flower needed quantity, please select Flower[4]\n"+ FioreFlowershop.ConsoleColors.RESET + FioreFlowershop.ConsoleColors.BLUE + "Note 2: if want to edit the season & flower pot, select the flower arrangement in the product type[6]\n" + FioreFlowershop.ConsoleColors.RESET
                             + FioreFlowershop.ConsoleColors.GREEN + "[1]" + FioreFlowershop.ConsoleColors.RESET + " Name\n" + FioreFlowershop.ConsoleColors.GREEN + "[2]" + FioreFlowershop.ConsoleColors.RESET + " Style\n" + FioreFlowershop.ConsoleColors.GREEN + "[3]" + FioreFlowershop.ConsoleColors.RESET + " Size\n"
                             + FioreFlowershop.ConsoleColors.GREEN + "[4]" + FioreFlowershop.ConsoleColors.RESET + " Flower\n" + FioreFlowershop.ConsoleColors.GREEN + "[5]" + FioreFlowershop.ConsoleColors.RESET + " Accessory\n" + FioreFlowershop.ConsoleColors.GREEN + "[6]" + FioreFlowershop.ConsoleColors.RESET + " Product type\n"
                             + FioreFlowershop.ConsoleColors.GREEN + "[7]" + FioreFlowershop.ConsoleColors.RESET + " All\n" + FioreFlowershop.ConsoleColors.GREEN + "[8]" + FioreFlowershop.ConsoleColors.RESET + " Cancel\n");
                 } else if (catalogTypes == 2) {
-                    System.out.print("\nWhich part of the product you wish to edit?\n" + FioreFlowershop.ConsoleColors.BLUE + "Note 1: if want to edit the flower needed quantity, please select Flower[4]\nNote 2: if want to edit the season & flower pot, select the flower arrangement in the product type[6]\n" + FioreFlowershop.ConsoleColors.RESET
+                    System.out.print("\nWhich part of the product you wish to edit?\n" + FioreFlowershop.ConsoleColors.BLUE + "Note 1: if want to edit the flower needed quantity, please select Flower[4]\n"+ FioreFlowershop.ConsoleColors.RESET + FioreFlowershop.ConsoleColors.BLUE + "Note 2: if want to edit the season & flower pot, select the flower arrangement in the product type[6]\n" + FioreFlowershop.ConsoleColors.RESET
                             + FioreFlowershop.ConsoleColors.GREEN + "[1]" + FioreFlowershop.ConsoleColors.RESET + " Name\n" + FioreFlowershop.ConsoleColors.GREEN + "[2]" + FioreFlowershop.ConsoleColors.RESET + " Style\n" + FioreFlowershop.ConsoleColors.GREEN + "[3]" + FioreFlowershop.ConsoleColors.RESET + " Size\n"
                             + FioreFlowershop.ConsoleColors.GREEN + "[4]" + FioreFlowershop.ConsoleColors.RESET + " Flower\n" + FioreFlowershop.ConsoleColors.GREEN + "[5]" + FioreFlowershop.ConsoleColors.RESET + " Accessory\n" + FioreFlowershop.ConsoleColors.GREEN + "[6]" + FioreFlowershop.ConsoleColors.RESET + " Product type\n" + FioreFlowershop.ConsoleColors.GREEN
                             + "[7]" + FioreFlowershop.ConsoleColors.RESET + " Promotion month\n" + FioreFlowershop.ConsoleColors.GREEN + "[8]" + FioreFlowershop.ConsoleColors.RESET + " Promotion year\n" + FioreFlowershop.ConsoleColors.GREEN + "[9]" + FioreFlowershop.ConsoleColors.RESET + " Discount rate\n" + FioreFlowershop.ConsoleColors.GREEN + "[10]"
@@ -801,7 +845,7 @@ public class CatalogMaintenance {
                     name = scan.nextLine();
                     if (name == null || name.isEmpty()) {
                         validInput = false;
-                        System.out.println("\n" + FioreFlowershop.ConsoleColors.RED + "This field cannot be empty\n" + FioreFlowershop.ConsoleColors.RESET);
+                        System.out.println("\n" + FioreFlowershop.ConsoleColors.RED + "This field cannot be empty" + FioreFlowershop.ConsoleColors.RESET);
                     } else {
                         for (int i = 1; i < normalPackage.getTotalEntries() + 1; i++) {
                             catalogCheckingPackage = normalPackage.getProduct(i);
@@ -818,7 +862,7 @@ public class CatalogMaintenance {
                         }
 
                         if (existNameChecker > 0) {
-                            System.out.println(FioreFlowershop.ConsoleColors.RED + "This name has been taken before please use another different name.\n" + FioreFlowershop.ConsoleColors.RESET);
+                            System.out.println(FioreFlowershop.ConsoleColors.RED + "This name has been taken before please use another different name." + FioreFlowershop.ConsoleColors.RESET);
                         }
                     }
                 } while (validInput == false || existNameChecker > 0);
@@ -1335,7 +1379,7 @@ public class CatalogMaintenance {
 
             if (productField == 9 || editAllMonthlyCatalog == true) {
                 do {
-                    System.out.print("Please enter the discount rate for monthly promotion(0 - 100%): ");
+                    System.out.print("Please enter the discount rate for monthly promotion(1 - 99%): ");
                     if (scan.hasNextInt()) {
                         discountRate = scan.nextInt();
                         isInteger = true;
@@ -1344,7 +1388,7 @@ public class CatalogMaintenance {
                         System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter the whole number only.\n" + FioreFlowershop.ConsoleColors.RESET);
                         scan.next();
                     }
-                } while (!(isInteger) || discountRate < 0 || discountRate > 100);
+                } while (!(isInteger) || discountRate <= 0 || discountRate > 99);
                 catalogPackage = discountedPackage.getProduct(productNumber);
 
                 if (editAllMonthlyCatalog == false) {
@@ -1477,42 +1521,58 @@ public class CatalogMaintenance {
 
     //deactive product in Catalog / Monthly promotion Catalog
     public static void deactiveCatalogItem(String navigationTitle, CatalogPackageInterface<CatalogPackage> normalPackage, CatalogPackageInterface<CatalogPackage> discountedPackage, int catalogTypes, ItemCatalogue itemCatalogue) {
-        int productNumber = 0, catalogSize = 0, minRange = 0, maxRange = 0;
+        int productNumber = 0, catalogSize = 0;
+        boolean validNumber = false;
+        ListIteratorInterface<Integer> validNumberList = new LinkedList<Integer>();
         char userConfirmation;
         CatalogPackage catalogPackage = new CatalogPackage();
+        //Get current month & year
+        Calendar c = Calendar.getInstance();
+        int currentYear = c.get(Calendar.YEAR);
+        int currentMonth = c.get(Calendar.MONTH);
+        String curentMonthString = "";
+
+        //Convert the month integer to String
+        if (currentMonth + 1 == 1) {
+            curentMonthString = "January";
+        } else if (currentMonth + 1 == 2) {
+            curentMonthString = "February";
+        } else if (currentMonth + 1 == 3) {
+            curentMonthString = "March";
+        } else if (currentMonth + 1 == 4) {
+            curentMonthString = "April";
+        } else if (currentMonth + 1 == 5) {
+            curentMonthString = "May";
+        } else if (currentMonth + 1 == 6) {
+            curentMonthString = "June";
+        } else if (currentMonth + 1 == 7) {
+            curentMonthString = "July";
+        } else if (currentMonth + 1 == 8) {
+            curentMonthString = "August";
+        } else if (currentMonth + 1 == 9) {
+            curentMonthString = "September";
+        } else if (currentMonth + 1 == 10) {
+            curentMonthString = "October";
+        } else if (currentMonth + 1 == 11) {
+            curentMonthString = "November";
+        } else if (currentMonth + 1 == 12) {
+            curentMonthString = "December";
+        }
 
         if (catalogTypes == 1) {
+            validNumberList.clear();
             for (int i = 1; i < normalPackage.getTotalEntries() + 1; i++) {
                 if (normalPackage.getProduct(i).getStatus().equals("Active")) {
+                    validNumberList.add(i);
                     catalogSize++;
-                }
-            }
-            for (int i = 1; i < normalPackage.getTotalEntries() + 1; i++) {
-                if (normalPackage.getProduct(i).getStatus().equals("Active")) {
-                    maxRange = i;
-                }
-            }            
-            for (int i = 1; i < normalPackage.getTotalEntries() + 1; i++) {
-                if (normalPackage.getProduct(i).getStatus().equals("Active")) {
-                    minRange = i;
-                    break;
                 }
             }
         } else if (catalogTypes == 2) {
+            validNumberList.clear();
             for (int i = 1; i < discountedPackage.getTotalEntries() + 1; i++) {
-                if (discountedPackage.getProduct(i).getStatus().equals("Active")) {
+                if (discountedPackage.getProduct(i).getStatus().equals("Active")&& discountedPackage.getProduct(i).getPromoMonth().equals(curentMonthString) && discountedPackage.getProduct(i).getPromoYear() == currentYear) {
+                    validNumberList.add(i);
                     catalogSize++;
-                }
-            }
-            for (int i = 1; i < discountedPackage.getTotalEntries() + 1; i++) {
-                if (discountedPackage.getProduct(i).getStatus().equals("Active")) {
-                    maxRange = i;
-                }
-            }            
-            for (int i = 1; i < discountedPackage.getTotalEntries() + 1; i++) {
-                if (discountedPackage.getProduct(i).getStatus().equals("Active")) {
-                    minRange = i;
-                    break;
                 }
             }
         }
@@ -1524,12 +1584,18 @@ public class CatalogMaintenance {
                 if (scan.hasNextInt()) {
                     productNumber = scan.nextInt();
                     isInteger = true;
+                    
+                    for(int i = 1; i < validNumberList.getTotalEntries()+1; i++){
+                        if (productNumber == validNumberList.getItem(i)) {
+                            validNumber = true;
+                        }
+                    }
                 } else {
                     isInteger = false;
                     System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter the number only." + FioreFlowershop.ConsoleColors.RESET);
                     scan.next();
                 }
-            } while (!(isInteger) || productNumber < minRange || productNumber > maxRange);
+            } while (!(isInteger) || validNumber == false);
 
             do {
                 System.out.print("Are you sure you want to delete this record" + FioreFlowershop.ConsoleColors.GREEN + "[y/n]" + FioreFlowershop.ConsoleColors.RESET + " ? ");

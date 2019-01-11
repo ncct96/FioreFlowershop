@@ -53,6 +53,29 @@ public class CustomizedPackage extends Order {
         this.priority = priority;
         this.deliveryType = deliveryType;
     }
+    
+    public CustomizedPackage(Item style, Item size, Item accessory, Item priority, Item deliveryType, Date deliveryDate, User user, boolean paymentStatus) {
+        super(paymentStatus, user);
+        this.user = user;
+        orderID = "CP" + orderNo;
+        this.orderID = orderID;
+        ++orderNo;
+
+        Date todayDate = Calendar.getInstance().getTime();
+
+        super.setDeliveryDate(deliveryDate);
+        super.setPriority(priority);
+        super.setID(orderID);
+        super.setOrderType(deliveryType.getName());
+        this.deliveryDate = df.format(deliveryDate);
+        orderDate = df.format(todayDate);
+
+        this.style = style;
+        this.size = size;
+        this.accessory = accessory;
+        this.priority = priority;
+        this.deliveryType = deliveryType;
+    }
 
     public CustomizedPackage() {
         orderID = "CP" + orderNo;
