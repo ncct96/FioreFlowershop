@@ -316,9 +316,10 @@ public class FioreFlowershop {
         CustomizedPackage package5 = new CustomizedPackage(styles.getItem(1), sizes.getItem(1), accessories.getItem(2), priorities.getItem(3), deliveryTypes.getItem(1), c2, false);
         CustomizedPackage package6 = new CustomizedPackage(styles.getItem(2), sizes.getItem(3), accessories.getItem(2), priorities.getItem(3), deliveryTypes.getItem(2), c2, false);
         CustomizedPackage package7 = new CustomizedPackage(styles.getItem(2), sizes.getItem(3), accessories.getItem(3), priorities.getItem(3), deliveryTypes.getItem(2), c3, false);
-        CustomizedPackage package8 = new CustomizedPackage(styles.getItem(2), sizes.getItem(3), accessories.getItem(2), priorities.getItem(3), deliveryTypes.getItem(2), c4, false);
+        CustomizedPackage package8 = new CustomizedPackage(styles.getItem(2), sizes.getItem(3), accessories.getItem(2), priorities.getItem(3), deliveryTypes.getItem(2), c1, false);
         CustomizedPackage package9 = new CustomizedPackage(styles.getItem(1), sizes.getItem(2), accessories.getItem(4), priorities.getItem(3), deliveryTypes.getItem(2), c3, false);
         CustomizedPackage package10 = new CustomizedPackage(styles.getItem(3), sizes.getItem(1), accessories.getItem(1), priorities.getItem(3), deliveryTypes.getItem(2), c4, false);
+        CustomizedPackage package11 = new CustomizedPackage(styles.getItem(3), sizes.getItem(1), accessories.getItem(1), priorities.getItem(3), deliveryTypes.getItem(2), c2, false);
         
         for (int i = 1; i <= testFlowers.getTotalEntries(); i++) {
             package1.getFlowerList().add(testFlowers.getItem(i));
@@ -331,8 +332,15 @@ public class FioreFlowershop {
             package8.getFlowerList().add(testFlowers.getItem(i));
             package9.getFlowerList().add(testFlowers.getItem(i));
             package10.getFlowerList().add(testFlowers.getItem(i));
+            package11.getFlowerList().add(testFlowers.getItem(i));
         }
 
+        Date date = new Date();
+        
+        package9.setDeliveryDate(date);
+        package10.setDeliveryDate(date);
+        package11.setDeliveryDate(date);
+        
         customizedPackages.enqueuePackage(package1);
         customizedPackages.enqueuePackage(package2);
         customizedPackages.enqueuePackage(package3);
@@ -343,9 +351,11 @@ public class FioreFlowershop {
         customizedPackages.enqueuePackage(package8);
         customizedPackages.enqueuePackage(package9);
         customizedPackages.enqueuePackage(package10);
+        customizedPackages.enqueuePackage(package11);
         
         SortOrders.sortCustomizedOrders(customizedPackages);
         
+        readyOrders.addOrder(customizedPackages.dequeuePackage());
         readyOrders.addOrder(customizedPackages.dequeuePackage());
         readyOrders.addOrder(customizedPackages.dequeuePackage());
         readyOrders.addOrder(customizedPackages.dequeuePackage());
