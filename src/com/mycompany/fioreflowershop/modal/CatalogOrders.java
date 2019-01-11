@@ -17,15 +17,15 @@ public class CatalogOrders extends Order {
     private String orderID;
     private CatalogPackageInterface<CatalogPackage> catalogPack = new CatalogPackageList<>();
     private Date orderTime,retrieveTime;
-    private Item priority;
+    private Item priority, deliveryType;
 
     public CatalogOrders() {
     }
 
     public CatalogOrders(String orderID, CatalogPackageInterface<CatalogPackage> catalogPack, Item priority,
-            String orderType, Date orderDate, Date orderTime, User user, String orderStatus, double orderAmt,
+            Item deliveryType, Date orderDate, Date orderTime, User user, String orderStatus, double orderAmt,
             boolean paymentStatus, Date retrieveDate, Date retrieveTime) {
-        super(orderType, orderDate, user, orderStatus, orderAmt, paymentStatus, retrieveDate);
+        super(deliveryType.getName(), orderDate, user, orderStatus, orderAmt, paymentStatus, retrieveDate);
         this.orderID = orderID;
         this.catalogPack = catalogPack;    
         this.priority = priority;
