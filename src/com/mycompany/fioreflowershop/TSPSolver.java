@@ -18,16 +18,15 @@ public class TSPSolver {
 
     private final int N, start;
     private final double[][] distance;
-    private final double[][] duration;
     private List<Integer> tour = new ArrayList<>();
     private double minTourCost = Double.POSITIVE_INFINITY;
     private boolean ranSolver = false;
 
-    public TSPSolver(double[][] distance, double[][] duration) {
-        this(0, distance, duration);
+    public TSPSolver(double[][] distance) {
+        this(0, distance);
     }
 
-    public TSPSolver(int start, double[][] distance, double[][] duration) {
+    public TSPSolver(int start, double[][] distance) {
         N = distance.length;
 
 //        if (N <= 2) {
@@ -46,7 +45,6 @@ public class TSPSolver {
 
         this.start = start;
         this.distance = distance;
-        this.duration = duration;
     }
 
     // Returns the optimal tour for the traveling salesman problem.

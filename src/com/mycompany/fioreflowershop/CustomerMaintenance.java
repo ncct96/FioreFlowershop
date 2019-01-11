@@ -37,8 +37,8 @@ public class CustomerMaintenance {
 
     public static final String RESET = "\033[0m";
     public static final String GREEN = "\033[0;32m";
-    public static final String RED = "\033[0;31m"; 
-    public static final String BLUE = "\033[0;34m"; 
+    public static final String RED = "\033[0;31m";
+    public static final String BLUE = "\033[0;34m";
     public static final String RED_BOLD = "\033[1;31m";
 
     public static void customerOptions() {
@@ -49,20 +49,21 @@ public class CustomerMaintenance {
                 System.out.println(GREEN + "[2] " + RESET + "Login To Existing Account");
                 System.out.println(GREEN + "[3] " + RESET + "Back to Main Menu");
                 System.out.print("Selection: ");
-                int logOrCreate = s.nextInt(); s.nextLine();
+                int logOrCreate = s.nextInt();
+                s.nextLine();
                 if (logOrCreate == 1) {
                     createAccount();
                 } else if (logOrCreate == 2) {
                     custLogIn();
                 } else {
-                    break; 
+                    break;
                 }
             }
         }
     }
 
-    public static void checkDate(){
-        while(true){
+    public static void checkDate() {
+        while (true) {
             double reminderRange = 0; //Declared for assigning reminder range
             reminderRange = corporateLoggedIn.getMonthlyLimit() * .9; //Get the monthly limit of customer, then multiplies it with 90%
             try {
@@ -92,35 +93,38 @@ public class CustomerMaintenance {
                         }
                     }
                 } else {
-    //                    dateLogin.push(currentDate);
+                    //                    dateLogin.push(currentDate);
                     dateLogin = currentDate;
                 }
             } catch (Exception e) {
                 //When exception is found, print out the exception error message to customer.
-                System.out.println(e.toString()); break;
+                System.out.println(e.toString());
+                break;
             }
             if (corporateLoggedIn.getCreditSpent() >= reminderRange) {
                 System.out.println(RED_BOLD + "\nYour Credit Spent For this Month is close to reaching the limit" + RESET);
                 System.out.println(RED_BOLD + "Your Credit Spent : " + String.format("%.0f", corporateLoggedIn.getCreditSpent()) + RESET);
-                System.out.println(RED_BOLD + "Your Maximum Limit : " + corporateLoggedIn.getMonthlyLimit() + RESET); 
+                System.out.println(RED_BOLD + "Your Maximum Limit : " + corporateLoggedIn.getMonthlyLimit() + RESET);
             }
             break;
         }
     }
-    
+
     public static void customerMenu() {
-        System.out.println("\nWelcome Customers! Fiore Flowershop is at your service!"); 
+        System.out.println("\nWelcome Customers! Fiore Flowershop is at your service!");
         while (true) {
-            try{
-                if(corporateLoggedIn != null){
+            try {
+                if (corporateLoggedIn != null) {
                     checkDate();
                 }
                 System.out.println("\nPlease Select One Of The Options Below:");
                 System.out.println(GREEN + "[1] " + RESET + "Make Flower Order");
                 System.out.println(GREEN + "[2] " + RESET + "View Ordered Items");
-                System.out.println(GREEN + "[3] " + RESET + "Log Out");
+                System.out.println(GREEN + "[3] " + RESET + "View Payment History");
+                System.out.println(GREEN + "[4] " + RESET + "Log Out");
                 System.out.print("Selection : ");
-                int customerOptionsChoice = s.nextInt(); s.nextLine();
+                int customerOptionsChoice = s.nextInt();
+                s.nextLine();
                 if (customerOptionsChoice == 1) {
                     while (true) {
                         System.out.println("\nPlease Select The Options Below.");
@@ -134,6 +138,8 @@ public class CustomerMaintenance {
                             FioreFlowershop.gotoCatalogOrders(customerLoggedIn, corporateLoggedIn);
                         } else if (orderChoice == 2) {
                             FioreFlowershop.gotoCustomizePackage(customerLoggedIn, 1);
+                        } else if (orderChoice == 3) {
+                            
                         } else {
                             break;
                         }
@@ -146,15 +152,16 @@ public class CustomerMaintenance {
                     System.out.println("\n" + GREEN + "Successfully Logged Out From Account! " + RESET);
                     break;
                 }
-            }catch(Exception e){
+            } catch (Exception e) {
                 break;
             }
         }
     }
 
     public static void createAccount() {
-        while(true){
-            boolean passwCheck; int consumerType = 0;
+        while (true) {
+            boolean passwCheck;
+            int consumerType = 0;
             String passw = "";
             passwCheck = false;
             System.out.println("\nPlease Fill In The Fields As Prompted.");
@@ -174,17 +181,17 @@ public class CustomerMaintenance {
                 if (repassw.equals(passw)) {
                     passwCheck = true;
                 } else {
-                    System.out.println("\n" + RED_BOLD + "Password Mismatched, Please Try Again.\n" + RESET); 
+                    System.out.println("\n" + RED_BOLD + "Password Mismatched, Please Try Again.\n" + RESET);
                 }
             } while (passwCheck == false);
             //Check for duplicate account created, disallow duplicate entries
             checkDuplicate(usern, passw, email, number, address, "", 0, "Customer");
             break;
         }
-        
+
     }
-    
-    public static void checkDuplicate(String usern, String passw, String email, String number, String address, String company, int creditLimit, String consumerType){
+
+    public static void checkDuplicate(String usern, String passw, String email, String number, String address, String company, int creditLimit, String consumerType) {
         boolean exist = false;
         if (user != null) {
             for (int i = 1; i <= user.getTotalUser(); i++) {
@@ -200,7 +207,7 @@ public class CustomerMaintenance {
             cust.addConsumer(c);
             user.addUser(c);
             System.out.println("\n" + GREEN + "New Account Successfully Created ! " + RESET);
-        }else if(!exist && consumerType.equals("Corporate")){
+        } else if (!exist && consumerType.equals("Corporate")) {
             CorporateCustomer cc = new CorporateCustomer(usern, email, number, address, passw, company, creditLimit, true);
             corpC.addCorporate(cc);
             user.addUser(cc);
@@ -211,22 +218,25 @@ public class CustomerMaintenance {
     public static void custLogIn() {
         while (true) {
             if (customerLoggedIn == null && corporateLoggedIn == null) {
-            System.out.println("\nPlease Fill In The Confidentials As Prompted");
-            System.out.print("Please Enter Your Email : ");
-            String email = s.nextLine();
-            System.out.print("Please Enter Your Password : ");
-            String passw = s.nextLine();
-            //Verify for valid account
-            custLogInVerify(email, passw); break;
+                System.out.println("\nPlease Fill In The Confidentials As Prompted");
+                System.out.print("Please Enter Your Email : ");
+                String email = s.nextLine();
+                System.out.print("Please Enter Your Password : ");
+                String passw = s.nextLine();
+                //Verify for valid account
+                custLogInVerify(email, passw);
+                break;
             } else {
-                System.out.println(RED_BOLD + "\nYou Are Already Logged In ! " + RESET); break;
+                System.out.println(RED_BOLD + "\nYou Are Already Logged In ! " + RESET);
+                break;
             }
         }
     }
-    
-    public static void custLogInVerify(String email, String passw){
-        while(true){
-            boolean customerHit = false; boolean corporateHit = false;
+
+    public static void custLogInVerify(String email, String passw) {
+        while (true) {
+            boolean customerHit = false;
+            boolean corporateHit = false;
             for (int i = 1; i <= cust.getTotalConsumer(); i++) {
                 if (cust.getConsumer(i).getEmail().equals(email) && cust.getConsumer(i).getPassword().equals(passw)) {
                     customerLoggedIn = new Consumer(cust.getConsumer(i).getUsername(), cust.getConsumer(i).getPassword(), cust.getConsumer(i).getEmail(),
@@ -256,105 +266,113 @@ public class CustomerMaintenance {
                 }
             }
             if (!customerHit && !corporateHit) {//If corporate customer is not found 
-                custTryAgain(); 
-            }else {
-                customerMenu(); 
+                custTryAgain();
+            } else {
+                customerMenu();
             }
             break;
         }
     }
-    
-    public static void custTryAgain(){
-        while(true){
+
+    public static void custTryAgain() {
+        while (true) {
             System.out.println(RED_BOLD + "\nInvalid Login Credentials" + RESET);
             System.out.println("Would you like to try again or create an account?");
             System.out.println("[1] Login Again");
             System.out.println("[2] Create An Account");
             System.out.println("[3] Back");
-            try{
-                int choice = s.nextInt(); s.nextLine();
-                if(choice == 1){
+            try {
+                int choice = s.nextInt();
+                s.nextLine();
+                if (choice == 1) {
                     custLogIn();
-                }else if(choice == 2){
+                } else if (choice == 2) {
                     createAccount();
-                }else if(choice == 3){
+                } else if (choice == 3) {
                     customerOptions();
-                }else {
+                } else {
                     break;
                 }
                 break;
-            }catch(Exception e){
-                System.out.println("\n"+RED+"An Error Occurred. Please Only Enter Number Only."+RESET);
+            } catch (Exception e) {
+                System.out.println("\n" + RED + "An Error Occurred. Please Only Enter Number Only." + RESET);
                 break;
             }
         }
     }
 
     //STAFF SECTION
-    public static void staffRemoveCust(){
-        Consumer consumerInstance = null; CorporateCustomer corporateInstance = null; boolean remove = false;
-        while (true){
-            try{
-                customerListHeader(); String email = "";
+    public static void staffRemoveCust() {
+        Consumer consumerInstance = null;
+        CorporateCustomer corporateInstance = null;
+        boolean remove = false;
+        while (true) {
+            try {
+                customerListHeader();
+                String email = "";
                 System.out.print("\nPlease Enter The Email To be Removed : ");
                 email = s.nextLine();
-                for(int i = 1; i <= user.getTotalUser(); i++){
-                    if(user.getUser(i).getEmail().equals(email)){
-                        System.out.print("\n"+RED+"Are you Sure? Press Enter To Continue/Other Keys To Cancel : "+RESET);
+                for (int i = 1; i <= user.getTotalUser(); i++) {
+                    if (user.getUser(i).getEmail().equals(email)) {
+                        System.out.print("\n" + RED + "Are you Sure? Press Enter To Continue/Other Keys To Cancel : " + RESET);
                         String enter = s.nextLine();
-                        if(enter.isEmpty()){
-                            user.remove(i); remove = true;
-                        }else {
+                        if (enter.isEmpty()) {
+                            user.remove(i);
+                            remove = true;
+                        } else {
                             break;
                         }
-                        
-                        if(user.getUser(i) instanceof Consumer){
+
+                        if (user.getUser(i) instanceof Consumer) {
                             consumerInstance = (Consumer) user.getUser(i);
-                        }else if(user.getUser(i) instanceof CorporateCustomer){
+                        } else if (user.getUser(i) instanceof CorporateCustomer) {
                             corporateInstance = (CorporateCustomer) user.getUser(i);
-                        }else {
+                        } else {
                             remove = false;
                         }
                         break;
                     }
                 }
-                if(remove){
-                    if(consumerInstance != null){
-                        for(int k = 1; k <= cust.getTotalConsumer(); k++){
-                            if(cust.getConsumer(k).equals(consumerInstance)){
-                                cust.remove(k); break;
+                if (remove) {
+                    if (consumerInstance != null) {
+                        for (int k = 1; k <= cust.getTotalConsumer(); k++) {
+                            if (cust.getConsumer(k).equals(consumerInstance)) {
+                                cust.remove(k);
+                                break;
                             }
                         }
-                    }else if(corporateInstance != null){
-                        for(int j = 1; j <= corpC.getTotalCorporate(); j++){
-                            if(corpC.getCorporate(j).equals(corporateInstance)){
-                                corpC.remove(j); break;
+                    } else if (corporateInstance != null) {
+                        for (int j = 1; j <= corpC.getTotalCorporate(); j++) {
+                            if (corpC.getCorporate(j).equals(corporateInstance)) {
+                                corpC.remove(j);
+                                break;
                             }
                         }
                     }
-                    System.out.println("\n"+GREEN+"Customer Successfully Removed ! "+RESET);
+                    System.out.println("\n" + GREEN + "Customer Successfully Removed ! " + RESET);
                     break;
-                }else {
-                    System.out.println("\n"+RED+"Unable to Remove Customer, Please Enter The Valid Email Shown."+RESET);
+                } else {
+                    System.out.println("\n" + RED + "Unable to Remove Customer, Please Enter The Valid Email Shown." + RESET);
                     break;
                 }
-            }catch (Exception e){
-                System.out.println("\n"+RED+"An Error Occurred. Please Try Again."+RESET); s.next();
+            } catch (Exception e) {
+                System.out.println("\n" + RED + "An Error Occurred. Please Try Again." + RESET);
+                s.next();
             }
         }
-        
+
     }
-    
-    public static void customerListHeader(){
+
+    public static void customerListHeader() {
         System.out.println("\n======================================================");
         System.out.println("\t Customers List.");
         System.out.println("======================================================");
-        if(user != null){
+        if (user != null) {
             for (int i = 1; i <= user.getTotalUser(); i++) {
                 String type = "";
-                if(user.getUser(i) instanceof Consumer){
+                if (user.getUser(i) instanceof Consumer) {
                     type = " (Consumer)";
-                }else if(user.getUser(i) instanceof CorporateCustomer){
+                } else if (user.getUser(i) instanceof CorporateCustomer) {
                     type = " (Corporate)";
                 }
                 System.out.println(BLUE + "[" + i + "] " + RESET + user.getUser(i).getEmail() + type);
@@ -363,11 +381,11 @@ public class CustomerMaintenance {
             System.out.println(RED + "\nSuch Empty, Much Wow !" + RESET);
         }
     }
-    
-    public static void staffEditCust(int custEditChoice){
+
+    public static void staffEditCust(int custEditChoice) {
         while (true) {
-            try{
-                String edit = ""; 
+            try {
+                String edit = "";
                 System.out.println("\nPlease enter which field to edit");
                 System.out.println("[1] Username");
                 System.out.println("[2] Email");
@@ -376,20 +394,24 @@ public class CustomerMaintenance {
                 System.out.println("[5] Password");
                 System.out.println("[6] Back");
                 System.out.print("Selection : ");
-                int custOptionChoice = s.nextInt(); s.nextLine(); 
+                int custOptionChoice = s.nextInt();
+                s.nextLine();
                 if (custOptionChoice == 1) { //
                     System.out.println("Old Username : " + cust.getConsumer(custEditChoice).getUsername());
                     System.out.print("Please Enter The New Username : ");
                     try {
                         edit = s.nextLine();
-                        if(!edit.matches("^[a-zA-Z0-9]+")){
-                            System.out.println("\n"+RED+"Invalid Format For Username, Only Alphanumeric is Allowed."+RESET); break;
+                        if (!edit.matches("^[a-zA-Z0-9]+")) {
+                            System.out.println("\n" + RED + "Invalid Format For Username, Only Alphanumeric is Allowed." + RESET);
+                            break;
                         }
                         cust.getConsumer(custEditChoice).setUsername(edit);
                         System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
-                        custEdit = null; break;
+                        custEdit = null;
+                        break;
                     } catch (Exception e) {
-                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET); s.next();
+                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
+                        s.next();
                     }
                 } else if (custOptionChoice == 2) {
                     System.out.println("Old Email : " + cust.getConsumer(custEditChoice).getEmail());
@@ -402,9 +424,11 @@ public class CustomerMaintenance {
                         }
                         cust.getConsumer(custEditChoice).setEmail(edit);
                         System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
-                        custEdit = null; break;
+                        custEdit = null;
+                        break;
                     } catch (Exception e) {
-                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET); s.next();
+                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
+                        s.next();
                     }
                 } else if (custOptionChoice == 3) {
                     System.out.println("Old Contact Number : " + cust.getConsumer(custEditChoice).getPhone());
@@ -412,14 +436,16 @@ public class CustomerMaintenance {
                     try {
                         edit = s.nextLine();
                         if (!edit.matches("[0-9]+")) {
-                            System.out.println("\n" + RED + "Invalid Contact Number Entered. Please Retry." + RESET); 
+                            System.out.println("\n" + RED + "Invalid Contact Number Entered. Please Retry." + RESET);
                             break;
                         }
                         cust.getConsumer(custEditChoice).setPhone(edit);
-                        System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET); 
-                        custEdit = null; break;
+                        System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
+                        custEdit = null;
+                        break;
                     } catch (Exception e) {
-                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET); s.next();
+                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
+                        s.next();
                     }
                 } else if (custOptionChoice == 4) {
                     System.out.println("Old Address : " + cust.getConsumer(custEditChoice).getAddress());
@@ -428,9 +454,11 @@ public class CustomerMaintenance {
                         edit = s.nextLine();
                         cust.getConsumer(custEditChoice).setAddress(edit);
                         System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
-                        custEdit = null; break;
+                        custEdit = null;
+                        break;
                     } catch (Exception e) {
-                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET); s.next();
+                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
+                        s.next();
                     }
 
                 } else if (custOptionChoice == 5) {
@@ -443,31 +471,35 @@ public class CustomerMaintenance {
                         }
                         cust.getConsumer(custEditChoice).setPassword(edit);
                         System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
-                        custEdit = null; break;
+                        custEdit = null;
+                        break;
                     } catch (Exception e) {
-                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET); s.next();
+                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
+                        s.next();
                     }
                 } else {
                     custEdit = null;
                     break;
                 }
-            }catch(Exception e){
-                System.out.println(RED+"\nSorry, Please Only Enter Number."+RESET); s.next();
+            } catch (Exception e) {
+                System.out.println(RED + "\nSorry, Please Only Enter Number." + RESET);
+                s.next();
             }
         }
     }
-    
+
     public static void staffEditType() {
         while (true) {
-            try{
+            try {
                 customerListHeader();
                 String email = "";
-                int custEditChoice = 0; int corpEditChoice = 0;
+                int custEditChoice = 0;
+                int corpEditChoice = 0;
                 System.out.print("\nPlease Enter The Customer's Email For Editing (ENTER B to BACK) : ");
                 email = s.nextLine();
-                if(email.equalsIgnoreCase("B")){
+                if (email.equalsIgnoreCase("B")) {
                     break;
-                }else{
+                } else {
                     for (int i = 1; i <= user.getTotalUser(); i++) {
                         if (email.equals(user.getUser(i).getEmail())) {
                             if (user.getUser(i) instanceof Consumer) {
@@ -479,9 +511,9 @@ public class CustomerMaintenance {
                             }
                             System.out.println(user.getUser(i).toString());
                         }
-                    } 
+                    }
                 }
-                
+
                 if (custEdit != null) {
                     for (int i = 1; i <= cust.getTotalConsumer(); i++) {
                         if (cust.getConsumer(i).getEmail().equals(user.getUser(custEditChoice).getEmail())) {
@@ -497,19 +529,22 @@ public class CustomerMaintenance {
                             break;
                         }
                     }
-                    managerEditCorporate(corpEditChoice); 
+                    managerEditCorporate(corpEditChoice);
                 } else {
-                    System.out.println("\n"+RED+"Please Enter A Valid Email Address Listed."+RESET);
+                    System.out.println("\n" + RED + "Please Enter A Valid Email Address Listed." + RESET);
                     break;
                 }
-            }catch (Exception e){s.next();}
+            } catch (Exception e) {
+                s.next();
+            }
         }
     }
 
     public static void managerEditCorporate(int corpEditChoice) {
         while (true) {
-            try{
-                String edit; int editLimit;
+            try {
+                String edit;
+                int editLimit;
                 System.out.println("\nPlease enter which field to edit");
                 System.out.println("[1] Username");
                 System.out.println("[2] Email");
@@ -520,20 +555,24 @@ public class CustomerMaintenance {
                 System.out.println("[7] Credit Limit");
                 System.out.println("[8] Back");
                 System.out.print("Selection : ");
-                int corpOptionChoice = s.nextInt(); s.nextLine();
+                int corpOptionChoice = s.nextInt();
+                s.nextLine();
                 if (corpOptionChoice == 1) {
                     System.out.println("Old Username : " + corpC.getCorporate(corpEditChoice).getUsername());
                     System.out.print("Please Enter The New Username : ");
                     try {
                         edit = s.nextLine();
-                        if(!edit.matches("^[a-zA-Z0-9]+")){
-                            System.out.println("\n"+RED+"Invalid Format For Username, Please Only Enter Alphabet/Number/Alphanumeric."+RESET); break;
+                        if (!edit.matches("^[a-zA-Z0-9]+")) {
+                            System.out.println("\n" + RED + "Invalid Format For Username, Please Only Enter Alphabet/Number/Alphanumeric." + RESET);
+                            break;
                         }
                         corpC.getCorporate(corpEditChoice).setUsername(edit);
                         System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
-                        corpEdit = null; break;
+                        corpEdit = null;
+                        break;
                     } catch (Exception e) {
-                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET); s.next();
+                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
+                        s.next();
                     }
                 } else if (corpOptionChoice == 2) {
                     System.out.println("Old Email : " + corpC.getCorporate(corpEditChoice).getEmail());
@@ -546,9 +585,11 @@ public class CustomerMaintenance {
                         }
                         corpC.getCorporate(corpEditChoice).setEmail(edit);
                         System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
-                        corpEdit = null; break;
+                        corpEdit = null;
+                        break;
                     } catch (Exception e) {
-                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET); s.next();
+                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
+                        s.next();
                     }
 
                 } else if (corpOptionChoice == 3) {
@@ -557,13 +598,16 @@ public class CustomerMaintenance {
                     try {
                         edit = s.nextLine();
                         if (!edit.matches("[0-9]+")) {
-                            System.out.println("\n" + RED + "Invalid Contact Number Entered. Please Retry." + RESET); break;
+                            System.out.println("\n" + RED + "Invalid Contact Number Entered. Please Retry." + RESET);
+                            break;
                         }
                         corpC.getCorporate(corpEditChoice).setPhone(edit);
                         System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
-                        corpEdit = null; break;
+                        corpEdit = null;
+                        break;
                     } catch (Exception e) {
-                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET); s.next();
+                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
+                        s.next();
                     }
 
                 } else if (corpOptionChoice == 4) {
@@ -573,9 +617,11 @@ public class CustomerMaintenance {
                         edit = s.nextLine();
                         corpC.getCorporate(corpEditChoice).setAddress(edit);
                         System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
-                        corpEdit = null; break;
+                        corpEdit = null;
+                        break;
                     } catch (Exception e) {
-                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET); s.next();
+                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
+                        s.next();
                     }
 
                 } else if (corpOptionChoice == 5) {
@@ -589,9 +635,11 @@ public class CustomerMaintenance {
                         }
                         corpC.getCorporate(corpEditChoice).setPassword(edit);
                         System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
-                        corpEdit = null; break;
+                        corpEdit = null;
+                        break;
                     } catch (Exception e) {
-                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET); s.next();
+                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
+                        s.next();
                     }
 
                 } else if (corpOptionChoice == 6) {
@@ -605,57 +653,69 @@ public class CustomerMaintenance {
                         }
                         corpC.getCorporate(corpEditChoice).setCompany(edit);
                         System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
-                        corpEdit = null; break;
+                        corpEdit = null;
+                        break;
                     } catch (Exception e) {
-                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET); s.next();
+                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
+                        s.next();
                     }
                 } else if (corpOptionChoice == 7) {
                     System.out.println("Old Credit Limit : " + corpC.getCorporate(corpEditChoice).getMonthlyLimit());
                     System.out.print("Please Enter The New Credit Limit : ");
                     try {
-                        editLimit = s.nextInt(); s.nextLine();
+                        editLimit = s.nextInt();
+                        s.nextLine();
                         corpC.getCorporate(corpEditChoice).setMonthlyLimit(editLimit);
                         System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
-                        corpEdit = null; break;
+                        corpEdit = null;
+                        break;
                     } catch (Exception e) {
-                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET); s.next();
+                        System.out.println("\n" + RED + "An Error Occurred, Please Try Again." + RESET);
+                        s.next();
                     }
                 } else {
                     corpEdit = null;
                     break;
-                }  
-            }catch(Exception e){
-                System.out.println(RED+"\nSorry, Please Only Enter Number."+RESET); s.next();
+                }
+            } catch (Exception e) {
+                System.out.println(RED + "\nSorry, Please Only Enter Number." + RESET);
+                s.next();
             }
         }
     }
 
     public static void staffCreateCorporate() {
-        while(true){
-            boolean passwCheck = false; boolean exist = false; String passw = "";
+        while (true) {
+            boolean passwCheck = false;
+            boolean exist = false;
+            String passw = "";
             System.out.println("Please Fill In The Fields As Prompted.");
-            try{
+            try {
                 System.out.print("Username : ");
                 String usern = s.nextLine();
-                if(!usern.matches("^[a-zA-Z0-9]+")){
-                    System.out.println("\n"+RED+"Please only Enter Alphanumeric Characters for Username."+RESET); break;
+                if (!usern.matches("^[a-zA-Z0-9]+")) {
+                    System.out.println("\n" + RED + "Please only Enter Alphanumeric Characters for Username." + RESET);
+                    break;
                 }
                 System.out.print("Email : ");
                 String email = s.nextLine();
-                if(!email.matches("^(.+)@(.+)$")){
-                    System.out.println("\n"+RED+"Please Enter The Valid Email Address."+RESET); break;
+                if (!email.matches("^(.+)@(.+)$")) {
+                    System.out.println("\n" + RED + "Please Enter The Valid Email Address." + RESET);
+                    break;
                 }
                 System.out.print("Contact Number : ");
                 String number = s.nextLine();
-                if(!number.matches("^[0-9]")){
-                    System.out.println("\n"+RED+"Please Enter Valid Contact Number."+RESET); break;
+                if (!number.matches("^[0-9]")) {
+                    System.out.println("\n" + RED + "Please Enter Valid Contact Number." + RESET);
+                    break;
                 }
                 System.out.print("Address (For Delivery Services) : ");
                 String address = s.nextLine();
                 System.out.print("Company : ");
                 String company = s.nextLine();
-                if(!company.matches("^[a-zA-Z]+")){
-                    System.out.println("\n"+RED+"Invalid Format For Company Name. Please Try Again."+RESET); break;
+                if (!company.matches("^[a-zA-Z]+")) {
+                    System.out.println("\n" + RED + "Invalid Format For Company Name. Please Try Again." + RESET);
+                    break;
                 }
                 System.out.print("Credit Limit : ");
                 int creditLimit = s.nextInt();
@@ -671,10 +731,11 @@ public class CustomerMaintenance {
                         System.out.println("\n" + RED_BOLD + "Password Mismatched, Please Try Again.\n" + RESET);
                     }
                 } while (passwCheck == false);
-                checkDuplicate(usern, passw, email, number, address, company, creditLimit, "Corporate"); 
+                checkDuplicate(usern, passw, email, number, address, company, creditLimit, "Corporate");
                 break;
-            }catch(Exception e){
-                System.out.println("\n"+RED+"An Error Occured. Please Try Again."+RESET); s.next();
+            } catch (Exception e) {
+                System.out.println("\n" + RED + "An Error Occured. Please Try Again." + RESET);
+                s.next();
             }
         }
     }
