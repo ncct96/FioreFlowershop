@@ -11,9 +11,9 @@ package com.mycompany.fioreflowershop.adt;
  */
 public class ItemList<T> implements ItemListInterface<T> {
 
-    private Node<T> head;
-    private Node<T> tail;
-    private int size;
+    private Node<T> head; //First item in the list
+    private Node<T> tail; //Last item in the list
+    private int size; //Size of the list
 
     public ItemList() {
         head = null;
@@ -140,12 +140,13 @@ public class ItemList<T> implements ItemListInterface<T> {
         return result;
     }
 
+    //Replace item at index
     @Override
-    public boolean replaceItem(int givenPosition, T newEntry) {
+    public boolean replaceItem(int index, T newEntry) {
         boolean isSuccessful = true;
 
-        if ((givenPosition >= 1) && (givenPosition <= size)) {
-            Node<T> desiredNode = getNodeAt(givenPosition);
+        if ((index >= 1) && (index <= size)) {
+            Node<T> desiredNode = getNodeAt(index);
             desiredNode.setData(newEntry);
         } else {
             isSuccessful = false;
@@ -154,17 +155,19 @@ public class ItemList<T> implements ItemListInterface<T> {
         return isSuccessful;
     }
 
+    //Get item at index
     @Override
-    public T getItem(int givenPosition) {
+    public T getItem(int index) {
         T result = null;
 
-        if ((givenPosition >= 1) && (givenPosition <= size)) {
-            result = getNodeAt(givenPosition).getData();
+        if ((index >= 1) && (index <= size)) {
+            result = getNodeAt(index).getData();
         }
 
         return result;
     }
 
+    //Check if list contains specified item
     @Override
     public boolean contains(T item) {
         Node<T> currentNode = head;
@@ -181,11 +184,13 @@ public class ItemList<T> implements ItemListInterface<T> {
         return false;
     }
 
+    //Get size of the list
     @Override
     public int getSize() {
         return size;
     }
 
+    //Check if list is empty
     @Override
     public boolean isEmpty() {
         boolean result;
@@ -199,6 +204,7 @@ public class ItemList<T> implements ItemListInterface<T> {
         return result;
     }
 
+    //Get list data as a string
     @Override
     public String toString() {
         String outputStr = "";
@@ -210,20 +216,23 @@ public class ItemList<T> implements ItemListInterface<T> {
         return outputStr;
     }
 
-    private Node<T> getNodeAt(int givenPosition) {
+    //Get node at index
+    private Node<T> getNodeAt(int index) {
         Node<T> currentNode = head;
-        for (int counter = 1; counter < givenPosition; counter++) {
+        for (int position = 1; position < index; position++) {
             currentNode = currentNode.getNext();
         }
 
         return currentNode;
     }
 
+    //Clear the list
     public final void clear() {
         head = null;
         size = 0;
     }
 
+    //Node class
     private class Node<T> {
 
         private T data;

@@ -14,18 +14,22 @@ import java.util.NoSuchElementException;
  */
 public class OrderList<T> implements OrderListInterface<T> {
 
-    private Node<T> firstOrder;
-    private int size;
+    private Node<T> firstOrder; //First order in the list
+    private int size; //Size of the list
 
     public OrderList() {
-        clearOrderList();
+        clear();
     }
 
-    public final void clearOrderList() {
+    //Clear the list
+    @Override
+    public final void clear() {
         firstOrder = null;
         size = 0;
     }
 
+    //Add order to the rear of the list
+    @Override
     public boolean addOrder(T newEntry) {
         Node<T> newNode = new Node<>(newEntry);
 
@@ -40,6 +44,8 @@ public class OrderList<T> implements OrderListInterface<T> {
         return true;
     }
 
+    //Add order at index
+    @Override
     public boolean addOrder(int newPosition, T newEntry) {
         boolean isSuccessful = true;
 
@@ -64,6 +70,8 @@ public class OrderList<T> implements OrderListInterface<T> {
         return isSuccessful;
     }
 
+    //Remove order at index
+    @Override
     public T removeOrder(int givenPosition) {
         T result = null;
 
@@ -85,6 +93,8 @@ public class OrderList<T> implements OrderListInterface<T> {
         return result;
     }
 
+    //Replace order at index
+    @Override
     public boolean replaceOrder(int givenPosition, T newEntry) {
         boolean isSuccessful = true;
 
@@ -98,22 +108,26 @@ public class OrderList<T> implements OrderListInterface<T> {
         return isSuccessful;
     }
 
-    public T getOrder(int givenPosition) {
+    //Get order at index
+    @Override
+    public T getOrder(int index) {
         T result = null;
 
-        if ((givenPosition >= 1) && (givenPosition <= size)) {
-            result = getNodeAt(givenPosition).getData();
+        if ((index >= 1) && (index <= size)) {
+            result = getNodeAt(index).getData();
         }
 
         return result;
     }
 
-    public boolean contains(T anEntry) {
+    //Check if list contains specified order
+    @Override
+    public boolean contains(T order) {
         boolean found = false;
         Node<T> currentNode = firstOrder;
 
         while (!found && (currentNode != null)) {
-            if (anEntry.equals(currentNode.getData())) {
+            if (order.equals(currentNode.getData())) {
                 found = true;
             } else {
                 currentNode = currentNode.getNext();
@@ -123,10 +137,14 @@ public class OrderList<T> implements OrderListInterface<T> {
         return found;
     }
 
+    //Get size of list
+    @Override
     public int getSize() {
         return size;
     }
 
+    //Check if list is empty
+    @Override
     public boolean isEmpty() {
         boolean result;
 
@@ -139,6 +157,8 @@ public class OrderList<T> implements OrderListInterface<T> {
         return result;
     }
 
+    //Get list data as a string
+    @Override
     public String toString() {
         String outputStr = "";
         Node<T> currentNode = firstOrder;
@@ -149,23 +169,18 @@ public class OrderList<T> implements OrderListInterface<T> {
         return outputStr;
     }
 
-    private void displayChain(Node nodeOne) {
-        if (nodeOne != null) {
-            System.out.print(nodeOne.getData() + " ");
-            displayChain(nodeOne.getNext());
-        }
-    }
-    
-    private Node<T> getNodeAt(int givenPosition) {
+    //Get node at index
+    private Node<T> getNodeAt(int index) {
         Node<T> currentNode = firstOrder;
 
-        for (int counter = 1; counter < givenPosition; counter++) {
+        for (int position = 1; position < index; position++) {
             currentNode = currentNode.getNext();
         }
 
         return currentNode;
     }
 
+    //Get iterator for the list
     @Override
     public Iterator<T> getIterator() {
         return new LinkedListIterator<>();
