@@ -258,7 +258,7 @@ public class CustomizePackage {
             System.out.println(ANSI_RED + "\nYou are not allowed to access this part of the system.\n" + ANSI_RESET);
             return;
         }
-        
+
         while (true) {
             try {
                 System.out.println("\nWhat do you wish to do?");
@@ -286,7 +286,6 @@ public class CustomizePackage {
         if (customizedPackages.isEmpty()) {
             System.out.println("No order history found");
         } else {
-
             Boolean found = false;
             System.out.println("\nYour Order History:");
             System.out.println("================================================");
@@ -315,24 +314,63 @@ public class CustomizePackage {
             System.out.println("No order history found");
         } else {
 
+            int selection;
+
+            while (true) {
+                try {
+                    System.out.println("\nOrder by:");
+                    System.out.println(ANSI_GREEN + "[1] " + ANSI_RESET + "Oldest to newest");
+                    System.out.println(ANSI_GREEN + "[2] " + ANSI_RESET + "Newest to oldest");
+                    System.out.print("Selection: ");
+                    Scanner scan = new Scanner(System.in);
+                    selection = scan.nextInt();
+                    if (selection == 1 || selection == 2) {
+                        break;
+                    } else {
+                        System.out.println(ANSI_RED + "Please select one of the above options" + ANSI_RESET);
+                    }
+                } catch (Exception e) {
+                    System.out.println(ANSI_RED + "Please select one of the above options" + ANSI_RESET);
+                }
+            }
+
             Boolean found = false;
             System.out.println("\nYour Order History:");
             System.out.println("================================================");
-            for (int i = 1; i <= readyOrders.getSize(); i++) {
-                if (readyOrders.getOrder(i) instanceof CustomizedPackage) {
-                    CustomizedPackage order = (CustomizedPackage) readyOrders.getOrder(i);
-                    if (order.getUser().getUsername() == customer.getUsername() && order.getUser().getPassword() == customer.getPassword()) {
-                        System.out.println(order.getOrderDateString() + " " + order.getOrderID());
-                        System.out.println("Flowers:");
-                        for (int j = 1; j <= order.getFlowerList().getTotalEntries(); j++) {
-                            System.out.println(" [" + j + "]: " + order.getFlowerList().getItem(j).getName() + " - RM " + order.getFlowerList().getItem(j).getPrice());
+            if (selection == 1) {
+                for (int i = 1; i <= readyOrders.getSize(); i++) {
+                    if (readyOrders.getOrder(i) instanceof CustomizedPackage) {
+                        CustomizedPackage order = (CustomizedPackage) readyOrders.getOrder(i);
+                        if (order.getUser().getUsername() == customer.getUsername() && order.getUser().getPassword() == customer.getPassword()) {
+                            System.out.println(order.getOrderDateString() + " " + order.getOrderID());
+                            System.out.println("Flowers:");
+                            for (int j = 1; j <= order.getFlowerList().getTotalEntries(); j++) {
+                                System.out.println(" [" + j + "]: " + order.getFlowerList().getItem(j).getName() + " - RM " + order.getFlowerList().getItem(j).getPrice());
+                            }
+                            System.out.println("Arrangement: " + order.getSize().getName() + " " + order.getStyle().getName());
+                            System.out.println("Price: RM" + order.CalculateOrder() + "\n");
+                            found = true;
                         }
-                        System.out.println("Arrangement: " + order.getSize().getName() + " " + order.getStyle().getName());
-                        System.out.println("Price: RM" + order.CalculateOrder() + "\n");
-                        found = true; 
+                    }
+                }
+            } else {
+                for (int i = readyOrders.getSize(); i >= 1; i--) {
+                    if (readyOrders.getOrder(i) instanceof CustomizedPackage) {
+                        CustomizedPackage order = (CustomizedPackage) readyOrders.getOrder(i);
+                        if (order.getUser().getUsername() == customer.getUsername() && order.getUser().getPassword() == customer.getPassword()) {
+                            System.out.println(order.getOrderDateString() + " " + order.getOrderID());
+                            System.out.println("Flowers:");
+                            for (int j = 1; j <= order.getFlowerList().getTotalEntries(); j++) {
+                                System.out.println(" [" + j + "]: " + order.getFlowerList().getItem(j).getName() + " - RM " + order.getFlowerList().getItem(j).getPrice());
+                            }
+                            System.out.println("Arrangement: " + order.getSize().getName() + " " + order.getStyle().getName());
+                            System.out.println("Price: RM" + order.CalculateOrder() + "\n");
+                            found = true;
+                        }
                     }
                 }
             }
+            
             if (!found) {
                 System.out.println("No order history found");
             }

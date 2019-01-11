@@ -161,9 +161,8 @@ public class Delivery {
             sortedList.replaceOrder(index, sortedList.getOrder(i));
             sortedList.replaceOrder(i, smallerOrder);
         }
-
+        
         displaySortedDelivery(sortedList);
-
     }
 
     public static void displaySortedDelivery(OrderListInterface<Order> orderedList) {
@@ -293,13 +292,12 @@ public class Delivery {
             }
         }
 
-        sortRoute(sortedList, shopAddress);
+        sortRoute(sortedList, shopAddress, new Date());
     }
 
     public static void searchSortRouteDelivery(OrderListInterface<Order> readyOrder, String shopAddress, Date date) throws ApiException, InterruptedException, IOException {
         OrderListInterface<Order> unSortedList = new OrderList<>();
         OrderListInterface<Order> sortedList = new OrderList<>();
-
 
         //int count = customOrder.getBackIndex();
         Iterator<Order> orderIterator = readyOrder.getIterator();
@@ -337,10 +335,10 @@ public class Delivery {
             }
         }
 
-        sortRoute(sortedList, shopAddress);
+        sortRoute(sortedList, shopAddress, date);
     }
 
-    public static void sortRoute(OrderListInterface<Order> sortedList, String shopAddress) throws ApiException, InterruptedException, IOException {
+    public static void sortRoute(OrderListInterface<Order> sortedList, String shopAddress, Date userDate) throws ApiException, InterruptedException, IOException {
 
         Date date = new Date();
         TSPSolver solver;
@@ -353,14 +351,14 @@ public class Delivery {
 
         try {
             solver = DeliveryOptimization.distanceMatrix(shopAddress, dest);
-            displaySortRoute(solver, dest, shopAddress);
+            displaySortRoute(solver, dest, shopAddress, userDate);
         } catch (IOException ex) {
             Logger.getLogger(Delivery.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
-    public static void displaySortRoute(TSPSolver solver, OrderListInterface<Order> dest, String shopAddress) {
+    public static void displaySortRoute(TSPSolver solver, OrderListInterface<Order> dest, String shopAddress, Date userDate) {
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -374,7 +372,7 @@ public class Delivery {
         OrderListInterface<Order> paidOrder = FioreFlowershop.getPaidOrder();
         int payChoice;
 
-        System.out.println("Date: " + dateFormat.format(date));
+        System.out.println("Date: " + dateFormat.format(userDate));
         System.out.println("===========================");
         System.out.println("Today's Delivery Route (Nearest to Furthest) ");
         System.out.println("================================================" + "\n");
@@ -473,7 +471,7 @@ public class Delivery {
                 Order order = orderIterator.next();
 
                 if (order.getID().equals(orderID) && order.isPaymentStatus() == false) {
-                    System.out.print(((CatalogOrders) order).getOrderID() + "\t\t");
+                    System.out.print(order.getID() + "\t\t");
                     System.out.print(order.getOrderType() + "\t");
                     System.out.print(df.format(order.getOrderDate()) + "\t\t");
                     //System.out.print("Username: " + order.getUser().getUsername());
@@ -578,7 +576,7 @@ public class Delivery {
         }
     }
 
-    public static void searchUserDelivery(String userID, LinkedList<CatalogOrders> catalogOrder, LinkedList<CustomizedPackage> customOrder, LinkedList<Order> paidOrder) {
+    public static void searchUserDelivery(String userID, LinkedList<Order> readyOrders, LinkedList<CustomizedPackage> customOrder, LinkedList<Order> paidOrder) {
 
         LinkedList<Order> matchOrder = new LinkedList<>();
         User user = null;
@@ -588,24 +586,13 @@ public class Delivery {
         DateFormat dt = new SimpleDateFormat("HH:mm");
         DateFormat dfdt = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-        // Get all CatalogOrder with Pick Up type
-        Iterator<CatalogOrders> iterator = catalogOrder.getIterator();
+        // Get all Order with Pick Up type
+        Iterator<Order> iterator = readyOrders.getIterator();
 
         while (iterator.hasNext()) {
-            CatalogOrders order = iterator.next();
+            Order order = iterator.next();
 
             if (order.getUser().getUsername().equals(userID) && order.getOrderType().equals("Delivery") && (order.getUser() instanceof Consumer)) {
-                user = order.getUser();
-                matchOrder.add(order);
-            }
-        }
-
-        Iterator<CustomizedPackage> customIterator = customOrder.getIterator();
-
-        while (customIterator.hasNext()) {
-            CustomizedPackage order = customIterator.next();
-
-            if (order.getUser().getUsername().equals(userID) && order.getDeliveryType().getName().equals("Delivery") && (order.getUser() instanceof Consumer)) {
                 user = order.getUser();
                 matchOrder.add(order);
             }
@@ -615,7 +602,7 @@ public class Delivery {
             System.out.println("User ID does not exist in system!");
             FioreFlowershop.orderMenu();
 
-        } else if (matchOrder.isEmpty()) {
+        } else if (user != null && matchOrder.isEmpty()) {
             System.out.println("User don't have any order with pending payment! Please try again!");
             FioreFlowershop.orderMenu();
 

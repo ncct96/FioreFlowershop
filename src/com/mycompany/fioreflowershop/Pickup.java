@@ -73,7 +73,7 @@ public class Pickup {
 
         for (int i = 1; i <= unSortedList.getSize(); i++) {
 
-            listCal.setTime(unSortedList.getOrder(i).getOrderDate());
+            listCal.setTime(unSortedList.getOrder(i).getDeliveryDate());
 
             day = listCal.get(Calendar.DAY_OF_MONTH);
             month = listCal.get(Calendar.MONTH) + 1;
@@ -102,7 +102,7 @@ public class Pickup {
         for (int i = 1; i < sortedList.getSize() - 1; i++) {
             int index = i;
             for (int j = i; j <= sortedList.getSize(); j++) {
-                if (sortedList.getOrder(j).getOrderDate().before(sortedList.getOrder(index).getOrderDate())) {
+                if (sortedList.getOrder(j).getOrderDate().before(sortedList.getOrder(index).getDeliveryDate())) {
                     index = j; //searching for lowest index  
                 }
             }
@@ -122,7 +122,7 @@ public class Pickup {
 
         Iterator<Order> orderIterator = readyOrder.getIterator();
         
-        // Get all delivery order for Catalog Order
+        // Get all pickup order for Catalog Order
         while (orderIterator.hasNext()) {
             Order order = orderIterator.next();
 
@@ -168,7 +168,7 @@ public class Pickup {
 //                searchQueue.enqueue(tempCustomOrder);
 //            }
 //        }
-        for (int i = 1; i < sortedList.getSize() - 1; i++) {
+        for (int i = 1; i < sortedList.getSize(); i++) {
             int index = i;
             for (int j = i; j <= sortedList.getSize(); j++) {
                 if (sortedList.getOrder(j).getDeliveryDate().before(sortedList.getOrder(index).getDeliveryDate())) {
@@ -217,7 +217,7 @@ public class Pickup {
 
                 System.out.println("Company Name: " + corp.getCompany());
                 System.out.println("Contact: " + corp.getPhone());
-                String date = df.format(catalogOrder.getItem(k).getOrderDate());
+                String date = df.format(catalogOrder.getItem(k).getDeliveryDate());
                 System.out.println("Delivery Date: " + date + "\n");
             } else {
 
@@ -227,8 +227,8 @@ public class Pickup {
 
                 System.out.println("Name: " + con.getUsername());
                 System.out.println("Contact: " + con.getPhone());
-                String date = df.format(catalogOrder.getItem(k).getOrderDate());
-                System.out.println("Delivery Date: " + date + "\n");
+                String date = df.format(catalogOrder.getItem(k).getDeliveryDate());
+                System.out.println("Pick Up Date: " + date + "\n");
             }
         }
 
@@ -251,8 +251,8 @@ public class Pickup {
 
                 System.out.println("Company Name: " + corp.getCompany());
                 System.out.println("Contact: " + corp.getPhone());
-                String date = df.format(customOrder.getItem(k).getOrderDate());
-                System.out.println("Delivery Date: " + date + "\n");
+                String date = df.format(customOrder.getItem(k).getDeliveryDate());
+                System.out.println("Pick Up Date: " + date + "\n");
             } else {
 
                 Consumer con = (Consumer) customOrder.getItem(k).getUser();
@@ -261,8 +261,8 @@ public class Pickup {
 
                 System.out.println("Name: " + con.getUsername());
                 System.out.println("Contact: " + con.getPhone());
-                String date = df.format(customOrder.getItem(k).getOrderDate());
-                System.out.println("Delivery Date: " + date + "\n");
+                String date = df.format(customOrder.getItem(k).getDeliveryDate());
+                System.out.println("Pick Up Date: " + date + "\n");
             }
         }
 
