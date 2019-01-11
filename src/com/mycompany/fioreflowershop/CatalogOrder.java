@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.*;
 
 /**
  *
@@ -356,7 +357,7 @@ public class CatalogOrder {
                         do {
                             System.out.println(FioreFlowershop.ConsoleColors.BLACK + "When do you want to pickup your items? (yyyy-MM-dd)");
                             pickDate = scan.next();
-                            if (!pickDate.isEmpty()) {
+                            if (!pickDate.isEmpty() && pickDate.matches("^\\d{4}-\\d{2}-\\d{2}$")) {
                                 try {
                                     Date pickDate2 = dateFormat.parse(pickDate);
                                     if (pickDate2.after(validPickupDate.getTime())) {
@@ -377,6 +378,9 @@ public class CatalogOrder {
                                 } catch (Exception e) {
                                     System.out.print("\n" + FioreFlowershop.ConsoleColors.RED + "Please supply a valid pickup date." + FioreFlowershop.ConsoleColors.BLACK + "\n");
                                 }
+                            } else {
+                                System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter a date with correct format e.g: 2018-12-25.");
+                                checkDate = false;
                             }
                         } while (!checkDate);
                     }
@@ -407,12 +411,18 @@ public class CatalogOrder {
                 }
 
             } else if (catalogPack.isEmpty()) {
-                System.out.println(FioreFlowershop.ConsoleColors.RED + "Your shopping cart is empty. You have not add in any item yet.");
+                System.out.println("");
+                System.out.println(FioreFlowershop.ConsoleColors.RED + "Your shopping cart is empty. You have not added in any item yet." + FioreFlowershop.ConsoleColors.BLACK);
                 displayCatalog(normalPackage, discountedPackage);
             }
 
         } else if (userMenuOption == 3) {
-            removeCartItem(normalPackage, discountedPackage);
+            if(!catalogPack.isEmpty()){
+               removeCartItem(normalPackage, discountedPackage);
+            }else if(catalogPack.isEmpty()){
+                System.out.println(FioreFlowershop.ConsoleColors.RED + "Your shopping cart is empty. You have not added in any item yet.");
+                displayCatalog(normalPackage, discountedPackage);
+            }
 
         } else if (userMenuOption == 4) {
             if (!checkoutStatus && !(catalogPack.isEmpty())) { //to prevent different order id for different ordered item for one order
@@ -803,7 +813,7 @@ public class CatalogOrder {
         do {
             haveStock = true;
             System.out.print("Please enter your choice in number (Enter 0 to previous page):");
-            if (scan.hasNext()) {
+            if (scan.hasNextInt()) {
                 itemSelection = scan.nextInt();
 
                 isInteger = true;
@@ -1050,7 +1060,7 @@ public class CatalogOrder {
             haveStock = true;
 
             System.out.print("Please enter your choice in number (Enter 0 to previous page):");
-            if (scan.hasNext()) {
+            if (scan.hasNextInt()) {
                 itemSelection = scan.nextInt();
                 isInteger = true;
                 if (itemSelection == 0) {
@@ -1303,7 +1313,7 @@ public class CatalogOrder {
 
             System.out.print("Please enter your choice in number (Enter 0 to previous page):");
 
-            if (scan.hasNext()) {
+            if (scan.hasNextInt()) {
                 itemSelection = scan.nextInt();
 
                 isInteger = true;

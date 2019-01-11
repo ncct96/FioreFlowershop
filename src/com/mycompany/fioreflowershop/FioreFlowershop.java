@@ -198,6 +198,7 @@ public class FioreFlowershop {
         testFlowers.add(flowers.getItem(3));
         testFlowers.add(flowers.getItem(5));
 
+        /*<------ Begin Woo Part -------->*/
         //Initialization of Catalog Package
         //Normal catalog
         CatalogPackage normalPackage1 = new CatalogPackage("Package1", styles.getItem(1), sizes.getItem(1), accessories.getItem(1), "Fresh flower", "", 0, 100.00, 0, "Active", "10 10 10");
@@ -208,13 +209,14 @@ public class FioreFlowershop {
         CatalogPackage normalPackage6 = new CatalogPackage("Package6", styles.getItem(3), sizes.getItem(3), season.getItem(1), flowerPot.getItem(1), accessories.getItem(2), "Flower arrangement", "", 0, 250.00, 0, "Active", "9 9 9");
 
         //Discounted catalog
-        CatalogPackage discountPackage1 = new CatalogPackage("Package1", styles.getItem(1), sizes.getItem(1), accessories.getItem(1), "Fresh flower", "January", 2019, 100.00, 20, "Active", "10 10 10");
-        CatalogPackage discountPackage2 = new CatalogPackage("Package2", styles.getItem(2), sizes.getItem(2), accessories.getItem(2), "Fresh flower", "January", 2019, 150.00, 50, "Active", "5 5 5");
-        CatalogPackage discountPackage3 = new CatalogPackage("Package3", styles.getItem(3), sizes.getItem(3), accessories.getItem(3), "Bouquets", "January", 2019, 120.00, 70, "Active", "1 1 1");
-        CatalogPackage discountPackage4 = new CatalogPackage("Package4", styles.getItem(4), sizes.getItem(1), accessories.getItem(4), "Bouquets", "January", 2019, 150.00, 10, "Active", "4 4 4");
-        CatalogPackage discountPackage5 = new CatalogPackage("Package5", styles.getItem(2), sizes.getItem(2), season.getItem(1), flowerPot.getItem(1), accessories.getItem(1), "Flower arrangement", "January", 2019, 200.00, 30, "Active", "3 3 3");
-        CatalogPackage discountPackage6 = new CatalogPackage("Package6", styles.getItem(3), sizes.getItem(3), season.getItem(1), flowerPot.getItem(1), accessories.getItem(2), "Flower arrangement", "January", 2019, 250.00, 40, "Active", "9 9 9");
+        CatalogPackage discountPackage1 = new CatalogPackage("Package1.0", styles.getItem(1), sizes.getItem(1), accessories.getItem(1), "Fresh flower", "January", 2019, 100.00, 20, "Active", "10 10 10");
+        CatalogPackage discountPackage2 = new CatalogPackage("Package2.0", styles.getItem(2), sizes.getItem(2), accessories.getItem(2), "Fresh flower", "January", 2019, 150.00, 50, "Active", "5 5 5");
+        CatalogPackage discountPackage3 = new CatalogPackage("Package3.0", styles.getItem(3), sizes.getItem(3), accessories.getItem(3), "Bouquets", "January", 2019, 120.00, 70, "Active", "1 1 1");
+        CatalogPackage discountPackage4 = new CatalogPackage("Package4.0", styles.getItem(4), sizes.getItem(1), accessories.getItem(4), "Bouquets", "January", 2019, 150.00, 10, "Active", "4 4 4");
+        CatalogPackage discountPackage5 = new CatalogPackage("Package5.0", styles.getItem(2), sizes.getItem(2), season.getItem(1), flowerPot.getItem(1), accessories.getItem(1), "Flower arrangement", "January", 2019, 200.00, 30, "Active", "3 3 3");
+        CatalogPackage discountPackage6 = new CatalogPackage("Package6.0", styles.getItem(3), sizes.getItem(3), season.getItem(1), flowerPot.getItem(1), accessories.getItem(2), "Flower arrangement", "January", 2019, 250.00, 40, "Active", "9 9 9");
 
+        //Adding the flower to the normal/discounted catalog
         for (int i = 1; i <= testFlowers.getTotalEntries(); i++) {
             normalPackage1.getFlowerList().add(testFlowers.getItem(i));
             normalPackage2.getFlowerList().add(testFlowers.getItem(i));
@@ -230,6 +232,7 @@ public class FioreFlowershop {
             discountPackage6.getFlowerList().add(testFlowers.getItem(i));
         }
 
+        //Adding the dummy catalog into normal catalog
         normalPackage.addProduct(normalPackage1);
         normalPackage.addProduct(normalPackage2);
         normalPackage.addProduct(normalPackage3);
@@ -237,22 +240,27 @@ public class FioreFlowershop {
         normalPackage.addProduct(normalPackage5);
         normalPackage.addProduct(normalPackage6);
 
+        //Adding the dummy catalog into monthly promotion catalog
         discountedPackage.addProduct(discountPackage1);
         discountedPackage.addProduct(discountPackage2);
         discountedPackage.addProduct(discountPackage3);
         discountedPackage.addProduct(discountPackage4);
         discountedPackage.addProduct(discountPackage5);
-        discountedPackage.addProduct(discountPackage6);
+        discountedPackage.addProduct(discountPackage6);        
+        /*<------ End Woo Part -------->*/
 
-        //Initialize Catalog Order      
-        catalogPack1.addProduct(normalPackage2);
-        catalogPack1.addProduct(discountPackage4);
-        catalogPack2.addProduct(normalPackage3);
-        catalogPack2.addProduct(discountPackage2);
-        catalogPack2.addProduct(discountPackage6);
-        //String orderID, CatalogPackageInterface<CatalogPackage> catalogPack, Item priority,
-        //String orderType, Date orderDate, Date orderTime, User user, String orderStatus, double orderAmt,
-        //boolean paymentStatus, Date retrieveDate, Date retrieveTime      
+        //Initialize Catalog Package      
+        CatalogPackage normalPackage_1 = new CatalogPackage("NPackage5", styles.getItem(2), sizes.getItem(2), season.getItem(1), flowerPot.getItem(1), accessories.getItem(1), "Flower arrangement", "", 0, 200.00, 0, "Active", 1, "3 3 3");
+        CatalogPackage normalPackage_2 = new CatalogPackage("NPackage6", styles.getItem(3), sizes.getItem(3), season.getItem(1), flowerPot.getItem(1), accessories.getItem(2), "Flower arrangement", "", 0, 250.00, 0, "Active", 2, "9 9 9");
+        CatalogPackage discountPackage_1 = new CatalogPackage("DPackage2.0", styles.getItem(2), sizes.getItem(2), "", new Item(), accessories.getItem(2), "Fresh flower", "January", 2019, 150.00, 50, "Active", 3, "5 5 5");
+        CatalogPackage discountPackage_2 = new CatalogPackage("DPackage3.0", styles.getItem(3), sizes.getItem(3), "", new Item(), accessories.getItem(3), "Bouquets", "January", 2019, 120.00, 70, "Active", 5, "1 1 1");
+        CatalogPackage discountPackage_6 = new CatalogPackage("Package6.0", styles.getItem(3), sizes.getItem(3), season.getItem(1), flowerPot.getItem(1), accessories.getItem(2), "Flower arrangement", "January", 2019, 250.00, 40, "Active", 1, "9 9 9");
+        catalogPack1.addProduct(normalPackage_1);
+        catalogPack1.addProduct(discountPackage_1);
+        catalogPack2.addProduct(normalPackage_2);
+        catalogPack2.addProduct(discountPackage_2);
+        catalogPack2.addProduct(discountPackage_6);
+             
         Date orderTime1 = new Date();
         Date orderTime2 = new Date();
         Date orderTime3 = new Date();
@@ -292,6 +300,8 @@ public class FioreFlowershop {
         } catch (ParseException ex) {
             Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        //Adding of order to Catalog Order for Delivery & Pickup Testing
         CatalogOrders C01 = new CatalogOrders("CO1001", catalogPack1, priorities.getItem(1), "Pick Up", todayDate, orderTime1, cc1, "Order Status", 560, false, todayDate, todayDate);
         CatalogOrders CO2 = new CatalogOrders("CO1002", catalogPack2, priorities.getItem(1), "Pick Up", todayDate, orderTime2, cc2, "Order Status", 200, false, todayDate, todayDate);
         CatalogOrders CO3 = new CatalogOrders("CO1003", catalogPack1, priorities.getItem(1), "Delivery", todayDate, orderTime3, c3, "Order Status", 360, false, retrieveDate, todayDate);
@@ -306,14 +316,19 @@ public class FioreFlowershop {
 
         
         /*<------ Begin CP's Part -------->*/
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -2);
+        
         CustomizedPackage package1 = new CustomizedPackage(styles.getItem(2), sizes.getItem(3), accessories.getItem(4), priorities.getItem(1), deliveryTypes.getItem(1), c1, false);
         CustomizedPackage package2 = new CustomizedPackage(styles.getItem(1), sizes.getItem(2), accessories.getItem(3), priorities.getItem(1), deliveryTypes.getItem(2), c2, false);
         CustomizedPackage package3 = new CustomizedPackage(styles.getItem(3), sizes.getItem(1), accessories.getItem(1), priorities.getItem(1), deliveryTypes.getItem(2), c1, false);
         CustomizedPackage package4 = new CustomizedPackage(styles.getItem(4), sizes.getItem(2), accessories.getItem(1), priorities.getItem(2), deliveryTypes.getItem(1), c2, false);
         CustomizedPackage package5 = new CustomizedPackage(styles.getItem(1), sizes.getItem(1), accessories.getItem(2), priorities.getItem(3), deliveryTypes.getItem(1), c2, false);
         CustomizedPackage package6 = new CustomizedPackage(styles.getItem(2), sizes.getItem(3), accessories.getItem(2), priorities.getItem(3), deliveryTypes.getItem(2), c2, false);
-        CustomizedPackage package7 = new CustomizedPackage(styles.getItem(2), sizes.getItem(3), accessories.getItem(2), priorities.getItem(3), deliveryTypes.getItem(2), c3, false);
+        CustomizedPackage package7 = new CustomizedPackage(styles.getItem(2), sizes.getItem(3), accessories.getItem(3), priorities.getItem(3), deliveryTypes.getItem(2), c3, false);
         CustomizedPackage package8 = new CustomizedPackage(styles.getItem(2), sizes.getItem(3), accessories.getItem(2), priorities.getItem(3), deliveryTypes.getItem(2), c4, false);
+        CustomizedPackage package9 = new CustomizedPackage(styles.getItem(1), sizes.getItem(2), accessories.getItem(4), priorities.getItem(3), deliveryTypes.getItem(2), c3, false);
+        CustomizedPackage package10 = new CustomizedPackage(styles.getItem(3), sizes.getItem(1), accessories.getItem(1), priorities.getItem(3), deliveryTypes.getItem(2), c4, false);
         
         for (int i = 1; i <= testFlowers.getTotalEntries(); i++) {
             package1.getFlowerList().add(testFlowers.getItem(i));
@@ -322,6 +337,10 @@ public class FioreFlowershop {
             package4.getFlowerList().add(testFlowers.getItem(i));
             package5.getFlowerList().add(testFlowers.getItem(i));
             package6.getFlowerList().add(testFlowers.getItem(i));
+            package7.getFlowerList().add(testFlowers.getItem(i));
+            package8.getFlowerList().add(testFlowers.getItem(i));
+            package9.getFlowerList().add(testFlowers.getItem(i));
+            package10.getFlowerList().add(testFlowers.getItem(i));
         }
 
         customizedPackages.enqueuePackage(package1);
@@ -332,15 +351,8 @@ public class FioreFlowershop {
         customizedPackages.enqueuePackage(package6);
         customizedPackages.enqueuePackage(package7);
         customizedPackages.enqueuePackage(package8);
-        Item style = new Item("Elliptical", 10);
-        Item size = new Item("Small", 1);
-        Item flower = new Item("Sunflowers", 250, 10);
-        Item accessory = new Item("None", 0, 1);
-
-        Item flexi = new Item("Flexi", 1, 6);
-        Item normal = new Item("Normal", 1.5, 4);
-        Item express = new Item("Express", 3, 2);
-        Item delivery = new Item("Pick Up", 0);
+        customizedPackages.enqueuePackage(package9);
+        customizedPackages.enqueuePackage(package10);
         
         SortOrders.sortCustomizedOrders(customizedPackages);
         
@@ -348,7 +360,9 @@ public class FioreFlowershop {
         readyOrders.addOrder(customizedPackages.dequeuePackage());
         readyOrders.addOrder(customizedPackages.dequeuePackage());
         readyOrders.addOrder(customizedPackages.dequeuePackage());
-        
+        readyOrders.addOrder(customizedPackages.dequeuePackage());
+        readyOrders.addOrder(customizedPackages.dequeuePackage());
+   
         SortOrders.sortAllOrders(readyOrders);
         /*<------ End CP's Part -------->*/
     }
