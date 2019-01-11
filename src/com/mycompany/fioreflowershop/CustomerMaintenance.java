@@ -361,7 +361,7 @@ public class CustomerMaintenance {
                     System.out.println("\n" + GREEN + "Customer Successfully Removed ! " + RESET);
                     break;
                 } else {
-                    System.out.println("\n" + RED + "Unable to Remove Customer, Please Enter The Valid Email Shown." + RESET);
+                    System.out.println("\n" + RED + "Request Canceled by User, Customer Removal Halted." + RESET);
                     break;
                 }
             } catch (Exception e) {
@@ -729,6 +729,7 @@ public class CustomerMaintenance {
                 System.out.print("Credit Limit : ");
                 int creditLimit = s.nextInt();
                 do {
+                    s.nextLine();
                     System.out.print("Password : ");
                     passw = s.nextLine();
                     System.out.print("Retype Password : ");
