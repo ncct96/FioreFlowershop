@@ -58,6 +58,8 @@ public class CustomerMaintenance {
                 } else {
                     break;
                 }
+            }else{
+                customerMenu();
             }
         }
     }
