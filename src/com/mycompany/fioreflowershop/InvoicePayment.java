@@ -448,21 +448,17 @@ public class InvoicePayment {
                 for(int l = 1;l <= order.getSize(); l++){
                     if(order.getOrder(l).getUser().equals(user)){
                         for(int m = 1; m <= userEmail.getTotalEntries(); m++){
-                            if(userEmail.getItem(m).equals(order.getOrder(l).getUser().getEmail())){
+                            if(userEmail.getItem(m).equals(user.getEmail())){
                                 userEmail.remove(m); 
                             }
                         }
                     }
                 }
-                
                 paymentHistory.addInvoice(new InvoiceHistory(invoiceNumber, tempCatalog, cc, today));
-//                for(int a = 1; a <= tempCatalog.getSize(); a++){
-//                    tempCatalog.removeOrder(a);
-//                }
-                    tempCatalog = new OrderList<>();
-                    ++invoiceNumber; 
-                    System.out.println(GREEN+"\nPayment Success, Thanks for the Patronage :D "+ RESET);
-                    System.out.println(BLUE+"Redirecting Back to User Selection Menu......" + RESET);
+                tempCatalog = new OrderList<>();
+                ++invoiceNumber; 
+                System.out.println(GREEN+"\nPayment Success, Thanks for the Patronage :D "+ RESET);
+                System.out.println(BLUE+"Redirecting Back to User Selection Menu......" + RESET);
             }else {//Payment Cancel by user
                 System.out.println(RED+"\nPayment Cancelled, Redirecting back to Main Menu."+RESET);
             }
