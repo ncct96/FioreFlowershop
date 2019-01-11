@@ -275,14 +275,19 @@ public class FioreFlowershop {
         catalogOrder.addOrder(CO5);
         
         /*<------ Begin CP's Part -------->*/
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -2);
+        
         CustomizedPackage package1 = new CustomizedPackage(styles.getItem(2), sizes.getItem(3), accessories.getItem(4), priorities.getItem(1), deliveryTypes.getItem(1), c1, false);
         CustomizedPackage package2 = new CustomizedPackage(styles.getItem(1), sizes.getItem(2), accessories.getItem(3), priorities.getItem(1), deliveryTypes.getItem(2), c2, false);
         CustomizedPackage package3 = new CustomizedPackage(styles.getItem(3), sizes.getItem(1), accessories.getItem(1), priorities.getItem(1), deliveryTypes.getItem(2), c1, false);
         CustomizedPackage package4 = new CustomizedPackage(styles.getItem(4), sizes.getItem(2), accessories.getItem(1), priorities.getItem(2), deliveryTypes.getItem(1), c2, false);
         CustomizedPackage package5 = new CustomizedPackage(styles.getItem(1), sizes.getItem(1), accessories.getItem(2), priorities.getItem(3), deliveryTypes.getItem(1), c2, false);
         CustomizedPackage package6 = new CustomizedPackage(styles.getItem(2), sizes.getItem(3), accessories.getItem(2), priorities.getItem(3), deliveryTypes.getItem(2), c2, false);
-        CustomizedPackage package7 = new CustomizedPackage(styles.getItem(2), sizes.getItem(3), accessories.getItem(2), priorities.getItem(3), deliveryTypes.getItem(2), c3, false);
+        CustomizedPackage package7 = new CustomizedPackage(styles.getItem(2), sizes.getItem(3), accessories.getItem(3), priorities.getItem(3), deliveryTypes.getItem(2), c3, false);
         CustomizedPackage package8 = new CustomizedPackage(styles.getItem(2), sizes.getItem(3), accessories.getItem(2), priorities.getItem(3), deliveryTypes.getItem(2), c4, false);
+        CustomizedPackage package9 = new CustomizedPackage(styles.getItem(1), sizes.getItem(2), accessories.getItem(4), priorities.getItem(3), deliveryTypes.getItem(2), c3, false);
+        CustomizedPackage package10 = new CustomizedPackage(styles.getItem(3), sizes.getItem(1), accessories.getItem(1), priorities.getItem(3), deliveryTypes.getItem(2), c4, false);
         
         for (int i = 1; i <= testFlowers.getTotalEntries(); i++) {
             package1.getFlowerList().add(testFlowers.getItem(i));
@@ -291,6 +296,10 @@ public class FioreFlowershop {
             package4.getFlowerList().add(testFlowers.getItem(i));
             package5.getFlowerList().add(testFlowers.getItem(i));
             package6.getFlowerList().add(testFlowers.getItem(i));
+            package7.getFlowerList().add(testFlowers.getItem(i));
+            package8.getFlowerList().add(testFlowers.getItem(i));
+            package9.getFlowerList().add(testFlowers.getItem(i));
+            package10.getFlowerList().add(testFlowers.getItem(i));
         }
 
         customizedPackages.enqueuePackage(package1);
@@ -301,9 +310,13 @@ public class FioreFlowershop {
         customizedPackages.enqueuePackage(package6);
         customizedPackages.enqueuePackage(package7);
         customizedPackages.enqueuePackage(package8);
+        customizedPackages.enqueuePackage(package9);
+        customizedPackages.enqueuePackage(package10);
         
         SortOrders.sortCustomizedOrders(customizedPackages);
         
+        readyOrders.addOrder(customizedPackages.dequeuePackage());
+        readyOrders.addOrder(customizedPackages.dequeuePackage());
         readyOrders.addOrder(customizedPackages.dequeuePackage());
         readyOrders.addOrder(customizedPackages.dequeuePackage());
         readyOrders.addOrder(customizedPackages.dequeuePackage());
