@@ -270,11 +270,11 @@ public class FioreFlowershop {
         }
 
         //Adding of order to Catalog Order for Delivery & Pickup Testing
-        CatalogOrders CO1 = new CatalogOrders("CO1", catalogPack1, priorities.getItem(1), new Item("Pick Up", 0), todayDate, orderTime1, cc1, "Order Status", 560, false, todayDate, todayDate);
-        CatalogOrders CO2 = new CatalogOrders("CO2", catalogPack2, priorities.getItem(1), new Item("Pick Up", 0), todayDate, orderTime2, cc2, "Order Status", 200, false, todayDate, todayDate);
-        CatalogOrders CO3 = new CatalogOrders("CO3", catalogPack1, priorities.getItem(1), new Item("Delivery", 10), todayDate, orderTime3, c3, "Order Status", 360, false, retrieveDate, todayDate);
-        CatalogOrders CO4 = new CatalogOrders("CO4", catalogPack1, priorities.getItem(2), new Item("Delivery", 10), orderDate, orderTime4, c4, "Order Status", 380, false, retrieveDate, todayDate);
-        CatalogOrders CO5 = new CatalogOrders("CO5", catalogPack1, priorities.getItem(3), new Item("Delivery", 10), orderDate, orderTime5, c3, "Order Status", 320, false, retrieveDate, todayDate);
+        CatalogOrders CO1 = new CatalogOrders("CO1", catalogPack1, priorities.getItem(1), new Item("Pick Up", 0), todayDate, orderTime1, cc1, "Pending", 560, false, todayDate, todayDate);
+        CatalogOrders CO2 = new CatalogOrders("CO2", catalogPack2, priorities.getItem(1), new Item("Pick Up", 0), todayDate, orderTime2, cc2, "Pending", 200, false, todayDate, todayDate);
+        CatalogOrders CO3 = new CatalogOrders("CO3", catalogPack1, priorities.getItem(1), new Item("Delivery", 10), todayDate, orderTime3, c3, "Pending", 360, false, retrieveDate, todayDate);
+        CatalogOrders CO4 = new CatalogOrders("CO4", catalogPack1, priorities.getItem(2), new Item("Delivery", 10), orderDate, orderTime4, c4, "Pending", 380, false, retrieveDate, todayDate);
+        CatalogOrders CO5 = new CatalogOrders("CO5", catalogPack1, priorities.getItem(3), new Item("Delivery", 10), orderDate, orderTime5, c3, "Pending", 320, false, retrieveDate, todayDate);
 
         readyOrders.addOrder(CO1);
         readyOrders.addOrder(CO2);
@@ -604,8 +604,8 @@ public class FioreFlowershop {
                 System.out.println("\nPlease Select One Of The Options Below.");
                 System.out.println("1. Today's Pick Up Order List");
                 System.out.println("2. Search Pick Up Order List by Date");
-                System.out.println("3. Search Pick Up Order by User ID to Pay (Consumer only!)");
-                System.out.println("4. Search Pick Up Order by User ID to Pay (Corporate Customer only!)");
+                System.out.println("3. Search Pick Up Order by User ID to Pay & Pick Up (Consumer only!)");
+                System.out.println("4. Search Pick Up Order by User ID to Pick Up (Corporate Customer only!)");
                 System.out.println("Enter your option: ");
 
                 int pickupChoice = s.nextInt();
@@ -640,6 +640,18 @@ public class FioreFlowershop {
                     String userID = s.nextLine();
 
                     Pickup.searchUserPickUp(userID, readyOrders, paidOrder);
+                } else if (pickupChoice == 4) {
+
+                    s.nextLine();
+
+                    System.out.print("Please enter User ID to pay: ");
+
+                    String userID = s.nextLine();
+
+                    Pickup.searchCorpPickUp(userID, readyOrders, paidOrder);
+
+                } else {
+                    break;
                 }
             } else if (choice == 2) {
                 while (true) {

@@ -10,12 +10,14 @@ import com.mycompany.fioreflowershop.adt.LinkedList;
 import com.mycompany.fioreflowershop.adt.ArrayQueue;
 import com.mycompany.fioreflowershop.adt.CatalogPackageInterface;
 import com.mycompany.fioreflowershop.adt.ConsumerInterface;
+import com.mycompany.fioreflowershop.adt.CorporateInterface;
 import com.mycompany.fioreflowershop.adt.LinkedList;
 import com.mycompany.fioreflowershop.adt.ListInterface;
 import com.mycompany.fioreflowershop.adt.ListIteratorInterface;
 import com.mycompany.fioreflowershop.adt.OrderList;
 import com.mycompany.fioreflowershop.adt.OrderListInterface;
 import com.mycompany.fioreflowershop.adt.QueueInterface;
+import com.mycompany.fioreflowershop.adt.UserInterface;
 import com.mycompany.fioreflowershop.modal.CatalogOrders;
 import com.mycompany.fioreflowershop.modal.CatalogPackage;
 import com.mycompany.fioreflowershop.modal.Consumer;
@@ -457,7 +459,7 @@ public class Pickup {
                             } else if (payAmt >= ((CustomizedPackage) order).CalculateOrder()) {
 
                                 change = CalculatePayment(payAmt, ((CustomizedPackage) order).CalculateOrder());
-                                setPaymentStatus(order);
+                                setPickUpPaymentStatus(order);
                                 paidOrder.addOrder(order);
 
                                 if (change == 0) {
@@ -477,18 +479,159 @@ public class Pickup {
 
     }
 
+    public static void searchCorpPickUp(String userID, OrderListInterface<Order> readyOrder, OrderListInterface<Order> paidOrder) {
+
+        OrderListInterface<Order> matchOrder = new OrderList<>();
+        CorporateInterface<CorporateCustomer> corpList = FioreFlowershop.getCorporateList();
+        User user = null;
+        String confirm = "";
+
+        Scanner s = new Scanner(System.in);
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat dt = new SimpleDateFormat("HH:mm");
+        DateFormat dfdt = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+        // Get all CatalogOrder with Pick Up type
+        Iterator<Order> orderIterator = readyOrder.getIterator();
+
+        while (orderIterator.hasNext()) {
+            Order order = orderIterator.next();
+
+            if (order.getUser().getUsername().equals(userID) && order.getOrderType().equals("Pick Up") && (order.getUser() instanceof CorporateCustomer) && order.getOrderStatus().equals("Pending")) {
+                matchOrder.addOrder(order);
+            }
+        }
+
+        // Get all consumer list and do checking on existence
+        for (int i = 1; i <= corpList.getTotalCorporate(); i++) {
+            if (corpList.getCorporate(i).getUsername().equals(userID)) {
+                user = corpList.getCorporate(i);
+            }
+        }
+
+        if (user == null && matchOrder.isEmpty()) {
+            System.out.println("\nUser ID does not exist in system!");
+            FioreFlowershop.orderMenu();
+
+        } else if (user != null && matchOrder.isEmpty()) {
+            System.out.println(ANSI_RED + "User don't have any order with pending pick up orders! Please try again!" + ANSI_RESET);
+            FioreFlowershop.orderMenu();
+
+        } else {
+
+            do {
+                System.out.println("Hi " + user.getUsername() + ",");
+                System.out.println("These are your orders with pending payment");
+                System.out.println("|No.|\t|Order ID|\t|Order Type|\t|Order Date|\t\t|Payment Amount (RM)|\t|Payment Status|\t|Pickup Date|");
+                System.out.println("=============================================================================================================================================================");
+
+                for (int i = 1; i <= matchOrder.getSize(); i++) {
+                    Order order = matchOrder.getOrder(i);
+
+                    if (user instanceof CorporateCustomer) {
+                        if (order instanceof CatalogOrders) {
+                            System.out.print(i + "\t");
+                            System.out.print(((CatalogOrders) order).getOrderID() + "\t\t");
+                            System.out.print(order.getOrderType() + "\t\t");
+                            System.out.print(df.format(order.getOrderDate()) + "\t\t");
+                            //System.out.print("Username: " + order.getUser().getUsername());
+                            //System.out.print("Contact: " + order.getUser().getPhone());
+                            //System.out.print("Order Details: " + ((CatalogOrders) order).getCatalogPack());
+                            System.out.print(String.format("%.2f", order.getOrderAmt()) + "\t\t\t");
+                            //System.out.print("Quantity: " + ((CatalogOrders) order).getItemQuantity());
+                            if (order.isPaymentStatus()) {
+                                System.out.print("Paid \t\t");
+                            } else {
+                                System.out.print("Pending \t\t");
+                            }
+                            if (order.getDateOfReceive() == null) {
+                                System.out.print("Pending \n");
+                            } else {
+                                System.out.print(dfdt.format(order.getDateOfReceive()) + "\n");
+                            }
+                        } else {
+                            System.out.print(i + "\t");
+                            System.out.print(((CustomizedPackage) order).getOrderID() + "\t\t");
+                            System.out.print(((CustomizedPackage) order).getDeliveryType().getName() + "\t\t");
+                            System.out.print(df.format(order.getOrderDate()) + "\t\t");
+                            //System.out.print(order.getUser().getUsername() + "\t");
+                            //System.out.print(order.getUser().getPhone() + "\t");
+                            // System.out.print(((CustomizedPackage) order).getFlower() + "\t");
+                            System.out.print(String.format("%.2f", ((CustomizedPackage) order).CalculateOrder()) + "\t\t\t");
+                            //System.out.print(((CatalogOrders) order).getCatalogPack().getItem(i).getUserQuantity() + "\t");
+                            if (order.isPaymentStatus()) {
+                                System.out.print("Paid \t\t");
+                            } else {
+                                System.out.print("Pending \t\t");
+                            }
+                            if (order.getDateOfReceive() == null) {
+                                System.out.print("Pending \n");
+                            } else {
+                                System.out.print(dfdt.format(order.getDateOfReceive()) + "\n");
+                            }
+                        }
+                    }
+                }
+
+                System.out.println("\n\n1. Pick Up");
+                System.out.println("2. Back");
+                System.out.println("Your selection: ");
+                int choice = s.nextInt();
+
+                if (choice == 1) {
+                    System.out.println("Select order number to pick up: ");
+
+                    int orderChoice = s.nextInt();
+
+                    Order order = matchOrder.getOrder(orderChoice);
+
+                    if (order instanceof CatalogOrders) {
+
+                        System.out.println("Confirm Pick Up? (Y/y = yes OR N/n = no)");
+                        confirm = s.next();
+
+                        s.nextLine();
+
+                        if (confirm.equalsIgnoreCase("Y")) {
+                            setPickUpPaymentStatus(order);
+                            System.out.println(ANSI_GREEN + "Order Picked Up Successfully!" + ANSI_RESET);
+                        }
+                    } else {
+
+                    }
+                } else {
+
+                }
+            } while (!confirm.equalsIgnoreCase("Y"));
+
+        }
+
+    }
+
     public static double CalculatePayment(double payAmt, double totalAmt) {
 
         double change = payAmt - totalAmt;
         return change;
     }
 
-    public static void setPaymentStatus(Order order) {
+    public static void setDeliveryPaymentStatus(Order order) {
         order.setPaymentStatus(true);
         order.setOrderStatus("Delivered");
         order.setPaymentTime(new Date());
         order.setDateOfReceive(new Date());
 
+    }
+
+    public static void setPickUpPaymentStatus(Order order) {
+        order.setPaymentStatus(true);
+        order.setOrderStatus("Picked Up");
+        order.setPaymentTime(new Date());
+        order.setDateOfReceive(new Date());
+    }
+
+    public static void setPickUpStatus(Order order) {
+        order.setOrderStatus("Picked Up");
+        order.setDateOfReceive(new Date());
     }
 
     public static void genReceipt(Order order, double payAmt, double change) {
