@@ -42,8 +42,9 @@ public class CatalogMaintenance {
             System.out.println(FioreFlowershop.ConsoleColors.GREEN + "[4]" + FioreFlowershop.ConsoleColors.RESET + " Display created catalog");
             System.out.println(FioreFlowershop.ConsoleColors.GREEN + "[5]" + FioreFlowershop.ConsoleColors.RESET + " Create new item");
             System.out.println(FioreFlowershop.ConsoleColors.GREEN + "[6]" + FioreFlowershop.ConsoleColors.RESET + " Delete item");
-            System.out.println(FioreFlowershop.ConsoleColors.GREEN + "[7]" + FioreFlowershop.ConsoleColors.RESET + " Display item");
-            System.out.println(FioreFlowershop.ConsoleColors.GREEN + "[8]" + FioreFlowershop.ConsoleColors.RESET + " Back");
+            System.out.println(FioreFlowershop.ConsoleColors.GREEN + "[7]" + FioreFlowershop.ConsoleColors.RESET + " Update item");
+            System.out.println(FioreFlowershop.ConsoleColors.GREEN + "[8]" + FioreFlowershop.ConsoleColors.RESET + " Display item");
+            System.out.println(FioreFlowershop.ConsoleColors.GREEN + "[9]" + FioreFlowershop.ConsoleColors.RESET + " Back");
             System.out.print("Selection: ");
             if (scan.hasNextInt()) {
                 managerChoice = scan.nextInt();
@@ -53,7 +54,7 @@ public class CatalogMaintenance {
                 System.out.println(FioreFlowershop.ConsoleColors.RED + "An Error Occured. Please Only Enter Number Only." + FioreFlowershop.ConsoleColors.RESET);
                 scan.next();
             }
-        } while (!(isInteger) || managerChoice < 1 || managerChoice > 8);
+        } while (!(isInteger) || managerChoice < 1 || managerChoice > 9);
 
         switch (managerChoice) {
             case 1:
@@ -81,10 +82,12 @@ public class CatalogMaintenance {
                 catalogMaintenance(normalPackage, discountedPackage, itemCatalogue);
                 break;
             case 7:
+                updateItem(normalPackage, discountedPackage, itemCatalogue);
+            case 8:
                 displayStockAvailability("Current stock", itemCatalogue);
                 catalogMaintenance(normalPackage, discountedPackage, itemCatalogue);
                 break;
-            case 8:
+            case 9:
                 FioreFlowershop.manager();
                 break;
         }
@@ -626,7 +629,7 @@ public class CatalogMaintenance {
                     }
                     System.out.printf(FioreFlowershop.ConsoleColors.GREEN + " [%d]" + FioreFlowershop.ConsoleColors.RESET, i);
                     System.out.printf(" %-10s", catalogPackage.getName());
-                    System.out.printf("\t  %s,%s,%s,%s,%s,%s %-30s RM%.2f %20s - %14s %s\n", catalogPackage.getStyle().getName(), catalogPackage.getSize().getName(), normalflowerArrangementList, catalogPackage.getSeason(), catalogPackage.getFlowerPot().getName(), catalogPackage.getAccessory().getName(), " ", catalogPackage.getPrice(), " ", " ", catalogPackage.getStatus());
+                    System.out.printf("\t  %s,%s,%s,%s,%s,%s %-30s RM%.2f %20s - %14s %s\n", catalogPackage.getStyle().getName(), catalogPackage.getSize().getName(), normalflowerArrangementList, catalogPackage.getSeason().getName(), catalogPackage.getFlowerPot().getName(), catalogPackage.getAccessory().getName(), " ", catalogPackage.getPrice(), " ", " ", catalogPackage.getStatus());
                     flowerArrangementCounter++;
                     normalflowerArrangementList = "";
                 } else if (catalogPackage.getProductType().equals("Flower arrangement") && catalogPackage.getPromoMonth().equals(curentMonthString) && catalogPackage.getPromoYear() == year && catalogPackage.getStatus().equals("Active") && catalogTypes == 2) {
@@ -636,7 +639,7 @@ public class CatalogMaintenance {
                     double discountRate = (double) ((100 - catalogPackage.getDiscountRate()) * catalogPackage.getPrice() / 100);
                     System.out.printf(FioreFlowershop.ConsoleColors.GREEN + " [%d]" + FioreFlowershop.ConsoleColors.RESET, i);
                     System.out.printf(" %s", catalogPackage.getName());
-                    System.out.printf("\t  %s,%s,%s,%s,%s,%s %-30s RM%.2f %20s RM%.2f %14s %s\n", catalogPackage.getStyle().getName(), catalogPackage.getSize().getName(), discountflowerArrangementList, catalogPackage.getSeason(), catalogPackage.getFlowerPot().getName(), catalogPackage.getAccessory().getName(), " ", catalogPackage.getPrice(), " ", discountRate, " ", catalogPackage.getStatus());
+                    System.out.printf("\t  %s,%s,%s,%s,%s,%s %-30s RM%.2f %20s RM%.2f %14s %s\n", catalogPackage.getStyle().getName(), catalogPackage.getSize().getName(), discountflowerArrangementList, catalogPackage.getSeason().getName(), catalogPackage.getFlowerPot().getName(), catalogPackage.getAccessory().getName(), " ", catalogPackage.getPrice(), " ", discountRate, " ", catalogPackage.getStatus());
                     discountFlowerArrangementCounter++;
                     discountflowerArrangementList = "";
                 }
@@ -1684,7 +1687,7 @@ public class CatalogMaintenance {
             if (itemCatalogue.getSeason().getSize() > 0) {
                 for (int c = 1; c <= itemCatalogue.getSeason().getSize(); c++) {
                     System.out.print(FioreFlowershop.ConsoleColors.GREEN + "[" + c + "]" + FioreFlowershop.ConsoleColors.RESET);
-                    System.out.printf("\t%s\n", itemCatalogue.getSeason().getItem(c));
+                    System.out.printf("\t%s\n", itemCatalogue.getSeason().getItem(c).getName());
                 }
             } else {
                 System.out.println(FioreFlowershop.ConsoleColors.RED + "No created Season exist ..." + FioreFlowershop.ConsoleColors.RESET);
@@ -1746,7 +1749,7 @@ public class CatalogMaintenance {
         }
     }
 
-    //
+    //Update current stock quantity
     public static void restockQuantity(ItemCatalogue itemCatalogue) {
         int itemNewQuantity = 0, itemType = 0, itemIndex = 0, minRange = 0, maxRange = 0;
         String itemTypeString = "";
@@ -2071,7 +2074,7 @@ public class CatalogMaintenance {
         int maxSize = 0;
         int position = 0;
         do {
-            System.out.println("\nSelect the type of item you wish to add");
+            System.out.println("\nSelect the type of item you wish to delete");
             System.out.println(FioreFlowershop.ConsoleColors.GREEN + "[1] " + FioreFlowershop.ConsoleColors.RESET + "Arrangement Styles");
             System.out.println(FioreFlowershop.ConsoleColors.GREEN + "[2] " + FioreFlowershop.ConsoleColors.RESET + "Arrangement Sizes");
             System.out.println(FioreFlowershop.ConsoleColors.GREEN + "[3] " + FioreFlowershop.ConsoleColors.RESET + "Flowers");
@@ -2130,7 +2133,7 @@ public class CatalogMaintenance {
         } else {
             return;
         }
-        System.out.println("Select the item to be deleted");
+        System.out.println("\nSelect the item to be deleted");
         printItem(itemCatalogue, selection);
         while (true) {
             try {
@@ -2166,8 +2169,9 @@ public class CatalogMaintenance {
         displayStockAvailability("Current Item", itemCatalogue);
 
         int itemNewQuantity = 0, itemType = 0, itemIndex = 0, minRange = 0, maxRange = 0;
-        String itemTypeString = "", seasonName = "";
-        boolean validInput;
+        double newPrice = 0.00;
+        String itemTypeString = "", newName = "";
+        boolean validInput, isDouble;
         int existNameChecker;
         if (itemCatalogue != null) {
             do {
@@ -2188,8 +2192,8 @@ public class CatalogMaintenance {
                     System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter the number only." + FioreFlowershop.ConsoleColors.RESET);
                     scan.next();
                 }
-                if (itemType == 4) {
-                    FioreFlowershop.inventoryClerk();
+                if (itemType == 7) {
+                    catalogMaintenance(normalPackage, discountedPackage, itemCatalogue);
                 }
             } while (!(isInteger) || itemType < 1 || itemType > 7);
 
@@ -2237,36 +2241,19 @@ public class CatalogMaintenance {
                 }
             } while (!(isInteger) || itemIndex < minRange || itemIndex > maxRange);
 
-//            do {
-//                if (itemType == 1) {
-//                    System.out.printf("\nPlease enter the new quantity for add into the " + FioreFlowershop.ConsoleColors.BLUE + itemCatalogue.getFlowers().getItem(itemIndex).getName() + FioreFlowershop.ConsoleColors.RESET + " stock: ");
-//                } else if (itemType == 2) {
-//                    System.out.printf("\nPlease enter the new quantity for add into the " + FioreFlowershop.ConsoleColors.BLUE + itemCatalogue.getAccessories().getItem(itemIndex).getName() + FioreFlowershop.ConsoleColors.RESET + " stock: ");
-//                } else if (itemType == 3) {
-//                    System.out.printf("\nPlease enter the new quantity for add into the " + FioreFlowershop.ConsoleColors.BLUE + itemCatalogue.getFlowerPot().getItem(itemIndex).getName() + FioreFlowershop.ConsoleColors.RESET + " stock: ");
-//                }
-//
-//                if (scan.hasNextInt()) {
-//                    itemNewQuantity = scan.nextInt();
-//                    isInteger = true;
-//                } else {
-//                    isInteger = false;
-//                    System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter the number only." + FioreFlowershop.ConsoleColors.RESET);
-//                    scan.next();
-//                }
-//            } while (!(isInteger));
-            if (itemType == 3) {
+            if (itemType == 1 && itemCatalogue.getStyles().getSize() > 0) {                
                 do {
                     validInput = true;
                     existNameChecker = 0;
-                    System.out.print("Please enter new season: ");
-                    seasonName = scan.nextLine();
-                    if (seasonName == null || seasonName.isEmpty()) {
+                    System.out.print("Please enter the new style name: ");
+                    scan.nextLine();
+                    newName = scan.nextLine();
+                    if (newName == null || newName.isEmpty()) {
                         validInput = false;
                         System.out.println(FioreFlowershop.ConsoleColors.RED + "This field cannot be empty\n" + FioreFlowershop.ConsoleColors.RESET);
                     } else {
-                        for (int i = 1; i < itemCatalogue.getSeason().getSize() + 1; i++) {
-                            if (itemCatalogue.getSeason().getItem(i).equals(seasonName)) {
+                        for (int i = 1; i < itemCatalogue.getStyles().getSize() + 1; i++) {
+                            if (itemCatalogue.getStyles().getItem(i).getName().equals(newName)) {
                                 existNameChecker++;
                             }
                         }
@@ -2275,23 +2262,160 @@ public class CatalogMaintenance {
                         }
                     }
                 } while (validInput == false || existNameChecker > 0);
+
+                do {
+                    System.out.print("Enter the new price: ");
+                    if (scan.hasNextDouble()) {
+                        isDouble = true;
+                        newPrice = scan.nextDouble();
+                    } else {
+                        isDouble = false;
+                        System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter the number(can include decimal) only." + FioreFlowershop.ConsoleColors.RESET);
+                        scan.next();
+                    }
+                } while (!(isDouble));
+            } else if (itemType == 2 && itemCatalogue.getSizes().getSize() > 0) {
+                scan.nextLine();
+                do {
+                    validInput = true;
+                    existNameChecker = 0;
+                    System.out.print("Please enter the new size:");
+                    newName = scan.nextLine();
+                    if (newName == null || newName.isEmpty()) {
+                        validInput = false;
+                        System.out.println(FioreFlowershop.ConsoleColors.RED + "This field cannot be empty\n" + FioreFlowershop.ConsoleColors.RESET);
+                    } else {
+                        for (int i = 1; i < itemCatalogue.getSizes().getSize() + 1; i++) {
+
+                            if (itemCatalogue.getSizes().getItem(i).getName().equals(newName)) {
+                                existNameChecker++;
+                            }
+                        }
+                        if (existNameChecker > 0) {
+                            System.out.println(FioreFlowershop.ConsoleColors.RED + "This name has been taken before please use another different name.\n" + FioreFlowershop.ConsoleColors.RESET);
+                        }
+                    }
+                } while (validInput == false || existNameChecker > 0);
+
+                do {
+                    System.out.print("Enter the new multiplier: ");
+                    if (scan.hasNextInt()) {
+                        newPrice = scan.nextInt();
+                        isInteger = true;
+                    } else {
+                        isInteger = false;
+                        System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter the number only." + FioreFlowershop.ConsoleColors.RESET);
+                        scan.next();
+                    }
+                } while (!(isInteger));
+            } else if (itemType == 3) {
+                do {
+                    validInput = true;
+                    existNameChecker = 0;
+                    System.out.print("Please enter new season: ");
+                    scan.nextLine();
+                    newName = scan.nextLine();
+                    if (newName == null || newName.isEmpty()) {
+                        validInput = false;
+                        System.out.println(FioreFlowershop.ConsoleColors.RED + "This field cannot be empty\n" + FioreFlowershop.ConsoleColors.RESET);
+                    } else {
+                        for (int i = 1; i < itemCatalogue.getSeason().getSize() + 1; i++) {
+                            if (itemCatalogue.getSeason().getItem(i).getName().equals(newName)) {
+                                existNameChecker++;
+                            }
+                        }
+                        if (existNameChecker > 0) {
+                            System.out.println(FioreFlowershop.ConsoleColors.RED + "This name has been taken before please use another different name.\n" + FioreFlowershop.ConsoleColors.RESET);
+                        }
+                    }
+                } while (validInput == false || existNameChecker > 0);
+            } else if (itemType == 4 && itemCatalogue.getFlowers().getSize() > 0 || itemType == 5 && itemCatalogue.getAccessories().getSize() > 0 || itemType == 6 && itemCatalogue.getFlowerPot().getSize() > 0) {
+                do {
+                    validInput = true;
+                    existNameChecker = 0;
+                    System.out.print("Please enter the new " + itemTypeString + " name:");
+                    scan.nextLine();
+                    newName = scan.nextLine();
+                    if (newName == null || newName.isEmpty()) {
+                        validInput = false;
+                        System.out.println(FioreFlowershop.ConsoleColors.RED + "This field cannot be empty\n" + FioreFlowershop.ConsoleColors.RESET);
+                    } else {
+                        if (itemType == 4) {
+                            for (int i = 1; i < itemCatalogue.getFlowers().getSize() + 1; i++) {
+                                if (itemCatalogue.getFlowers().getItem(i).getName().equals(newName)) {
+                                    existNameChecker++;
+                                }
+                            }
+                        }else if(itemType == 5){
+                            for (int i = 1; i < itemCatalogue.getAccessories().getSize() + 1; i++) {
+                                if (itemCatalogue.getAccessories().getItem(i).getName().equals(newName)) {
+                                    existNameChecker++;
+                                }
+                            }
+                        }else if(itemType == 6){
+                            for (int i = 1; i < itemCatalogue.getFlowerPot().getSize() + 1; i++) {
+                                if (itemCatalogue.getFlowerPot().getItem(i).getName().equals(newName)) {
+                                    existNameChecker++;
+                                }
+                            }
+                        }
+                        if (existNameChecker > 0) {
+                            System.out.println(FioreFlowershop.ConsoleColors.RED + "This name has been taken before please use another different name.\n" + FioreFlowershop.ConsoleColors.RESET);
+                        }
+                    }
+                } while (validInput == false || existNameChecker > 0);
+
+                do {
+                    System.out.print("Enter the new price: ");
+                    if (scan.hasNextDouble()) {
+                        isDouble = true;
+                        newPrice = scan.nextDouble();
+                    } else {
+                        isDouble = false;
+                        System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter the number(can include decimal) only." + FioreFlowershop.ConsoleColors.RESET);
+                        scan.next();
+                    }
+                } while (!(isDouble));                
+                
+                do {
+                    System.out.print("Enter the new quantity: ");
+                    if (scan.hasNextInt()) {
+                        itemNewQuantity = scan.nextInt();
+                        isInteger = true;
+                    } else {
+                        isInteger = false;
+                        System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter the number only." + FioreFlowershop.ConsoleColors.RESET);
+                        scan.next();
+                    }
+                } while (!(isInteger));
             }
 
-            if (itemType == 1) {
-                itemCatalogue.getFlowers().getItem(itemIndex).setQuantity(itemCatalogue.getFlowers().getItem(itemIndex).getQuantity() + itemNewQuantity);
-                System.out.println(FioreFlowershop.ConsoleColors.GREEN + "\nThe quantity of the " + itemCatalogue.getFlowers().getItem(itemIndex).getName() + " has been updated ..." + FioreFlowershop.ConsoleColors.RESET);
-            } else if (itemType == 2) {
-                itemCatalogue.getAccessories().getItem(itemIndex).setQuantity(itemCatalogue.getAccessories().getItem(itemIndex).getQuantity() + itemNewQuantity);
-                System.out.println(FioreFlowershop.ConsoleColors.GREEN + "\nThe quantity of the " + itemCatalogue.getAccessories().getItem(itemIndex).getName() + " has been updated ..." + FioreFlowershop.ConsoleColors.RESET);
-            } else if (itemType == 3) {
-                itemCatalogue.getFlowerPot().getItem(itemIndex).setQuantity(itemCatalogue.getFlowerPot().getItem(itemIndex).getQuantity() + itemNewQuantity);
-                System.out.println(FioreFlowershop.ConsoleColors.GREEN + "\nThe quantity of the " + itemCatalogue.getFlowerPot().getItem(itemIndex).getName() + " has been updated ..." + FioreFlowershop.ConsoleColors.RESET);
-            } else if (itemType == 5) {
-                itemCatalogue.getSeason().getItem(itemIndex).setName(seasonName);
+            if (itemType == 1 && itemCatalogue.getStyles().getSize() > 0) {
+                itemCatalogue.getStyles().getItem(itemIndex).setName(newName);
+                itemCatalogue.getStyles().getItem(itemIndex).setPrice(newPrice);
+            } else if (itemType == 2 && itemCatalogue.getSizes().getSize() > 0) {
+                itemCatalogue.getSizes().getItem(itemIndex).setName(newName);
+                itemCatalogue.getSizes().getItem(itemIndex).setPrice(newPrice);
+            } else if (itemType == 3 && itemCatalogue.getSeason().getSize() > 0) {
+                itemCatalogue.getSeason().getItem(itemIndex).setName(newName);
+            } else if (itemType == 4 && itemCatalogue.getSeason().getSize() > 0) {
+                itemCatalogue.getFlowers().getItem(itemIndex).setName(newName);
+                itemCatalogue.getFlowers().getItem(itemIndex).setPrice(newPrice);
+                itemCatalogue.getFlowers().getItem(itemIndex).setQuantity(itemNewQuantity);
+            } else if (itemType == 5 && itemCatalogue.getAccessories().getSize() > 0) {
+                itemCatalogue.getAccessories().getItem(itemIndex).setName(newName);
+                itemCatalogue.getAccessories().getItem(itemIndex).setPrice(newPrice);
+                itemCatalogue.getAccessories().getItem(itemIndex).setQuantity(itemNewQuantity);
+            } else if (itemType == 6 && itemCatalogue.getFlowerPot().getSize() > 0) {
+                itemCatalogue.getFlowerPot().getItem(itemIndex).setName(newName);
+                itemCatalogue.getFlowerPot().getItem(itemIndex).setPrice(newPrice);
+                itemCatalogue.getFlowerPot().getItem(itemIndex).setQuantity(itemNewQuantity);
             }
+            System.out.println(FioreFlowershop.ConsoleColors.GREEN + "The " + itemTypeString + " has been successfuly updated... " + FioreFlowershop.ConsoleColors.RESET);
+            catalogMaintenance(normalPackage, discountedPackage, itemCatalogue);
         } else {
             System.out.println(FioreFlowershop.ConsoleColors.RED + "There are no records found ... " + FioreFlowershop.ConsoleColors.RESET);
-            FioreFlowershop.inventoryClerk();
+            catalogMaintenance(normalPackage, discountedPackage, itemCatalogue);
         }
     }
 
