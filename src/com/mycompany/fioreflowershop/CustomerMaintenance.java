@@ -180,7 +180,7 @@ public class CustomerMaintenance {
             System.out.print("Contact Number : ");
             String number = s.nextLine();
             if(!number.matches("[0-9]+")){
-                System.out.println("\n" + RED_BOLD+"Contact Numbers can only contain Numbers. Please Try Again."+RESET);
+                System.out.println("\n" + RED_BOLD+"Contact Numbers can only contain Numbers. Please Try Again."+RESET); break;
             }
             System.out.print("Address (For Delivery Services) : ");
             String address = s.nextLine();
@@ -478,7 +478,7 @@ public class CustomerMaintenance {
                     try {
                         edit = s.nextLine();
                         if (cust.getConsumer(custEditChoice).getPassword().equals(edit)) {
-                            System.out.println("\n" + RED + "Password cannot be same with old password. Please Try Again." + RESET);
+                            System.out.println("\n" + RED + "Password cannot be same with old password. Please Try Again." + RESET); break;
                         }
                         cust.getConsumer(custEditChoice).setPassword(edit);
                         System.out.println("\n" + GREEN + "Successfully Modified ! " + RESET);
@@ -573,7 +573,7 @@ public class CustomerMaintenance {
                     System.out.print("Please Enter The New Username : ");
                     try {
                         edit = s.nextLine();
-                        if (!edit.matches("^[a-zA-Z0-9]+")) {
+                        if (!edit.matches("^[a-zA-Z]+")) {
                             System.out.println("\n" + RED + "Invalid Format For Username, Please Only Enter Alphabet/Number/Alphanumeric." + RESET);
                             break;
                         }
