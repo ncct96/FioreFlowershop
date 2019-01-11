@@ -478,26 +478,52 @@ public class Delivery {
 
                 Order order = orderIterator.next();
 
-                if (order.getID().equals(orderID) && order.isPaymentStatus() == false) {
-                    System.out.print(order.getID() + "\t\t");
-                    System.out.print(order.getOrderType() + "\t");
-                    System.out.print(df.format(order.getOrderDate()) + "\t\t");
-                    //System.out.print("Username: " + order.getUser().getUsername());
-                    //System.out.print("Contact: " + order.getUser().getPhone());
-                    //System.out.print("Order Details: " + ((CatalogOrders) order).getCatalogPack());
-                    System.out.print(String.format("%.2f", order.getOrderAmt()) + "\t\t\t");
-                    //System.out.print("Quantity: " + ((CatalogOrders) order).getItemQuantity());
-                    if (order.isPaymentStatus()) {
-                        System.out.print("Paid \t\t");
-                    } else {
-                        System.out.print("Pending \t\t");
+                if (order instanceof CatalogOrders) {
+                    if (order.getID().equals(orderID) && order.isPaymentStatus() == false) {
+                        System.out.print(order.getID() + "\t\t");
+                        System.out.print(order.getOrderType() + "\t");
+                        System.out.print(df.format(order.getOrderDate()) + "\t\t");
+                        //System.out.print("Username: " + order.getUser().getUsername());
+                        //System.out.print("Contact: " + order.getUser().getPhone());
+                        //System.out.print("Order Details: " + ((CatalogOrders) order).getCatalogPack());
+                        System.out.print(String.format("%.2f", order.getOrderAmt()) + "\t\t\t");
+                        //System.out.print("Quantity: " + ((CatalogOrders) order).getItemQuantity());
+                        if (order.isPaymentStatus()) {
+                            System.out.print("Paid \t\t");
+                        } else {
+                            System.out.print("Pending \t\t");
+                        }
+                        if (order.getDateOfReceive() == null) {
+                            System.out.print("Pending \n");
+                        } else {
+                            System.out.print(dfdt.format(order.getDateOfReceive()) + "\n");
+                        }
+                        matchOrder = order;
                     }
-                    if (order.getDateOfReceive() == null) {
-                        System.out.print("Pending \n");
-                    } else {
-                        System.out.print(dfdt.format(order.getDateOfReceive()) + "\n");
+                } else {
+                    if (order.getID().equals(orderID) && order.isPaymentStatus() == false) {
+                        System.out.print(order.getID() + "\t\t");
+                        System.out.print(order.getOrderType() + "\t");
+                        System.out.print(df.format(order.getOrderDate()) + "\t\t");
+                        //System.out.print("Username: " + order.getUser().getUsername());
+                        //System.out.print("Contact: " + order.getUser().getPhone());
+                        //System.out.print("Order Details: " + ((CatalogOrders) order).getCatalogPack());
+                        System.out.print(String.format("%.2f", ((CustomizedPackage) order).CalculateOrder()) + "\t\t\t"
+                        );
+                        //System.out.print("Quantity: " + ((CatalogOrders) order).getItemQuantity());
+                        if (order.isPaymentStatus()) {
+                            System.out.print("Paid \t\t");
+                        } else {
+                            System.out.print("Pending \t\t");
+                        }
+                        if (order.getDateOfReceive() == null) {
+                            System.out.print("Pending \n");
+                        } else {
+                            System.out.print(dfdt.format(order.getDateOfReceive()) + "\n");
+                        }
+                        matchOrder = order;
                     }
-                    matchOrder = order;
+
                 }
             }
 
@@ -769,6 +795,12 @@ public class Delivery {
                 System.out.println(((CustomizedPackage) order).getFlowerList().getItem(i).getName() + ((CustomizedPackage) order).getFlowerList().getItem(i).getPrice());
             }
 
+            System.out.println("Size: " + ((CustomizedPackage) order).getSize().getName() + "" + ((CustomizedPackage) order).getSize().getPrice());
+            System.out.println("Arrangement Style: " + ((CustomizedPackage) order).getStyle().getName() + "" + ((CustomizedPackage) order).getStyle().getPrice());
+            System.out.println("Accesscories: " + ((CustomizedPackage) order).getAccessory().getName() + "" + ((CustomizedPackage) order).getAccessory().getPrice());
+            System.out.println("Delivery Type: " + ((CustomizedPackage) order).getDeliveryType().getName() + " - RM " + ((CustomizedPackage) order).getDeliveryType().getPrice());
+            System.out.println("Order Priority: " + order.getPriority().getName() + " - Price x " + +((CustomizedPackage) order).getPriority().getPrice());
+
             System.out.println("\n-------------------------------------------------------------------------------------------------");
             System.out.println("\tTOTAL (RM) : \t     \t\t\t\t\t\t\t\t" + String.format("%.2f", ((CustomizedPackage) order).CalculateOrder()));
             System.out.println("---------------------------------------------------------------------------------------------------");
@@ -789,54 +821,58 @@ public class Delivery {
         DateFormat dt = new SimpleDateFormat("HH:mm");
         DateFormat dfdt = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-        Order order = paidOrder.getOrder(1);
+        Iterator<Order> iterator = paidOrder.getIterator();
 
         System.out.println("\nDelivery Order Payment History");
         System.out.println("|No.|\t|Order ID|\t|Order Type|\t|Order Date|\t\t|Payment Amount (RM)|\t|Payment Status|\t|Delivered Date|");
         System.out.println("=============================================================================================================================================================");
 
-        if (order == null) {
-            System.out.println(RED + "No order found!");
-        } else if (order instanceof CatalogOrders) {
+        while (iterator.hasNext()) {
 
-            System.out.print(1 + "\t");
-            System.out.print(((CatalogOrders) order).getOrderID() + "\t\t");
-            System.out.print(order.getOrderType() + "\t\t");
-            System.out.print(df.format(order.getOrderDate()) + "\t\t");
-            //System.out.print(order.getUser().getUsername() + "\t");
-            //System.out.print(order.getUser().getPhone() + "\t");
-            // System.out.print(((CustomizedPackage) order).getFlower() + "\t");
-            System.out.print(String.format("%.2f", order.getOrderAmt()) + "\t\t\t");
-            //System.out.print(((CatalogOrders) order).getCatalogPack().getItem(i).getUserQuantity() + "\t");
+            Order order = iterator.next();
             if (order.isPaymentStatus()) {
-                System.out.print("Paid \t\t\t");
-            } else {
-                System.out.print("Pending \t\t\t");
-            }
-            if (order.getDateOfReceive() == null) {
-                System.out.print("Pending \n");
-            } else {
-                System.out.print(dfdt.format(order.getDateOfReceive()) + "\n");
-            }
-        } else {
-            System.out.print(1 + "\t");
-            System.out.print(((CustomizedPackage) order).getOrderID() + "\t\t");
-            System.out.print(((CustomizedPackage) order).getDeliveryType().getName() + "\t\t");
-            System.out.print(df.format(order.getOrderDate()) + "\t\t");
-            //System.out.print(order.getUser().getUsername() + "\t");
-            //System.out.print(order.getUser().getPhone() + "\t");
-            // System.out.print(((CustomizedPackage) order).getFlower() + "\t");
-            System.out.print(String.format("%.2f", ((CustomizedPackage) order).CalculateOrder()) + "\t\t\t");
-            //System.out.print(((CatalogOrders) order).getCatalogPack().getItem(i).getUserQuantity() + "\t");
-            if (order.isPaymentStatus()) {
-                System.out.print("Paid \t\t\t");
-            } else {
-                System.out.print("Pending \t\t\t");
-            }
-            if (order.getDateOfReceive() == null) {
-                System.out.print("Pending \n");
-            } else {
-                System.out.print(dfdt.format(order.getDateOfReceive()) + "\n");
+                if (order instanceof CatalogOrders) {
+
+                    System.out.print(1 + "\t");
+                    System.out.print(((CatalogOrders) order).getOrderID() + "\t\t");
+                    System.out.print(order.getOrderType() + "\t\t");
+                    System.out.print(df.format(order.getOrderDate()) + "\t\t");
+                    //System.out.print(order.getUser().getUsername() + "\t");
+                    //System.out.print(order.getUser().getPhone() + "\t");
+                    // System.out.print(((CustomizedPackage) order).getFlower() + "\t");
+                    System.out.print(String.format("%.2f", order.getOrderAmt()) + "\t\t\t");
+                    //System.out.print(((CatalogOrders) order).getCatalogPack().getItem(i).getUserQuantity() + "\t");
+                    if (order.isPaymentStatus()) {
+                        System.out.print("Paid \t\t\t");
+                    } else {
+                        System.out.print("Pending \t\t\t");
+                    }
+                    if (order.getDateOfReceive() == null) {
+                        System.out.print("Pending \n");
+                    } else {
+                        System.out.print(dfdt.format(order.getDateOfReceive()) + "\n");
+                    }
+                } else {
+                    System.out.print(1 + "\t");
+                    System.out.print(((CustomizedPackage) order).getOrderID() + "\t\t");
+                    System.out.print(((CustomizedPackage) order).getDeliveryType().getName() + "\t\t");
+                    System.out.print(df.format(order.getOrderDate()) + "\t\t");
+                    //System.out.print(order.getUser().getUsername() + "\t");
+                    //System.out.print(order.getUser().getPhone() + "\t");
+                    // System.out.print(((CustomizedPackage) order).getFlower() + "\t");
+                    System.out.print(String.format("%.2f", ((CustomizedPackage) order).CalculateOrder()) + "\t\t\t");
+                    //System.out.print(((CatalogOrders) order).getCatalogPack().getItem(i).getUserQuantity() + "\t");
+                    if (order.isPaymentStatus()) {
+                        System.out.print("Paid \t\t\t");
+                    } else {
+                        System.out.print("Pending \t\t\t");
+                    }
+                    if (order.getDateOfReceive() == null) {
+                        System.out.print("Pending \n");
+                    } else {
+                        System.out.print(dfdt.format(order.getDateOfReceive()) + "\n");
+                    }
+                }
             }
         }
     }

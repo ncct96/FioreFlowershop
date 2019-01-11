@@ -586,7 +586,7 @@ public class Pickup {
 
                     }
                 } else {
-
+                    break;
                 }
             } while (!confirm.equalsIgnoreCase("Y"));
 
@@ -612,7 +612,6 @@ public class Pickup {
                 user = order.getUser();
             }
         }
-
 
         System.out.println("These are orders that picked up by customer");
         System.out.println("|No.|\t|Order ID|\t|Order Type|\t|Order Date|\t\t|Payment Amount (RM)|\t|Payment Status|\t|Pickup Date|");
