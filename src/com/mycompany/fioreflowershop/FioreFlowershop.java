@@ -560,7 +560,7 @@ public class FioreFlowershop {
             System.out.println(GREEN + "[1] " + RESET + "View Ongoing Delivery List");
             System.out.println(GREEN + "[2] " + RESET + "Payment for Delivery Order");
             System.out.println(GREEN + "[3] " + RESET + "View Delivered Order");
-            System.out.println(GREEN + "[4] " + RESET + "View Delivery Payments");
+            System.out.println(GREEN + "[4] " + RESET + "View Today's Delivery Payments");
             System.out.println(GREEN + "[5] " + RESET + "Back");
             System.out.print("Selection: ");
             int deliveryStaffChoice = s.nextInt();

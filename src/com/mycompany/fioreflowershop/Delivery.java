@@ -44,7 +44,7 @@ public class Delivery {
     public static final String GREEN = "\033[0;32m";   // GREEN
 
     public static OrderListInterface<Order> searchDelivery(Date date, OrderListInterface<Order> readyOrder) {
-        
+
         OrderListInterface<Order> unSortedList = new OrderList<Order>();
         OrderListInterface<Order> matchedList = new OrderList<>();
 
@@ -161,7 +161,7 @@ public class Delivery {
             sortedList.replaceOrder(index, sortedList.getOrder(i));
             sortedList.replaceOrder(i, smallerOrder);
         }
-        
+
         displaySortedDelivery(sortedList);
     }
 
@@ -197,6 +197,7 @@ public class Delivery {
                 System.out.println("Order ID: " + order.getOrderID());
 
                 System.out.println("Company Name: " + corp.getCompany());
+                System.out.println("Address: " + corp.getAddress());
                 System.out.println("Contact: " + corp.getPhone());
                 String date = df.format(catalogOrder.getItem(k).getDeliveryDate());
                 System.out.println("Delivery Date: " + date + "\n");
@@ -207,6 +208,7 @@ public class Delivery {
                 System.out.println("Order ID: " + order.getOrderID());
 
                 System.out.println("Name: " + con.getUsername());
+                System.out.println("Address: " + con.getAddress());
                 System.out.println("Contact: " + con.getPhone());
                 String date = df.format(catalogOrder.getItem(k).getDeliveryDate());
                 System.out.println("Delivery Date: " + date + "\n");
@@ -231,6 +233,7 @@ public class Delivery {
                 System.out.println("Order ID: " + order.getOrderID());
 
                 System.out.println("Company Name: " + corp.getCompany());
+                System.out.println("Address: " + corp.getAddress());
                 System.out.println("Contact: " + corp.getPhone());
                 String date = df.format(customOrder.getItem(k).getDeliveryDate());
                 System.out.println("Delivery Date: " + date + "\n");
@@ -241,6 +244,7 @@ public class Delivery {
                 System.out.println("Order ID: " + order.getOrderID());
 
                 System.out.println("Name: " + con.getUsername());
+                System.out.println("Address: " + con.getAddress());
                 System.out.println("Contact: " + con.getPhone());
                 String date = df.format(customOrder.getItem(k).getDeliveryDate());
                 System.out.println("Delivery Date: " + date + "\n");
@@ -524,7 +528,6 @@ public class Delivery {
 //                    }
 //                }
 //            }
-
             do {
 
                 System.out.println("1. Pay");
@@ -586,7 +589,6 @@ public class Delivery {
         DateFormat dt = new SimpleDateFormat("HH:mm");
         DateFormat dfdt = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-        // Get all Order with Pick Up type
         Iterator<Order> iterator = readyOrders.getIterator();
 
         while (iterator.hasNext()) {
