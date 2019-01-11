@@ -53,6 +53,7 @@ public class FioreFlowershop {
 
     private static CatalogPackageInterface<CatalogPackage> catalogPack1 = new CatalogPackageList<>();
     private static CatalogPackageInterface<CatalogPackage> catalogPack2 = new CatalogPackageList<>();
+    private static CatalogPackageInterface<CatalogPackage> catalogPack3 = new CatalogPackageList<>();
 
     private static String[] origin = {"Taiping", "Penang", "Cheras", "Johor"};
     private static String[] dest = {"Taiping", "Penang", "Cheras", "Johor"};
@@ -74,16 +75,8 @@ public class FioreFlowershop {
     }
 
     public static void initializePackages() {
-        //FOR TESTING ONLY, TOUCHING IS PROHIBITED, YOU HAVE BEEN WARNED
-//        try{
-//            Date todayDate = new Date(); Date todayFormatDate;
-//            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//            todayFormatDate = dateFormat.parse(dateFormat.format(todayDate));
-//            System.out.println(todayFormatDate);
-//        }catch(Exception e){
-//            
-//        }
         Date todayDate = new Date();
+        
         //consumer initialize
         CorporateCustomer cc1 = new CorporateCustomer("Noice", "noice@example.com", "0123456789", "No Address", "abcdef", "Not your business", 5000, true);
         CorporateCustomer cc2 = new CorporateCustomer("NotNoice", "notnoice@example.com", "0123456781", "PV13", "abc123", "Some Merchant", 5000, true);
@@ -111,30 +104,8 @@ public class FioreFlowershop {
         corporate.getCorporate(1).setCreditSpent(4500);
         corporate.getCorporate(2).setCreditSpent(1500);
 
-        //Initialize shopping cart
-//        CatalogPackage cp1 = new CatalogPackage("FlowerStrong", "Stylish", "Small", "", "", "Rose", "Ribbons", "Product Type", "12", 2018, 10, 50, 20, 5);
-//        CatalogPackage cp2 = new CatalogPackage("FlowerWeak", "Colourful", "Medium", "", "", "Lavender", "Bow Tie", "Product Type", "11", 2018, 20, 30, 10, 4);
-//        CatalogPackage cp3 = new CatalogPackage("FlowerMedium", "Elegant", "Large", "", "", "Sunflower", "Belt", "Product Type", "11", 2018, 15, 40, 5, 6);
-//        catalogPack1.addProduct(cp1);
-//        catalogPack1.addProduct(cp2);
-//        catalogPack2.addProduct(cp1);
-//        catalogPack2.addProduct(cp2);
-//        catalogPack2.addProduct(cp3);
-//        CatalogOrders ct1 = new CatalogOrders("C1", catalogPack1, "Pick Up", todayDate, cc1, "Order Status", 308, false, todayDate, todayDate);
-//        CatalogOrders ct2 = new CatalogOrders("C2", catalogPack2, "Pick Up", todayDate, cc2, "Order Status", 200, false, todayDate, todayDate);
-//        CatalogOrders ct3 = new CatalogOrders("C3", catalogPack1, "Delivery", todayDate, c3, "Order Status", 308, false, todayDate, todayDate);
-//        CatalogOrders ct4 = new CatalogOrders("C4", catalogPack1, "Delivery", todayDate, c4, "Order Status", 308, false, todayDate, todayDate);
-//        CatalogOrders ct5 = new CatalogOrders("C5", catalogPack1, "Delivery", todayDate, c3, "Order Status", 308, false, todayDate, todayDate);
-//        CatalogOrders ct6 = new CatalogOrders("C6", catalogPack1, "Delivery", todayDate, c2, "Order Status", 308, false, todayDate, todayDate);
-//        CatalogOrders ct7 = new CatalogOrders("C7", catalogPack1, "Delivery", todayDate, c1, "Order Status", 308, false, todayDate, todayDate);
-//
-//        catalogOrder.addOrder(ct1);
-//        catalogOrder.addOrder(ct2);
-//        catalogOrder.addOrder(ct3);
-//        catalogOrder.addOrder(ct4);
-//        catalogOrder.addOrder(ct5);
-//        catalogOrder.addOrder(ct6);
-//        catalogOrder.addOrder(ct7);
+        
+        //Add in catalog package and catalog orders
         ItemListInterface<Item> styles = new ItemList<>();
         ItemListInterface<Item> sizes = new ItemList<>();
         ItemListInterface<Item> flowers = new ItemList<>();
@@ -319,7 +290,6 @@ public class FioreFlowershop {
         catalogOrder.addOrder(CO3);
         catalogOrder.addOrder(CO4);
         catalogOrder.addOrder(CO5);
-
         
         /*<------ Begin CP's Part -------->*/
         Calendar cal = Calendar.getInstance();

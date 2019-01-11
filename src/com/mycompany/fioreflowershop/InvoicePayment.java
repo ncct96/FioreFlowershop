@@ -147,19 +147,19 @@ public class InvoicePayment {
         System.out.println("==================================================================================================================");
         for(int i = 1; i <= paymentHistory.getTotalInvoice(); i++){
             if(paymentHistory.getInvoice(i).getInvoiceNumber().equals(invoiceID)){
-                //for(int k = 1; k <= paymentHistory.getItem(i).getCatalogOrder().getTotalEntries(); k++){
+                for(int k = 1; k <= paymentHistory.getInvoice(i).getCatalogOrder().getSize(); k++){
                     for(int p = 1; p <= paymentHistory.getInvoice(i).getCatalogOrder().getOrder(i).getCatalogPack().getTotalEntries(); p++){
                         Date orderDate = paymentHistory.getInvoice(i).getCatalogOrder().getOrder(i).getOrderDate();
                         CatalogPackage orderInstance = paymentHistory.getInvoice(i).getCatalogOrder().getOrder(i).getCatalogPack().getProduct(p);
-//                        System.out.println(sdf.format(orderDate)+"   | "+ orderInstance.getName()+ "\t\t\t  | \t" 
-//                        + orderInstance.getUserQuantity()+ "\t|\t" + orderInstance.getDiscountRate()+ "\t    |\t" 
-//                        + orderInstance.getPrice() + " \t     |   " + orderInstance.getPrice() *orderInstance.getUserQuantity());
-//                        totalPrice += totalPrice(orderInstance.getPrice() , orderInstance.getUserQuantity());
-//                        if(orderInstance.getDiscountRate() != 0){
-//                            discountPrice += discountPrice(orderInstance.getPrice(), orderInstance.getUserQuantity(), orderInstance.getDiscountRate());
-//                        }
+                        System.out.println(sdf.format(orderDate)+"   | "+ orderInstance.getName()+ "\t\t\t  | \t" 
+                        + orderInstance.getUserQuantity()+ "\t|\t" + orderInstance.getDiscountRate()+ "\t    |\t" 
+                        + orderInstance.getPrice() + " \t     |   " + orderInstance.getPrice() *orderInstance.getUserQuantity());
+                        totalPrice += totalPrice(orderInstance.getPrice() , orderInstance.getUserQuantity());
+                        if(orderInstance.getDiscountRate() != 0){
+                            discountPrice += discountPrice(orderInstance.getPrice(), orderInstance.getUserQuantity(), orderInstance.getDiscountRate());
+                        }
                     }
-                //}
+                }
             }
         }
         invoiceMenuFooter(totalPrice, discountPrice);
@@ -223,7 +223,8 @@ public class InvoicePayment {
         }
             if(count <= 0){
                     System.out.println(RED+"\nSorry, No Records Found !"+RESET);
-                    invoiceMaintenance();
+                    break;
+//                    invoiceMaintenance();
             }else{
                 try{
                     int choiceCorp = 0; 
@@ -263,15 +264,15 @@ public class InvoicePayment {
             System.out.println("[City, ST ZIP Code]");
             System.out.println("[" + cc.getPhone() + "]");
             System.out.println("===============================================================================================================");
-            System.out.println("Date Ordered | Description \t\t\t  | Quantity    |  Discount Rate(%) | Unit Price(RM) |  Total(RM)");
+            System.out.println("Date Ordered | Description \t\t  | Quantity    |  Discount Rate(%) | Unit Price(RM) |  Total(RM)");
         }
     }
     
     public static void invoiceMenuFooter(double totalPrice, double discountPrice){
-        System.out.println("\n\n\t\t\t\t\t\t\t\t\t Subtotal :\t\t\t " + totalPrice);
-        System.out.println("\t\t\t\t\t\t\t\t\t Total Discount :\t\t  " + discountPrice);
-        System.out.println("\t\t\t\t\t\t\t\t\t =========================================");
-        System.out.println("\t\t\t\t\t\t\t\t\t BALANCE DUE :\t\t\t "+ (totalPrice-discountPrice));
+        System.out.println("\n\n\t\t\t\t\t\t\t\t Subtotal : \t\t\t " + totalPrice);
+        System.out.println("\t\t\t\t\t\t\t\t Total Discount :\t\t  " + discountPrice);
+        System.out.println("\t\t\t\t\t\t\t\t =========================================");
+        System.out.println("\t\t\t\t\t\t\t\t BALANCE DUE : \t\t\t "+ (totalPrice-discountPrice));
         totalPrice = 0; discountPrice = 0;
     }
     
@@ -284,17 +285,17 @@ public class InvoicePayment {
                     if(order.getOrder(k).getCatalogPack() != null){
                         CatalogPackage orderInstance = order.getOrder(i).getCatalogPack().getProduct(k);
                         Date orderDate = order.getOrder(k).getOrderDate();
-//                        System.out.println(sdf.format(orderDate)+"   | "
-//                        +orderInstance.getName()+ "\t\t\t  | \t" 
-//                        +orderInstance.getUserQuantity()+ "\t|\t" 
-//                        +orderInstance.getDiscountRate()+ "\t    |\t" 
-//                        +orderInstance.getPrice() + " \t     |   " 
-//                        +orderInstance.getPrice()
-//                        *orderInstance.getUserQuantity());
-//                        totalPrice += totalPrice(orderInstance.getPrice(), orderInstance.getUserQuantity());
-//                        if(orderInstance.getDiscountRate() != 0){
-//                            discountPrice += discountPrice(orderInstance.getPrice(), orderInstance.getUserQuantity(), orderInstance.getDiscountRate());
-//                        }  
+                        System.out.println(sdf.format(orderDate)+"   | "
+                        +orderInstance.getName()+ "\t\t\t  | \t" 
+                        +orderInstance.getUserQuantity()+ "\t|\t" 
+                        +orderInstance.getDiscountRate()+ "\t    |\t" 
+                        +orderInstance.getPrice() + " \t     |   " 
+                        +orderInstance.getPrice()
+                        *orderInstance.getUserQuantity());
+                        totalPrice += totalPrice(orderInstance.getPrice(), orderInstance.getUserQuantity());
+                        if(orderInstance.getDiscountRate() != 0){
+                            discountPrice += discountPrice(orderInstance.getPrice(), orderInstance.getUserQuantity(), orderInstance.getDiscountRate());
+                        }  
                     }
                 }
             }
@@ -347,7 +348,6 @@ public class InvoicePayment {
                         }
                     }
                 }
-
                 for(int j = 1; j <= userEmail.getTotalEntries(); j++){
                     System.out.println(BLUE + "[" + j + "] " + RESET
                     + userEmail.getItem(j));
@@ -388,17 +388,17 @@ public class InvoicePayment {
                         for(int k = 1; k <= order.getOrder(i).getCatalogPack().getTotalEntries(); k++){
                         CatalogPackage orderInstance = order.getOrder(i).getCatalogPack().getProduct(k);
                         Date orderDate = order.getOrder(k).getOrderDate();
-//                        System.out.println(sdf.format(orderDate)+"   | "
-//                        +orderInstance.getName()+ "\t\t\t  | \t" 
-//                        +orderInstance.getUserQuantity()+ "\t|\t" 
-//                        +orderInstance.getDiscountRate()+ "\t    |\t" 
-//                        +orderInstance.getPrice() + " \t     |   " 
-//                        +orderInstance.getPrice()
-//                        *orderInstance.getUserQuantity());
-//                        totalPrice += totalPrice(orderInstance.getPrice(),orderInstance.getUserQuantity());
-//                            if(order.getOrder(i).getCatalogPack().getProduct(k).getDiscountRate() != 0){
-//                                discountPrice += discountPrice(orderInstance.getPrice(),orderInstance.getUserQuantity(), orderInstance.getDiscountRate());
-//                            }
+                        System.out.println(sdf.format(orderDate)+"   | "
+                        +orderInstance.getName()+ "\t\t\t  | \t" 
+                        +orderInstance.getUserQuantity()+ "\t|\t" 
+                        +orderInstance.getDiscountRate()+ "\t    |\t" 
+                        +orderInstance.getPrice() + " \t     |   " 
+                        +orderInstance.getPrice()
+                        *orderInstance.getUserQuantity());
+                        totalPrice += totalPrice(orderInstance.getPrice(),orderInstance.getUserQuantity());
+                            if(order.getOrder(i).getCatalogPack().getProduct(k).getDiscountRate() != 0){
+                                discountPrice += discountPrice(orderInstance.getPrice(),orderInstance.getUserQuantity(), orderInstance.getDiscountRate());
+                            }
                             tempCatalog.addOrder(order.getOrder(i));
                         }
                     }
@@ -436,7 +436,7 @@ public class InvoicePayment {
                         FioreFlowershop.getCorporateList().getCorporate(i).setPaymentStatus(true);
                         //Set corporate customer's credit spent back to 0
                         FioreFlowershop.getCorporateList().getCorporate(i).setCreditSpent(0);
-                        //credit += FioreFlowershop.getCorporate().getItem(i).getCreditSpent() + (totalPrice-discountPrice);
+                        credit += FioreFlowershop.getCorporateList().getCorporate(i).getCreditSpent() + (totalPrice-discountPrice);
                     }
                 }
                     //Set shopping cart payment status to true
