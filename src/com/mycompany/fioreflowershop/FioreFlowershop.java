@@ -198,6 +198,7 @@ public class FioreFlowershop {
         testFlowers.add(flowers.getItem(3));
         testFlowers.add(flowers.getItem(5));
 
+        /*<------ Begin Woo Part -------->*/
         //Initialization of Catalog Package
         //Normal catalog
         CatalogPackage normalPackage1 = new CatalogPackage("Package1", styles.getItem(1), sizes.getItem(1), accessories.getItem(1), "Fresh flower", "", 0, 100.00, 0, "Active", "10 10 10");
@@ -215,6 +216,7 @@ public class FioreFlowershop {
         CatalogPackage discountPackage5 = new CatalogPackage("Package5", styles.getItem(2), sizes.getItem(2), season.getItem(1), flowerPot.getItem(1), accessories.getItem(1), "Flower arrangement", "January", 2019, 200.00, 30, "Active", "3 3 3");
         CatalogPackage discountPackage6 = new CatalogPackage("Package6", styles.getItem(3), sizes.getItem(3), season.getItem(1), flowerPot.getItem(1), accessories.getItem(2), "Flower arrangement", "January", 2019, 250.00, 40, "Active", "9 9 9");
 
+        //Adding the flower to the normal/discounted catalog
         for (int i = 1; i <= testFlowers.getTotalEntries(); i++) {
             normalPackage1.getFlowerList().add(testFlowers.getItem(i));
             normalPackage2.getFlowerList().add(testFlowers.getItem(i));
@@ -230,6 +232,7 @@ public class FioreFlowershop {
             discountPackage6.getFlowerList().add(testFlowers.getItem(i));
         }
 
+        //Adding the dummy catalog into normal catalog
         normalPackage.addProduct(normalPackage1);
         normalPackage.addProduct(normalPackage2);
         normalPackage.addProduct(normalPackage3);
@@ -237,12 +240,14 @@ public class FioreFlowershop {
         normalPackage.addProduct(normalPackage5);
         normalPackage.addProduct(normalPackage6);
 
+        //Adding the dummy catalog into monthly promotion catalog
         discountedPackage.addProduct(discountPackage1);
         discountedPackage.addProduct(discountPackage2);
         discountedPackage.addProduct(discountPackage3);
         discountedPackage.addProduct(discountPackage4);
         discountedPackage.addProduct(discountPackage5);
-        discountedPackage.addProduct(discountPackage6);
+        discountedPackage.addProduct(discountPackage6);        
+        /*<------ End Woo Part -------->*/
 
         //Initialize Catalog Order      
         catalogPack1.addProduct(normalPackage2);
