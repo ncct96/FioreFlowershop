@@ -11,15 +11,17 @@ package com.mycompany.fioreflowershop.adt;
  */
 public class CustomizePackageQueue<T> implements CustomizePackageQueueInterface<T> {
 
-    private Node<T> firstOrder;
-    private Node<T> lastOrder;
-    private int size = 0;
+    private Node<T> firstOrder; //First order in the queue
+    private Node<T> lastOrder; //Last order in the queue
+    private int size = 0; //Size of the queue
 
     public CustomizePackageQueue() {
         firstOrder = null;
         lastOrder = null;
     }
 
+    //Add order to the back of the queue
+    @Override
     public void enqueuePackage(T newPackage) {
         Node newNode = new Node(newPackage, null);
 
@@ -33,6 +35,8 @@ public class CustomizePackageQueue<T> implements CustomizePackageQueueInterface<
         ++size;
     }
 
+    //Get and remove order from front of the queue
+    @Override
     public T dequeuePackage() {
         T front = null;
 
@@ -50,7 +54,9 @@ public class CustomizePackageQueue<T> implements CustomizePackageQueueInterface<
         --size;
         return front;
     }
-
+    
+    //Get order from front of the queue
+    @Override
     public T getFirstPackage() {
         T front = null;
 
@@ -61,20 +67,27 @@ public class CustomizePackageQueue<T> implements CustomizePackageQueueInterface<
         return front;
     }
 
+    //Check if queue is empty
+    @Override
     public boolean isEmpty() {
         return (firstOrder == null) && (lastOrder == null);
     }
 
+    //Clear the queue
+    @Override
     public void clear() {
         firstOrder = null;
         lastOrder = null;
         size = 0;
     }
 
+    //Get size of the queue
+    @Override
     public int getSize() {
         return size;
     }
 
+    //Check if queue contains specified item
     @Override
     public boolean contains(T item) {
         Node<T> currentNode = firstOrder;
@@ -92,6 +105,7 @@ public class CustomizePackageQueue<T> implements CustomizePackageQueueInterface<
         return false;
     }
 
+    //Add incoming queue to the back of the current queue
     @Override
     public boolean merge(CustomizePackageQueueInterface<T> queue) {
         if (queue.isEmpty()) {
@@ -103,11 +117,12 @@ public class CustomizePackageQueue<T> implements CustomizePackageQueueInterface<
         return true;
     }
 
-    public boolean replaceOrder(int givenPosition, T newEntry) {
+    //Replace order at index
+    public boolean replaceOrder(int index, T newEntry) {
         boolean isSuccessful = true;
 
-        if ((givenPosition >= 1) && (givenPosition <= size)) {
-            Node<T> desiredNode = getNodeAt(givenPosition);
+        if ((index >= 1) && (index <= size)) {
+            Node<T> desiredNode = getNodeAt(index);
             desiredNode.setData(newEntry);
         } else {
             isSuccessful = false;
@@ -116,27 +131,28 @@ public class CustomizePackageQueue<T> implements CustomizePackageQueueInterface<
         return isSuccessful;
     }
 
-    public T getOrder(int givenPosition) {
+    //Get order at index
+    public T getOrder(int index) {
         T result = null;
 
-        if ((givenPosition >= 1) && (givenPosition <= size)) {
-            result = getNodeAt(givenPosition).getData();
+        if ((index >= 1) && (index <= size)) {
+            result = getNodeAt(index).getData();
         }
 
         return result;
     }
 
-    private Node<T> getNodeAt(int givenPosition) {
+    //Get node at index
+    private Node<T> getNodeAt(int index) {
         Node<T> currentNode = firstOrder;
-
-        // traverse the list to locate the desired node
-        for (int counter = 1; counter < givenPosition; counter++) {
+        for (int position = 1; position < index; position++) {
             currentNode = currentNode.getNext();
         }
 
         return currentNode;
     }
 
+    //Node class
     private class Node<T> {
 
         private T data;

@@ -26,10 +26,10 @@ public class InvoiceHistory {
     }
     
     public InvoiceHistory(int invoiceNum , OrderListInterface<CatalogOrders> cart, CorporateCustomer corp, Date paid){
-        invoiceNumber = "IH"+invoiceNum;
-        setCatalogOrder(catalogOrder);
+        setInvoiceNumber("IH"+invoiceNum);
+        setCatalogOrder(cart);
         setCorp(corp);
-        setDatepay(datepay);
+        setDatepay(paid);
     }
 
     public Date getDatepay() {
