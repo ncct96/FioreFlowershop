@@ -544,7 +544,7 @@ public class Delivery {
 
                         } else if (payAmt >= matchOrder.getOrderAmt()) {
 
-                            double change = payAmt - matchOrder.getOrderAmt();
+                            double change = CalculatePayment(payAmt, matchOrder);
                             matchOrder.setPaymentStatus(true);
                             matchOrder.setOrderStatus("Picked Up");
                             paidOrder.addOrder(matchOrder);
@@ -728,8 +728,13 @@ public class Delivery {
     }
 
     public static double CalculatePayment(double payAmt, Order order) {
-        double change = payAmt - order.getOrderAmt();
-        return change;
+        if (order instanceof CatalogOrders) {
+            double change = payAmt - order.getOrderAmt();
+            return change;
+        } else {
+            double change = payAmt - ((CustomizedPackage) order).CalculateOrder();
+            return change;
+        }
     }
 
     public static void setPaymentStatus(Order order) {
