@@ -547,9 +547,8 @@ public class FioreFlowershop {
             System.out.println("\nPlease Select One Of The Options Below.");
             System.out.println(GREEN + "[1] " + RESET + "View Ongoing Delivery List");
             System.out.println(GREEN + "[2] " + RESET + "Payment for Delivery Order");
-            System.out.println(GREEN + "[3] " + RESET + "Testing");
-            System.out.println(GREEN + "[4] " + RESET + "View Today's Delivery Payments");
-            System.out.println(GREEN + "[5] " + RESET + "Back");
+            System.out.println(GREEN + "[3] " + RESET + "View Delivery Payments");
+            System.out.println(GREEN + "[4] " + RESET + "Back");
             System.out.print("Selection: ");
             int deliveryStaffChoice = s.nextInt();
 
@@ -598,9 +597,6 @@ public class FioreFlowershop {
                 } catch (ApiException | InterruptedException | IOException ex) {
                     Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } else if (deliveryStaffChoice == 3) {
-                DeliveryOptimization.distanceMatrix(shopAddress, deliveryOrder);
-                break;
             } else if (deliveryStaffChoice == 4) {
                 Delivery.searchPaidDelivery(paidOrder);
                 break;
@@ -624,8 +620,10 @@ public class FioreFlowershop {
                 System.out.println("\nPlease Select One Of The Options Below.");
                 System.out.println("1. Today's Pick Up Order List");
                 System.out.println("2. Search Pick Up Order List by Date");
-                System.out.println("3. Search Pick Up Order by User ID to Pay & Pick Up (Consumer only!)");
-                System.out.println("4. Search Pick Up Order by User ID to Pick Up (Corporate Customer only!)");
+                System.out.println("3. Search Pick Up Order by Username to Pay & Pick Up (Consumer only!)");
+                System.out.println("4. Search Pick Up Order by Username to Pick Up (Corporate Customer only!)");
+                System.out.println("5. View Picked Up Order");
+                System.out.println("6. Back");
                 System.out.println("Enter your option: ");
 
                 int pickupChoice = s.nextInt();
@@ -656,7 +654,7 @@ public class FioreFlowershop {
                 } else if (pickupChoice == 3) {
                     s.nextLine();
 
-                    System.out.print("Please enter User ID to pay: ");
+                    System.out.print("Please enter username to pay: ");
 
                     String userID = s.nextLine();
 
@@ -667,12 +665,17 @@ public class FioreFlowershop {
 
                     s.nextLine();
 
-                    System.out.print("Please enter User ID to pay: ");
+                    System.out.print("Please enter username to pick up: ");
 
                     String userID = s.nextLine();
 
                     Pickup.searchCorpPickUp(userID, readyOrders, paidOrder);
 
+                    break;
+                } else if (pickupChoice == 5) {
+                    
+                    Pickup.searchPickedUp(readyOrders);
+                    
                     break;
                 } else {
                     break;
@@ -735,6 +738,8 @@ public class FioreFlowershop {
                 try {
                     deliveryStaff();
 
+                    break;
+
                 } catch (ApiException | InterruptedException | IOException ex) {
                     Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -751,6 +756,8 @@ public class FioreFlowershop {
                     Date date = dateformat.parse(dateStr);
 
                     Delivery.searchDelivery(date, readyOrders);
+
+                    break;
 
                 } catch (ParseException ex) {
                     Logger.getLogger(FioreFlowershop.class.getName()).log(Level.SEVERE, null, ex);

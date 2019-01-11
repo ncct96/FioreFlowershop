@@ -41,7 +41,10 @@ import java.util.logging.Logger;
 public class Delivery {
 
     public static final String RED = "\033[0;31m";     // RED
-    public static final String GREEN = "\033[0;32m";   // GREEN
+    public static final String GREEN = "\033[0;32m";   // GREEN    
+    private static final String ANSI_RESET = "\u001B[0m";
+    private static final String ANSI_RED = "\u001B[31m";
+    private static final String ANSI_GREEN = "\u001B[32m";
 
     public static OrderListInterface<Order> searchDelivery(Date date, OrderListInterface<Order> readyOrder) {
 
@@ -497,7 +500,7 @@ public class Delivery {
                     matchOrder = order;
                 }
             }
-            
+
             do {
 
                 System.out.println("1. Pay");
@@ -529,28 +532,21 @@ public class Delivery {
                             matchOrder.setPaymentTime(new Date());
                             matchOrder.setDateOfReceive(new Date());
                             genReceipt(matchOrder, payAmt, change);
-//                            try {
-//                                //FioreFlowershop.deliveryStaff();
-//                            } catch (ApiException ex) {
-//                                Logger.getLogger(Delivery.class.getName()).log(Level.SEVERE, null, ex);
-//                            } catch (InterruptedException ex) {
-//                                Logger.getLogger(Delivery.class.getName()).log(Level.SEVERE, null, ex);
-//                            } catch (IOException ex) {
-//                                Logger.getLogger(Delivery.class.getName()).log(Level.SEVERE, null, ex);
-//                            }
+                            try {
+                                FioreFlowershop.deliveryStaff();
+                                break;
+                            } catch (ApiException ex) {
+                                Logger.getLogger(Delivery.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(Delivery.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (IOException ex) {
+                                Logger.getLogger(Delivery.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         }
                     } while (payAmt < matchOrder.getOrderAmt());
                 } else if (payChoice == 2) {
                     break;
-//                    try {
-//                        FioreFlowershop.deliveryStaff();
-//                    } catch (ApiException ex) {
-//                        Logger.getLogger(Delivery.class.getName()).log(Level.SEVERE, null, ex);
-//                    } catch (InterruptedException ex) {
-//                        Logger.getLogger(Delivery.class.getName()).log(Level.SEVERE, null, ex);
-//                    } catch (IOException ex) {
-//                        Logger.getLogger(Delivery.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
+
                 } else {
                     System.out.println("Invalid input, please try again!");
                 }
@@ -587,13 +583,16 @@ public class Delivery {
         }
 
         if (user == null && !matchOrder.isEmpty()) {
-            System.out.println("User ID does not exist in system!");
+            System.out.println(ANSI_RED + "\nUser are not a Corporate Customer!" + ANSI_RESET);
             FioreFlowershop.orderMenu();
 
         } else if (user != null && matchOrder.isEmpty()) {
-            System.out.println("User don't have any order with pending payment! Please try again!");
+            System.out.println(ANSI_RED + "User don't have any order with pending payment! Please try again!" + ANSI_RESET);
             FioreFlowershop.orderMenu();
 
+        } else if (user == null && matchOrder.isEmpty()) {
+            System.out.println(ANSI_RED + "\nUser ID does not exist in system!" + ANSI_RESET);
+            FioreFlowershop.orderMenu();
         } else {
 
             System.out.println("Hi " + user.getUsername() + ",");
