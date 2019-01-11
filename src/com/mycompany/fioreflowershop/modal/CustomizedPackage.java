@@ -211,7 +211,7 @@ public class CustomizedPackage extends Order {
 
     public double CalculateOrder() {
         double flowerPrice = 0;
-        for (int i = 1; i < flowerList.getTotalEntries(); i++) {
+        for (int i = 1; i <= flowerList.getTotalEntries(); i++) {
             flowerPrice += flowerList.getItem(i).getPrice();
         }
         return (style.getPrice() + (flowerPrice * size.getPrice()) + accessory.getPrice()) * priority.getPrice() + deliveryType.getPrice();
