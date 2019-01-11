@@ -43,6 +43,7 @@ public class CustomizedPackage extends Order {
         super.setDeliveryDate(addDate);
         super.setPriority(priority);
         super.setID(orderID);
+        super.setOrderStatus("Pending");
         super.setOrderType(deliveryType.getName());
         deliveryDate = df.format(addDate);
         orderDate = df.format(todayDate);
@@ -53,7 +54,7 @@ public class CustomizedPackage extends Order {
         this.priority = priority;
         this.deliveryType = deliveryType;
     }
-    
+
     public CustomizedPackage(Item style, Item size, Item accessory, Item priority, Item deliveryType, Date deliveryDate, User user, boolean paymentStatus) {
         super(paymentStatus, user);
         this.user = user;
@@ -66,6 +67,7 @@ public class CustomizedPackage extends Order {
         super.setDeliveryDate(deliveryDate);
         super.setPriority(priority);
         super.setID(orderID);
+        super.setOrderStatus("Pending");
         super.setOrderType(deliveryType.getName());
         this.deliveryDate = df.format(deliveryDate);
         orderDate = df.format(todayDate);

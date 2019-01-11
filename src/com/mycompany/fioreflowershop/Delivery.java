@@ -451,6 +451,7 @@ public class Delivery {
 
         System.out.println("Back to Origin: " + shopAddress);
         System.out.println("\nTotal Payment Amount: RM" + String.format("%.2f", totalPayment) + "\n");
+        System.out.println("\nTotal Distance: "  +  String.format("%.2f",(solver.getTourCost() / 1000)) + "km \n");
 
         System.out.println("1. Record Payment");
         System.out.println("2. Back");

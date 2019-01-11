@@ -9,6 +9,7 @@ import static com.mycompany.fioreflowershop.Delivery.displaySortedDelivery;
 import com.mycompany.fioreflowershop.adt.LinkedList;
 import com.mycompany.fioreflowershop.adt.ArrayQueue;
 import com.mycompany.fioreflowershop.adt.CatalogPackageInterface;
+import com.mycompany.fioreflowershop.adt.ConsumerInterface;
 import com.mycompany.fioreflowershop.adt.LinkedList;
 import com.mycompany.fioreflowershop.adt.ListInterface;
 import com.mycompany.fioreflowershop.adt.ListIteratorInterface;
@@ -38,6 +39,10 @@ import java.util.Scanner;
  * @author Nicholas
  */
 public class Pickup {
+
+    private static final String ANSI_RESET = "\u001B[0m";
+    private static final String ANSI_RED = "\u001B[31m";
+    private static final String ANSI_GREEN = "\u001B[32m";
 
     static Scanner sc = new Scanner(System.in);
 
@@ -99,7 +104,7 @@ public class Pickup {
 //                }
 //            }
 //        }
-        for (int i = 1; i < sortedList.getSize() - 1; i++) {
+        for (int i = 1; i < sortedList.getSize(); i++) {
             int index = i;
             for (int j = i; j <= sortedList.getSize(); j++) {
                 if (sortedList.getOrder(j).getOrderDate().before(sortedList.getOrder(index).getDeliveryDate())) {
@@ -218,8 +223,8 @@ public class Pickup {
                 System.out.println("Company Name: " + corp.getCompany());
                 System.out.println("Contact: " + corp.getPhone());
                 String date = df.format(catalogOrder.getItem(k).getDeliveryDate());
-                System.out.println("Pick Up Date: " + date + "\n");
-                System.out.println("Pick Up Status: " + order.getOrderStatus());
+                System.out.println("Pick Up Date: " + date);
+                System.out.println("Pick Up Status: " + order.getOrderStatus() + "\n");
             } else {
 
                 Consumer con = (Consumer) catalogOrder.getItem(k).getUser();
@@ -229,8 +234,8 @@ public class Pickup {
                 System.out.println("Name: " + con.getUsername());
                 System.out.println("Contact: " + con.getPhone());
                 String date = df.format(catalogOrder.getItem(k).getDeliveryDate());
-                System.out.println("Pick Up Date: " + date + "\n");
-                System.out.println("Pick Up Status: " + order.getOrderStatus());
+                System.out.println("Pick Up Date: " + date);
+                System.out.println("Pick Up Status: " + order.getOrderStatus() + "\n");
             }
         }
 
@@ -254,8 +259,8 @@ public class Pickup {
                 System.out.println("Company Name: " + corp.getCompany());
                 System.out.println("Contact: " + corp.getPhone());
                 String date = df.format(customOrder.getItem(k).getDeliveryDate());
-                System.out.println("Pick Up Date: " + date + "\n");
-                System.out.println("Pick Up Status: " + order.getOrderStatus());
+                System.out.println("Pick Up Date: " + date);
+                System.out.println("Pick Up Status: " + order.getOrderStatus() + "\n");
 
             } else {
 
@@ -266,8 +271,8 @@ public class Pickup {
                 System.out.println("Name: " + con.getUsername());
                 System.out.println("Contact: " + con.getPhone());
                 String date = df.format(customOrder.getItem(k).getDeliveryDate());
-                System.out.println("Pick Up Date: " + date + "\n");
-                System.out.println("Pick Up Status: " + order.getOrderStatus());
+                System.out.println("Pick Up Date: " + date);
+                System.out.println("Pick Up Status: " + order.getOrderStatus() + "\n");
 
             }
         }
@@ -298,6 +303,7 @@ public class Pickup {
     public static void searchUserPickUp(String userID, OrderListInterface<Order> readyOrder, OrderListInterface<Order> paidOrder) {
 
         OrderListInterface<Order> matchOrder = new OrderList<>();
+        ConsumerInterface<Consumer> conList = FioreFlowershop.getConsumerList();
         User user = null;
 
         Scanner s = new Scanner(System.in);
@@ -311,18 +317,24 @@ public class Pickup {
         while (orderIterator.hasNext()) {
             Order order = orderIterator.next();
 
-            if (order.getUser().getUsername().equals(userID) && order.getOrderType().equals("Pick Up") && (order.getUser() instanceof Consumer)) {
-                user = order.getUser();
+            if (order.getUser().getUsername().equals(userID) && order.getOrderType().equals("Pick Up") && (order.getUser() instanceof Consumer) && !order.isPaymentStatus()) {
                 matchOrder.addOrder(order);
             }
         }
 
+        // Get all consumer list and do checking on existence
+        for (int i = 1; i <= conList.getTotalConsumer(); i++) {
+            if (conList.getConsumer(i).getUsername().equals(userID)) {
+                user = conList.getConsumer(i);
+            }
+        }
+
         if (user == null && !matchOrder.isEmpty()) {
-            System.out.println("User ID does not exist in system!");
+            System.out.println("\nUser ID does not exist in system!");
             FioreFlowershop.orderMenu();
 
-        } else if (matchOrder.isEmpty()) {
-            System.out.println("User don't have any order with pending payment! Please try again!");
+        } else if (user != null && matchOrder.isEmpty()) {
+            System.out.println(ANSI_RED + "User don't have any order with pending payment! Please try again!" + ANSI_RESET);
             FioreFlowershop.orderMenu();
 
         } else {
@@ -386,7 +398,7 @@ public class Pickup {
             int payChoice = s.nextInt();
 
             if (payChoice == 1) {
-                System.out.println("Select order to pick up & pay :");
+                System.out.println("Select order number to pick up & pay :");
 
                 int orderChoice = s.nextInt();
 
