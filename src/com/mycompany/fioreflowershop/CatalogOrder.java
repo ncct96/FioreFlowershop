@@ -366,13 +366,16 @@ public class CatalogOrder {
                             }
                         } while (!isInteger || pickUp < 1 || pickUp > 3);
 
-                        if (pickUp == 1) {
+                        if (pickUp == 1) { //Express Pickup
+                            priority = new Item("Express", 3, 2);
                             validPickupDate.add(Calendar.DATE, 1); // Adding 1 days
                             dayUntilPickUp = 1;
-                        } else if (pickUp == 2) {
+                        } else if (pickUp == 2) { //Normal Pickup
+                            priority = new Item("Normal", 1.5, 4);
                             validPickupDate.add(Calendar.DATE, 4); // Adding 4 days
                             dayUntilPickUp = 4;
-                        } else if (pickUp == 3) {
+                        } else if (pickUp == 3) { //Flexi Pickup
+                            priority = new Item("Flexi", 1, 6);
                             validPickupDate.add(Calendar.DATE, 6); // Adding 6 days
                             dayUntilPickUp = 6;
                         }
