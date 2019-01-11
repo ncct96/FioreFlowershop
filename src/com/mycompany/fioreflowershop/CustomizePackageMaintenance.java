@@ -309,7 +309,7 @@ public class CustomizePackageMaintenance {
             System.out.println("(If you select a position with an existing item,\nthat item will be moved down one slot together with all proceeding items)");
             System.out.println("================================================");
             CustomizePackageMaintenance.printItem(itemCatalogue, selection);
-            System.out.println(ANSI_GREEN + "[" + (itemCatalogue.getStyles().getSize() + 1) + "]" + ANSI_RESET + "[ NEW SLOT ]");
+            System.out.println(ANSI_GREEN + "[" + (maxSize + 1) + "]" + ANSI_RESET + "[ NEW SLOT ]");
             while (true) {
                 try {
                     do {
@@ -488,7 +488,7 @@ public class CustomizePackageMaintenance {
             System.out.println("(If you select a position with an existing item,\nthat item will be moved down one slot together with all proceeding items)");
             System.out.println("================================================");
             CustomizePackageMaintenance.printItem(itemCatalogue, selection);
-            System.out.println(ANSI_GREEN + "[" + (itemCatalogue.getStyles().getSize() + 1) + "]" + ANSI_RESET + "[ NEW SLOT ]");
+            System.out.println(ANSI_GREEN + "[" + (maxSize + 1) + "]" + ANSI_RESET + "[ NEW SLOT ]");
             while (true) {
                 try {
                     do {
