@@ -167,10 +167,19 @@ public class CustomerMaintenance {
             System.out.println("\nPlease Fill In The Fields As Prompted.");
             System.out.print("Username : ");
             String usern = s.nextLine();
+            if(!usern.matches("[a-zA-Z]+")){
+                System.out.println("\n"+RED_BOLD+"Username only contain Alphabets. Please Try Again."+RESET); break;
+            }
             System.out.print("Email : ");
             String email = s.nextLine();
+            if(!email.matches("^(.+)@(.+)$")){
+                System.out.println("\n" + RED_BOLD+"Email Must Contain '@' and '.com'. Please Try Again."+RESET); break;
+            }
             System.out.print("Contact Number : ");
             String number = s.nextLine();
+            if(!number.matches("[0-9]+")){
+                System.out.println("\n" + RED_BOLD+"Contact Numbers can only contain Numbers. Please Try Again."+RESET);
+            }
             System.out.print("Address (For Delivery Services) : ");
             String address = s.nextLine();
             do {
@@ -401,7 +410,7 @@ public class CustomerMaintenance {
                     System.out.print("Please Enter The New Username : ");
                     try {
                         edit = s.nextLine();
-                        if (!edit.matches("^[a-zA-Z0-9]+")) {
+                        if (!edit.matches("^[a-zA-Z]+")) {
                             System.out.println("\n" + RED + "Invalid Format For Username, Only Alphanumeric is Allowed." + RESET);
                             break;
                         }
@@ -418,7 +427,7 @@ public class CustomerMaintenance {
                     System.out.print("Please Enter The New Email : ");
                     try {
                         edit = s.nextLine();
-                        if (!edit.contains("@")) {
+                        if (!edit.matches("^(.+)@(.+)$")) {
                             System.out.println("\n" + RED + "Invalid Email Entered. Please Retry." + RESET);
                             break;
                         }
@@ -693,8 +702,8 @@ public class CustomerMaintenance {
             try {
                 System.out.print("Username : ");
                 String usern = s.nextLine();
-                if (!usern.matches("^[a-zA-Z0-9]+")) {
-                    System.out.println("\n" + RED + "Please only Enter Alphanumeric Characters for Username." + RESET);
+                if (!usern.matches("^[a-zA-Z]+")) {
+                    System.out.println("\n" + RED + "Please only Enter Alphabets for Username." + RESET);
                     break;
                 }
                 System.out.print("Email : ");
@@ -705,7 +714,7 @@ public class CustomerMaintenance {
                 }
                 System.out.print("Contact Number : ");
                 String number = s.nextLine();
-                if (!number.matches("^[0-9]")) {
+                if (!number.matches("^[0-9]+")) {
                     System.out.println("\n" + RED + "Please Enter Valid Contact Number." + RESET);
                     break;
                 }
@@ -720,7 +729,6 @@ public class CustomerMaintenance {
                 System.out.print("Credit Limit : ");
                 int creditLimit = s.nextInt();
                 do {
-                    s.nextLine();
                     System.out.print("Password : ");
                     passw = s.nextLine();
                     System.out.print("Retype Password : ");
@@ -734,8 +742,8 @@ public class CustomerMaintenance {
                 checkDuplicate(usern, passw, email, number, address, company, creditLimit, "Corporate");
                 break;
             } catch (Exception e) {
-                System.out.println("\n" + RED + "An Error Occured. Please Try Again." + RESET);
-                s.next();
+                s.nextLine();
+                System.out.println("\n" + RED + "An Error Occured. Please Try Again." + RESET); break;
             }
         }
     }

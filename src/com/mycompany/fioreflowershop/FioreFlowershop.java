@@ -77,7 +77,8 @@ public class FioreFlowershop {
     public static void initializePackages() {
         Date todayDate = new Date();
 
-        //consumer initialize
+        /*<------ Begin Ck Part -------->*/
+        //Initialize corporate customer and customer
         CorporateCustomer cc1 = new CorporateCustomer("Noice", "noice@example.com", "0123456789", "PV 18", "abcdef", "Not your business", 5000, true);
         CorporateCustomer cc2 = new CorporateCustomer("NotNoice", "notnoice@example.com", "0123456781", "PV 13", "abc123", "Some Merchant", 5000, true);
         Consumer c1 = new Consumer("ceekay", "abcdef123", "ceekay@example.com", "0125566922", "PV 16");
@@ -103,6 +104,7 @@ public class FioreFlowershop {
         corporate.addCorporate(cc2);
         corporate.getCorporate(1).setCreditSpent(4500);
         corporate.getCorporate(2).setCreditSpent(1500);
+        /*<------ End Ck Part -------->*/
 
         //Add in catalog package and catalog orders
         ItemListInterface<Item> styles = new ItemList<>();
