@@ -119,7 +119,7 @@ public class CustomerMaintenance {
                 }
                 System.out.println("\nPlease Select One Of The Options Below:");
                 System.out.println(GREEN + "[1] " + RESET + "Make Flower Order");
-                System.out.println(GREEN + "[2] " + RESET + "View Ordered Items");
+                System.out.println(GREEN + "[2] " + RESET + "View Customized Package Order History");
                 System.out.println(GREEN + "[3] " + RESET + "View Payment History");
                 System.out.println(GREEN + "[4] " + RESET + "Log Out");
                 System.out.print("Selection : ");

@@ -407,7 +407,8 @@ public class CustomizePackage {
                                 System.out.println(" [" + j + "]: " + order.getFlowerList().getItem(j).getName() + " - RM " + order.getFlowerList().getItem(j).getPrice());
                             }
                             System.out.println("Arrangement: " + order.getSize().getName() + " " + order.getStyle().getName());
-                            System.out.println("Price: RM" + order.CalculateOrder() + "\n");
+                            System.out.println("Price: RM" + order.CalculateOrder());
+                            System.out.println("Order status: " + order.getOrderStatus() + "\n");
                             found = true;
                         }
                     }
@@ -423,7 +424,8 @@ public class CustomizePackage {
                                 System.out.println(" [" + j + "]: " + order.getFlowerList().getItem(j).getName() + " - RM " + order.getFlowerList().getItem(j).getPrice());
                             }
                             System.out.println("Arrangement: " + order.getSize().getName() + " " + order.getStyle().getName());
-                            System.out.println("Price: RM" + order.CalculateOrder() + "\n");
+                            System.out.println("Price: RM" + order.CalculateOrder());
+                            System.out.println("Order status: " + order.getOrderStatus() + "\n");
                             found = true;
                         }
                     }

@@ -243,17 +243,22 @@ public class CatalogOrder {
             System.out.println("2. My Shopping Cart");
             System.out.println("3. Remove Item from Shopping Cart");
             System.out.println("4. Back");
-            System.out.print("Please enter a number (1-2): ");
-            if (scan.hasNextInt()) {
-                userMenuOption = scan.nextInt();
-                scan.nextLine();
-                isInteger = true;
+            System.out.print("Please enter a number (1-4): ");
+            if (scan.hasNext()) {
+                String menuOption = scan.next();
+                if (isDigit(menuOption.charAt(0))) {
+                    userMenuOption = Character.getNumericValue(menuOption.charAt(0));
+                    isInteger = true;
+                } else if (!isDigit(menuOption.charAt(0))) {
+                    isInteger = false;
+                    System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter shown number only." + FioreFlowershop.ConsoleColors.BLACK);
+                }
             } else {
-                isInteger = false;
-                System.err.println(FioreFlowershop.ConsoleColors.BLACK + "Please enter shown number only.");
-                scan.next();
+                System.out.println("");
+                System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter shown number only." + FioreFlowershop.ConsoleColors.BLACK);
             }
         } while (!(isInteger) || userMenuOption < 1 || userMenuOption > 4);
+
         if (userMenuOption == 1) {
             typeSelection(normalPackage, discountedPackage);
         } else if (userMenuOption == 2) {
@@ -476,13 +481,18 @@ public class CatalogOrder {
         int choice = 0;
         do {
             System.out.print("Which item do you wish to remove?\nPlease enter the number of the item :");
-            if (scan.hasNextInt()) {
-                choice = scan.nextInt();
-                isInteger = true;
+            if (scan.hasNext()) {
+                String removeChoice = scan.next();
+                if (isDigit(removeChoice.charAt(0))) {
+                    choice = Character.getNumericValue(removeChoice.charAt(0));
+                    isInteger = true;
+                } else if (!isDigit(removeChoice.charAt(0))) {
+                    isInteger = false;
+                    System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter shown number only." + FioreFlowershop.ConsoleColors.BLACK);
+                }
             } else {
-                isInteger = false;
+                System.out.println("");
                 System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter shown number only." + FioreFlowershop.ConsoleColors.BLACK);
-                scan.nextInt();
             }
         } while (!(isInteger) || choice < 1 || choice > catalogPack.getTotalEntries());
 
@@ -701,13 +711,15 @@ public class CatalogOrder {
             System.out.println("3.Flower Arrangement");
             System.out.println("4.Back");
             System.out.print("Please enter your choice (1-4):");
-            if (scan.hasNextInt()) {
-                userMenuOption = scan.nextInt();
-                isInteger = true;
-            } else {
-                isInteger = false;
-                System.err.println("Please enter your choice (1-4).");
-                scan.next();
+            if (scan.hasNext()) {
+                String MenuOption = scan.next();
+                if (isDigit(MenuOption.charAt(0))) {
+                    userMenuOption = Character.getNumericValue(MenuOption.charAt(0));
+                    isInteger = true;
+                } else if (!isDigit(MenuOption.charAt(0))) {
+                    isInteger = false;
+                    System.err.println("Please enter your choice (1-4).");
+                }
             }
         } while (!(isInteger) || userMenuOption < 1 || userMenuOption > 4);
         if (userMenuOption == 4) {
@@ -887,26 +899,52 @@ public class CatalogOrder {
 
         do {
             haveStock = true;
+            isInteger = true;
             System.out.print("Please enter your choice in number (Enter 0 to previous page):");
             if (scan.hasNextInt()) {
-                itemSelection = scan.nextInt();
+                String itemChoice = scan.next();
+                int choiceCheck = 0;
 
-                isInteger = true;
-                if (itemSelection == 0) {
-                    typeSelection(normalPackage, discountedPackage);
+                if (itemChoice.trim().length() > freshFlower.getTotalEntries() || !isDigit(itemChoice.charAt(0))) {
+                    isInteger = false;
+                    System.out.println("");
+                    System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter your choice the number within the range only.\n" + FioreFlowershop.ConsoleColors.BLACK);
+                } else if (itemChoice.length() <= freshFlower.getTotalEntries() && isDigit(itemChoice.charAt(0))) { //more than shown range of package list
+                    for (int i = 0; i < itemChoice.trim().length(); i++) {
+                        if (isDigit(itemChoice.trim().charAt(i))) {
+                            choiceCheck++;
+                        }
+                    }
+                    if (itemChoice.charAt(0) == '0') {
+                        typeSelection(normalPackage, discountedPackage);
+                    }
+                    if (choiceCheck == itemChoice.length()) {
+                        itemSelection = Integer.valueOf(itemChoice);
+                        if (itemSelection > freshFlower.getTotalEntries() || itemSelection < 0) { //more than shown range of package list
+                            isInteger = false;
+                            System.out.println("");
+                            System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter your choice the number within the range only." + FioreFlowershop.ConsoleColors.BLACK);
+                        } else {
+                            if (checkQuantity(freshFlower.getProduct(itemSelection), normalPackage, discountedPackage) == 0) {
+                                haveStock = false;
+                                System.out.println("");
+                                System.out.println(FioreFlowershop.ConsoleColors.RED + "Sorry, the item you have selected is out of stock.\n" + FioreFlowershop.ConsoleColors.BLACK);
+                            } else {
+                                isInteger = true;
+                            }
+                        }
+                    } else if (choiceCheck != itemChoice.length()) { //other character is included besides integer
+                        isInteger = false;
+                        System.out.println("");
+                        System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter your choice the number within the range only." + FioreFlowershop.ConsoleColors.BLACK);
+                    }
                 }
             } else {
                 isInteger = false;
-                System.err.println("Please enter your choice the number within the range only.");
-                scan.nextInt();
-            }
-            if (checkQuantity(freshFlower.getProduct(itemSelection), normalPackage, discountedPackage) == 0) {
-                haveStock = false;
-                System.out.println("");
-                System.out.println(FioreFlowershop.ConsoleColors.RED + "Sorry, the item you have selected is out of stock.\n" + FioreFlowershop.ConsoleColors.BLACK);
+                System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter your choice the number within the range only." + FioreFlowershop.ConsoleColors.BLACK);
             }
 
-        } while (itemSelection == 0 || itemSelection > freshFlower.getTotalEntries() || !(isInteger) || !(haveStock));
+        } while (itemSelection < 0 || itemSelection > freshFlower.getTotalEntries() || !(isInteger) || !(haveStock));
 
         System.out.println("\nDisplay catalog - Quantity Selection");
         System.out.println("========================================================================================================");
@@ -922,11 +960,18 @@ public class CatalogOrder {
 
         do {
             do {
+                System.out.println("");
                 System.out.print("Please enter quantity of this item you want to order:");
 
                 if (scan.hasNextInt()) {
                     quantity = scan.nextInt();
-                    isInteger = true;
+                    
+                    if(quantity < 0){
+                        isInteger = false;
+                    }else if(quantity > 0){
+                        isInteger = true;
+                    }                                     
+                   
                 } else {
                     isInteger = false;
                     System.err.println("Please enter the quantity in number only.");
@@ -940,8 +985,7 @@ public class CatalogOrder {
             } else if (quantity > checkQuantity(freshFlower.getProduct(itemSelection), normalPackage, discountedPackage) || quantity == 0) {
                 quantityCheck = false;
                 System.out.println("");
-                System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter a quantity that is not more that the current item's quantity" + FioreFlowershop.ConsoleColors.RESET);
-                System.out.println("");
+                System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter a quantity that is not more that the current item's quantity" + FioreFlowershop.ConsoleColors.RESET);                
             }
 
         } while (quantityCheck == false);
@@ -1093,9 +1137,9 @@ public class CatalogOrder {
         System.out.print("\nDo you wish to browse through fresh flower? (Y/y = Yes, other keys = No)");
         String con = scan.next();
 
-        if (con.equalsIgnoreCase("Y")) {
+        if (con.trim().equalsIgnoreCase("Y")) {
             freshFlowerCatalog(normalPackage, discountedPackage);
-        } else {
+        } else if (!con.trim().equalsIgnoreCase("Y")) {
             typeSelection(normalPackage, discountedPackage);
         }
 
@@ -1130,15 +1174,46 @@ public class CatalogOrder {
 
             System.out.print("Please enter your choice in number (Enter 0 to previous page):");
             if (scan.hasNextInt()) {
-                itemSelection = scan.nextInt();
-                isInteger = true;
-                if (itemSelection == 0) {
-                    typeSelection(normalPackage, discountedPackage);
-                }
+                String itemChoice = scan.next();
+                int choiceCheck = 0;
 
+                if (itemChoice.trim().length() > bouquets.getTotalEntries() || !isDigit(itemChoice.charAt(0))) {
+                    isInteger = false;
+                    System.out.println("");
+                    System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter your choice the number within the range only.\n" + FioreFlowershop.ConsoleColors.BLACK);
+                } else if (itemChoice.length() <= bouquets.getTotalEntries() && isDigit(itemChoice.charAt(0))) { //more than shown range of package list
+                    for (int i = 0; i < itemChoice.trim().length(); i++) {
+                        if (isDigit(itemChoice.trim().charAt(i))) {
+                            choiceCheck++;
+                        }
+                    }
+                    if (itemChoice.charAt(0) == '0') {
+                        typeSelection(normalPackage, discountedPackage);
+                    }
+                    if (choiceCheck == itemChoice.length()) {
+                        itemSelection = Integer.valueOf(itemChoice);
+                        if (itemSelection > bouquets.getTotalEntries() || itemSelection < 0) { //more than shown range of package list
+                            isInteger = false;
+                            System.out.println("");
+                            System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter your choice the number within the range only." + FioreFlowershop.ConsoleColors.BLACK);
+                        } else {
+                            if (checkQuantity(bouquets.getProduct(itemSelection), normalPackage, discountedPackage) == 0) {
+                                haveStock = false;
+                                System.out.println("");
+                                System.out.println(FioreFlowershop.ConsoleColors.RED + "Sorry, the item you have selected is out of stock.\n" + FioreFlowershop.ConsoleColors.BLACK);
+                            } else {
+                                isInteger = true;
+                            }
+                        }
+                    } else if (choiceCheck != itemChoice.length()) { //other character is included besides integer
+                        isInteger = false;
+                        System.out.println("");
+                        System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter your choice the number within the range only." + FioreFlowershop.ConsoleColors.BLACK);
+                    }
+                }
             } else {
                 isInteger = false;
-                System.err.println("Please enter your choice number only.");
+                System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter your choice the number within the range only." + FioreFlowershop.ConsoleColors.BLACK);
                 scan.next();
             }
             if (itemSelection != 0 && itemSelection <= bouquets.getTotalEntries()) {
@@ -1170,7 +1245,11 @@ public class CatalogOrder {
 
                 if (scan.hasNextInt()) {
                     quantity = scan.nextInt();
-                    isInteger = true;
+                    if(quantity < 0){
+                        isInteger = false;
+                    }else if(quantity > 0){
+                        isInteger = true;
+                    }   
                 } else {
                     isInteger = false;
                     System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter the quantity in number only." + FioreFlowershop.ConsoleColors.BLACK);
@@ -1338,9 +1417,9 @@ public class CatalogOrder {
         System.out.print("Do you wish to browse through bouquets? (Y/y = Yes, other keys = No)");
         con = scan.next();
 
-        if (con.equalsIgnoreCase("Y")) {
+        if (con.trim().equalsIgnoreCase("Y")) {
             bouquetsCatalog(normalPackage, discountedPackage);
-        } else {
+        } else if (!con.trim().equalsIgnoreCase("Y")) {
             typeSelection(normalPackage, discountedPackage);
         }
     }
@@ -1375,15 +1454,46 @@ public class CatalogOrder {
             System.out.print("Please enter your choice in number (Enter 0 to previous page):");
 
             if (scan.hasNextInt()) {
-                itemSelection = scan.nextInt();
+                String itemChoice = scan.next();
+                int choiceCheck = 0;
 
-                isInteger = true;
-                if (itemSelection == 0) {
-                    typeSelection(normalPackage, discountedPackage);
+                if (itemChoice.trim().length() > flowerArrangement.getTotalEntries() || !isDigit(itemChoice.charAt(0))) {
+                    isInteger = false;
+                    System.out.println("");
+                    System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter your choice the number within the range only.\n" + FioreFlowershop.ConsoleColors.BLACK);
+                } else if (itemChoice.length() <= flowerArrangement.getTotalEntries() && isDigit(itemChoice.charAt(0))) { //more than shown range of package list
+                    for (int i = 0; i < itemChoice.trim().length(); i++) {
+                        if (isDigit(itemChoice.trim().charAt(i))) {
+                            choiceCheck++;
+                        }
+                    }
+                    if (itemChoice.charAt(0) == '0') {
+                        typeSelection(normalPackage, discountedPackage);
+                    }
+                    if (choiceCheck == itemChoice.length()) {
+                        itemSelection = Integer.valueOf(itemChoice);
+                        if (itemSelection > flowerArrangement.getTotalEntries() || itemSelection < 0) { //more than shown range of package list
+                            isInteger = false;
+                            System.out.println("");
+                            System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter your choice the number within the range only." + FioreFlowershop.ConsoleColors.BLACK);
+                        } else {
+                            if (checkQuantity(flowerArrangement.getProduct(itemSelection), normalPackage, discountedPackage) == 0) {
+                                haveStock = false;
+                                System.out.println("");
+                                System.out.println(FioreFlowershop.ConsoleColors.RED + "Sorry, the item you have selected is out of stock.\n" + FioreFlowershop.ConsoleColors.BLACK);
+                            } else {
+                                isInteger = true;
+                            }
+                        }
+                    } else if (choiceCheck != itemChoice.length()) { //other character is included besides integer
+                        isInteger = false;
+                        System.out.println("");
+                        System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter your choice the number within the range only." + FioreFlowershop.ConsoleColors.BLACK);
+                    }
                 }
             } else {
                 isInteger = false;
-                System.err.println("Please enter your choice in number only.");
+                System.out.println(FioreFlowershop.ConsoleColors.RED + "Please enter your choice the number within the range only." + FioreFlowershop.ConsoleColors.BLACK);
                 scan.next();
             }
             if (itemSelection != 0 && itemSelection <= flowerArrangement.getTotalEntries()) {
@@ -1393,7 +1503,7 @@ public class CatalogOrder {
                     System.out.println(FioreFlowershop.ConsoleColors.RED + "Sorry, the item you have selected is out of stock.\n" + FioreFlowershop.ConsoleColors.BLACK);
                 }
             }
-        } while (itemSelection == 0 || itemSelection > flowerArrangement.getTotalEntries() || !(isInteger) || !(haveStock));
+        } while (!(isInteger) || !(haveStock));
 
         System.out.println("\nDisplay catalog - Quantity Selection");
         System.out.println("========================================================================================================");
@@ -1414,7 +1524,11 @@ public class CatalogOrder {
 
                 if (scan.hasNextInt()) {
                     quantity = scan.nextInt();
-                    isInteger = true;
+                    if(quantity < 0){
+                        isInteger = false;
+                    }else if(quantity > 0){
+                        isInteger = true;
+                    }   
                 } else {
                     isInteger = false;
                     System.err.println("Please enter the quantity in number only.");
@@ -1541,9 +1655,9 @@ public class CatalogOrder {
         System.out.print("Do you wish to browse through flower arrangement? (Y/y = Yes, other keys = No)");
         String con = scan.next();
 
-        if (con.equalsIgnoreCase("Y")) {
+        if (con.trim().equalsIgnoreCase("Y")) {
             flowerArrangementCatalog(normalPackage, discountedPackage);
-        } else {
+        } else if (!con.trim().equalsIgnoreCase("Y")) {
             typeSelection(normalPackage, discountedPackage);
         }
     }
